@@ -71,7 +71,27 @@ MonoBehaviour:
   tickRate: 10
   winner: 0
   allPlayersIDs: 
-  debugList: []
+  debugList:
+  - team: 0
+    championSOIndex: 0
+    playerReady: 0
+    championPhotonViewId: 0
+  - team: 0
+    championSOIndex: 0
+    playerReady: 0
+    championPhotonViewId: 0
+  - team: 0
+    championSOIndex: 0
+    playerReady: 0
+    championPhotonViewId: 0
+  - team: 0
+    championSOIndex: 0
+    playerReady: 0
+    championPhotonViewId: 0
+  - team: 0
+    championSOIndex: 0
+    playerReady: 0
+    championPhotonViewId: 0
   expectedPlayerCount: 4
   allTeams: 000000000100000002000000
   teamColors:
