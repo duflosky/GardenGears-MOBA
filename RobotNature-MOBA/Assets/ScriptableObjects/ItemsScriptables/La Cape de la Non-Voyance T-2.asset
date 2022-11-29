@@ -22,8 +22,8 @@ MonoBehaviour:
   activeCapacities: []
   activeCapacitiesIndexes: 
   indexInCollection: 0
-  healthMod: 0
-  powerMod: 0
+  healthMod: 200
+  powerMod: 50
   resistanceMod: 0
   speedMod: 0
   attackSpeedMod: 0
