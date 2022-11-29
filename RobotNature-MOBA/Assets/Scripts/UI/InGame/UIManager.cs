@@ -1,17 +1,20 @@
 using UnityEngine;
 
-public partial class UIManager : MonoBehaviour
+namespace UI.InGame
 {
-    public static UIManager Instance;
-
-    private void Awake()
+    public partial class UIManager : MonoBehaviour
     {
-        if (Instance != null && Instance != this)
-        {
-            DestroyImmediate(gameObject);
-            return;
-        }
+        public static UI.InGame.UIManager Instance;
 
-        Instance = this;
+        private void Awake()
+        {
+            if (Instance != null && Instance != this)
+            {
+                DestroyImmediate(gameObject);
+                return;
+            }
+
+            Instance = this;
+        }
     }
 }
