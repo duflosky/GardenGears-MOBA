@@ -59,8 +59,6 @@ namespace GameStates
             public Champion champion;
         }
 
-        public string currentStateDebugString;
-
         private void Awake()
         {
             if (Instance != null && Instance != this)
@@ -120,7 +118,6 @@ namespace GameStates
         {
             currentState.ExitState();
             currentState = gamesStates[stateIndex];
-            currentStateDebugString = gamesStates[stateIndex].ToString();
             currentState.StartState();
         }
 

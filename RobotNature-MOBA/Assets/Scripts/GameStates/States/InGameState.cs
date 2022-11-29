@@ -12,7 +12,7 @@ namespace GameStates.States
 
         public override void StartState()
         {
-            // InputManager.EnablePlayerMap(true);
+            InputManager.EnablePlayerMap(true);
         }
 
         public override void UpdateState()

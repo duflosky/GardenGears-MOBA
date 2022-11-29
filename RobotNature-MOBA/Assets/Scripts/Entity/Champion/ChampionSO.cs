@@ -1,7 +1,5 @@
-// using Entities.Capacities;
+using Entities.Capacities;
 using UnityEngine;
-
-// TODO: Uncomment Capacities
 
 namespace Entities.Champion
 {
@@ -19,21 +17,20 @@ namespace Entities.Champion
         public float referenceMoveSpeed;
         
         [Header("Attack")]
-        // public ActiveCapacitySO attackAbility;
+        public ActiveCapacitySO attackAbility;
         [HideInInspector] public byte attackAbilityIndex;
         public float attackDamage;
         
         [Header("Abilities")]
-        // public PassiveCapacitySO[] passiveCapacities;
+        public PassiveCapacitySO[] passiveCapacities;
         [HideInInspector] public byte[] passiveCapacitiesIndexes;
-        // public ActiveCapacitySO[] activeCapacities; 
+        public ActiveCapacitySO[] activeCapacities; 
         [HideInInspector] public byte[] activeCapacitiesIndexes;
-        // public ActiveCapacitySO ultimateAbility;
+        public ActiveCapacitySO ultimateAbility;
         [HideInInspector] public byte ultimateAbilityIndex;
         
         public void SetIndexes()
         {
-            /*
             // Attack
             attackAbilityIndex = CapacitySOCollectionManager.GetActiveCapacitySOIndex(attackAbility);
         
@@ -45,6 +42,7 @@ namespace Entities.Champion
                 passiveCapacitiesIndexes[index] =
                     CapacitySOCollectionManager.GetPassiveCapacitySOIndex(passiveCapacitySo);
             }
+            
             // Actives
             activeCapacitiesIndexes = new byte[activeCapacities.Length];
             for (var index = 0; index < activeCapacitiesIndexes.Length; index++)
@@ -53,10 +51,8 @@ namespace Entities.Champion
                 activeCapacitiesIndexes[index] =
                     CapacitySOCollectionManager.GetActiveCapacitySOIndex(activeCapacitySo);
             }
-
+            
             ultimateAbilityIndex = CapacitySOCollectionManager.GetActiveCapacitySOIndex(ultimateAbility);
-            */
         }
-        
     }
 }

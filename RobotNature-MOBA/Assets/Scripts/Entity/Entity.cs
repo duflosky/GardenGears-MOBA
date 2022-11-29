@@ -39,7 +39,6 @@ public class Entity : MonoBehaviourPun
     /// </summary>
     public Vector3 OffsetUI = new Vector3(0, 2f, 0);
     
-    // Start is called before the first frame update
     void Start()
     { 
         entityIndex = photonView.ViewID;
@@ -47,8 +46,7 @@ public class Entity : MonoBehaviourPun
         OnStart();
     }
     protected virtual void OnStart(){}
-
-    // Update is called once per frame
+    
     void Update()
     {
      OnUpdate();   
