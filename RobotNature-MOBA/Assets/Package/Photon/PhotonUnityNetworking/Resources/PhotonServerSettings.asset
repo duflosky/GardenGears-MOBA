@@ -61,6 +61,7 @@ MonoBehaviour:
   - SyncSwitchStateRPC
   - SyncWinnerRPC
   - TickRPC
+  - SyncChampionPhotonId
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 0

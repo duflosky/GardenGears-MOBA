@@ -403,7 +403,7 @@ namespace GameStates
         {
             // TODO - init pools
         
-            LinkChampionSOCapacityIndexes();
+            // LinkChampionSOCapacityIndexes();
         
             // ItemCollectionManager.Instance.LinkCapacityIndexes();
         

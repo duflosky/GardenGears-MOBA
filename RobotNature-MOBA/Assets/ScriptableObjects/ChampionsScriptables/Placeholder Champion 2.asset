@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 61ba6ac30a5ce5548850d215437d2a35, type: 3}
   m_Name: Placeholder Champion 2
   m_EditorClassIdentifier: 
-  championMeshPrefab: {fileID: 0}
+  championMeshPrefab: {fileID: 4196819551082274846, guid: 086209d3580b3884abf86008e186ac33,
+    type: 3}
   canvasIndex: 0
   maxHp: 10
   maxRessource: 10

@@ -19,6 +19,7 @@ namespace GameStates.States
         {
             if (IsWinConditionChecked())
             {
+                Debug.Log("Boolean condition true");
                 sm.SendWinner(sm.winner);
                 sm.SwitchState(3);
                 return;
