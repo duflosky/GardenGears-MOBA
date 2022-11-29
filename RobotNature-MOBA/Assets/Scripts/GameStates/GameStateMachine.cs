@@ -35,8 +35,6 @@ namespace GameStates
         /// </summary>
         private readonly Dictionary<int, PlayerData> playersReadyDict = new Dictionary<int, PlayerData>();
 
-        public List<PlayerData> debugList;
-
         public uint expectedPlayerCount = 4;
 
         public ChampionSO[] allChampionsSo;
@@ -237,7 +235,6 @@ namespace GameStates
                     playerReady = false
                 };
                 playersReadyDict.Add(actorNumber, playerData);
-                debugList[actorNumber] = playerData;
 
                 allPlayersIDs.Add(actorNumber);
             }
@@ -285,7 +282,6 @@ namespace GameStates
             }
 
             playersReadyDict[photonID].team = (Enums.Team)team;
-            debugList[photonID].team = (Enums.Team)team;
         }
 
         public void RequestSetChampion(byte champion)
@@ -305,7 +301,6 @@ namespace GameStates
             if (!playersReadyDict.ContainsKey(photonID)) return;
 
             playersReadyDict[photonID].championSOIndex = champion;
-            debugList[photonID].championSOIndex = champion;
         }
 
         public void RequestSendDataDictionary()
@@ -334,7 +329,6 @@ namespace GameStates
             };
 
             playersReadyDict[key] = data;
-            debugList[key] = data;
         }
 
         public void SendSetToggleReady(bool ready)
@@ -352,7 +346,6 @@ namespace GameStates
             }
 
             playersReadyDict[photonID].playerReady = ready;
-            debugList[photonID].playerReady = ready;
 
             if (!playersReadyDict[photonID].playerReady) return;
             if (!IsEveryPlayerReady()) return;
@@ -440,9 +433,6 @@ namespace GameStates
             var champion = PhotonNetwork.GetPhotonView(photonViewId);
             playersReadyDict[photonId].championPhotonViewId = champion.ViewID;
             playersReadyDict[photonId].champion = champion.GetComponent<Champion>();
-        
-            debugList[photonId].championPhotonViewId = playersReadyDict[photonId].championPhotonViewId;
-            debugList[photonId].champion = playersReadyDict[photonId].champion;
             
             champion.name = $"Player ID : {photonId}";
         }
