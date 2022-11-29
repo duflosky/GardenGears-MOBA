@@ -17,7 +17,7 @@ public class Champion : Entity, IMovable
     protected override void OnUpdate()
     {
         base.OnUpdate();
-        if(isMoving) Move();
+        Move();
     }
 
 

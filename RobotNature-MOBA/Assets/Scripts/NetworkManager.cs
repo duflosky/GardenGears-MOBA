@@ -40,19 +40,18 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 
     public void CreateRoom(string roomName)
     {
-        Debug.Log("Create Room");
-        PhotonNetwork.CreateRoom(roomName);
+        if (roomName == "") PhotonNetwork.CreateRoom("default");
+        else PhotonNetwork.CreateRoom(roomName);
     }
 
     public void JoinRoom(string roomName)
     {
-        Debug.Log("Join Room");
-        PhotonNetwork.JoinRoom(roomName);
+        if (roomName == "") PhotonNetwork.JoinRoom("default");
+        else PhotonNetwork.JoinRoom(roomName);
     }
 
     public override void OnJoinedRoom()
     {
-        Debug.Log("Joined Room");
         PhotonNetwork.LoadLevel("LobbyScene");
     }
     
