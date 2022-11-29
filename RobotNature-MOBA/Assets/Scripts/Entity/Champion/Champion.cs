@@ -30,7 +30,6 @@ public class Champion : Entity, IMovable
 
     public void SetMoveDirection(Vector3 dir)
     {
-        Debug.Log($"Set dir to {dir}");
         lastDir = dir;
         isMoving = (dir != Vector3.zero) ;
     }

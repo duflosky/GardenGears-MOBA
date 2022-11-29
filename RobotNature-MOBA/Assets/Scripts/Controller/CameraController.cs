@@ -14,7 +14,7 @@ public class CameraController : MonoBehaviour
     
     [SerializeField] private Vector3 offset;
     [SerializeField] private float lerpSpeed;
-    [SerializeField] private float rotationY;
+    [SerializeField] private float rotationX;
     
     public void Awake()
     {
@@ -42,7 +42,7 @@ public class CameraController : MonoBehaviour
         if (cameraLock)
         {
             nextPos = player.position + offset;
-            transform.position = Vector3.Lerp(transform.position, nextPos, deltaTime * lerpSpeed);
+            transform.position = nextPos; //Vector3.Lerp(transform.position, nextPos, deltaTime * lerpSpeed);
         }
         else
         {
@@ -71,7 +71,7 @@ public class CameraController : MonoBehaviour
             transform.position = Vector3.Lerp(transform.position, nextPos, deltaTime* lerpSpeed);
         }
 
-        transform.rotation = Quaternion.Euler(transform.rotation.x, rotationY, transform.rotation.z);
+        transform.rotation = Quaternion.Euler(rotationX, transform.rotation.y, transform.rotation.z);
     }
 
     public void LinkCamera(Transform target)

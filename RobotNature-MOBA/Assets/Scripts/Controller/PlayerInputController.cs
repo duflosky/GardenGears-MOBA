@@ -10,6 +10,7 @@ namespace Controllers.Inputs
         private void Start()
         {
             LinkControlsToPlayer();
+            LinkCameraToPlayer();
         }
 
         /// <summary>
