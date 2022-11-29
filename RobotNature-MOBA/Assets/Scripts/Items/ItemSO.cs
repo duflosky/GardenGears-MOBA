@@ -4,8 +4,8 @@ using UnityEngine;
 
 namespace Items
 {
-    //Asset Menu Syntax :
-    //[CreateAssetMenu(menuName = "ItemSO", fileName = "new ItemSO")]
+    // Asset Menu Syntax :
+    [CreateAssetMenu(menuName = "ItemSO", fileName = "new ItemSO")]
     public abstract class ItemSO : ScriptableObject
     {
         [Tooltip("GD Name")] public string itemName;

@@ -67,4 +67,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e4c1542b861033e4e9c763b01e1019d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  allItemSOs: []
+  allItemSOs:
+  - {fileID: 11400000, guid: 251424d87f36dd548bca980ae23d7b8c, type: 2}
+  - {fileID: 11400000, guid: 4ec314e26cc46264190b406862dd9748, type: 2}
+  - {fileID: 11400000, guid: 6e4851652297de3438bf6c6ba8e9484a, type: 2}
+  - {fileID: 11400000, guid: a3e8fc23a63419d42b99bc3cdc60b57c, type: 2}
+  - {fileID: 11400000, guid: 2bf7c55998709ec4f940c99374c418f1, type: 2}
+  - {fileID: 11400000, guid: 26df1918d7cbc1d4a9994a2dca54351f, type: 2}
+  - {fileID: 11400000, guid: a260588aa8c53f54b9735a63be583482, type: 2}
+  - {fileID: 11400000, guid: f9b3b08bd74c29545950fba610a9eca4, type: 2}
+  - {fileID: 11400000, guid: 8f8c3a42c63191844bcea18ebb9fc699, type: 2}
+  - {fileID: 11400000, guid: ee37a0df03b2fd64688bf47463e3d58a, type: 2}
+  - {fileID: 11400000, guid: 48c6f7be6ebea704b909a88ae8538ed9, type: 2}
+  - {fileID: 11400000, guid: f462a0c00b3dba04fa957bcff508f449, type: 2}
+  - {fileID: 11400000, guid: 13e7801c37d569c42b0a14a1e6099602, type: 2}
+  - {fileID: 11400000, guid: ddf5bb8441fb9e847ba539acde5545ba, type: 2}
+  - {fileID: 11400000, guid: cc2fdfc54af39334e9ee810342415f25, type: 2}
