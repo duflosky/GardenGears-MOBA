@@ -72,6 +72,74 @@
                     "isPartOfComposite": true
                 }
             ]
+        },
+        {
+            "name": "Capacity",
+            "id": "1ad1369f-3054-4487-84cc-92a46f61278a",
+            "actions": [
+                {
+                    "name": "Capacity1",
+                    "type": "Button",
+                    "id": "69b3dbeb-9d62-4040-8069-29ece82405be",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Capacity2",
+                    "type": "Button",
+                    "id": "60258e78-bf49-4b65-98b6-960321c73b0b",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Ultime",
+                    "type": "Button",
+                    "id": "4066f0d7-3890-4e93-b91d-2252531678e5",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "dfccd1af-df03-4fdc-990f-4d6028599b7f",
+                    "path": "",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Capacity1",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "31ef5a54-20fe-4f1b-a2ab-ff4c933f194a",
+                    "path": "",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Capacity2",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "d81835f5-f080-4ee4-b222-4b33eac0df33",
+                    "path": "",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Ultime",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
         }
     ],
     "controlSchemes": []

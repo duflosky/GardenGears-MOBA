@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 public class NetworkManager : MonoBehaviourPunCallbacks
 {
     public static NetworkManager Instance;
+    public string sceneToLoad = "LobbyScene"; 
 
     #region Unity Methods
     private void Awake()
@@ -52,7 +53,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 
     public override void OnJoinedRoom()
     {
-        PhotonNetwork.LoadLevel("LobbyScene");
+        PhotonNetwork.LoadLevel(sceneToLoad);
     }
     
     #endregion

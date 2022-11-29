@@ -261,4 +261,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b746afdb27c119049ae5d4a1b17b8cca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  referenceMoveSpeed: 7
+  entityIndex: 0
+  canAddPassiveCapacity: 1
+  canRemovePassiveCapacity: 1
+  TransformUI: {fileID: 0}
+  OffsetUI: {x: 0, y: 2, z: 0}
+  referenceMoveSpeed: 15
+  abilitiesIndexes: 0000
+  ultimateAbilityIndex: 0
+  canCast: 0
