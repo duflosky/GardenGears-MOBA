@@ -94,6 +94,74 @@ public partial class @PlayerInputs : IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": true
                 }
             ]
+        },
+        {
+            ""name"": ""Capacity"",
+            ""id"": ""1ad1369f-3054-4487-84cc-92a46f61278a"",
+            ""actions"": [
+                {
+                    ""name"": ""Capacity1"",
+                    ""type"": ""Button"",
+                    ""id"": ""69b3dbeb-9d62-4040-8069-29ece82405be"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Capacity2"",
+                    ""type"": ""Button"",
+                    ""id"": ""60258e78-bf49-4b65-98b6-960321c73b0b"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Ultime"",
+                    ""type"": ""Button"",
+                    ""id"": ""4066f0d7-3890-4e93-b91d-2252531678e5"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""dfccd1af-df03-4fdc-990f-4d6028599b7f"",
+                    ""path"": """",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Capacity1"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""31ef5a54-20fe-4f1b-a2ab-ff4c933f194a"",
+                    ""path"": """",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Capacity2"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""d81835f5-f080-4ee4-b222-4b33eac0df33"",
+                    ""path"": """",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Ultime"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": []
@@ -101,6 +169,11 @@ public partial class @PlayerInputs : IInputActionCollection2, IDisposable
         // Movement
         m_Movement = asset.FindActionMap("Movement", throwIfNotFound: true);
         m_Movement_Move = m_Movement.FindAction("Move", throwIfNotFound: true);
+        // Capacity
+        m_Capacity = asset.FindActionMap("Capacity", throwIfNotFound: true);
+        m_Capacity_Capacity1 = m_Capacity.FindAction("Capacity1", throwIfNotFound: true);
+        m_Capacity_Capacity2 = m_Capacity.FindAction("Capacity2", throwIfNotFound: true);
+        m_Capacity_Ultime = m_Capacity.FindAction("Ultime", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -189,8 +262,63 @@ public partial class @PlayerInputs : IInputActionCollection2, IDisposable
         }
     }
     public MovementActions @Movement => new MovementActions(this);
+
+    // Capacity
+    private readonly InputActionMap m_Capacity;
+    private ICapacityActions m_CapacityActionsCallbackInterface;
+    private readonly InputAction m_Capacity_Capacity1;
+    private readonly InputAction m_Capacity_Capacity2;
+    private readonly InputAction m_Capacity_Ultime;
+    public struct CapacityActions
+    {
+        private @PlayerInputs m_Wrapper;
+        public CapacityActions(@PlayerInputs wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Capacity1 => m_Wrapper.m_Capacity_Capacity1;
+        public InputAction @Capacity2 => m_Wrapper.m_Capacity_Capacity2;
+        public InputAction @Ultime => m_Wrapper.m_Capacity_Ultime;
+        public InputActionMap Get() { return m_Wrapper.m_Capacity; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(CapacityActions set) { return set.Get(); }
+        public void SetCallbacks(ICapacityActions instance)
+        {
+            if (m_Wrapper.m_CapacityActionsCallbackInterface != null)
+            {
+                @Capacity1.started -= m_Wrapper.m_CapacityActionsCallbackInterface.OnCapacity1;
+                @Capacity1.performed -= m_Wrapper.m_CapacityActionsCallbackInterface.OnCapacity1;
+                @Capacity1.canceled -= m_Wrapper.m_CapacityActionsCallbackInterface.OnCapacity1;
+                @Capacity2.started -= m_Wrapper.m_CapacityActionsCallbackInterface.OnCapacity2;
+                @Capacity2.performed -= m_Wrapper.m_CapacityActionsCallbackInterface.OnCapacity2;
+                @Capacity2.canceled -= m_Wrapper.m_CapacityActionsCallbackInterface.OnCapacity2;
+                @Ultime.started -= m_Wrapper.m_CapacityActionsCallbackInterface.OnUltime;
+                @Ultime.performed -= m_Wrapper.m_CapacityActionsCallbackInterface.OnUltime;
+                @Ultime.canceled -= m_Wrapper.m_CapacityActionsCallbackInterface.OnUltime;
+            }
+            m_Wrapper.m_CapacityActionsCallbackInterface = instance;
+            if (instance != null)
+            {
+                @Capacity1.started += instance.OnCapacity1;
+                @Capacity1.performed += instance.OnCapacity1;
+                @Capacity1.canceled += instance.OnCapacity1;
+                @Capacity2.started += instance.OnCapacity2;
+                @Capacity2.performed += instance.OnCapacity2;
+                @Capacity2.canceled += instance.OnCapacity2;
+                @Ultime.started += instance.OnUltime;
+                @Ultime.performed += instance.OnUltime;
+                @Ultime.canceled += instance.OnUltime;
+            }
+        }
+    }
+    public CapacityActions @Capacity => new CapacityActions(this);
     public interface IMovementActions
     {
         void OnMove(InputAction.CallbackContext context);
+    }
+    public interface ICapacityActions
+    {
+        void OnCapacity1(InputAction.CallbackContext context);
+        void OnCapacity2(InputAction.CallbackContext context);
+        void OnUltime(InputAction.CallbackContext context);
     }
 }

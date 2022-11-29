@@ -1,3 +1,4 @@
+using Entities.Capacities;
 using UnityEngine;
 using UnityEngine.InputSystem;
 /*using Entities;
@@ -41,19 +42,19 @@ namespace Controllers.Inputs
         /// Actions Performed on Capacity 0 Activation
         /// </summary>
         /// <param name="ctx"></param>
-        private void OnActivateCapacity0(InputAction.CallbackContext ctx)
+        private void OnActivateCapacity1(InputAction.CallbackContext ctx)
         {
-            /*ActiveCapacitySO capacity0 = CapacitySOCollectionManager.GetActiveCapacitySOByIndex(champion.abilitiesIndexes[0]);
+            ActiveCapacitySO capacity1 = CapacitySOCollectionManager.GetActiveCapacitySOByIndex(champion.abilitiesIndexes[0]);
 
-            champion.RequestCast(champion.abilitiesIndexes[0],selectedEntity,cursorWorldPos);*/
+            champion.RequestCast(champion.abilitiesIndexes[0],selectedEntity,cursorWorldPos);
         }
         /// <summary>
         /// Actions Performed on Capacity 1 Activation
         /// </summary>
         /// <param name="ctx"></param>
-        private void OnActivateCapacity1(InputAction.CallbackContext ctx)
+        private void OnActivateCapacity2(InputAction.CallbackContext ctx)
         {
-            //champion.RequestCast(champion.abilitiesIndexes[1],selectedEntity,cursorWorldPos);
+            champion.RequestCast(champion.abilitiesIndexes[1],selectedEntity,cursorWorldPos);
         }
         /// <summary>
         /// Actions Performed on Capacity 2 Activation
@@ -61,7 +62,7 @@ namespace Controllers.Inputs
         /// <param name="ctx"></param>
         private void OnActivateUltimateAbility(InputAction.CallbackContext ctx)
         {
-            //champion.RequestCast(champion.ultimateAbilityIndex,selectedEntity,cursorWorldPos);
+            champion.RequestCast(champion.ultimateAbilityIndex,selectedEntity,cursorWorldPos);
         }
 
         /// <summary>
@@ -159,6 +160,10 @@ namespace Controllers.Inputs
             Debug.Log("Link Champ inputs");
             inputs.Movement.Move.performed += OnMoveChange; 
             inputs.Movement.Move.canceled += OnMoveChange;
+            
+            inputs.Capacity.Capacity1.performed += OnActivateCapacity1;
+            inputs.Capacity.Capacity2.performed += OnActivateCapacity2;
+            inputs.Capacity.Ultime.performed += OnActivateUltimateAbility;
             /*
             cam = Camera.main;
             selectedEntity = new int[1];
@@ -166,9 +171,7 @@ namespace Controllers.Inputs
             
             inputs.Attack.Attack.performed += OnAttack;
             
-            inputs.Capacity.Capacity0.performed += OnActivateCapacity0;
-            inputs.Capacity.Capacity1.performed += OnActivateCapacity1;
-            inputs.Capacity.Capacity2.performed += OnActivateUltimateAbility;
+            
 
                 
                 champion.rb.isKinematic = false;
