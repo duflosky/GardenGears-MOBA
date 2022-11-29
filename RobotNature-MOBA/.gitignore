@@ -61,3 +61,6 @@ sysinfo.txt
 # Crashlytics generated file
 crashlytics-build.properties
 
+RobotNature-MOBA/UserSettings/
+
+RobotNature-MOBA/Assets/Packages/Photon/PhotonUnityNetworking/Resources/PhotonServerSettings.asset
