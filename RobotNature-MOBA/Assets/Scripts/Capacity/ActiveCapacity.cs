@@ -10,9 +10,14 @@ namespace Entities.Capacities
         public byte indexOfSOInCollection;
         public ActiveCapacitySO SO;
         public Entity caster;
+        
         private double cooldownTimer;
         public bool onCooldown;
         
+        protected ActiveCapacitySO AssociatedActiveCapacitySO()
+        {
+            return CapacitySOCollectionManager.GetActiveCapacitySOByIndex(indexOfSOInCollection);
+        }
 
         #region Cast
 
@@ -53,6 +58,11 @@ namespace Entities.Capacities
                 return true;
             }
             else return false;
+        }
+
+        public virtual void CollideEffect(Entity entityAffect)
+        {
+            
         }
 
         public virtual bool isInRange(int casterIndex, Vector3 position)

@@ -93,9 +93,10 @@ namespace Controllers.Inputs
 
         private void OnMouseMove(InputAction.CallbackContext ctx)
         {
-            /*mousePos = ctx.ReadValue<Vector2>();
+            mousePos = ctx.ReadValue<Vector2>();
             var mouseRay = cam.ScreenPointToRay(Input.mousePosition);
             if (!Physics.Raycast(mouseRay, out var hit)) return;
+            Debug.Log("hitMap");
             cursorWorldPos[0] = hit.point;
             selectedEntity[0] = -1;
             var ent = hit.transform.GetComponent<Entity>();
@@ -106,7 +107,7 @@ namespace Controllers.Inputs
                 cursorWorldPos[0] = ent.transform.position;
             }
 
-            if(isActivebuttonPress)
+            /*if(isActivebuttonPress)
             {
                 champion.MoveToPosition(GetMouseOverWorldPos());
             }*/
@@ -155,6 +156,10 @@ namespace Controllers.Inputs
 
         protected override void Link(Entity entity)
         {
+            selectedEntity = new int[1];
+            cursorWorldPos = new Vector3[1];
+            cam = Camera.main;
+            
             champion = controlledEntity as Champion;
             base.Link(entity);
             Debug.Log("Link Champ inputs");
@@ -164,10 +169,10 @@ namespace Controllers.Inputs
             inputs.Capacity.Capacity1.performed += OnActivateCapacity1;
             inputs.Capacity.Capacity2.performed += OnActivateCapacity2;
             inputs.Capacity.Ultime.performed += OnActivateUltimateAbility;
+            
+            
+            inputs.Mouse.MousePos.performed += OnMouseMove;
             /*
-            cam = Camera.main;
-            selectedEntity = new int[1];
-            cursorWorldPos = new Vector3[1];
             
             inputs.Attack.Attack.performed += OnAttack;
             
@@ -176,7 +181,6 @@ namespace Controllers.Inputs
                 
                 champion.rb.isKinematic = false;
 
-            inputs.MoveMouse.MousePos.performed += OnMouseMove;
             
             inputs.Inventory.ActivateItem0.performed += OnActivateItem0;
             inputs.Inventory.ActivateItem1.performed += OnActivateItem1;
