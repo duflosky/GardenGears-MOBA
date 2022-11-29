@@ -2,7 +2,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Controllers.Inputs;
-// using Controllers.Inputs;
 using Entities.Champion;
 // using Entities.Inventory;
 using Photon.Pun;
@@ -433,12 +432,12 @@ namespace GameStates
 
         private void InstantiateChampion()
         {
-            // var champion = (Champion)PoolNetworkManager.Instance.PoolInstantiate(0, Vector3.up, Quaternion.identity);
+            var champion = (Champion)PoolNetworkManager.Instance.PoolInstantiate(0, Vector3.up, Quaternion.identity);
             
-            // photonView.RPC("SyncChampionPhotonId", RpcTarget.All, PhotonNetwork.LocalPlayer.ActorNumber, champion.photonView.ViewID);
+            photonView.RPC("SyncChampionPhotonId", RpcTarget.All, PhotonNetwork.LocalPlayer.ActorNumber, champion.photonView.ViewID);
         
-            // champion.name = $"Player ID:{PhotonNetwork.LocalPlayer.ActorNumber} [MINE]";
-            // LinkController(champion);
+            champion.name = $"Player ID:{PhotonNetwork.LocalPlayer.ActorNumber} [MINE]";
+            LinkController(champion);
         }
 
         [PunRPC]
@@ -473,18 +472,16 @@ namespace GameStates
         
         private void ApplyChampionSoData(PlayerData playerData)
         {
-            /*
             if (playerData.championSOIndex >= allChampionsSo.Length)
             {
                 Debug.LogWarning("Make sure the mesh is valid. Selects default mesh.");
                 playerData.championSOIndex = 1;
             }
-            */
-        
-            // var championSo = allChampionsSo[playerData.championSOIndex];
+
+            var championSo = allChampionsSo[playerData.championSOIndex];
         
             // We state name
-            // playerData.champion.name += $" / {championSo.name}";
+            playerData.champion.name += $" / {championSo.name}";
         
             // We sync data and champion mesh
             // playerData.champion.ApplyChampionSO(playerData.championSOIndex, playerData.team);
