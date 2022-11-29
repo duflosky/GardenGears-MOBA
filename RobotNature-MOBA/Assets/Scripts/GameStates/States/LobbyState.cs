@@ -10,16 +10,16 @@ namespace GameStates.States
         {
             LobbyUIManager.Instance.Initialization();
 
-            // InputManager.EnablePlayerMap(false);
-            // InputManager.EnablePlayerUIMap(true);
+            InputManager.EnablePlayerMap(false);
+            InputManager.EnablePlayerUIMap(true);
         }
 
         public override void UpdateState() { }
 
         public override void ExitState()
         {
-            // InputManager.EnablePlayerMap(false);
-            // InputManager.EnablePlayerUIMap(false);
+            InputManager.EnablePlayerMap(false);
+            InputManager.EnablePlayerUIMap(false);
         }
 
         public override void OnAllPlayerReady()

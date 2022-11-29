@@ -14,12 +14,12 @@ namespace GameStates.States
 
         public override void ExitState()
         {
-            // sm.LateLoad();
+            sm.LateLoad();
         }
 
         public override void OnAllPlayerReady()
         {
-            //sm.SwitchState(2);
+            sm.SwitchState(2);
         }
     }
 }

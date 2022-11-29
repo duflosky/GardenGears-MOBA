@@ -1,8 +1,8 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-// using Controllers.Inputs;
-// using Entities.Champion;
+using Controllers.Inputs;
+using Entities.Champion;
 // using Entities.Inventory;
 using Photon.Pun;
 using GameStates.States;
@@ -42,7 +42,7 @@ namespace GameStates
 
         public uint expectedPlayerCount = 4;
 
-        // public ChampionSO[] allChampionsSo;
+        public ChampionSO[] allChampionsSo;
         public Enums.Team[] allTeams;
 
         public TeamColor[] teamColors;
@@ -61,7 +61,7 @@ namespace GameStates
             public byte championSOIndex;
             public bool playerReady;
             public int championPhotonViewId;
-            // public Champion champion;
+            public Champion champion;
         }
 
         public string currentStateDebugString;
@@ -183,15 +183,15 @@ namespace GameStates
             return playersReadyDict[PhotonNetwork.LocalPlayer.ActorNumber].championPhotonViewId;
         }
         
-        // public Champion GetPlayerChampion(int actorNumber)
-        // {
-        //     return playersReadyDict[actorNumber].champion;
-        // }
-        //
-        // public Champion GetPlayerChampion()
-        // {
-        //     return playersReadyDict[PhotonNetwork.LocalPlayer.ActorNumber].champion;
-        // }
+        public Champion GetPlayerChampion(int actorNumber)
+        {
+            return playersReadyDict[actorNumber].champion;
+        }
+        
+        public Champion GetPlayerChampion()
+        {
+            return playersReadyDict[PhotonNetwork.LocalPlayer.ActorNumber].champion;
+        }
         
         public Enums.Team GetPlayerTeam(int actorNumber)
         {
@@ -396,108 +396,108 @@ namespace GameStates
             PhotonNetwork.LoadLevel(gameSceneName);
         }
 
-        // /// <summary>
-        // /// Executed by MapLoaderManager on a GO on the scene 'gameSceneName', so only once the scene is loaded
-        // /// </summary>
-        // public void LoadMap()
-        // {
-        //     // TODO - init pools
-        //
-        //     LinkChampionSOCapacityIndexes();
-        //
-        //     // ItemCollectionManager.Instance.LinkCapacityIndexes();
-        //
-        //     InstantiateChampion();
-        //     
-        //     SendSetToggleReady(true);
-        // }
-        //
-        // /// <summary>
-        // /// Executed during the exit of loading state, so after every champion is instantiated and every indexes are linked
-        // /// </summary>
-        // public void LateLoad()
-        // {
-        //     LinkLoadChampionData();
-        //     
-        //     SetupUI();
-        // }
+        /// <summary>
+        /// Executed by MapLoaderManager on a GO on the scene 'gameSceneName', so only once the scene is loaded
+        /// </summary>
+        public void LoadMap()
+        {
+            // TODO - init pools
+        
+            // LinkChampionSOCapacityIndexes();
+        
+            // ItemCollectionManager.Instance.LinkCapacityIndexes();
+        
+            InstantiateChampion();
+            
+            SendSetToggleReady(true);
+        }
+        
+        /// <summary>
+        /// Executed during the exit of loading state, so after every champion is instantiated and every indexes are linked
+        /// </summary>
+        public void LateLoad()
+        {
+            LinkLoadChampionData();
+            
+            SetupUI();
+        }
 
-        // private void LinkChampionSOCapacityIndexes()
-        // {
-        //     foreach (var championSo in allChampionsSo)
-        //     {
-        //         championSo.SetIndexes();
-        //     }
-        // }
+        private void LinkChampionSOCapacityIndexes()
+        {
+            foreach (var championSo in allChampionsSo)
+            {
+                championSo.SetIndexes();
+            }
+        }
 
-        // private void InstantiateChampion()
-        // {
-        //     var champion = (Champion)PoolNetworkManager.Instance.PoolInstantiate(0, Vector3.up, Quaternion.identity);
-        //     
-        //     photonView.RPC("SyncChampionPhotonId", RpcTarget.All, PhotonNetwork.LocalPlayer.ActorNumber, champion.photonView.ViewID);
-        //
-        //     champion.name = $"Player ID:{PhotonNetwork.LocalPlayer.ActorNumber} [MINE]";
-        //     LinkController(champion);
-        // }
+        private void InstantiateChampion()
+        {
+            var champion = (Champion)PoolNetworkManager.Instance.PoolInstantiate(0, Vector3.up, Quaternion.identity);
+            
+            photonView.RPC("SyncChampionPhotonId", RpcTarget.All, PhotonNetwork.LocalPlayer.ActorNumber, champion.photonView.ViewID);
+        
+            champion.name = $"Player ID:{PhotonNetwork.LocalPlayer.ActorNumber} [MINE]";
+            LinkController(champion);
+        }
 
-        // [PunRPC]
-        // private void SyncChampionPhotonId(int photonId, int photonViewId)
-        // {
-        //     var champion = PhotonNetwork.GetPhotonView(photonViewId);
-        //     playersReadyDict[photonId].championPhotonViewId = champion.ViewID;
-        //     playersReadyDict[photonId].champion = champion.GetComponent<Champion>();
-        //
-        //     debugList[photonId].championPhotonViewId = playersReadyDict[photonId].championPhotonViewId;
-        //     debugList[photonId].champion = playersReadyDict[photonId].champion;
-        //     
-        //     champion.name = $"Player ID : {photonId}";
-        // }
+        [PunRPC]
+        private void SyncChampionPhotonId(int photonId, int photonViewId)
+        {
+            var champion = PhotonNetwork.GetPhotonView(photonViewId);
+            playersReadyDict[photonId].championPhotonViewId = champion.ViewID;
+            playersReadyDict[photonId].champion = champion.GetComponent<Champion>();
+        
+            debugList[photonId].championPhotonViewId = playersReadyDict[photonId].championPhotonViewId;
+            debugList[photonId].champion = playersReadyDict[photonId].champion;
+            
+            champion.name = $"Player ID : {photonId}";
+        }
 
-        // private void LinkLoadChampionData()
-        // {
-        //     foreach (var playerData in playersReadyDict.Values)
-        //     {
-        //         ApplyChampionSoData(playerData);
-        //     }
-        // }
+        private void LinkLoadChampionData()
+        {
+            foreach (var playerData in playersReadyDict.Values)
+            {
+                ApplyChampionSoData(playerData);
+            }
+        }
 
-        // private void LinkController(Champion champion)
-        // {
-        //     var controller = champion.GetComponent<PlayerInputController>();
-        //
-        //     // We set local parameters
-        //     controller.LinkControlsToPlayer();
-        //     controller.LinkCameraToPlayer();
-        // }
-        //
-        // private void ApplyChampionSoData(PlayerData playerData)
-        // {
-        //     if (playerData.championSOIndex >= allChampionsSo.Length)
-        //     {
-        //         Debug.LogWarning("Make sure the mesh is valid. Selects default mesh.");
-        //         playerData.championSOIndex = 1;
-        //     }
-        //
-        //     var championSo = allChampionsSo[playerData.championSOIndex];
-        //
-        //     // We state name
-        //     playerData.champion.name += $" / {championSo.name}";
-        //
-        //     // We sync data and champion mesh
-        //     playerData.champion.ApplyChampionSO(playerData.championSOIndex, playerData.team);
-        // }
-        //
-        // private void SetupUI()
-        // {
-        //     if (UIManager.Instance == null) return;
-        //     
-        //     UIManager.Instance.InstantiateChampionHUD();
-        //     
-        //     foreach (var actorNumber in playersReadyDict)
-        //     {
-        //         UIManager.Instance.AssignInventory(actorNumber.Key);
-        //     }
-        // }
+        private void LinkController(Champion champion)
+        {
+            var controller = champion.GetComponent<PlayerInputController>();
+        
+            // We set local parameters
+            controller.LinkControlsToPlayer();
+            controller.LinkCameraToPlayer();
+        }
+        
+        private void ApplyChampionSoData(PlayerData playerData)
+        {
+            if (playerData.championSOIndex >= allChampionsSo.Length)
+            {
+                Debug.LogWarning("Make sure the mesh is valid. Selects default mesh.");
+                playerData.championSOIndex = 1;
+            }
+
+            var championSo = allChampionsSo[playerData.championSOIndex];
+        
+            // We state name
+            playerData.champion.name += $" / {championSo.name}";
+        
+            // We sync data and champion mesh
+            // playerData.champion.ApplyChampionSO(playerData.championSOIndex, playerData.team);
+        }
+        
+        private void SetupUI()
+        {
+            if (UIManager.Instance == null) return;
+            
+            // UIManager.Instance.InstantiateChampionHUD();
+            
+            foreach (var actorNumber in playersReadyDict)
+            {
+                // UIManager.Instance.AssignInventory(actorNumber.Key);
+            }
+        }
 
         public void SendWinner(Enums.Team team)
         {

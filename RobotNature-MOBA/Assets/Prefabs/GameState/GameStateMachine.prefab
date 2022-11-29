@@ -76,23 +76,31 @@ MonoBehaviour:
     championSOIndex: 0
     playerReady: 0
     championPhotonViewId: 0
+    champion: {fileID: 0}
   - team: 0
     championSOIndex: 0
     playerReady: 0
     championPhotonViewId: 0
+    champion: {fileID: 0}
   - team: 0
     championSOIndex: 0
     playerReady: 0
     championPhotonViewId: 0
+    champion: {fileID: 0}
   - team: 0
     championSOIndex: 0
     playerReady: 0
     championPhotonViewId: 0
+    champion: {fileID: 0}
   - team: 0
     championSOIndex: 0
     playerReady: 0
     championPhotonViewId: 0
+    champion: {fileID: 0}
   expectedPlayerCount: 4
+  allChampionsSo:
+  - {fileID: 11400000, guid: 2c51b2f0db1daba44a6638a38491f553, type: 2}
+  - {fileID: 11400000, guid: cba014a81abf9f94d894dc5ac4e5ad2c, type: 2}
   allTeams: 000000000100000002000000
   teamColors:
   - team: 1
