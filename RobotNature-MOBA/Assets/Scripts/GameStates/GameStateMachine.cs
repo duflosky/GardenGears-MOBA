@@ -9,8 +9,6 @@ using GameStates.States;
 using UI.Menu;
 using UnityEngine;
 
-// TODO: Uncomment Champion, Inventory and Inputs
-
 namespace GameStates
 {
     [RequireComponent(typeof(PhotonView))]
@@ -35,10 +33,7 @@ namespace GameStates
         /// <summary>
         /// Key : actorNumber, Values : Team, ChampionSOindex, ready
         /// </summary>
-        private readonly Dictionary<int, PlayerData> playersReadyDict =
-            new Dictionary<int, PlayerData>();
-
-        public List<PlayerData> debugList;
+        private readonly Dictionary<int, PlayerData> playersReadyDict = new Dictionary<int, PlayerData>();
 
         public uint expectedPlayerCount = 4;
 
@@ -63,8 +58,6 @@ namespace GameStates
             public int championPhotonViewId;
             public Champion champion;
         }
-
-        public string currentStateDebugString;
 
         private void Awake()
         {
@@ -125,7 +118,6 @@ namespace GameStates
         {
             currentState.ExitState();
             currentState = gamesStates[stateIndex];
-            currentStateDebugString = gamesStates[stateIndex].ToString();
             currentState.StartState();
         }
 
@@ -240,7 +232,6 @@ namespace GameStates
                     playerReady = false
                 };
                 playersReadyDict.Add(actorNumber, playerData);
-                debugList[actorNumber] = playerData;
 
                 allPlayersIDs.Add(actorNumber);
             }
@@ -288,7 +279,6 @@ namespace GameStates
             }
 
             playersReadyDict[photonID].team = (Enums.Team)team;
-            debugList[photonID].team = (Enums.Team)team;
         }
 
         public void RequestSetChampion(byte champion)
@@ -308,7 +298,6 @@ namespace GameStates
             if (!playersReadyDict.ContainsKey(photonID)) return;
 
             playersReadyDict[photonID].championSOIndex = champion;
-            debugList[photonID].championSOIndex = champion;
         }
 
         public void RequestSendDataDictionary()
@@ -329,7 +318,6 @@ namespace GameStates
         [PunRPC]
         private void SyncDataDictionaryRPC(int key, byte team, byte championSO, bool ready)
         {
-            Debug.Log($"Je récupère les data du Master : {key}, {(Enums.Team)team}, {championSO}, {ready}");
             var data = new PlayerData
             {
                 team = (Enums.Team)team,
@@ -338,7 +326,6 @@ namespace GameStates
             };
 
             playersReadyDict[key] = data;
-            debugList[key] = data;
         }
 
         public void SendSetToggleReady(bool ready)
@@ -356,7 +343,6 @@ namespace GameStates
             }
 
             playersReadyDict[photonID].playerReady = ready;
-            debugList[photonID].playerReady = ready;
 
             if (!playersReadyDict[photonID].playerReady) return;
             if (!IsEveryPlayerReady()) return;
@@ -401,9 +387,7 @@ namespace GameStates
         /// </summary>
         public void LoadMap()
         {
-            // TODO - init pools
-        
-            // LinkChampionSOCapacityIndexes();
+            LinkChampionSOCapacityIndexes();
         
             // ItemCollectionManager.Instance.LinkCapacityIndexes();
         
@@ -446,9 +430,6 @@ namespace GameStates
             var champion = PhotonNetwork.GetPhotonView(photonViewId);
             playersReadyDict[photonId].championPhotonViewId = champion.ViewID;
             playersReadyDict[photonId].champion = champion.GetComponent<Champion>();
-        
-            debugList[photonId].championPhotonViewId = playersReadyDict[photonId].championPhotonViewId;
-            debugList[photonId].champion = playersReadyDict[photonId].champion;
             
             champion.name = $"Player ID : {photonId}";
         }
@@ -485,11 +466,12 @@ namespace GameStates
         
             // We sync data and champion mesh
             // playerData.champion.ApplyChampionSO(playerData.championSOIndex, playerData.team);
+            playerData.champion.ApplyChampionSO(playerData.championSOIndex);
         }
         
         private void SetupUI()
         {
-            if (UIManager.Instance == null) return;
+            if (UI.InGame.UIManager.Instance == null) return;
             
             // UIManager.Instance.InstantiateChampionHUD();
             
