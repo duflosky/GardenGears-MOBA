@@ -65,6 +65,8 @@ MonoBehaviour:
   - CastRPC
   - RemoveEntityByIndexRPC
   - SyncCastRPC
+  - AddToCurrentItemsRPC
+  - RemoveToCurrentItemsRPC
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 0
