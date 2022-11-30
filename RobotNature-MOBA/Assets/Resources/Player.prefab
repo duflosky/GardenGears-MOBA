@@ -266,7 +266,11 @@ MonoBehaviour:
   canRemovePassiveCapacity: 1
   TransformUI: {fileID: 0}
   OffsetUI: {x: 0, y: 2, z: 0}
+  items: []
   referenceMoveSpeed: 15
   abilitiesIndexes: 0000
   ultimateAbilityIndex: 0
   canCast: 0
+  references:
+    version: 2
+    RefIds: []

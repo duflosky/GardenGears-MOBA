@@ -531,6 +531,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: GameStateMachine
       objectReference: {fileID: 0}
+    - target: {fileID: 2510760133667038806, guid: de704630e2b4b5e43838cf30aabd6da2,
+        type: 3}
+      propertyPath: gameSceneName
+      value: InGameDebug
+      objectReference: {fileID: 0}
     - target: {fileID: 2510760133667038807, guid: de704630e2b4b5e43838cf30aabd6da2,
         type: 3}
       propertyPath: sceneViewId

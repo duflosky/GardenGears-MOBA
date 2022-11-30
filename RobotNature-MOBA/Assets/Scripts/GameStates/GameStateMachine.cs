@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Controllers.Inputs;
 using Entities.Champion;
+using Entities.Inventory;
 // using Entities.Inventory;
 using Photon.Pun;
 using GameStates.States;
@@ -310,8 +311,7 @@ namespace GameStates
         {
             foreach (var kvp in playersReadyDict)
             {
-                photonView.RPC("SyncDataDictionaryRPC", RpcTarget.Others, kvp.Key, (byte)kvp.Value.team,
-                    kvp.Value.championSOIndex, kvp.Value.playerReady);
+                photonView.RPC("SyncDataDictionaryRPC", RpcTarget.Others, kvp.Key, (byte)kvp.Value.team, kvp.Value.championSOIndex, kvp.Value.playerReady);
             }
         }
 
@@ -389,7 +389,7 @@ namespace GameStates
         {
             LinkChampionSOCapacityIndexes();
         
-            // ItemCollectionManager.Instance.LinkCapacityIndexes();
+            ItemCollectionManager.Instance.LinkCapacityIndexes();
         
             InstantiateChampion();
             
@@ -473,11 +473,11 @@ namespace GameStates
         {
             if (UI.InGame.UIManager.Instance == null) return;
             
-            // UIManager.Instance.InstantiateChampionHUD();
+            // UI.InGame.UIManager.Instance.InstantiateChampionHUD();
             
             foreach (var actorNumber in playersReadyDict)
             {
-                // UIManager.Instance.AssignInventory(actorNumber.Key);
+                UI.InGame.UIManager.Instance.AssignInventory(actorNumber.Key);
             }
         }
 
