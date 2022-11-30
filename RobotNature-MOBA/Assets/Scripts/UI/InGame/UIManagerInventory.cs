@@ -66,6 +66,7 @@ namespace UI.InGame
             private void UpdateLocalInventory(byte _)
             {
                 var items = inventory.GetItems();
+                Debug.Log("UpdateLocalInventory");
                 for (byte i = 0; i < slots.Count; i++)
                 {
                 

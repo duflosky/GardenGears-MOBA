@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemName: 
   description: 
-  sprite: {fileID: 0}
+  sprite: {fileID: 21300000, guid: edfd8e181b68e634a91f201eb22323f5, type: 3}
   consumable: 0
   activationCooldown: 0
   passiveCapacities: []

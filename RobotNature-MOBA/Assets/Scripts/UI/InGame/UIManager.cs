@@ -4,7 +4,7 @@ namespace UI.InGame
 {
     public partial class UIManager : MonoBehaviour
     {
-        public static UI.InGame.UIManager Instance;
+        public static UIManager Instance;
 
         private void Awake()
         {
