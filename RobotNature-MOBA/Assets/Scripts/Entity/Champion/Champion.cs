@@ -521,7 +521,6 @@ public class Champion : Entity, IMovable, IInventoryable, IResourceable, ICastab
             currentHp = 0;
             RequestDie();
         }
-
         OnDecreaseCurrentHpFeedback?.Invoke(amount);
     }
 
@@ -902,7 +901,6 @@ public class Champion : Entity, IMovable, IInventoryable, IResourceable, ICastab
     public void RequestDie()
     {
         photonView.RPC("DieRPC", RpcTarget.MasterClient);
-        Debug.Log("Request to die");
     }
 
     [PunRPC]
@@ -932,7 +930,6 @@ public class Champion : Entity, IMovable, IInventoryable, IResourceable, ICastab
             Debug.LogWarning($"{name} can't die!");
             return;
         }
-
         isAlive = false;
         OnDie?.Invoke();
         GameStateMachine.Instance.OnTick += Revive;

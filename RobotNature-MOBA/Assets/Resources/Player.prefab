@@ -301,6 +301,7 @@ MonoBehaviour:
   elementsToShow: []
   team: 0
   canChangeTeam: 0
+  championSo: {fileID: 0}
   items: []
   maxResource: 100
   currentResource: 10

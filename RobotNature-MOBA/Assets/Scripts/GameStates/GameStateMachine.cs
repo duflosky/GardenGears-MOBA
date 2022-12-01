@@ -472,7 +472,7 @@ namespace GameStates
         {
             if (UI.InGame.UIManager.Instance == null) return;
             
-            // UI.InGame.UIManager.Instance.InstantiateChampionHUD();
+            UI.InGame.UIManager.Instance.InstantiateChampionHUD();
             
             foreach (var actorNumber in playersReadyDict)
             {

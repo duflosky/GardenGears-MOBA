@@ -1,19 +1,20 @@
 using GameStates;
 using UnityEngine;
 
-public partial class UIManager
+namespace UI.InGame
 {
-    [SerializeField] private ChampionHUD[] championOverlays;
-    
-    public void InstantiateChampionHUD()
+    public partial class UIManager
     {
-        var champion = GameStateMachine.Instance.GetPlayerChampion();
-        if (champion == null) return;
-        /*
-        var canvasIndex = champion.championSo.canvasIndex;
-        if (canvasIndex >= championOverlays.Length) canvasIndex = 0;
-        var canvasChampion = Instantiate(championOverlays[canvasIndex], transform);
-        canvasChampion.InitHUD(champion);
-        */
+        [SerializeField] private ChampionHUD[] championOverlays;
+    
+        public void InstantiateChampionHUD()
+        {
+            var champion = GameStateMachine.Instance.GetPlayerChampion();
+            if (champion == null) return;
+            var canvasIndex = champion.championSo.canvasIndex;
+            if (canvasIndex >= championOverlays.Length) canvasIndex = 0;
+            var canvasChampion = Instantiate(championOverlays[canvasIndex], transform);
+            canvasChampion.InitHUD(champion);
+        }
     }
 }

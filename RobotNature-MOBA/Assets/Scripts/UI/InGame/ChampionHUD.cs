@@ -118,6 +118,7 @@ public class ChampionHUD : MonoBehaviour
             spellIcon = spellUltimate,
             spellCooldown = spellUltimateCooldown
         };
+        if (so.activeCapacities.Length != 2) return;
         spellHolderDict.Add(so.activeCapacitiesIndexes[0], spellOneHolder);
         spellHolderDict.Add(so.activeCapacitiesIndexes[1], spellTwoHolder);
         spellHolderDict.Add(so.ultimateAbilityIndex, ultimateHolder);
