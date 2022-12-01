@@ -5,8 +5,8 @@ namespace Items
 {
     public class ModItem : Item
     {
-        // private IActiveLifeable lifeable;
-        // private IMoveable moveable; 
+        private IActiveLifeable lifeable; 
+        private IMovable moveable; 
         // TODO:
         // - Add a way to increase damage
         // - Add a way to increase attack speed
@@ -15,10 +15,10 @@ namespace Items
 
         protected override void OnItemAddedEffects(Entity entity)
         {
-            // lifeable = entity.GetComponent<IActiveLifeable>();
-            // lifeable?.IncreaseMaxHpRPC(((ModItemSO)AssociatedItemSO()).healthMod);
-            // moveable = entity.GetComponent<IMoveable>();
-            // moveable?.IncreaseSpeedRPC(((ModItemSO)AssociatedItemSO()).speedMod);
+            lifeable = entity.GetComponent<IActiveLifeable>();
+            lifeable?.IncreaseMaxHpRPC(((ModItemSO)AssociatedItemSO()).healthMod);
+            moveable = entity.GetComponent<IMovable>();
+            moveable?.IncreaseCurrentMoveSpeedRPC(((ModItemSO)AssociatedItemSO()).speedMod);
         }
 
         protected override void OnItemAddedEffectsFeedback(Entity entity)
@@ -28,7 +28,7 @@ namespace Items
 
         protected override void OnItemRemovedEffects(Entity entity)
         {
-            // lifeable?.DecreaseMaxHpRPC(((ModItemSO)AssociatedItemSO()).healthMod);
+            lifeable?.DecreaseMaxHpRPC(((ModItemSO)AssociatedItemSO()).healthMod);
         }
 
         protected override void OnItemRemovedEffectsFeedback(Entity entity)

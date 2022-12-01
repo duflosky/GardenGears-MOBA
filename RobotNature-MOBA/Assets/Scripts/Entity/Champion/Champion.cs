@@ -1,5 +1,3 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Entities;
@@ -34,6 +32,8 @@ public class Champion : Entity, IMovable, IInventoryable, IResourceable, ICastab
     {
         base.OnUpdate();
         Move();
+        RotateMath();
+        Rotate();
     }
 
     public void ApplyChampionSO(byte championSoIndex, Enums.Team newTeam)
@@ -94,7 +94,7 @@ public class Champion : Entity, IMovable, IInventoryable, IResourceable, ICastab
                 pos = transform;
                 break;
         }
-        
+
         respawnPos = transform.position = pos.position;
 
         if (uiManager != null)
@@ -104,14 +104,14 @@ public class Champion : Entity, IMovable, IInventoryable, IResourceable, ICastab
         }
     }
 
-    #region Mouvement
+    #region Moveable
 
     [Header("=== MOUVEMENT")] private Vector3 lastDir;
     private bool isMoving;
 
     [SerializeField] float referenceMoveSpeed;
     float currentMoveSpeed = 3;
-    
+
     public Transform rotateParent;
     public float currentRotateSpeed;
     private Vector3 rotateDirection;
@@ -126,11 +126,11 @@ public class Champion : Entity, IMovable, IInventoryable, IResourceable, ICastab
     {
         rb.velocity = lastDir * currentMoveSpeed;
     }
-    
+
     private void RotateMath()
     {
         if (!photonView.IsMine) return;
-    
+
         var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
         if (!Physics.Raycast(ray, out var hit, float.PositiveInfinity)) return;
@@ -138,11 +138,142 @@ public class Champion : Entity, IMovable, IInventoryable, IResourceable, ICastab
         rotateDirection = -(transform.position - hit.point);
         rotateDirection.y = 0;
     }
-    
+
     private void Rotate()
     {
-        rotateParent.transform.rotation = Quaternion.Lerp(rotateParent.transform.rotation, Quaternion.LookRotation(rotateDirection),Time.deltaTime * currentRotateSpeed);
+        rotateParent.transform.rotation = Quaternion.Lerp(rotateParent.transform.rotation,
+            Quaternion.LookRotation(rotateDirection),
+            Time.deltaTime * currentRotateSpeed);
     }
+
+    public float GetReferenceMoveSpeed()
+    {
+        return referenceMoveSpeed;
+    }
+
+    public float GetCurrentMoveSpeed()
+    {
+        return currentMoveSpeed;
+    }
+
+    public void RequestSetCanMove(bool value)
+    {
+    }
+
+    [PunRPC]
+    public void SyncSetCanMoveRPC(bool value)
+    {
+    }
+
+    [PunRPC]
+    public void SetCanMoveRPC(bool value)
+    {
+    }
+
+    public event GlobalDelegates.BoolDelegate OnSetCanMove;
+    public event GlobalDelegates.BoolDelegate OnSetCanMoveFeedback;
+
+    public void RequestSetReferenceMoveSpeed(float value)
+    {
+    }
+
+    [PunRPC]
+    public void SyncSetReferenceMoveSpeedRPC(float value)
+    {
+    }
+
+    [PunRPC]
+    public void SetReferenceMoveSpeedRPC(float value)
+    {
+    }
+
+    public event GlobalDelegates.FloatDelegate OnSetReferenceMoveSpeed;
+    public event GlobalDelegates.FloatDelegate OnSetReferenceMoveSpeedFeedback;
+
+    public void RequestIncreaseReferenceMoveSpeed(float amount)
+    {
+    }
+
+    [PunRPC]
+    public void SyncIncreaseReferenceMoveSpeedRPC(float amount)
+    {
+    }
+
+    [PunRPC]
+    public void IncreaseReferenceMoveSpeedRPC(float amount)
+    {
+    }
+
+    public event GlobalDelegates.FloatDelegate OnIncreaseReferenceMoveSpeed;
+    public event GlobalDelegates.FloatDelegate OnIncreaseReferenceMoveSpeedFeedback;
+
+    public void RequestDecreaseReferenceMoveSpeed(float amount)
+    {
+    }
+
+    [PunRPC]
+    public void SyncDecreaseReferenceMoveSpeedRPC(float amount)
+    {
+    }
+
+    [PunRPC]
+    public void DecreaseReferenceMoveSpeedRPC(float amount)
+    {
+    }
+
+    public event GlobalDelegates.FloatDelegate OnDecreaseReferenceMoveSpeed;
+    public event GlobalDelegates.FloatDelegate OnDecreaseReferenceMoveSpeedFeedback;
+
+    public void RequestSetCurrentMoveSpeed(float value)
+    {
+    }
+
+    [PunRPC]
+    public void SyncSetCurrentMoveSpeedRPC(float value)
+    {
+    }
+
+    [PunRPC]
+    public void SetCurrentMoveSpeedRPC(float value)
+    {
+    }
+
+    public event GlobalDelegates.FloatDelegate OnSetCurrentMoveSpeed;
+    public event GlobalDelegates.FloatDelegate OnSetCurrentMoveSpeedFeedback;
+
+    public void RequestIncreaseCurrentMoveSpeed(float amount)
+    {
+    }
+
+    [PunRPC]
+    public void SyncIncreaseCurrentMoveSpeedRPC(float amount)
+    {
+    }
+
+    [PunRPC]
+    public void IncreaseCurrentMoveSpeedRPC(float amount)
+    {
+    }
+
+    public event GlobalDelegates.FloatDelegate OnIncreaseCurrentMoveSpeed;
+    public event GlobalDelegates.FloatDelegate OnIncreaseCurrentMoveSpeedFeedback;
+
+    public void RequestDecreaseCurrentMoveSpeed(float amount)
+    {
+    }
+
+    [PunRPC]
+    public void SyncDecreaseCurrentMoveSpeedRPC(float amount)
+    {
+    }
+
+    [PunRPC]
+    public void DecreaseCurrentMoveSpeedRPC(float amount)
+    {
+    }
+
+    public event GlobalDelegates.FloatDelegate OnDecreaseCurrentMoveSpeed;
+    public event GlobalDelegates.FloatDelegate OnDecreaseCurrentMoveSpeedFeedback;
 
     #endregion
 
@@ -362,7 +493,7 @@ public class Champion : Entity, IMovable, IInventoryable, IResourceable, ICastab
 
     public void RequestDecreaseCurrentHp(float amount)
     {
-        photonView.RPC("DecreaseCurrentHpRPC",RpcTarget.MasterClient,amount);
+        photonView.RPC("DecreaseCurrentHpRPC", RpcTarget.MasterClient, amount);
     }
 
     [PunRPC]
@@ -374,6 +505,7 @@ public class Champion : Entity, IMovable, IInventoryable, IResourceable, ICastab
             currentHp = 0;
             RequestDie();
         }
+
         OnDecreaseCurrentHpFeedback?.Invoke(amount);
     }
 
@@ -382,7 +514,7 @@ public class Champion : Entity, IMovable, IInventoryable, IResourceable, ICastab
     {
         currentHp -= amount;
         OnDecreaseCurrentHp?.Invoke(amount);
-        photonView.RPC("SyncDecreaseCurrentHpRPC",RpcTarget.All,currentHp);
+        photonView.RPC("SyncDecreaseCurrentHpRPC", RpcTarget.All, currentHp);
     }
 
 
@@ -784,6 +916,7 @@ public class Champion : Entity, IMovable, IInventoryable, IResourceable, ICastab
             Debug.LogWarning($"{name} can't die!");
             return;
         }
+
         isAlive = false;
         OnDie?.Invoke();
         GameStateMachine.Instance.OnTick += Revive;
