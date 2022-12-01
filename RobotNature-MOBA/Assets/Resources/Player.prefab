@@ -130,6 +130,37 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!1 &1323857384276205197
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4021050473540789002}
+  m_Layer: 0
+  m_Name: UI
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4021050473540789002
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1323857384276205197}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2072707834866526806}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &4196819551082274846
 GameObject:
   m_ObjectHideFlags: 0
@@ -165,6 +196,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2355554548384556205}
+  - {fileID: 4021050473540789002}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -264,9 +296,14 @@ MonoBehaviour:
   entityIndex: 0
   canAddPassiveCapacity: 1
   canRemovePassiveCapacity: 1
-  TransformUI: {fileID: 0}
+  TransformUI: {fileID: 4021050473540789002}
   OffsetUI: {x: 0, y: 2, z: 0}
+  elementsToShow: []
+  team: 0
+  canChangeTeam: 0
   items: []
+  maxResource: 0
+  currentResource: 0
   referenceMoveSpeed: 15
   abilitiesIndexes: 0000
   ultimateAbilityIndex: 0
