@@ -1,14 +1,11 @@
 using System.Collections.Generic;
-using Entities;
 using Entities.Capacities;
-using Entities.Champion;
 using GameStates;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class ChampionHUD : MonoBehaviour
 {
-    /*
     [SerializeField] private Image healthBar;
     [SerializeField] private Image resourceBar;
     [SerializeField] private Image spellPassive;
@@ -67,7 +64,6 @@ public class ChampionHUD : MonoBehaviour
         resourceable = champion.GetComponent<IResourceable>();
         castable = champion.GetComponent<ICastable>();
 
-        healthBar.fillAmount = lifeable.GetCurrentHpPercent();
         resourceBar.fillAmount = resourceable.GetCurrentResourcePercent();
         LinkToEvents();
         UpdateIcons(champion);
@@ -87,14 +83,12 @@ public class ChampionHUD : MonoBehaviour
         castable.OnCastFeedback += UpdateCooldown;
 
         lifeable.OnSetCurrentHpFeedback += UpdateFillPercentHealth;
-        lifeable.OnSetCurrentHpPercentFeedback += UpdateFillPercentByPercentHealth;
         lifeable.OnIncreaseCurrentHpFeedback += UpdateFillPercentHealth;
         lifeable.OnDecreaseCurrentHpFeedback += UpdateFillPercentHealth;
         lifeable.OnIncreaseMaxHpFeedback += UpdateFillPercentHealth;
         lifeable.OnDecreaseMaxHpFeedback += UpdateFillPercentHealth;
         
         resourceable.OnSetCurrentResourceFeedback += UpdateFillPercentResource;
-        resourceable.OnSetCurrentResourcePercentFeedback += UpdateFillPercentByPercentResource;
         resourceable.OnIncreaseCurrentResourceFeedback += UpdateFillPercentResource;
         resourceable.OnDecreaseCurrentResourceFeedback += UpdateFillPercentResource;
         resourceable.OnIncreaseMaxResourceFeedback += UpdateFillPercentResource;
@@ -126,11 +120,9 @@ public class ChampionHUD : MonoBehaviour
         };
         spellHolderDict.Add(so.activeCapacitiesIndexes[0], spellOneHolder);
         spellHolderDict.Add(so.activeCapacitiesIndexes[1], spellTwoHolder);
-        if(!spellHolderDict.ContainsKey(so.ultimateAbilityIndex))spellHolderDict.Add(so.ultimateAbilityIndex, ultimateHolder);
-        else Debug.Log("A FIXE, CA BUG ");
+        spellHolderDict.Add(so.ultimateAbilityIndex, ultimateHolder);
         
-        if(so.passiveCapacities.Length != 0)
-        passiveHolder.Setup(so.passiveCapacities[0].icon);
+        if(so.passiveCapacities.Length != 0) passiveHolder.Setup(so.passiveCapacities[0].icon);
         spellOneHolder.Setup(so.activeCapacities[0].icon);
         spellTwoHolder.Setup(so.activeCapacities[1].icon);
         ultimateHolder.Setup(so.ultimateAbility.icon);
@@ -141,24 +133,13 @@ public class ChampionHUD : MonoBehaviour
         spellHolderDict[capacityIndex].StartTimer(CapacitySOCollectionManager.GetActiveCapacitySOByIndex(capacityIndex).cooldown) ;
     }
     
-    private void UpdateFillPercentByPercentHealth(float value)
-    {
-        healthBar.fillAmount = lifeable.GetCurrentHp()/lifeable.GetMaxHp();
-    }
-    
     private void UpdateFillPercentHealth(float value)
     {
-        healthBar.fillAmount = lifeable.GetCurrentHp()/lifeable.GetMaxHp();
-    }
-    
-    private void UpdateFillPercentByPercentResource(float value)
-    {
-        resourceBar.fillAmount = value;
+        healthBar.fillAmount = lifeable.GetCurrentHp() / lifeable.GetMaxHp();
     }
 
     private void UpdateFillPercentResource(float value)
     {
-        resourceBar.fillAmount = resourceable.GetCurrentResource();
+        resourceBar.fillAmount = resourceable.GetCurrentResource() / resourceable.GetMaxResource();
     }
-    */
 }

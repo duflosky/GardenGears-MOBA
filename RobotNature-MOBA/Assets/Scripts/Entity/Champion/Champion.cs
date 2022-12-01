@@ -14,7 +14,7 @@ using UnityEngine;
 public class Champion : Entity, IMovable, IInventoryable, IResourceable, ICastable, IActiveLifeable, IDeadable
 {
     private Rigidbody rb;
-    private ChampionSO championSo;
+    public ChampionSO championSo;
 
     [SerializeReference] public List<Item> items = new List<Item>();
 
@@ -50,9 +50,7 @@ public class Champion : Entity, IMovable, IInventoryable, IResourceable, ICastab
         currentMoveSpeed = referenceMoveSpeed;
         //attackDamage = championSo.attackDamage;
         //attackAbilityIndex = championSo.attackAbilityIndex;
-        // TODO : Instantiate mesh champion ? 
-        Debug.Log(
-            $"ChampionSO: {championSo}, activeCapacitiesIndexes.Lenght: {championSo.activeCapacitiesIndexes.Length}");
+        // TODO : Instantiate mesh champion ?
         abilitiesIndexes = championSo.activeCapacitiesIndexes;
         ultimateAbilityIndex = championSo.ultimateAbilityIndex;
 
