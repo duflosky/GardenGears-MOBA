@@ -45,9 +45,7 @@ public class AutoAttackMelee : ActiveCapacity
     void DisableCollider()
     {
         timer += 1;
-        Debug.Log("Tick");
         if(timer < 1.5f*GameStateMachine.Instance.tickRate)return;
-        Debug.Log("Desinstantiate");
         GameStateMachine.Instance.OnTick -= DisableCollider;
         timer = 0;
         collider.gameObject.SetActive(false);
