@@ -1,23 +1,28 @@
 using System.Collections;
 using System.Collections.Generic;
+using Entities;
 using Entities.Capacities;
+using GameStates;
 using UnityEngine;
 
 public class AutoAttackMelee : ActiveCapacity
 {
     private AffectCollider collider;
     private AutoAttackMeleeSO SOType;
+    private double timer;
 
     public override bool TryCast(int casterIndex, int[] targetsEntityIndexes, Vector3[] targetPositions)
     {
         if(!base.TryCast(casterIndex, targetsEntityIndexes, targetPositions)) return false;
         SOType = (AutoAttackMeleeSO)SO;
-        Debug.Log($"targetPositions {targetPositions}, transform {transform}");
-        Vector3 lookDir = targetPositions[0]-transform.position;
-        var zoneGO = PoolLocalManager.Instance.PoolInstantiate(SOType.damageZone, transform.position, Quaternion.LookRotation(lookDir) );
-        collider = zoneGO.GetComponent<AffectCollider>();
+        Transform tr = EntityCollectionManager.GetEntityByIndex(casterIndex).transform;
+        Debug.Log($" transform {tr}");
+        Vector3 lookDir = targetPositions[0]-tr.position;
+        lookDir.y = 0;
+        var zoneGO = PoolLocalManager.Instance.PoolInstantiate(SOType.damageZone, tr.position+lookDir.normalized*.5f, Quaternion.LookRotation(lookDir) );
+        collider = zoneGO.GetComponentInChildren<AffectCollider>();
         collider.capacitySender = this;
-        StartCoroutine(DisableCollider());
+        GameStateMachine.Instance.OnTick += DisableCollider;
         Debug.Log("AA Melee");
         return true;
     }
@@ -39,9 +44,12 @@ public class AutoAttackMelee : ActiveCapacity
         
     }
 
-    IEnumerator DisableCollider()
+    void DisableCollider()
     {
-        yield return new WaitForSeconds(1f);
+        timer += GameStateMachine.Instance.tickRate;
+        if(timer < 1)return;
+        GameStateMachine.Instance.OnTick -= DisableCollider;
+        timer = 0;
         collider.gameObject.SetActive(false);
     }
 }

@@ -109,7 +109,7 @@ public class Champion : Entity, IMovable, ICastable, IActiveLifeable
     public void CastRPC(byte capacityIndex, int[] targetedEntities, Vector3[] targetedPositions)
     {
         var activeCapacity = CapacitySOCollectionManager.CreateActiveCapacity(capacityIndex,this);
-            
+            Debug.Log($"targetedEntities: {targetedEntities[0]}, targetedPositions: {targetedPositions}");
         if (!activeCapacity.TryCast(entityIndex, targetedEntities, targetedPositions)) return;
             
         OnCast?.Invoke(capacityIndex,targetedEntities,targetedPositions);

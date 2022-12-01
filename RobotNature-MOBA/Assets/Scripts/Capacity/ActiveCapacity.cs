@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Entities.Capacities
 {
-    public abstract class ActiveCapacity : MonoBehaviour
+    public abstract class ActiveCapacity
     {
         public byte indexOfSOInCollection;
         public ActiveCapacitySO SO;

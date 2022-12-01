@@ -39,17 +39,18 @@ namespace Controllers.Inputs
         }
         
         /// <summary>
-        /// Actions Performed on Capacity 0 Activation
+        /// Actions Performed on Capacity 1 Activation
         /// </summary>
         /// <param name="ctx"></param>
         private void OnActivateCapacity1(InputAction.CallbackContext ctx)
         {
             ActiveCapacitySO capacity1 = CapacitySOCollectionManager.GetActiveCapacitySOByIndex(champion.abilitiesIndexes[0]);
 
+            Debug.Log($"selectedEntity: {selectedEntity},cursorWorldPos: {cursorWorldPos}");
             champion.RequestCast(champion.abilitiesIndexes[0],selectedEntity,cursorWorldPos);
         }
         /// <summary>
-        /// Actions Performed on Capacity 1 Activation
+        /// Actions Performed on Capacity 2 Activation
         /// </summary>
         /// <param name="ctx"></param>
         private void OnActivateCapacity2(InputAction.CallbackContext ctx)
@@ -57,7 +58,7 @@ namespace Controllers.Inputs
             champion.RequestCast(champion.abilitiesIndexes[1],selectedEntity,cursorWorldPos);
         }
         /// <summary>
-        /// Actions Performed on Capacity 2 Activation
+        /// Actions Performed on Ultimate Capacity Activation
         /// </summary>
         /// <param name="ctx"></param>
         private void OnActivateUltimateAbility(InputAction.CallbackContext ctx)
@@ -96,7 +97,6 @@ namespace Controllers.Inputs
             mousePos = ctx.ReadValue<Vector2>();
             var mouseRay = cam.ScreenPointToRay(Input.mousePosition);
             if (!Physics.Raycast(mouseRay, out var hit)) return;
-            Debug.Log("hitMap");
             cursorWorldPos[0] = hit.point;
             selectedEntity[0] = -1;
             var ent = hit.transform.GetComponent<Entity>();
