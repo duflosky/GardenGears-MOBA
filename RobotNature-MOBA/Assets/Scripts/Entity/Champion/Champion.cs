@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -5,13 +6,16 @@ using Entities.Capacities;
 using Entities.Inventory;
 using GameStates;
 using Items;
+using Entities.Champion;
 using Photon.Pun;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody))]
-public class Champion : Entity, IMovable, IInventoryable, IResourceable
+public class Champion : Entity, IMovable, 
+public class Champion : Entity, IMovable, IInventoryable, IResourceable, ICastable, IActiveLifeable
 {
     private Rigidbody rb;
+    private ChampionSO championSo;
 
     [SerializeReference] public List<Item> items = new List<Item>();
 
@@ -34,20 +38,18 @@ public class Champion : Entity, IMovable, IInventoryable, IResourceable
 
     public void ApplyChampionSO(byte championSoIndex, Enums.Team newTeam)
     {
-        uiManager = UI.InGame.UIManager.Instance;
         var so = GameStateMachine.Instance.allChampionsSo[championSoIndex];
-        // championSo = so;
-        //maxHp = championSo.maxHp;
-        //currentHp = maxHp;
+        championSo = so;
+        maxHp = championSo.maxHp;
+        currentHp = maxHp;
+        uiManager = UI.InGame.UIManager.Instance;
         maxResource = so.maxRessource;
         currentResource = so.maxRessource;
         //viewRange = championSo.viewRange;
-        //referenceMoveSpeed = championSo.referenceMoveSpeed;
+        referenceMoveSpeed = championSo.referenceMoveSpeed;
         currentMoveSpeed = referenceMoveSpeed;
         //attackDamage = championSo.attackDamage;
         //attackAbilityIndex = championSo.attackAbilityIndex;
-        //abilitiesIndexes = championSo.activeCapacitiesIndexes;
-        //ultimateAbilityIndex = championSo.ultimateAbilityIndex;
         
         team = newTeam;
 
@@ -93,6 +95,8 @@ public class Champion : Entity, IMovable, IInventoryable, IResourceable
             // uiManager.InstantiateHealthBarForEntity(entityIndex);
             uiManager.InstantiateResourceBarForEntity(entityIndex);
         }
+        abilitiesIndexes = championSo.activeCapacitiesIndexes;
+        ultimateAbilityIndex = championSo.ultimateAbilityIndex;
     }
 
     #region Mouvement
@@ -116,7 +120,6 @@ public class Champion : Entity, IMovable, IInventoryable, IResourceable
 
     #endregion
 
-
     #region Cast
 
     [Header("=== CAST")] public byte[] abilitiesIndexes = new byte[2];
@@ -125,16 +128,43 @@ public class Champion : Entity, IMovable, IInventoryable, IResourceable
     public bool canCast;
 
 
+    public bool CanCast()
+    {
+        return canCast;
+    }
+
+    public void RequestSetCanCast(bool value)
+    {
+        throw new System.NotImplementedException();
+    }
+
+    [PunRPC]
+    public void SetCanCastRPC(bool value)
+    {
+        canCast = value;
+        OnSetCanCast?.Invoke(value);
+        photonView.RPC("SyncCastRPC",RpcTarget.All,canCast);
+    }
+
+    [PunRPC]
+    public void SyncSetCanCastRPC(bool value)
+    {
+        canCast = value;
+        OnSetCanCastFeedback?.Invoke(value);
+    }
+
+    public event GlobalDelegates.BoolDelegate OnSetCanCast;
+    public event GlobalDelegates.BoolDelegate OnSetCanCastFeedback;
+
     public void RequestCast(byte capacityIndex, int[] targetedEntities, Vector3[] targetedPositions)
     {
-        photonView.RPC("CastRPC", RpcTarget.MasterClient, capacityIndex, targetedEntities, targetedPositions);
+        photonView.RPC("CastRPC",RpcTarget.MasterClient,capacityIndex,targetedEntities,targetedPositions);
     }
 
     [PunRPC]
     public void CastRPC(byte capacityIndex, int[] targetedEntities, Vector3[] targetedPositions)
     {
-        var activeCapacity = CapacitySOCollectionManager.CreateActiveCapacity(capacityIndex, this);
-
+        var activeCapacity = CapacitySOCollectionManager.CreateActiveCapacity(capacityIndex,this);
         if (!activeCapacity.TryCast(entityIndex, targetedEntities, targetedPositions)) return;
 
         OnCast?.Invoke(capacityIndex, targetedEntities, targetedPositions);
@@ -151,6 +181,55 @@ public class Champion : Entity, IMovable, IInventoryable, IResourceable
 
     public event GlobalDelegates.ByteIntArrayVector3ArrayDelegate OnCast;
     public event GlobalDelegates.ByteIntArrayVector3ArrayCapacityDelegate OnCastFeedback;
+
+    #endregion
+
+    #region ActiveLife
+
+    [SerializeField] private bool attackAffect;
+    [SerializeField] private bool abilitiesAffect;
+    private float maxHp;
+    private float currentHp;
+    
+    public bool AttackAffected()
+    {
+        return attackAffect;
+    }
+
+    public bool AbilitiesAffected()
+    {
+        return abilitiesAffect;
+    }
+
+    public void RequestDecreaseCurrentHp(float amount)
+    {
+        throw new NotImplementedException();
+    }
+    
+    [PunRPC]
+    public void DecreaseCurrentHpRPC(float amount)
+    {
+        currentHp -= amount;
+        OnDecreaseCurrentHp?.Invoke(amount);
+        photonView.RPC("SyncDecreaseCurrentHpRPC",RpcTarget.All,currentHp);
+        if (currentHp <= 0)
+        {
+            currentHp = 0;
+            Debug.Log("Die");
+            gameObject.SetActive(false);
+            //TODO : RequestDie();
+        }
+    }
+
+    [PunRPC]
+    public void SyncDecreaseCurrentHpRPC(float amount)
+    {
+        throw new NotImplementedException();
+    }
+
+
+    public event GlobalDelegates.FloatDelegate OnDecreaseCurrentHp;
+    public event GlobalDelegates.FloatDelegate OnDecreaseCurrentHpFeedback;
 
     #endregion
 

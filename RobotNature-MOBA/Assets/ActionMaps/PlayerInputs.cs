@@ -131,7 +131,7 @@ public partial class @PlayerInputs : IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""dfccd1af-df03-4fdc-990f-4d6028599b7f"",
-                    ""path"": """",
+                    ""path"": ""<Keyboard>/q"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -142,7 +142,7 @@ public partial class @PlayerInputs : IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""31ef5a54-20fe-4f1b-a2ab-ff4c933f194a"",
-                    ""path"": """",
+                    ""path"": ""<Keyboard>/e"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -153,11 +153,39 @@ public partial class @PlayerInputs : IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""d81835f5-f080-4ee4-b222-4b33eac0df33"",
-                    ""path"": """",
+                    ""path"": ""<Keyboard>/r"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Ultime"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
+        },
+        {
+            ""name"": ""Mouse"",
+            ""id"": ""a4aaa245-b2ed-47a0-8198-60dc0e3814b8"",
+            ""actions"": [
+                {
+                    ""name"": ""MousePos"",
+                    ""type"": ""Value"",
+                    ""id"": ""5583577e-212b-4229-8f35-767d3b363e29"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""c4160847-8b2c-4ce0-96ab-e893d29898ff"",
+                    ""path"": ""<Mouse>/position"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MousePos"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -174,6 +202,9 @@ public partial class @PlayerInputs : IInputActionCollection2, IDisposable
         m_Capacity_Capacity1 = m_Capacity.FindAction("Capacity1", throwIfNotFound: true);
         m_Capacity_Capacity2 = m_Capacity.FindAction("Capacity2", throwIfNotFound: true);
         m_Capacity_Ultime = m_Capacity.FindAction("Ultime", throwIfNotFound: true);
+        // Mouse
+        m_Mouse = asset.FindActionMap("Mouse", throwIfNotFound: true);
+        m_Mouse_MousePos = m_Mouse.FindAction("MousePos", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -311,6 +342,39 @@ public partial class @PlayerInputs : IInputActionCollection2, IDisposable
         }
     }
     public CapacityActions @Capacity => new CapacityActions(this);
+
+    // Mouse
+    private readonly InputActionMap m_Mouse;
+    private IMouseActions m_MouseActionsCallbackInterface;
+    private readonly InputAction m_Mouse_MousePos;
+    public struct MouseActions
+    {
+        private @PlayerInputs m_Wrapper;
+        public MouseActions(@PlayerInputs wrapper) { m_Wrapper = wrapper; }
+        public InputAction @MousePos => m_Wrapper.m_Mouse_MousePos;
+        public InputActionMap Get() { return m_Wrapper.m_Mouse; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(MouseActions set) { return set.Get(); }
+        public void SetCallbacks(IMouseActions instance)
+        {
+            if (m_Wrapper.m_MouseActionsCallbackInterface != null)
+            {
+                @MousePos.started -= m_Wrapper.m_MouseActionsCallbackInterface.OnMousePos;
+                @MousePos.performed -= m_Wrapper.m_MouseActionsCallbackInterface.OnMousePos;
+                @MousePos.canceled -= m_Wrapper.m_MouseActionsCallbackInterface.OnMousePos;
+            }
+            m_Wrapper.m_MouseActionsCallbackInterface = instance;
+            if (instance != null)
+            {
+                @MousePos.started += instance.OnMousePos;
+                @MousePos.performed += instance.OnMousePos;
+                @MousePos.canceled += instance.OnMousePos;
+            }
+        }
+    }
+    public MouseActions @Mouse => new MouseActions(this);
     public interface IMovementActions
     {
         void OnMove(InputAction.CallbackContext context);
@@ -320,5 +384,9 @@ public partial class @PlayerInputs : IInputActionCollection2, IDisposable
         void OnCapacity1(InputAction.CallbackContext context);
         void OnCapacity2(InputAction.CallbackContext context);
         void OnUltime(InputAction.CallbackContext context);
+    }
+    public interface IMouseActions
+    {
+        void OnMousePos(InputAction.CallbackContext context);
     }
 }

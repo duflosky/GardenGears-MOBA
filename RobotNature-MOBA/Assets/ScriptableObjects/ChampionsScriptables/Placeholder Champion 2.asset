@@ -19,8 +19,13 @@ MonoBehaviour:
   maxRessource: 10
   viewRange: 10
   referenceMoveSpeed: 10
+  attackAbility: {fileID: 0}
   attackAbilityIndex: 0
   attackDamage: 10
+  passiveCapacities: []
   passiveCapacitiesIndexes: 
+  activeCapacities:
+  - {fileID: 11400000, guid: 6380c6b585792cd478baa9dbd9ae15da, type: 2}
   activeCapacitiesIndexes: 
+  ultimateAbility: {fileID: 0}
   ultimateAbilityIndex: 0

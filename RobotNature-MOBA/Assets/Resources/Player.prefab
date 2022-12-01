@@ -311,3 +311,5 @@ MonoBehaviour:
   references:
     version: 2
     RefIds: []
+  attackAffect: 0
+  abilitiesAffect: 0
