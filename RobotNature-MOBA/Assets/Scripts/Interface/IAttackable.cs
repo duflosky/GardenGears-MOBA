@@ -11,14 +11,16 @@ namespace Entities
         /// Sends an RPC to the master to set if the entity can attack.
         /// </summary>
         public void RequestSetCanAttack(bool value);
-        /// <summary>
-        /// Sets if the entity can attack.
-        /// </summary>
-        public void SetCanAttackRPC(bool value);
+
         /// <summary>
         /// Sends an RPC to all clients to set if the entity can attack.
         /// </summary>
         public void SyncSetCanAttackRPC(bool value);
+
+        /// <summary>
+        /// Sets if the entity can attack.
+        /// </summary>
+        public void SetCanAttackRPC(bool value);
 
         public event GlobalDelegates.BoolDelegate OnSetCanAttack;
         public event GlobalDelegates.BoolDelegate OnSetCanAttackFeedback;
