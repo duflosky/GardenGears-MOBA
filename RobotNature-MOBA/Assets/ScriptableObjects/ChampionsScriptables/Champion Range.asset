@@ -10,22 +10,22 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 61ba6ac30a5ce5548850d215437d2a35, type: 3}
-  m_Name: Placeholder Champion 1
+  m_Name: Champion Range
   m_EditorClassIdentifier: 
   championMeshPrefab: {fileID: 4196819551082274846, guid: 086209d3580b3884abf86008e186ac33,
     type: 3}
   canvasIndex: 0
   maxHp: 10
   maxRessource: 10
-  viewRange: 5
+  viewRange: 10
   referenceMoveSpeed: 10
   attackAbility: {fileID: 0}
   attackAbilityIndex: 0
-  attackDamage: 0
+  attackDamage: 10
   passiveCapacities: []
   passiveCapacitiesIndexes: 
   activeCapacities:
-  - {fileID: 11400000, guid: 72818ee0e1106e5499e933bf0ce05385, type: 2}
+  - {fileID: 11400000, guid: 6380c6b585792cd478baa9dbd9ae15da, type: 2}
   activeCapacitiesIndexes: 
   ultimateAbility: {fileID: 0}
   ultimateAbilityIndex: 0

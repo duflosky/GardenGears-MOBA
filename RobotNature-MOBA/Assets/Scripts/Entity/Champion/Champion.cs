@@ -5,13 +5,12 @@ using System.Linq;
 using Entities.Capacities;
 using Entities.Inventory;
 using GameStates;
-using Items;
 using Entities.Champion;
+using Items;
 using Photon.Pun;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody))]
-public class Champion : Entity, IMovable, 
 public class Champion : Entity, IMovable, IInventoryable, IResourceable, ICastable, IActiveLifeable
 {
     private Rigidbody rb;
@@ -50,6 +49,9 @@ public class Champion : Entity, IMovable, IInventoryable, IResourceable, ICastab
         currentMoveSpeed = referenceMoveSpeed;
         //attackDamage = championSo.attackDamage;
         //attackAbilityIndex = championSo.attackAbilityIndex;
+        Debug.Log($"ChampionSO: {championSo}, activeCapacitiesIndexes.Lenght: {championSo.activeCapacitiesIndexes.Length}");
+        abilitiesIndexes = championSo.activeCapacitiesIndexes;
+        ultimateAbilityIndex = championSo.ultimateAbilityIndex;
         
         team = newTeam;
 
@@ -95,8 +97,7 @@ public class Champion : Entity, IMovable, IInventoryable, IResourceable, ICastab
             // uiManager.InstantiateHealthBarForEntity(entityIndex);
             uiManager.InstantiateResourceBarForEntity(entityIndex);
         }
-        abilitiesIndexes = championSo.activeCapacitiesIndexes;
-        ultimateAbilityIndex = championSo.ultimateAbilityIndex;
+        
     }
 
     #region Mouvement

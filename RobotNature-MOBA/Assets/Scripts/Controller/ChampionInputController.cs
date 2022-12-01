@@ -44,9 +44,9 @@ namespace Controllers.Inputs
         /// <param name="ctx"></param>
         private void OnActivateCapacity1(InputAction.CallbackContext ctx)
         {
+            Debug.Log($"champion: {champion.name}, abilitieIndex: ");
             ActiveCapacitySO capacity1 = CapacitySOCollectionManager.GetActiveCapacitySOByIndex(champion.abilitiesIndexes[0]);
 
-            Debug.Log($"selectedEntity: {selectedEntity},cursorWorldPos: {cursorWorldPos}");
             champion.RequestCast(champion.abilitiesIndexes[0],selectedEntity,cursorWorldPos);
         }
         /// <summary>

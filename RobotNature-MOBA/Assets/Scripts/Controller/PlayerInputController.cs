@@ -9,7 +9,7 @@ namespace Controllers.Inputs
 
         private void Start()
         {
-            LinkControlsToPlayer();
+            //LinkControlsToPlayer();
             LinkCameraToPlayer();
         }
 

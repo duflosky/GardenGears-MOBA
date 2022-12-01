@@ -13,6 +13,7 @@ namespace GameStates.States
         public override void StartState()
         {
             InputManager.EnablePlayerMap(true);
+            lastTickTime = PhotonNetwork.Time;
         }
 
         public override void UpdateState()
@@ -24,13 +25,14 @@ namespace GameStates.States
                 sm.SwitchState(3);
                 return;
             }
+
+            timer = PhotonNetwork.Time - lastTickTime;
             
             if (timer >= 1.0 / sm.tickRate)
             {
                 sm.Tick();
                 lastTickTime = PhotonNetwork.Time;
             }
-            else timer = PhotonNetwork.Time - lastTickTime;
         }
 
         public override void ExitState() { }

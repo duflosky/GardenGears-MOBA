@@ -16,14 +16,12 @@ public class AutoAttackMelee : ActiveCapacity
         if(!base.TryCast(casterIndex, targetsEntityIndexes, targetPositions)) return false;
         SOType = (AutoAttackMeleeSO)SO;
         Transform tr = EntityCollectionManager.GetEntityByIndex(casterIndex).transform;
-        Debug.Log($" transform {tr}");
         Vector3 lookDir = targetPositions[0]-tr.position;
         lookDir.y = 0;
         var zoneGO = PoolLocalManager.Instance.PoolInstantiate(SOType.damageZone, tr.position+lookDir.normalized*.5f, Quaternion.LookRotation(lookDir) );
         collider = zoneGO.GetComponentInChildren<AffectCollider>();
         collider.capacitySender = this;
         GameStateMachine.Instance.OnTick += DisableCollider;
-        Debug.Log("AA Melee");
         return true;
     }
 
@@ -46,8 +44,10 @@ public class AutoAttackMelee : ActiveCapacity
 
     void DisableCollider()
     {
-        timer += GameStateMachine.Instance.tickRate;
-        if(timer < 1)return;
+        timer += 1;
+        Debug.Log("Tick");
+        if(timer < 1.5f*GameStateMachine.Instance.tickRate)return;
+        Debug.Log("Desinstantiate");
         GameStateMachine.Instance.OnTick -= DisableCollider;
         timer = 0;
         collider.gameObject.SetActive(false);
