@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Entities;
 using Entities.Capacities;
 using Entities.Inventory;
 using GameStates;
@@ -11,7 +12,7 @@ using Photon.Pun;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody))]
-public class Champion : Entity, IMovable, IInventoryable, IResourceable, ICastable, IActiveLifeable
+public class Champion : Entity, IMovable, IInventoryable, IResourceable, ICastable, IActiveLifeable, IDeadable
 {
     private Rigidbody rb;
     private ChampionSO championSo;
@@ -20,7 +21,7 @@ public class Champion : Entity, IMovable, IInventoryable, IResourceable, ICastab
 
     public float maxResource;
     public float currentResource;
-    
+
     private UI.InGame.UIManager uiManager;
 
     protected override void OnStart()
@@ -49,10 +50,12 @@ public class Champion : Entity, IMovable, IInventoryable, IResourceable, ICastab
         currentMoveSpeed = referenceMoveSpeed;
         //attackDamage = championSo.attackDamage;
         //attackAbilityIndex = championSo.attackAbilityIndex;
-        Debug.Log($"ChampionSO: {championSo}, activeCapacitiesIndexes.Lenght: {championSo.activeCapacitiesIndexes.Length}");
+        // TODO : Instantiate mesh champion ? 
+        Debug.Log(
+            $"ChampionSO: {championSo}, activeCapacitiesIndexes.Lenght: {championSo.activeCapacitiesIndexes.Length}");
         abilitiesIndexes = championSo.activeCapacitiesIndexes;
         ultimateAbilityIndex = championSo.ultimateAbilityIndex;
-        
+
         team = newTeam;
 
         Transform pos = transform;
@@ -91,13 +94,14 @@ public class Champion : Entity, IMovable, IInventoryable, IResourceable, ICastab
                 pos = transform;
                 break;
         }
+        
+        respawnPos = transform.position = pos.position;
 
         if (uiManager != null)
         {
-            // uiManager.InstantiateHealthBarForEntity(entityIndex);
+            uiManager.InstantiateHealthBarForEntity(entityIndex);
             uiManager.InstantiateResourceBarForEntity(entityIndex);
         }
-        
     }
 
     #region Mouvement
@@ -107,6 +111,10 @@ public class Champion : Entity, IMovable, IInventoryable, IResourceable, ICastab
 
     [SerializeField] float referenceMoveSpeed;
     float currentMoveSpeed = 3;
+    
+    public Transform rotateParent;
+    public float currentRotateSpeed;
+    private Vector3 rotateDirection;
 
     public void SetMoveDirection(Vector3 dir)
     {
@@ -117,6 +125,23 @@ public class Champion : Entity, IMovable, IInventoryable, IResourceable, ICastab
     void Move()
     {
         rb.velocity = lastDir * currentMoveSpeed;
+    }
+    
+    private void RotateMath()
+    {
+        if (!photonView.IsMine) return;
+    
+        var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+
+        if (!Physics.Raycast(ray, out var hit, float.PositiveInfinity)) return;
+
+        rotateDirection = -(transform.position - hit.point);
+        rotateDirection.y = 0;
+    }
+    
+    private void Rotate()
+    {
+        rotateParent.transform.rotation = Quaternion.Lerp(rotateParent.transform.rotation, Quaternion.LookRotation(rotateDirection),Time.deltaTime * currentRotateSpeed);
     }
 
     #endregion
@@ -144,7 +169,7 @@ public class Champion : Entity, IMovable, IInventoryable, IResourceable, ICastab
     {
         canCast = value;
         OnSetCanCast?.Invoke(value);
-        photonView.RPC("SyncCastRPC",RpcTarget.All,canCast);
+        photonView.RPC("SyncCastRPC", RpcTarget.All, canCast);
     }
 
     [PunRPC]
@@ -159,13 +184,13 @@ public class Champion : Entity, IMovable, IInventoryable, IResourceable, ICastab
 
     public void RequestCast(byte capacityIndex, int[] targetedEntities, Vector3[] targetedPositions)
     {
-        photonView.RPC("CastRPC",RpcTarget.MasterClient,capacityIndex,targetedEntities,targetedPositions);
+        photonView.RPC("CastRPC", RpcTarget.MasterClient, capacityIndex, targetedEntities, targetedPositions);
     }
 
     [PunRPC]
     public void CastRPC(byte capacityIndex, int[] targetedEntities, Vector3[] targetedPositions)
     {
-        var activeCapacity = CapacitySOCollectionManager.CreateActiveCapacity(capacityIndex,this);
+        var activeCapacity = CapacitySOCollectionManager.CreateActiveCapacity(capacityIndex, this);
         if (!activeCapacity.TryCast(entityIndex, targetedEntities, targetedPositions)) return;
 
         OnCast?.Invoke(capacityIndex, targetedEntities, targetedPositions);
@@ -191,7 +216,17 @@ public class Champion : Entity, IMovable, IInventoryable, IResourceable, ICastab
     [SerializeField] private bool abilitiesAffect;
     private float maxHp;
     private float currentHp;
-    
+
+    public float GetMaxHp()
+    {
+        return maxHp;
+    }
+
+    public float GetCurrentHp()
+    {
+        return currentHp;
+    }
+
     public bool AttackAffected()
     {
         return attackAffect;
@@ -202,30 +237,152 @@ public class Champion : Entity, IMovable, IInventoryable, IResourceable, ICastab
         return abilitiesAffect;
     }
 
+    public void RequestSetMaxHp(float value)
+    {
+        photonView.RPC("SetMaxHpRPC", RpcTarget.MasterClient, value);
+    }
+
+    [PunRPC]
+    public void SyncSetMaxHpRPC(float value)
+    {
+        maxHp = value;
+        currentHp = value;
+        OnSetMaxHpFeedback?.Invoke(value);
+    }
+
+    [PunRPC]
+    public void SetMaxHpRPC(float value)
+    {
+        maxHp = value;
+        currentHp = value;
+        OnSetMaxHp?.Invoke(value);
+        photonView.RPC("SyncSetMaxHpRPC", RpcTarget.All, maxHp);
+    }
+
+    public event GlobalDelegates.FloatDelegate OnSetMaxHp;
+    public event GlobalDelegates.FloatDelegate OnSetMaxHpFeedback;
+
+    public void RequestIncreaseMaxHp(float amount)
+    {
+        photonView.RPC("IncreaseMaxHpRPC", RpcTarget.MasterClient, amount);
+    }
+
+    [PunRPC]
+    public void SyncIncreaseMaxHpRPC(float amount)
+    {
+        maxHp = amount;
+        currentHp = amount;
+        OnIncreaseMaxHpFeedback?.Invoke(amount);
+    }
+
+    [PunRPC]
+    public void IncreaseMaxHpRPC(float amount)
+    {
+        maxHp += amount;
+        currentHp = amount;
+        if (maxHp < currentHp) currentHp = maxHp;
+        OnIncreaseMaxHp?.Invoke(amount);
+        photonView.RPC("SyncIncreaseMaxHpRPC", RpcTarget.All, maxHp);
+    }
+
+    public event GlobalDelegates.FloatDelegate OnIncreaseMaxHp;
+    public event GlobalDelegates.FloatDelegate OnIncreaseMaxHpFeedback;
+
+    public void RequestDecreaseMaxHp(float amount)
+    {
+        photonView.RPC("DecreaseMaxHpRPC", RpcTarget.MasterClient, amount);
+    }
+
+    [PunRPC]
+    public void SyncDecreaseMaxHpRPC(float amount)
+    {
+        maxHp = amount;
+        if (maxHp < currentHp) currentHp = maxHp;
+        OnDecreaseMaxHpFeedback?.Invoke(amount);
+    }
+
+    [PunRPC]
+    public void DecreaseMaxHpRPC(float amount)
+    {
+        maxHp -= amount;
+        if (maxHp < currentHp) currentHp = maxHp;
+        OnDecreaseMaxHp?.Invoke(amount);
+        photonView.RPC("SyncDecreaseMaxHpRPC", RpcTarget.All, maxHp);
+    }
+
+    public event GlobalDelegates.FloatDelegate OnDecreaseMaxHp;
+    public event GlobalDelegates.FloatDelegate OnDecreaseMaxHpFeedback;
+
+    public void RequestSetCurrentHp(float value)
+    {
+        photonView.RPC("SetCurrentHpRPC", RpcTarget.MasterClient, value);
+    }
+
+    [PunRPC]
+    public void SyncSetCurrentHpRPC(float value)
+    {
+        currentHp = value;
+        OnSetCurrentHpFeedback?.Invoke(value);
+    }
+
+    [PunRPC]
+    public void SetCurrentHpRPC(float value)
+    {
+        currentHp = value;
+        OnSetCurrentHp?.Invoke(value);
+        photonView.RPC("SyncSetCurrentHpRPC", RpcTarget.All, value);
+    }
+
+    public event GlobalDelegates.FloatDelegate OnSetCurrentHp;
+    public event GlobalDelegates.FloatDelegate OnSetCurrentHpFeedback;
+
+    public void RequestIncreaseCurrentHp(float amount)
+    {
+        photonView.RPC("IncreaseCurrentHpRPC", RpcTarget.MasterClient, amount);
+    }
+
+    [PunRPC]
+    public void SyncIncreaseCurrentHpRPC(float amount)
+    {
+        currentHp = amount;
+        OnIncreaseCurrentHpFeedback?.Invoke(amount);
+    }
+
+    [PunRPC]
+    public void IncreaseCurrentHpRPC(float amount)
+    {
+        currentHp += amount;
+        if (currentHp > maxHp) currentHp = maxHp;
+        OnIncreaseCurrentHp?.Invoke(amount);
+        photonView.RPC("SyncIncreaseCurrentHpRPC", RpcTarget.All, currentHp);
+    }
+
+    public event GlobalDelegates.FloatDelegate OnIncreaseCurrentHp;
+    public event GlobalDelegates.FloatDelegate OnIncreaseCurrentHpFeedback;
+
     public void RequestDecreaseCurrentHp(float amount)
     {
-        throw new NotImplementedException();
+        photonView.RPC("DecreaseCurrentHpRPC",RpcTarget.MasterClient,amount);
     }
-    
+
     [PunRPC]
     public void DecreaseCurrentHpRPC(float amount)
     {
-        currentHp -= amount;
-        OnDecreaseCurrentHp?.Invoke(amount);
-        photonView.RPC("SyncDecreaseCurrentHpRPC",RpcTarget.All,currentHp);
+        currentHp = amount;
         if (currentHp <= 0)
         {
             currentHp = 0;
-            Debug.Log("Die");
-            gameObject.SetActive(false);
-            //TODO : RequestDie();
+            RequestDie();
         }
+        OnDecreaseCurrentHpFeedback?.Invoke(amount);
     }
 
     [PunRPC]
     public void SyncDecreaseCurrentHpRPC(float amount)
     {
-        throw new NotImplementedException();
+        currentHp -= amount;
+        OnDecreaseCurrentHp?.Invoke(amount);
+        photonView.RPC("SyncDecreaseCurrentHpRPC",RpcTarget.All,currentHp);
     }
 
 
@@ -548,6 +705,139 @@ public class Champion : Entity, IMovable, IInventoryable, IResourceable, ICastab
 
     public event GlobalDelegates.FloatDelegate OnDecreaseCurrentResource;
     public event GlobalDelegates.FloatDelegate OnDecreaseCurrentResourceFeedback;
+
+    #endregion
+
+    #region Deadable
+
+    public bool isAlive;
+    public bool canDie;
+
+    public float respawnDuration = 3;
+    private double respawnTimer;
+
+    private Vector3 respawnPos;
+
+    public bool IsAlive()
+    {
+        return isAlive;
+    }
+
+    public bool CanDie()
+    {
+        return canDie;
+    }
+
+    public void RequestSetCanDie(bool value)
+    {
+        photonView.RPC("SetCanDieRPC", RpcTarget.MasterClient, value);
+    }
+
+    [PunRPC]
+    public void SyncSetCanDieRPC(bool value)
+    {
+        canDie = value;
+        OnSetCanDieFeedback?.Invoke(value);
+    }
+
+    [PunRPC]
+    public void SetCanDieRPC(bool value)
+    {
+        canDie = value;
+        OnSetCanDie?.Invoke(value);
+        photonView.RPC("SyncSetCanDieRPC", RpcTarget.All, value);
+    }
+
+    public event GlobalDelegates.BoolDelegate OnSetCanDie;
+    public event GlobalDelegates.BoolDelegate OnSetCanDieFeedback;
+
+    public void RequestDie()
+    {
+        photonView.RPC("DieRPC", RpcTarget.MasterClient);
+        Debug.Log("Request to die");
+    }
+
+    [PunRPC]
+    public void SyncDieRPC()
+    {
+        if (photonView.IsMine)
+        {
+            InputManager.PlayerMap.Movement.Disable();
+            // InputManager.PlayerMap.Attack.Disable();
+            InputManager.PlayerMap.Capacity.Disable();
+            // InputManager.PlayerMap.Inventory.Disable();
+        }
+
+        rotateParent.gameObject.SetActive(false);
+        TransformUI.gameObject.SetActive(false);
+        // FogOfWarManager.Instance.RemoveFOWViewable(this);
+
+        OnDieFeedback?.Invoke();
+    }
+
+    [PunRPC]
+    public void DieRPC()
+    {
+        // TODO : More useful to use that mechanic on decreaseCurrentHp ?
+        if (!canDie)
+        {
+            Debug.LogWarning($"{name} can't die!");
+            return;
+        }
+        isAlive = false;
+        OnDie?.Invoke();
+        GameStateMachine.Instance.OnTick += Revive;
+        photonView.RPC("SyncDieRPC", RpcTarget.All);
+    }
+
+    public event GlobalDelegates.NoParameterDelegate OnDie;
+    public event GlobalDelegates.NoParameterDelegate OnDieFeedback;
+
+    public void RequestRevive()
+    {
+        photonView.RPC("ReviveRPC", RpcTarget.MasterClient);
+    }
+
+    [PunRPC]
+    public void SyncReviveRPC()
+    {
+        transform.position = respawnPos;
+        if (photonView.IsMine)
+        {
+            InputManager.PlayerMap.Movement.Enable();
+            // InputManager.PlayerMap.Attack.Enable();
+            InputManager.PlayerMap.Capacity.Enable();
+            // InputManager.PlayerMap.Inventory.Enable();
+        }
+
+        // FogOfWarManager.Instance.AddFOWViewable(this);
+        rotateParent.gameObject.SetActive(true);
+        TransformUI.gameObject.SetActive(true);
+        OnReviveFeedback?.Invoke();
+    }
+
+    [PunRPC]
+    public void ReviveRPC()
+    {
+        isAlive = true;
+
+        SetCurrentHpRPC(maxHp);
+        SetCurrentResourceRPC(maxResource);
+        OnRevive?.Invoke();
+        photonView.RPC("SyncReviveRPC", RpcTarget.All);
+    }
+
+    private void Revive()
+    {
+        respawnTimer += 1 / GameStateMachine.Instance.tickRate;
+        if (!(respawnTimer >= respawnDuration)) return;
+        GameStateMachine.Instance.OnTick -= Revive;
+        respawnTimer = 0f;
+        RequestRevive();
+    }
+
+    public event GlobalDelegates.NoParameterDelegate OnRevive;
+    public event GlobalDelegates.NoParameterDelegate OnReviveFeedback;
 
     #endregion
 }

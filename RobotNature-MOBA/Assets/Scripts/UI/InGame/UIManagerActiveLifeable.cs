@@ -1,4 +1,5 @@
 using Entities;
+using GameStates;
 // using Entities.FogOfWar;
 using UnityEngine;
 
@@ -14,16 +15,14 @@ namespace UI.InGame
             var entity = EntityCollectionManager.GetEntityByIndex(entityIndex);
             Debug.Log(entity);
             if (entity == null) return;
-            /*
             if (entity.GetComponent<IActiveLifeable>() == null) return;
-            var canvasHealth = Instantiate(healthBarPrefab, entity.uiTransform.position + entity.offset, Quaternion.identity, entity.uiTransform);
+            var canvasHealth = Instantiate(healthBarPrefab, entity.TransformUI.position + entity.OffsetUI, Quaternion.identity, entity.TransformUI);
             entity.elementsToShow.Add(canvasHealth);
             if (entity.team != GameStateMachine.Instance.GetPlayerTeam())
             {
                 canvasHealth.SetActive(false);
             }
             canvasHealth.GetComponent<EntityHealthBar>().InitHealthBar(entity);
-            */
         }
     }
 }

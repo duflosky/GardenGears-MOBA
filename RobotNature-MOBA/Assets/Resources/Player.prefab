@@ -305,11 +305,16 @@ MonoBehaviour:
   maxResource: 0
   currentResource: 0
   referenceMoveSpeed: 15
+  rotateParent: {fileID: 0}
+  currentRotateSpeed: 0
   abilitiesIndexes: 0000
   ultimateAbilityIndex: 0
   canCast: 0
+  attackAffect: 0
+  abilitiesAffect: 0
+  isAlive: 0
+  canDie: 0
+  respawnDuration: 3
   references:
     version: 2
     RefIds: []
-  attackAffect: 0
-  abilitiesAffect: 0
