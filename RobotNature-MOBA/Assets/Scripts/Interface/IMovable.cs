@@ -4,23 +4,7 @@ public interface IMovable
         public float GetReferenceMoveSpeed();
         /// <returns>the entity's current move speed</returns>
         public float GetCurrentMoveSpeed();
-        
-        /// <summary>
-        /// Sends an RPC to the master to set if the entity can move.
-        /// </summary>
-        public void RequestSetCanMove(bool value);
-        /// <summary>
-        /// Sends an RPC to all clients to set if the entity can move.
-        /// </summary>
-        public void SyncSetCanMoveRPC(bool value);
-        /// <summary>
-        /// Sets if the entity can move.
-        /// </summary>
-        public void SetCanMoveRPC(bool value);
 
-        public event GlobalDelegates.BoolDelegate OnSetCanMove;
-        public event GlobalDelegates.BoolDelegate OnSetCanMoveFeedback;
-        
         /// <summary>
         /// Sends an RPC to the master to set the entity's reference move speed.
         /// </summary>

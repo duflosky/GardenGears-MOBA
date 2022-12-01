@@ -107,6 +107,20 @@ MonoBehaviour:
   - SyncDieRPC
   - SyncReviveRPC
   - SyncSetCanDieRPC
+  - DecreaseCurrentMoveSpeedRPC
+  - DecreaseReferenceMoveSpeedRPC
+  - IncreaseCurrentMoveSpeedRPC
+  - IncreaseReferenceMoveSpeedRPC
+  - SetCanMoveRPC
+  - SetCurrentMoveSpeedRPC
+  - SetReferenceMoveSpeedRPC
+  - SyncDecreaseCurrentMoveSpeedRPC
+  - SyncDecreaseReferenceMoveSpeedRPC
+  - SyncIncreaseCurrentMoveSpeedRPC
+  - SyncIncreaseReferenceMoveSpeedRPC
+  - SyncSetCanMoveRPC
+  - SyncSetCurrentMoveSpeedRPC
+  - SyncSetReferenceMoveSpeedRPC
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1

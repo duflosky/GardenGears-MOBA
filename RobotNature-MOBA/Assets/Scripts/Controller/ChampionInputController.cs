@@ -107,7 +107,7 @@ namespace Controllers.Inputs
                 cursorWorldPos[0] = ent.transform.position;
             }
 
-            /*if(isActivebuttonPress)
+            /*if(isActiveButtonPress)
             {
                 champion.MoveToPosition(GetMouseOverWorldPos());
             }*/
