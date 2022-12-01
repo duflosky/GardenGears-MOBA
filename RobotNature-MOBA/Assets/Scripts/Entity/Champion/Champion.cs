@@ -126,6 +126,8 @@ public class Champion : Entity, IMovable, IInventoryable, IResourceable, ICastab
     [Header("=== CAST")] public byte[] abilitiesIndexes = new byte[2];
     public byte ultimateAbilityIndex;
 
+    private double[] abilityCooldowns = new double[3];
+
     public bool canCast;
 
 
@@ -136,7 +138,7 @@ public class Champion : Entity, IMovable, IInventoryable, IResourceable, ICastab
 
     public void RequestSetCanCast(bool value)
     {
-        throw new System.NotImplementedException();
+        photonView.RPC("SetCanCastRPC", RpcTarget.MasterClient);
     }
 
     [PunRPC]
@@ -154,19 +156,29 @@ public class Champion : Entity, IMovable, IInventoryable, IResourceable, ICastab
         OnSetCanCastFeedback?.Invoke(value);
     }
 
+
     public event GlobalDelegates.BoolDelegate OnSetCanCast;
     public event GlobalDelegates.BoolDelegate OnSetCanCastFeedback;
 
-    public void RequestCast(byte capacityIndex, int[] targetedEntities, Vector3[] targetedPositions)
+    public void DecreaseCooldown()
     {
+        for (int i = 0; i < abilityCooldowns.Length; i++)
+        {
+           if(abilityCooldowns[i]>0) abilityCooldowns[i]--;
+        }
+    }
+    
+    public void RequestCast(byte capacityIndex, byte championCapacityIndex, int[] targetedEntities, Vector3[] targetedPositions)
+    {
+        if(abilityCooldowns[championCapacityIndex]>0)return;
         photonView.RPC("CastRPC",RpcTarget.MasterClient,capacityIndex,targetedEntities,targetedPositions);
     }
 
     [PunRPC]
-    public void CastRPC(byte capacityIndex, int[] targetedEntities, Vector3[] targetedPositions)
+    public void CastRPC(byte capacityIndex, byte championCapacityIndex, int[] targetedEntities, Vector3[] targetedPositions)
     {
         var activeCapacity = CapacitySOCollectionManager.CreateActiveCapacity(capacityIndex,this);
-        if (!activeCapacity.TryCast(entityIndex, targetedEntities, targetedPositions)) return;
+        if (!activeCapacity.TryCast(entityIndex, targetedEntities, targetedPositions) || abilityCooldowns[championCapacityIndex]>0) return;
 
         OnCast?.Invoke(capacityIndex, targetedEntities, targetedPositions);
         photonView.RPC("SyncCastRPC", RpcTarget.All, capacityIndex, targetedEntities, targetedPositions);
