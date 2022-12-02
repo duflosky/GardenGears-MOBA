@@ -73,6 +73,24 @@ MonoBehaviour:
   - SyncActivateItemRPC
   - SyncAddItemRPC
   - SyncRemoveItemRPC
+  - ChangeTeamRPC
+  - DecreaseCurrentHpRPC
+  - DecreaseCurrentResourceRPC
+  - DecreaseMaxResourceRPC
+  - IncreaseCurrentResourceRPC
+  - IncreaseMaxResourceRPC
+  - SetCanCastRPC
+  - SetCurrentResourceRPC
+  - SetMaxResourceRPC
+  - SyncChangeTeamRPC
+  - SyncDecreaseCurrentHpRPC
+  - SyncDecreaseCurrentResourceRPC
+  - SyncDecreaseMaxResourceRPC
+  - SyncIncreaseCurrentResourceRPC
+  - SyncIncreaseMaxResourceRPC
+  - SyncSetCanCastRPC
+  - SyncSetCurrentResourceRPC
+  - SyncSetMaxResourceRPC
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1

@@ -54,7 +54,7 @@ namespace Entities.Capacities
 
         public static ActiveCapacity CreateActiveCapacity(byte soIndex,Entity caster)
         {
-            ActiveCapacitySO soRef = Instance.allActiveCapacities[soIndex];
+            /*ActiveCapacitySO soRef = Instance.allActiveCapacities[soIndex];
             ActiveCapacity active;
             if (capacityReferences.ContainsKey(soRef))
             {
@@ -64,7 +64,8 @@ namespace Entities.Capacities
             {
                 active = (ActiveCapacity) Activator.CreateInstance(Instance.allActiveCapacities[soIndex].AssociatedType());
                 capacityReferences.Add(soRef, active);
-            }
+            }*/
+            var active = (ActiveCapacity) Activator.CreateInstance(Instance.allActiveCapacities[soIndex].AssociatedType());
             
             active.indexOfSOInCollection = soIndex;
             active.SO = Instance.allActiveCapacities[soIndex];
