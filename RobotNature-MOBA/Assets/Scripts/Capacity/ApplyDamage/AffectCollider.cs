@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Entities;
@@ -9,11 +10,23 @@ public class AffectCollider : MonoBehaviour
 {
     [HideInInspector] public Entity caster;
     [HideInInspector] public ActiveCapacity capacitySender;
-    [HideInInspector] public float speed;
     [SerializeField] private List<byte> effectIndex = new List<byte>();
+    private Rigidbody rb;
+
+    private void Start()
+    {
+        rb = GetComponent<Rigidbody>();
+    }
+
+    public void Launch(Vector3 moveVector)
+    {
+        rb.velocity = moveVector;
+    }
 
     private void OnTriggerEnter(Collider other)
     {
+        if (!PhotonNetwork.IsMasterClient) return;
+        
         Entity entity = other.GetComponent<Entity>();
 
         if (entity && entity != caster)
@@ -23,14 +36,6 @@ public class AffectCollider : MonoBehaviour
             if (PhotonNetwork.IsMasterClient)
             {
                 capacitySender.CollideEffect(entity);
-                /*activeLifeable.DecreaseCurrentHpRPC(damage);
-                    
-                gameObject.SetActive(false);
-                    
-                foreach (byte index in effectIndex)
-                {
-                    //TODO entity.AddPassive(index)
-                }*/
             }
         }
     }
