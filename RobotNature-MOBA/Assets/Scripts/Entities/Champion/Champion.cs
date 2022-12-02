@@ -5,9 +5,9 @@ using Entities.Capacities;
 using Entities.Inventory;
 using GameStates;
 using Entities.Champion;
+using Entities.FogOfWar;
 using Items;
 using Photon.Pun;
-using Unity.VisualScripting;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody))]
@@ -942,7 +942,7 @@ public class Champion : Entity, IMovable, IInventoryable, IResourceable, ICastab
 
         rotateParent.gameObject.SetActive(false);
         TransformUI.gameObject.SetActive(false);
-        // FogOfWarManager.Instance.RemoveFOWViewable(this);
+        FogOfWarManager.Instance.RemoveFOWViewable(this);
 
         OnDieFeedback?.Invoke();
     }
@@ -982,7 +982,7 @@ public class Champion : Entity, IMovable, IInventoryable, IResourceable, ICastab
             // InputManager.PlayerMap.Inventory.Enable();
         }
 
-        // FogOfWarManager.Instance.AddFOWViewable(this);
+        FogOfWarManager.Instance.AddFOWViewable(this);
         rotateParent.gameObject.SetActive(true);
         TransformUI.gameObject.SetActive(true);
         OnReviveFeedback?.Invoke();

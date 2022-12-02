@@ -2,8 +2,6 @@ using Entities;
 using GameStates;
 using UnityEngine;
 
-// using Entities.FogOfWar;
-
 namespace UI.InGame
 {
     public partial class UIManager
