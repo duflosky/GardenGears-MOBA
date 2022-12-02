@@ -10,6 +10,7 @@ namespace GameStates.States
         public override void StartState()
         {
             sm.MoveToGameScene();
+            InputManager.EnablePlayerMap(false);
             sm.winner = Enums.Team.Neutral;
         }
 
