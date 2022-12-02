@@ -23,7 +23,7 @@ namespace UI.InGame
 
         private void UpdateFillPercent(float value)
         {
-            healthBar.fillAmount = lifeable.GetCurrentHp() / lifeable.GetMaxHp();
+            healthBar.fillAmount = value / lifeable.GetMaxHp();
         }
     }
 }

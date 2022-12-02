@@ -509,7 +509,7 @@ public class Champion : Entity, IMovable, IInventoryable, IResourceable, ICastab
 
     public void RequestDecreaseCurrentHp(float amount)
     {
-        photonView.RPC("DecreaseCurrentHpRPC", RpcTarget.MasterClient, amount);
+        photonView.RPC("SyncDecreaseCurrentHpRPC", RpcTarget.MasterClient, amount);
     }
 
     [PunRPC]
@@ -529,7 +529,7 @@ public class Champion : Entity, IMovable, IInventoryable, IResourceable, ICastab
     {
         currentHp -= amount;
         OnDecreaseCurrentHp?.Invoke(amount);
-        photonView.RPC("SyncDecreaseCurrentHpRPC", RpcTarget.All, currentHp);
+        photonView.RPC("DecreaseCurrentHpRPC", RpcTarget.All, currentHp);
     }
 
 
