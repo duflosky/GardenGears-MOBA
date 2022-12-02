@@ -308,8 +308,8 @@ MonoBehaviour:
   abilitiesIndexes: 0000
   ultimateAbilityIndex: 0
   canCast: 0
+  attackAffect: 0
+  abilitiesAffect: 0
   references:
     version: 2
     RefIds: []
-  attackAffect: 0
-  abilitiesAffect: 0

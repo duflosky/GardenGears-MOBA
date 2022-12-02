@@ -47,7 +47,7 @@ namespace Controllers.Inputs
             Debug.Log($"champion: {champion.name}, abilitieIndex: ");
             ActiveCapacitySO capacity1 = CapacitySOCollectionManager.GetActiveCapacitySOByIndex(champion.abilitiesIndexes[0]);
 
-            champion.RequestCast(champion.abilitiesIndexes[0],selectedEntity,cursorWorldPos);
+            champion.RequestCast(champion.abilitiesIndexes[0], 0,selectedEntity,cursorWorldPos);
         }
         /// <summary>
         /// Actions Performed on Capacity 2 Activation
@@ -55,7 +55,7 @@ namespace Controllers.Inputs
         /// <param name="ctx"></param>
         private void OnActivateCapacity2(InputAction.CallbackContext ctx)
         {
-            champion.RequestCast(champion.abilitiesIndexes[1],selectedEntity,cursorWorldPos);
+            champion.RequestCast(champion.abilitiesIndexes[1], 1,selectedEntity,cursorWorldPos);
         }
         /// <summary>
         /// Actions Performed on Ultimate Capacity Activation
@@ -63,7 +63,7 @@ namespace Controllers.Inputs
         /// <param name="ctx"></param>
         private void OnActivateUltimateAbility(InputAction.CallbackContext ctx)
         {
-            champion.RequestCast(champion.ultimateAbilityIndex,selectedEntity,cursorWorldPos);
+            champion.RequestCast(champion.ultimateAbilityIndex, 2,selectedEntity,cursorWorldPos);
         }
 
         /// <summary>

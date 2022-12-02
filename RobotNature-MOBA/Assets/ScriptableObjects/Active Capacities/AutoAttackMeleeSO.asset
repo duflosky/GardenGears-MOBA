@@ -16,7 +16,7 @@ MonoBehaviour:
   descriptionName: tomberparterreFor
   icon: {fileID: 0}
   description: 
-  cooldown: 2
+  cooldown: 3
   isTargeting: 0
   maxRange: 0
   types: 
@@ -24,6 +24,6 @@ MonoBehaviour:
   indexInCollection: 0
   feedbackDuration: 0
   feedbackPrefab: {fileID: 0}
-  damageZone: {fileID: 4812136842466418308, guid: 8231442f1d541fb42987a68f0edfef2a,
+  damageZone: {fileID: 7532979715515481309, guid: d1216e8af4a118342b46fc7fcaad3b16,
     type: 3}
   damageAmount: 1
