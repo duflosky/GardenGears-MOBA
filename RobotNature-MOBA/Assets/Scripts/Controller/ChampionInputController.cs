@@ -10,6 +10,7 @@ namespace Controllers.Inputs
 {
     public class ChampionInputController : PlayerInputController
     {
+        [SerializeField] private LayerMask mousePostionMask;
         private Champion champion;
         private int[] selectedEntity;
         private Vector3[] cursorWorldPos;
@@ -44,7 +45,6 @@ namespace Controllers.Inputs
         /// <param name="ctx"></param>
         private void OnActivateCapacity1(InputAction.CallbackContext ctx)
         {
-            Debug.Log($"champion: {champion.name}, abilitieIndex: ");
             ActiveCapacitySO capacity1 = CapacitySOCollectionManager.GetActiveCapacitySOByIndex(champion.abilitiesIndexes[0]);
 
             champion.RequestCast(champion.abilitiesIndexes[0], 0,selectedEntity,cursorWorldPos);
@@ -96,7 +96,7 @@ namespace Controllers.Inputs
         {
             mousePos = ctx.ReadValue<Vector2>();
             var mouseRay = cam.ScreenPointToRay(Input.mousePosition);
-            if (!Physics.Raycast(mouseRay, out var hit)) return;
+            if (!Physics.Raycast(mouseRay, out var hit, mousePostionMask)) return;
             cursorWorldPos[0] = hit.point;
             selectedEntity[0] = -1;
             var ent = hit.transform.GetComponent<Entity>();

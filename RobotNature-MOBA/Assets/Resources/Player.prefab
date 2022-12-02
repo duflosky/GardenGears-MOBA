@@ -281,6 +281,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 50489f109a81e334b89de3e30c3c5607, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mousePostionMask:
+    serializedVersion: 2
+    m_Bits: 2147483647
 --- !u!114 &-2763956337353663596
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -311,8 +314,8 @@ MonoBehaviour:
   abilitiesIndexes: 0000
   ultimateAbilityIndex: 0
   canCast: 0
-  attackAffect: 0
-  abilitiesAffect: 0
+  attackAffect: 1
+  abilitiesAffect: 1
   isAlive: 1
   canDie: 1
   respawnDuration: 3

@@ -112,6 +112,8 @@ public class Champion : Entity, IMovable, IInventoryable, IResourceable, ICastab
         }
     }
 
+    public  GlobalDelegates.EntityDelegate OnDealDamage;
+    
     #region Moveable
 
     [Header("=== MOUVEMENT")] private Vector3 lastDir;
@@ -385,8 +387,8 @@ public class Champion : Entity, IMovable, IInventoryable, IResourceable, ICastab
 
     #region ActiveLife
 
-    [SerializeField] private bool attackAffect;
-    [SerializeField] private bool abilitiesAffect;
+    [SerializeField] private bool attackAffect = true;
+    [SerializeField] private bool abilitiesAffect = true;
     private float maxHp;
     private float currentHp;
 

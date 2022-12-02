@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Entities;
 using Entities.Capacities;
 using GameStates;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class AutoAttackMelee : ActiveCapacity
@@ -10,17 +11,21 @@ public class AutoAttackMelee : ActiveCapacity
     private AffectCollider collider;
     private AutoAttackMeleeSO SOType;
     private double timer;
+    private Transform casterTransform;
+    private Vector3 lookDir;
 
     public override bool TryCast(int casterIndex, int[] targetsEntityIndexes, Vector3[] targetPositions)
     {
         if(!base.TryCast(casterIndex, targetsEntityIndexes, targetPositions)) return false;
         SOType = (AutoAttackMeleeSO)SO;
-        Transform tr = EntityCollectionManager.GetEntityByIndex(casterIndex).transform;
-        Vector3 lookDir = targetPositions[0]-tr.position;
+        casterTransform = EntityCollectionManager.GetEntityByIndex(casterIndex).transform;
+        lookDir = targetPositions[0]-casterTransform.position;
         lookDir.y = 0;
-        var zoneGO = PoolLocalManager.Instance.PoolInstantiate(SOType.damageZone, tr.position+lookDir.normalized*.5f, Quaternion.LookRotation(lookDir) );
-        collider = zoneGO.GetComponentInChildren<AffectCollider>();
+        var zoneGO = PoolLocalManager.Instance.PoolInstantiate(SOType.damageZone, casterTransform.position, Quaternion.LookRotation(lookDir) );
+        collider = zoneGO.GetComponent<AffectCollider>();
+        collider.GetComponent<SphereCollider>().radius = SOType.maxRange;
         collider.capacitySender = this;
+        collider.caster = caster;
         GameStateMachine.Instance.OnTick += DisableCollider;
         return true;
     }
@@ -30,9 +35,23 @@ public class AutoAttackMelee : ActiveCapacity
         IActiveLifeable lifeable = entityAffect.GetComponent<IActiveLifeable>();
         if (lifeable != null)
         {
+            var angle = Vector3.Angle(lookDir.normalized, (entityAffect.transform.position - casterTransform.position).normalized);
+            Debug.Log($"collide {entityAffect.gameObject.name} at {angle}°");
             if (lifeable.AttackAffected())
-            {
-              lifeable.DecreaseCurrentHpRPC(SOType.damageAmount);  
+            { 
+                if(angle>SOType.normalAmplitude)return; 
+                if(angle <= SOType.perfectAmplitude)
+                {
+                    //Critic
+                    Debug.Log("Critic");
+                    lifeable.DecreaseCurrentHpRPC(SOType.damageAmount*1.5f);
+                }
+                else
+                {
+                    Debug.Log("Normal hit");
+                    lifeable.DecreaseCurrentHpRPC(SOType.damageAmount);  
+                }
+
             }
         }
     }
@@ -41,7 +60,8 @@ public class AutoAttackMelee : ActiveCapacity
     {
         
     }
-
+    
+    
     void DisableCollider()
     {
         timer += 1;

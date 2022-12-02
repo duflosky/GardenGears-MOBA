@@ -8,7 +8,12 @@ using UnityEngine;
 public class AutoAttackMeleeSO : ActiveCapacitySO
 {
     public GameObject damageZone;
-    public float damageAmount = 1; 
+    public float damageAmount = 1;
+
+    
+    public float normalAmplitude;
+    public float perfectAmplitude;
+
     public override Type AssociatedType()
     {
         return typeof(AutoAttackMelee);

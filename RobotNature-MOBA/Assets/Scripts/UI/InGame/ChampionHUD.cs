@@ -118,15 +118,23 @@ public class ChampionHUD : MonoBehaviour
             spellIcon = spellUltimate,
             spellCooldown = spellUltimateCooldown
         };
-        if (so.activeCapacities.Length != 2) return;
-        spellHolderDict.Add(so.activeCapacitiesIndexes[0], spellOneHolder);
-        spellHolderDict.Add(so.activeCapacitiesIndexes[1], spellTwoHolder);
-        spellHolderDict.Add(so.ultimateAbilityIndex, ultimateHolder);
+
+        for (int i = 0; i < so.activeCapacities.Length; i++)
+        {
+            if (i == 2)
+            {
+                spellHolderDict.Add(so.ultimateAbilityIndex, ultimateHolder);
+                ultimateHolder.Setup(so.ultimateAbility.icon);
+            }
+            else
+            {
+                spellHolderDict.Add(so.activeCapacitiesIndexes[i], spellOneHolder);
+                spellOneHolder.Setup(so.activeCapacities[i].icon);
+            }
+        }
+        
         
         if(so.passiveCapacities.Length != 0) passiveHolder.Setup(so.passiveCapacities[0].icon);
-        spellOneHolder.Setup(so.activeCapacities[0].icon);
-        spellTwoHolder.Setup(so.activeCapacities[1].icon);
-        ultimateHolder.Setup(so.ultimateAbility.icon);
     }
 
     private void UpdateCooldown(byte capacityIndex, int[] intArray, Vector3[] vectors, ActiveCapacity capacity)
