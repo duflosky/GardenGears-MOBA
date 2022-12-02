@@ -11,14 +11,12 @@ public class AutoAttackMelee : ActiveCapacity
     private AffectCollider collider;
     private AutoAttackMeleeSO SOType;
     private double timer;
-    private Transform casterTransform;
     private Vector3 lookDir;
 
     public override bool TryCast(int casterIndex, int[] targetsEntityIndexes, Vector3[] targetPositions)
     {
         if(!base.TryCast(casterIndex, targetsEntityIndexes, targetPositions)) return false;
         SOType = (AutoAttackMeleeSO)SO;
-        casterTransform = EntityCollectionManager.GetEntityByIndex(casterIndex).transform;
         lookDir = targetPositions[0]-casterTransform.position;
         lookDir.y = 0;
         var zoneGO = PoolLocalManager.Instance.PoolInstantiate(SOType.damageZone, casterTransform.position, Quaternion.LookRotation(lookDir) );
@@ -26,7 +24,7 @@ public class AutoAttackMelee : ActiveCapacity
         collider.GetComponent<SphereCollider>().radius = SOType.maxRange;
         collider.capacitySender = this;
         collider.caster = caster;
-        GameStateMachine.Instance.OnTick += DisableCollider;
+        GameStateMachine.Instance.OnTick += DisableObject;
         return true;
     }
 
@@ -62,11 +60,11 @@ public class AutoAttackMelee : ActiveCapacity
     }
     
     
-    void DisableCollider()
+    void DisableObject()
     {
         timer += 1;
         if(timer < 1.5f*GameStateMachine.Instance.tickRate)return;
-        GameStateMachine.Instance.OnTick -= DisableCollider;
+        GameStateMachine.Instance.OnTick -= DisableObject;
         timer = 0;
         collider.gameObject.SetActive(false);
     }

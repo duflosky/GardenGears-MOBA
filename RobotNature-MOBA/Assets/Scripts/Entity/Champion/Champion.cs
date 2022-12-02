@@ -18,9 +18,7 @@ public class Champion : Entity, IMovable, IInventoryable, IResourceable, ICastab
 
     [SerializeReference] public List<Item> items = new List<Item>();
 
-    public float maxResource;
-    public float currentResource;
-
+    
     private UI.InGame.UIManager uiManager;
 
     protected override void OnStart()
@@ -54,7 +52,8 @@ public class Champion : Entity, IMovable, IInventoryable, IResourceable, ICastab
         currentHp = maxHp;
         uiManager = UI.InGame.UIManager.Instance;
         maxResource = so.maxRessource;
-        currentResource = so.maxRessource;
+        if (so.isRessourceRegen) currentResource = so.maxRessource;
+        else currentResource = 0;
         //viewRange = championSo.viewRange;
         referenceMoveSpeed = championSo.referenceMoveSpeed;
         currentMoveSpeed = referenceMoveSpeed;
@@ -728,6 +727,10 @@ public class Champion : Entity, IMovable, IInventoryable, IResourceable, ICastab
 
     #region Resourceable
 
+    public float maxResource;
+    public float currentResource;
+
+    
     public float GetMaxResource()
     {
         return maxResource;
