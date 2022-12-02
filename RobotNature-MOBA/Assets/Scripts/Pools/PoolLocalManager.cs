@@ -64,7 +64,10 @@ public class PoolLocalManager : MonoBehaviour
             if (queue.Count == 0)
             {
                 returnGO = Instantiate(GORef, position, rotation, parent);
+                var queuer = returnGO.AddComponent<Enqueuer>();
+                queuer.GORef = GORef;
             }
+            
             else
             {
                 returnGO = queue.Dequeue();
