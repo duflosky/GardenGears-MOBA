@@ -1,3 +1,6 @@
+using UnityEngine;
+using UnityEngine.InputSystem;
+
 namespace GameStates.States
 {
     public class LoadingState : GameState
@@ -7,6 +10,7 @@ namespace GameStates.States
         public override void StartState()
         {
             sm.MoveToGameScene();
+            InputManager.EnablePlayerMap(false);
             sm.winner = Enums.Team.Neutral;
         }
 

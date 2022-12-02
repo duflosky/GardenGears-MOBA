@@ -7,7 +7,7 @@ namespace Items
     public class ModItemSO : ItemSO
     {
         public int healthMod;
-        public int powerMod;
+        public int damageMod;
         public int resistanceMod;
         public int speedMod;
         public int attackSpeedMod;

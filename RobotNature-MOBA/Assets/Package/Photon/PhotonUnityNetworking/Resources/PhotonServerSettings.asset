@@ -74,23 +74,53 @@ MonoBehaviour:
   - SyncAddItemRPC
   - SyncRemoveItemRPC
   - ChangeTeamRPC
-  - DecreaseCurrentHpRPC
   - DecreaseCurrentResourceRPC
   - DecreaseMaxResourceRPC
   - IncreaseCurrentResourceRPC
   - IncreaseMaxResourceRPC
-  - SetCanCastRPC
   - SetCurrentResourceRPC
   - SetMaxResourceRPC
   - SyncChangeTeamRPC
-  - SyncDecreaseCurrentHpRPC
   - SyncDecreaseCurrentResourceRPC
   - SyncDecreaseMaxResourceRPC
   - SyncIncreaseCurrentResourceRPC
   - SyncIncreaseMaxResourceRPC
-  - SyncSetCanCastRPC
   - SyncSetCurrentResourceRPC
   - SyncSetMaxResourceRPC
+  - DecreaseCurrentHpRPC
+  - SetCanCastRPC
+  - SyncDecreaseCurrentHpRPC
+  - SyncSetCanCastRPC
+  - DecreaseMaxHpRPC
+  - IncreaseCurrentHpRPC
+  - IncreaseMaxHpRPC
+  - SetCurrentHpRPC
+  - SetMaxHpRPC
+  - SyncDecreaseMaxHpRPC
+  - SyncIncreaseCurrentHpRPC
+  - SyncIncreaseMaxHpRPC
+  - SyncSetCurrentHpRPC
+  - SyncSetMaxHpRPC
+  - DieRPC
+  - ReviveRPC
+  - SetCanDieRPC
+  - SyncDieRPC
+  - SyncReviveRPC
+  - SyncSetCanDieRPC
+  - DecreaseCurrentMoveSpeedRPC
+  - DecreaseReferenceMoveSpeedRPC
+  - IncreaseCurrentMoveSpeedRPC
+  - IncreaseReferenceMoveSpeedRPC
+  - SetCanMoveRPC
+  - SetCurrentMoveSpeedRPC
+  - SetReferenceMoveSpeedRPC
+  - SyncDecreaseCurrentMoveSpeedRPC
+  - SyncDecreaseReferenceMoveSpeedRPC
+  - SyncIncreaseCurrentMoveSpeedRPC
+  - SyncIncreaseReferenceMoveSpeedRPC
+  - SyncSetCanMoveRPC
+  - SyncSetCurrentMoveSpeedRPC
+  - SyncSetReferenceMoveSpeedRPC
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1

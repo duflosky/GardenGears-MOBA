@@ -617,6 +617,17 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3790906383816998676, guid: 9c3021a2ea8514d499121208c907913a,
+        type: 3}
+      propertyPath: championOverlays.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3790906383816998676, guid: 9c3021a2ea8514d499121208c907913a,
+        type: 3}
+      propertyPath: championOverlays.Array.data[0]
+      value: 
+      objectReference: {fileID: 8532207813079190186, guid: 7fcbb12145d7b854c8cbd2619ca446ed,
+        type: 3}
     - target: {fileID: 5574767613899442843, guid: 9c3021a2ea8514d499121208c907913a,
         type: 3}
       propertyPath: m_RootOrder
