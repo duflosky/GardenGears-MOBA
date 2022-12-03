@@ -5,9 +5,9 @@ using Entities.Capacities;
 using Entities.Inventory;
 using GameStates;
 using Entities.Champion;
+using Entities.FogOfWar;
 using Items;
 using Photon.Pun;
-using Unity.VisualScripting;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody))]
@@ -17,9 +17,6 @@ public class Champion : Entity, IMovable, IInventoryable, IResourceable, ICastab
     public ChampionSO championSo;
 
     [SerializeReference] public List<Item> items = new List<Item>();
-
-    public float maxResource;
-    public float currentResource;
 
     private UI.InGame.UIManager uiManager;
 
@@ -61,6 +58,8 @@ public class Champion : Entity, IMovable, IInventoryable, IResourceable, ICastab
         //attackDamage = championSo.attackDamage;
         //attackAbilityIndex = championSo.attackAbilityIndex;
         // TODO : Instantiate mesh champion ?
+        var championMesh = Instantiate(championSo.championMeshPrefab, rotateParent.position, Quaternion.identity, rotateParent);
+        championMesh.transform.localEulerAngles = Vector3.zero;
         abilitiesIndexes = championSo.activeCapacitiesIndexes;
         ultimateAbilityIndex = championSo.ultimateAbilityIndex;
 
@@ -102,6 +101,14 @@ public class Champion : Entity, IMovable, IInventoryable, IResourceable, ICastab
                 pos = transform;
                 break;
         }
+        
+        if (GameStates.GameStateMachine.Instance.GetPlayerTeam() != team)
+        {
+            championMesh.SetActive(false);
+        }
+        
+        championMesh.GetComponent<ChampionMeshLinker>().LinkTeamColor(this.team);
+        elementsToShow.Add(championMesh);
 
         respawnPos = transform.position = pos.position;
 
@@ -728,6 +735,9 @@ public class Champion : Entity, IMovable, IInventoryable, IResourceable, ICastab
 
     #region Resourceable
 
+    public float maxResource;
+    public float currentResource;
+    
     public float GetMaxResource()
     {
         return maxResource;
@@ -944,7 +954,7 @@ public class Champion : Entity, IMovable, IInventoryable, IResourceable, ICastab
 
         rotateParent.gameObject.SetActive(false);
         TransformUI.gameObject.SetActive(false);
-        // FogOfWarManager.Instance.RemoveFOWViewable(this);
+        FogOfWarManager.Instance.RemoveFOWViewable(this);
 
         OnDieFeedback?.Invoke();
     }
@@ -984,7 +994,7 @@ public class Champion : Entity, IMovable, IInventoryable, IResourceable, ICastab
             // InputManager.PlayerMap.Inventory.Enable();
         }
 
-        // FogOfWarManager.Instance.AddFOWViewable(this);
+        FogOfWarManager.Instance.AddFOWViewable(this);
         rotateParent.gameObject.SetActive(true);
         TransformUI.gameObject.SetActive(true);
         OnReviveFeedback?.Invoke();

@@ -1,6 +1,5 @@
 using Entities;
 using GameStates;
-// using Entities.FogOfWar;
 using UnityEngine;
 
 namespace UI.InGame
