@@ -7,7 +7,6 @@ namespace Entities.FogOfWar
 {
     public class FogOfWarManager : MonoBehaviourPun
     {
-        //Instance => talk to the group to see if that possible
         private static FogOfWarManager _instance;
 
         public static FogOfWarManager Instance
@@ -34,9 +33,7 @@ namespace Entities.FogOfWar
         /// <param name="IFogOfWarViewable"> Interface for Entity </param>
         private List<Entity> allViewables = new List<Entity>();
 
-        private Dictionary<Entity, List<Entity>> currentViewablesWithEntitiesShowables =
-            new Dictionary<Entity, List<Entity>>();
-
+        private Dictionary<Entity, List<Entity>> currentViewablesWithEntitiesShowables = new Dictionary<Entity, List<Entity>>();
 
         [Header("Camera and Scene Setup")] public Camera cameraFog;
         public List<string> sceneToRenderFog;
@@ -118,7 +115,6 @@ namespace Entities.FogOfWar
                     if (!currentViewablesWithEntitiesShowables[viewable].Contains((Entity)seenShowables[i]))
                     {
                         viewable.RemoveShowable(seenShowables[i]);
-                        //Debug.Log("Remove Elements from list");
                     }
                 }
             }
@@ -235,23 +231,19 @@ namespace Entities.FogOfWar
             if (Physics.Raycast(entity.fogOfWarStartDetection.position, dir, out hit, entity.viewRange,
                     layerTargetFogOfWar))
             {
-                // Debug.DrawRay(entity.transform.position, dir * entity.viewRange, Color.green, 1);
                 Entity candidateEntity = hit.collider.gameObject.GetComponent<Entity>();
-                // Debug.Log(hit.collider.gameObject.name);
                 if (candidateEntity != null)
                 {
                     entity.AddShowable(candidateEntity);
                     currentViewablesWithEntitiesShowables[entity].Add(candidateEntity);
-                    return new ViewCastInfo(false, entity.transform.position + dir * entity.viewRange, entity.viewRange,
-                        globalAngle);
+                    return new ViewCastInfo(false, entity.transform.position + dir * entity.viewRange, entity.viewRange, globalAngle);
                 }
 
                 return new ViewCastInfo(true, hit.point, hit.distance, globalAngle);
             }
             else
             {
-                return new ViewCastInfo(false, entity.transform.position + dir * entity.viewRange, entity.viewRange,
-                    globalAngle);
+                return new ViewCastInfo(false, entity.transform.position + dir * entity.viewRange, entity.viewRange, globalAngle);
             }
         }
 
