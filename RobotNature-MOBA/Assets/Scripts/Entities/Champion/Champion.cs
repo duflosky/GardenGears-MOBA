@@ -18,9 +18,6 @@ public class Champion : Entity, IMovable, IInventoryable, IResourceable, ICastab
 
     [SerializeReference] public List<Item> items = new List<Item>();
 
-    public float maxResource;
-    public float currentResource;
-
     private UI.InGame.UIManager uiManager;
 
     protected override void OnStart()
@@ -61,6 +58,8 @@ public class Champion : Entity, IMovable, IInventoryable, IResourceable, ICastab
         //attackDamage = championSo.attackDamage;
         //attackAbilityIndex = championSo.attackAbilityIndex;
         // TODO : Instantiate mesh champion ?
+        var championMesh = Instantiate(championSo.championMeshPrefab, rotateParent.position, Quaternion.identity, rotateParent);
+        championMesh.transform.localEulerAngles = Vector3.zero;
         abilitiesIndexes = championSo.activeCapacitiesIndexes;
         ultimateAbilityIndex = championSo.ultimateAbilityIndex;
 
@@ -102,6 +101,14 @@ public class Champion : Entity, IMovable, IInventoryable, IResourceable, ICastab
                 pos = transform;
                 break;
         }
+        
+        if (GameStates.GameStateMachine.Instance.GetPlayerTeam() != team)
+        {
+            championMesh.SetActive(false);
+        }
+        
+        championMesh.GetComponent<ChampionMeshLinker>().LinkTeamColor(this.team);
+        elementsToShow.Add(championMesh);
 
         respawnPos = transform.position = pos.position;
 
@@ -726,6 +733,9 @@ public class Champion : Entity, IMovable, IInventoryable, IResourceable, ICastab
 
     #region Resourceable
 
+    public float maxResource;
+    public float currentResource;
+    
     public float GetMaxResource()
     {
         return maxResource;
