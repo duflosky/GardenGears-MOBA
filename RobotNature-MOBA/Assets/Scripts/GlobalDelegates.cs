@@ -1,3 +1,4 @@
+using Entities;
 using Entities.Capacities;
 using UnityEngine;
 
