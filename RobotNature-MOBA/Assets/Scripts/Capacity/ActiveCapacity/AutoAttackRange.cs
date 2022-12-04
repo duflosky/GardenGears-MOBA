@@ -2,47 +2,67 @@ using System.Collections;
 using System.Collections.Generic;
 using Entities;
 using Entities.Capacities;
+using Photon.Pun;
 using UnityEngine;
 
 public class AutoAttackRange : ActiveCapacity
 {
     private AutoAttackRangeSO SOType;
     private Vector3 lookDir;
-    private AffectCollider bullet;
+    private GameObject bullet;
 
-    public override void OnStarte()
+    public override void OnStart()
     {
         SOType = (AutoAttackRangeSO)SO;
+        casterTransform = caster.transform;
     }
 
     public override bool TryCast(int casterIndex, int[] targetsEntityIndexes, Vector3[] targetPositions)
     {
         if(!base.TryCast(casterIndex, targetsEntityIndexes, targetPositions)) return false;
-        SOType = (AutoAttackRangeSO)SO;
         lookDir = targetPositions[0]-casterTransform.position;
         lookDir.y = 0;
-        bullet = PoolLocalManager.Instance.PoolInstantiate(SOType.bulletPrefab, casterTransform.position, Quaternion.LookRotation(lookDir)).GetComponent<AffectCollider>();
-        bullet.caster = caster;
-        bullet.capacitySender = this;
-        bullet.Launch(lookDir*SOType.bulletSpeed);
+        bullet = PoolLocalManager.Instance.PoolInstantiate(SOType.bulletPrefab, casterTransform.position, Quaternion.LookRotation(lookDir));
+        var collider = bullet.GetComponent<AffectCollider>();
+        collider.caster = caster;
+        collider.capacitySender = this;
+        Debug.Log($"lookDir : {lookDir}, bulletSpeed:{SOType.bulletSpeed}");
+        collider.Launch(lookDir*SOType.bulletSpeed);
         Debug.Log("AA Range");
         return true;
     }
 
-    public override void CollideEffect(Entity entityAffect)
+    public override void CollideEntityEffect(Entity entityAffect)
     {
-        var lifeable = entityAffect.GetComponent<IActiveLifeable>();
-        if (lifeable != null)
+        if (PhotonNetwork.IsMasterClient)
         {
-            if(!lifeable.AttackAffected())return;
+            var lifeable = entityAffect.GetComponent<IActiveLifeable>();
+            if (lifeable != null)
+            {
+                if(!lifeable.AttackAffected())return;
             
-            lifeable.DecreaseCurrentHpRPC(SOType.bulletDamage);
+                entityAffect.photonView.RPC("DecreaseCurrentHpRPC", RpcTarget.All, SOType.bulletDamage);
+                bullet.gameObject.SetActive(false);
+            }
+        }
+        else
+        { 
             bullet.gameObject.SetActive(false);
         }
     }
 
+    public override void CollideObjectEffect(GameObject obj)
+    {
+       bullet.SetActive(false);
+    }
+
     public override void PlayFeedback(int casterIndex, int[] targetsEntityIndexes, Vector3[] targetPositions)
     {
-        throw new System.NotImplementedException();
+        if (PhotonNetwork.IsMasterClient) return;
+        lookDir = targetPositions[0]-casterTransform.position;
+        lookDir.y = 0;
+        bullet = PoolLocalManager.Instance.PoolInstantiate(SOType.bulletPrefab, casterTransform.position, Quaternion.LookRotation(lookDir));
+        bullet.GetComponent<AffectCollider>().Launch(lookDir*SOType.bulletSpeed);
+        bullet.GetComponent<AffectCollider>().caster = caster;
     }
 }

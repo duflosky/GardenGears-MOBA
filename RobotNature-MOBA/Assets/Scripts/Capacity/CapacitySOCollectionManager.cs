@@ -60,7 +60,7 @@ namespace Entities.Capacities
             active.indexOfSOInCollection = soIndex;
             active.SO = Instance.allActiveCapacities[soIndex];
             active.caster = caster;
-            active.OnStarte();
+            active.OnStart();
             return active;
         }
 
