@@ -10,6 +10,7 @@ namespace Entities.Capacities
         public byte indexOfSOInCollection;
         public ActiveCapacitySO SO;
         public Entity caster;
+        protected Transform casterTransform;
         
         private double cooldownTimer;
         public bool onCooldown;
@@ -53,6 +54,7 @@ namespace Entities.Capacities
             if (!onCooldown)
             {
                 InitiateCooldown();
+                casterTransform = EntityCollectionManager.GetEntityByIndex(casterIndex).transform;
                 return true;
             }
             else return false;
