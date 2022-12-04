@@ -10,7 +10,7 @@ namespace Entities.Capacities
         public byte indexOfSOInCollection;
         public ActiveCapacitySO SO;
         public Entity caster;
-        protected Transform casterTransform;
+        public Transform casterTransform;
         
         private double cooldownTimer;
         public bool onCooldown;
@@ -19,6 +19,8 @@ namespace Entities.Capacities
         {
             return CapacitySOCollectionManager.GetActiveCapacitySOByIndex(indexOfSOInCollection);
         }
+
+        public abstract void OnStarte();
 
         #region Cast
 
@@ -54,7 +56,7 @@ namespace Entities.Capacities
             if (!onCooldown)
             {
                 InitiateCooldown();
-                casterTransform = EntityCollectionManager.GetEntityByIndex(casterIndex).transform;
+                //casterTransform = EntityCollectionManager.GetEntityByIndex(casterIndex).transform;
                 return true;
             }
             else return false;

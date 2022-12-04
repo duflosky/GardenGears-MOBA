@@ -12,7 +12,7 @@ namespace UI.InGame
         public void InstantiateHealthBarForEntity(int entityIndex)
         {
             var entity = EntityCollectionManager.GetEntityByIndex(entityIndex);
-            Debug.Log(entity);
+            //Debug.Log(entity);
             if (entity == null) return;
             if (entity.GetComponent<IActiveLifeable>() == null) return;
             var canvasHealth = Instantiate(healthBarPrefab, entity.TransformUI.position + entity.OffsetUI, Quaternion.identity, entity.TransformUI);

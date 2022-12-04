@@ -9,7 +9,12 @@ public class AutoAttackRange : ActiveCapacity
     private AutoAttackRangeSO SOType;
     private Vector3 lookDir;
     private AffectCollider bullet;
-    
+
+    public override void OnStarte()
+    {
+        SOType = (AutoAttackRangeSO)SO;
+    }
+
     public override bool TryCast(int casterIndex, int[] targetsEntityIndexes, Vector3[] targetPositions)
     {
         if(!base.TryCast(casterIndex, targetsEntityIndexes, targetPositions)) return false;

@@ -1,7 +1,9 @@
 using System;
 using System.Collections.Generic;
+using Photon.Pun;
 using UnityEngine;
 
+//[RequireComponent(typeof(PhotonView))]
 public class PoolLocalManager : MonoBehaviour
 {
     [Serializable]
@@ -16,6 +18,7 @@ public class PoolLocalManager : MonoBehaviour
     [SerializeField] private List<ElementData> poolElements;
 
     public static Dictionary<GameObject, Queue<GameObject>> queuesDictionary;
+
 
     private void Awake()
     {
@@ -86,4 +89,5 @@ public class PoolLocalManager : MonoBehaviour
         
         return returnGO;
     }
+
 }

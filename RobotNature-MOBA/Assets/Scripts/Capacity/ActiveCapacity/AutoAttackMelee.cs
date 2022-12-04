@@ -9,19 +9,26 @@ using UnityEngine;
 
 public class AutoAttackMelee : ActiveCapacity
 {
-    private AffectCollider collider;
-    private AutoAttackMeleeSO SOType;
+    private GameObject feedbackObject;
+    public AutoAttackMeleeSO SOType;
     private double timer;
     private Vector3 lookDir;
+
+
+    public override void OnStarte()
+    {
+        SOType = (AutoAttackMeleeSO)SO;
+        casterTransform = caster.transform;
+    }
 
     public override bool TryCast(int casterIndex, int[] targetsEntityIndexes, Vector3[] targetPositions)
     {
         if(!base.TryCast(casterIndex, targetsEntityIndexes, targetPositions)) return false;
-        SOType = (AutoAttackMeleeSO)SO;
+        //SOType = (AutoAttackMeleeSO)SO;
         lookDir = targetPositions[0]-casterTransform.position;
         lookDir.y = 0;
-        var zoneGO = PoolLocalManager.Instance.PoolInstantiate(SOType.damageZone, casterTransform.position, Quaternion.LookRotation(lookDir));
-        collider = zoneGO.GetComponent<AffectCollider>(); 
+        feedbackObject = PoolLocalManager.Instance.PoolInstantiate(SOType.damageZone, casterTransform.position, Quaternion.LookRotation(lookDir));
+        AffectCollider collider = feedbackObject.GetComponent<AffectCollider>(); 
         collider.GetComponent<SphereCollider>().radius = SOType.maxRange;
         collider.capacitySender = this;
         collider.caster = caster;
@@ -44,7 +51,6 @@ public class AutoAttackMelee : ActiveCapacity
                     //Critic
                     Debug.Log("Critic");
                     entityAffect.photonView.RPC("DecreaseCurrentHpRPC", RpcTarget.All, SOType.damageAmount*1.5f);
-                    //lifeable.DecreaseCurrentHpRPC(SOType.damageAmount*1.5f);
                 }
                 else
                 {
@@ -58,7 +64,15 @@ public class AutoAttackMelee : ActiveCapacity
 
     public override void PlayFeedback(int casterIndex, int[] targetsEntityIndexes, Vector3[] targetPositions)
     {
-        
+        Debug.Log("Play FeedBack");
+        if(PhotonNetwork.IsMasterClient) return;
+        Debug.Log("Play FeedBack as Client");
+        lookDir = targetPositions[0]-casterTransform.position;
+        lookDir.y = 0;
+        feedbackObject = PoolLocalManager.Instance.PoolInstantiate(SOType.damageZone, casterTransform.position, Quaternion.LookRotation(lookDir));
+       var col = feedbackObject.GetComponent<Collider>();
+       if (col) col.enabled = false;
+       GameStateMachine.Instance.OnTick += DisableObject;
     }
     
     
@@ -68,6 +82,6 @@ public class AutoAttackMelee : ActiveCapacity
         if(timer < 1.5f*GameStateMachine.Instance.tickRate)return;
         GameStateMachine.Instance.OnTick -= DisableObject;
         timer = 0;
-        collider.gameObject.SetActive(false);
+        feedbackObject.SetActive(false);
     }
 }
