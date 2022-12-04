@@ -26,7 +26,6 @@ public class AffectCollider : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         if (!PhotonNetwork.IsMasterClient) return;
-        Debug.Log($"CollideAffected: {other.name}");
         
         Entity entity = other.GetComponent<Entity>();
 
