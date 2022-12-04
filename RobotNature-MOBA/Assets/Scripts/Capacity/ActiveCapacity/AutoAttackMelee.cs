@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Entities;
 using Entities.Capacities;
 using GameStates;
+using Photon.Pun;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -19,8 +20,8 @@ public class AutoAttackMelee : ActiveCapacity
         SOType = (AutoAttackMeleeSO)SO;
         lookDir = targetPositions[0]-casterTransform.position;
         lookDir.y = 0;
-        var zoneGO = PoolLocalManager.Instance.PoolInstantiate(SOType.damageZone, casterTransform.position, Quaternion.LookRotation(lookDir) );
-        collider = zoneGO.GetComponent<AffectCollider>();
+        var zoneGO = PoolLocalManager.Instance.PoolInstantiate(SOType.damageZone, casterTransform.position, Quaternion.LookRotation(lookDir));
+        collider = zoneGO.GetComponent<AffectCollider>(); 
         collider.GetComponent<SphereCollider>().radius = SOType.maxRange;
         collider.capacitySender = this;
         collider.caster = caster;
@@ -42,7 +43,8 @@ public class AutoAttackMelee : ActiveCapacity
                 {
                     //Critic
                     Debug.Log("Critic");
-                    lifeable.DecreaseCurrentHpRPC(SOType.damageAmount*1.5f);
+                    entityAffect.photonView.RPC("DecreaseCurrentHpRPC", RpcTarget.All, SOType.damageAmount*1.5f);
+                    //lifeable.DecreaseCurrentHpRPC(SOType.damageAmount*1.5f);
                 }
                 else
                 {

@@ -306,8 +306,8 @@ MonoBehaviour:
   abilitiesIndexes: 0000
   ultimateAbilityIndex: 0
   canCast: 0
-  attackAffect: 0
-  abilitiesAffect: 0
+  attackAffect: 1
+  abilitiesAffect: 1
   maxResource: 100
   currentResource: 10
   isAlive: 1
