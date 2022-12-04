@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2355554548384556205}
+  - component: {fileID: 1082294273818369790}
   m_Layer: 29
   m_Name: Graph
   m_TagString: Untagged
@@ -31,6 +32,22 @@ Transform:
   m_Father: {fileID: 2072707834866526806}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1082294273818369790
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 348281418435240716}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SynchronizePosition: 1
+  m_SynchronizeRotation: 1
+  m_SynchronizeScale: 0
+  m_UseLocal: 1
 --- !u!1 &805723800655630349
 GameObject:
   m_ObjectHideFlags: 0
@@ -220,6 +237,7 @@ MonoBehaviour:
   observableSearch: 2
   ObservedComponents:
   - {fileID: 5216063283110905563}
+  - {fileID: 1082294273818369790}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
