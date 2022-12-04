@@ -20,7 +20,7 @@ namespace Entities.Capacities
             return CapacitySOCollectionManager.GetActiveCapacitySOByIndex(indexOfSOInCollection);
         }
 
-        public abstract void OnStarte();
+        public abstract void OnStart();
 
         #region Cast
 
@@ -56,15 +56,19 @@ namespace Entities.Capacities
             if (!onCooldown)
             {
                 InitiateCooldown();
-                //casterTransform = EntityCollectionManager.GetEntityByIndex(casterIndex).transform;
                 return true;
             }
             else return false;
         }
 
-        public virtual void CollideEffect(Entity entityAffect)
+        public virtual void CollideEntityEffect(Entity entityAffect)
         {
             
+        }
+
+        public virtual void CollideObjectEffect(GameObject obj)
+        {
+            Debug.Log("Collide Obejct");
         }
 
         public virtual bool isInRange(int casterIndex, Vector3 position)

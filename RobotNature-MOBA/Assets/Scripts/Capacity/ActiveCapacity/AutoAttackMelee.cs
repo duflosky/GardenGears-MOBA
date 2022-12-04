@@ -15,7 +15,7 @@ public class AutoAttackMelee : ActiveCapacity
     private Vector3 lookDir;
 
 
-    public override void OnStarte()
+    public override void OnStart()
     {
         SOType = (AutoAttackMeleeSO)SO;
         casterTransform = caster.transform;
@@ -36,7 +36,7 @@ public class AutoAttackMelee : ActiveCapacity
         return true;
     }
 
-    public override void CollideEffect(Entity entityAffect)
+    public override void CollideEntityEffect(Entity entityAffect)
     {
         IActiveLifeable lifeable = entityAffect.GetComponent<IActiveLifeable>();
         if (lifeable != null)

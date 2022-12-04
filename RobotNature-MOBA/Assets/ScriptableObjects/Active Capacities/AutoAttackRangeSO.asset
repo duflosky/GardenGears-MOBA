@@ -21,6 +21,10 @@ MonoBehaviour:
   maxRange: 0
   types: 
   shootType: 0
-  indexInCollection: 0
+  indexInCollection: 1
   feedbackDuration: 0
   feedbackPrefab: {fileID: 0}
+  bulletPrefab: {fileID: 8739522949654536987, guid: 0bf2acb7ad65c8945a9300e6946c16c4,
+    type: 3}
+  bulletSpeed: 1
+  bulletDamage: 2

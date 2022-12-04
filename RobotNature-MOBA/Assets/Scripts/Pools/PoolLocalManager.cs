@@ -85,6 +85,7 @@ public class PoolLocalManager : MonoBehaviour
             queuesDictionary.Add(GORef, new Queue<GameObject>());
             
             returnGO = Instantiate(GORef, position, rotation, parent);
+            var queuer = returnGO.AddComponent<Enqueuer>();
         }
         
         return returnGO;
