@@ -82,6 +82,6 @@ public class AutoAttackMelee : ActiveCapacity
         if(timer < 1.5f*GameStateMachine.Instance.tickRate)return;
         GameStateMachine.Instance.OnTick -= DisableObject;
         timer = 0;
-        feedbackObject.SetActive(false);
+        if(feedbackObject)feedbackObject.SetActive(false);
     }
 }
