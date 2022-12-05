@@ -54,7 +54,7 @@ public class AutoAttackRange : ActiveCapacity
 
     public override void CollideObjectEffect(GameObject obj)
     {
-       bullet.SetActive(false);
+       collider.Disable();
     }
 
     public override void PlayFeedback(int casterIndex, int[] targetsEntityIndexes, Vector3[] targetPositions)

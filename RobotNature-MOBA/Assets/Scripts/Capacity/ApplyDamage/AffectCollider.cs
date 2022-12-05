@@ -44,7 +44,7 @@ public class AffectCollider : Entity
         else if (!entity && !affectEntityOnly)
         {
             Debug.Log("No entity");
-            Disable();
+            capacitySender.CollideObjectEffect(other.gameObject);
         }
     }
     
