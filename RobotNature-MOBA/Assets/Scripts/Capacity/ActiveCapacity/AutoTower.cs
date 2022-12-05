@@ -9,10 +9,7 @@ public class AutoTower : ActiveCapacity
     private Tower _tower;
     private double timer;
 
-    public override void OnStart()
-    {
-        Debug.Log("Shooting bullets");
-    }
+    public override void OnStart() { }
 
     public override bool TryCast(int casterIndex, int[] targetsEntityIndexes, Vector3[] targetPositions)
     {
@@ -26,9 +23,7 @@ public class AutoTower : ActiveCapacity
         return true;
     }
 
-    public override void PlayFeedback(int casterIndex, int[] targetsEntityIndexes, Vector3[] targetPositions)
-    {
-    }
+    public override void PlayFeedback(int casterIndex, int[] targetsEntityIndexes, Vector3[] targetPositions) { }
     
     private void DelayWaitingTick()
     {
@@ -45,9 +40,8 @@ public class AutoTower : ActiveCapacity
     {
         if (Vector3.Distance(_tower.transform.position, _target.transform.position) < _tower.detectionRange)
         {
-            Debug.Log("Apply Effect Auto");
             IActiveLifeable entityActiveLifeable = _target.GetComponent<IActiveLifeable>();
-            entityActiveLifeable.DecreaseCurrentHpRPC(_tower.damage); 
+            entityActiveLifeable.RequestDecreaseCurrentHp(_tower.damage); 
         }
     }
 }

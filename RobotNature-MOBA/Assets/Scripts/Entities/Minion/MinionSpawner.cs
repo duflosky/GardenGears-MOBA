@@ -3,7 +3,10 @@ using System.Collections.Generic;
 using Entities;
 using Entities.Building;
 using Entities.Minion;
+using Photon.Pun;
 using UnityEngine;
+
+// TODO: Add a way to spawn minions at the start of the game not immediately after the scene loads
 
 public class MinionSpawner : Building
 {
@@ -26,7 +29,7 @@ public class MinionSpawner : Building
         spawnCycleTime += Time.deltaTime;
         if (spawnCycleTime >= spawnSpeed)
         {
-            StartCoroutine(SpawnMinionCo());
+            if (PhotonNetwork.LocalPlayer.IsMasterClient) StartCoroutine(SpawnMinionCo());
             spawnCycleTime = 0;
         }
     }
