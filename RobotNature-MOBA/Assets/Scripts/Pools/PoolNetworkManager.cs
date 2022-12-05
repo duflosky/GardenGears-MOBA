@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using Entities;
 using Photon.Pun;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PoolNetworkManager : MonoBehaviour
@@ -66,6 +67,9 @@ public class PoolNetworkManager : MonoBehaviour
             if (queue.Count == 0)
             {
                 entity = PhotonNetwork.Instantiate(entityRef.gameObject.name, position, rotation).GetComponent<Entity>();
+                var enqueuer = entity.AddComponent<Enqueuer>();
+                enqueuer.isLocal = false;
+                enqueuer.entityRef = entityRef;
                 // entity.OnInstantiated();
                 // entity.OnInstantiatedFeedback();
             }
@@ -81,8 +85,17 @@ public class PoolNetworkManager : MonoBehaviour
             queuesDictionary.Add(entityRef, new Queue<Entity>());
             
             entity = PhotonNetwork.Instantiate(entityRef.gameObject.name, position, rotation).GetComponent<Entity>();
+            var enqueuer = entity.AddComponent<Enqueuer>();
+            enqueuer.isLocal = false;
+            enqueuer.entityRef = entityRef;
         }
 
         return entity;
+    }
+
+
+    public void EnqueuePool(Entity entityRef, Entity entity)
+    {
+        queuesDictionary[entityRef].Enqueue(entity);
     }
 }

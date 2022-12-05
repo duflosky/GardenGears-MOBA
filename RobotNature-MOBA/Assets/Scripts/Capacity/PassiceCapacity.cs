@@ -17,9 +17,9 @@ namespace Entities.Capacities
         protected Entity entity;
         
         
-        public void OnAdded(Entity target)
+        public void OnAdded(Entity target, int amount)
         {
-            if (stackable) count++;
+            if (stackable) count+= amount;
             entity = target;
             Debug.Log("onadded");
             OnAddedEffects(entity);

@@ -95,6 +95,8 @@ GameObject:
   - component: {fileID: -5931017334800636100}
   - component: {fileID: 2118353905633772010}
   - component: {fileID: 2860758946025365765}
+  - component: {fileID: -8164060901906245578}
+  - component: {fileID: 3450819169442172253}
   m_Layer: 0
   m_Name: Bullet
   m_TagString: Untagged
@@ -130,8 +132,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 83f69c13c5845754aba87db2d96d43fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  entityIndex: 0
+  canAddPassiveCapacity: 1
+  canRemovePassiveCapacity: 1
+  TransformUI: {fileID: 0}
+  OffsetUI: {x: 0, y: 2, z: 0}
+  canShow: 0
+  canHide: 0
+  elementsToShow: []
+  canChangeTeam: 0
+  team: 0
+  baseViewRange: 0
+  viewRange: 0
+  viewAngle: 0
+  canView: 0
+  meshFilterFoV: {fileID: 0}
+  fogOfWarStartDetection: {fileID: 0}
   caster: {fileID: 0}
   effectIndex: 
+  affectEntityOnly: 0
 --- !u!54 &2118353905633772010
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -162,3 +181,42 @@ CapsuleCollider:
   m_Height: 0
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &-8164060901906245578
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8739522949654536987}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents:
+  - {fileID: 3450819169442172253}
+  sceneViewId: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
+--- !u!114 &3450819169442172253
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8739522949654536987}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SynchronizePosition: 1
+  m_SynchronizeRotation: 1
+  m_SynchronizeScale: 0
+  m_UseLocal: 1

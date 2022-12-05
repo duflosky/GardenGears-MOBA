@@ -318,19 +318,19 @@ MonoBehaviour:
   fogOfWarStartDetection: {fileID: 3250246203560208442}
   championSo: {fileID: 0}
   items: []
-  referenceMoveSpeed: 10
-  rotateParent: {fileID: 2355554548384556205}
-  currentRotateSpeed: 10
+  attackAffect: 1
+  abilitiesAffect: 1
   abilitiesIndexes: 0000
   ultimateAbilityIndex: 0
   canCast: 0
-  attackAffect: 1
-  abilitiesAffect: 1
-  maxResource: 100
-  currentResource: 10
   isAlive: 1
   canDie: 1
   respawnDuration: 3
+  referenceMoveSpeed: 10
+  rotateParent: {fileID: 2355554548384556205}
+  currentRotateSpeed: 10
+  maxResource: 100
+  currentResource: 10
   references:
     version: 2
     RefIds: []
