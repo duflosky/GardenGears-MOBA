@@ -57,7 +57,6 @@ namespace Entities.Minion
             myAgent = GetComponent<NavMeshAgent>();
             myController = GetComponent<MinionController>();
             currentHealth = maxHealth;
-            Debug.Log("OnStart ? " + gameObject.name);
         }
 
         #region State Methods
@@ -123,8 +122,7 @@ namespace Entities.Minion
 
         private void CheckObjectives()
         {
-            if (!TowersList[towerIndex].isAlive)
-                return;
+            if (!TowersList[towerIndex].isAlive) return;
 
             if (Vector3.Distance(transform.position, TowersList[towerIndex].transform.position) > attackRange)
             {
