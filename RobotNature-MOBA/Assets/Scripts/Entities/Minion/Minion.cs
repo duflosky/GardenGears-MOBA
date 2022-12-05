@@ -19,7 +19,7 @@ namespace Entities.Minion
         [Header("Pathfinding")] 
         public List<Transform> myWaypoints = new List<Transform>();
         public List<Building.Building> TowersList = new List<Building.Building>();
-        public int wayPointIndex;
+        public int waypointIndex;
         public int towerIndex;
 
         public enum MinionAggroState
@@ -45,13 +45,11 @@ namespace Entities.Minion
         public List<GameObject> whoIsAttackingMe = new List<GameObject>();
         public bool attackCycle;
 
-        [Header("Stats")] 
-        public float currentHealth;
+        [Header("Stats")]
         public float attackDamage;
         public float attackSpeed;
         [Range(2, 8)] public float attackRange;
         public float delayBeforeAttack;
-        public float maxHealth;
 
         #endregion
 
@@ -60,7 +58,7 @@ namespace Entities.Minion
             base.OnStart();
             myAgent = GetComponent<NavMeshAgent>();
             myController = GetComponent<MinionController>();
-            currentHealth = maxHealth;
+            currentHp = maxHp;
             UI.InGame.UIManager.Instance.InstantiateHealthBarForEntity(entityIndex);
             UI.InGame.UIManager.Instance.InstantiateResourceBarForEntity(entityIndex);
         }
@@ -82,8 +80,17 @@ namespace Entities.Minion
 
         public void LookingForPathingState()
         {
-            myAgent.SetDestination(myWaypoints[wayPointIndex].position);
-            myController.currentState = MinionController.MinionState.Walking;
+            if (myWaypoints is null) return;
+            if (myWaypoints.Count > 0)
+            {
+                myAgent.SetDestination(myWaypoints[waypointIndex].position);
+                myController.currentState = MinionController.MinionState.Walking;
+            }
+            else
+            {
+                myController.currentState = MinionController.MinionState.Idle;
+            }
+            
         }
 
         public void AttackingState()
@@ -132,12 +139,12 @@ namespace Entities.Minion
 
         private void CheckMyWaypoints()
         {
-            if (Vector3.Distance(transform.position, myWaypoints[wayPointIndex].transform.position) <= myAgent.stoppingDistance)
+            if (Vector3.Distance(transform.position, myWaypoints[waypointIndex].transform.position) <= myAgent.stoppingDistance)
             {
-                if (wayPointIndex < myWaypoints.Count - 1)
+                if (waypointIndex < myWaypoints.Count - 1)
                 {
-                    wayPointIndex++;
-                    myAgent.SetDestination(myWaypoints[wayPointIndex].position);
+                    waypointIndex++;
+                    myAgent.SetDestination(myWaypoints[waypointIndex].position);
                 }
                 else
                 {
@@ -148,6 +155,7 @@ namespace Entities.Minion
 
         private void CheckObjectives()
         {
+            if (TowersList is null) return;
             if (!TowersList[towerIndex].isAlive) return;
 
             if (Vector3.Distance(transform.position, TowersList[towerIndex].transform.position) > attackRange)
@@ -197,7 +205,7 @@ namespace Entities.Minion
         {
             int[] targetEntity = new[] { target.GetComponent<Entity>().entityIndex };
 
-            AttackRPC(2, targetEntity, Array.Empty<Vector3>());
+            RequestAttack(2, targetEntity, Array.Empty<Vector3>());
         }
 
         #region Attackable
@@ -483,7 +491,7 @@ namespace Entities.Minion
 
         [SerializeField] private bool attackAffected = true;
         [SerializeField] private bool abilitiesAffected = true;
-        private float maxHp;
+        [SerializeField] private float maxHp;
         private float currentHp;
 
         public float GetMaxHp()
@@ -631,11 +639,11 @@ namespace Entities.Minion
 
         public void RequestDecreaseCurrentHp(float amount)
         {
-            photonView.RPC("SyncDecreaseCurrentHpRPC", RpcTarget.MasterClient, amount);
+            photonView.RPC("DecreaseCurrentHpRPC", RpcTarget.MasterClient, amount);
         }
 
         [PunRPC]
-        public void DecreaseCurrentHpRPC(float amount)
+        public void SyncDecreaseCurrentHpRPC(float amount)
         {
             currentHp = amount;
             if (currentHp <= 0)
@@ -647,11 +655,11 @@ namespace Entities.Minion
         }
 
         [PunRPC]
-        public void SyncDecreaseCurrentHpRPC(float amount)
+        public void DecreaseCurrentHpRPC(float amount)
         {
             currentHp -= amount;
             OnDecreaseCurrentHp?.Invoke(amount);
-            photonView.RPC("DecreaseCurrentHpRPC", RpcTarget.All, currentHp);
+            photonView.RPC("SyncDecreaseCurrentHpRPC", RpcTarget.All, currentHp);
         }
 
         public event GlobalDelegates.FloatDelegate OnDecreaseCurrentHp;
@@ -705,8 +713,7 @@ namespace Entities.Minion
         {
             PoolNetworkManager.Instance.PoolRequeue(this);
             FogOfWarManager.Instance.RemoveFOWViewable(this);
-            // gameObject.SetActive(false);
-            Destroy(gameObject);
+            gameObject.SetActive(false);
         }
 
         [PunRPC]

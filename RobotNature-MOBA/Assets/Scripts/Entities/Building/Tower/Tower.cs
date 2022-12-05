@@ -355,10 +355,11 @@ public class Tower : Building, IAttackable, IActiveLifeable, IDeadable
         
         photonView.RPC("SyncDecreaseCurrentHpRPC", RpcTarget.All, currentHealth);
         
+        //TODO: Turrel cannot die
         if (currentHealth <= 0 && isAlive)
         {
-            RequestDie();
             isAlive = false;
+            RequestDie();
         }
     }
 
