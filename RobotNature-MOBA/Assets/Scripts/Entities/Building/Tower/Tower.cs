@@ -17,7 +17,7 @@ public class Tower : Building, IAttackable, IActiveLifeable, IDeadable
     public float delayBeforeAttack;
     public float detectionDelay;
     public float brainSpeed;
-    public float timeBewteenShots;
+    public float timeBetweenShots;
     public LayerMask canBeHitByTowerMask;
     public bool isCycleAttack = false;
     public string enemyUnit;
@@ -30,7 +30,6 @@ public class Tower : Building, IAttackable, IActiveLifeable, IDeadable
         if (brainTimer > brainSpeed)
         {
             TowerDetection();
-            Debug.Log("TowerDetection() " + gameObject.name);
             brainTimer = 0;
         }
     }
@@ -66,7 +65,7 @@ public class Tower : Building, IAttackable, IActiveLifeable, IDeadable
         
         AttackRPC(3, targetEntity, Array.Empty<Vector3>());
         
-        yield return new WaitForSeconds(timeBewteenShots);
+        yield return new WaitForSeconds(timeBetweenShots);
         isCycleAttack = false;
     }
 

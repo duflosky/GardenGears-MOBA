@@ -57,7 +57,6 @@ public partial class Champion : Entity, IMovable, IInventoryable, IResourceable,
         currentMoveSpeed = referenceMoveSpeed;
         //attackDamage = championSo.attackDamage;
         //attackAbilityIndex = championSo.attackAbilityIndex;
-        // TODO : Instantiate mesh champion ?
         var championMesh = Instantiate(championSo.championMeshPrefab, rotateParent.position, Quaternion.identity, rotateParent);
         championMesh.transform.localEulerAngles = Vector3.zero;
         abilitiesIndexes = championSo.activeCapacitiesIndexes;
