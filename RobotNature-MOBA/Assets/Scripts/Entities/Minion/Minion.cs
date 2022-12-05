@@ -2,20 +2,22 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Entities.Capacities;
+using Entities.FogOfWar;
 using Photon.Pun;
 using UnityEngine;
 using UnityEngine.AI;
 
 namespace Entities.Minion
 {
-    public class MinionTest : Entity, IMovable, IAttackable, IActiveLifeable
+    public class Minion : Entity, IMovable, IAttackable, IActiveLifeable
     {
-        #region MinionVariables
+        #region Minion Variables
 
         public NavMeshAgent myAgent;
         private MinionController myController;
 
-        [Header("Pathfinding")] public List<Transform> myWaypoints = new List<Transform>();
+        [Header("Pathfinding")] 
+        public List<Transform> myWaypoints = new List<Transform>();
         public List<Building.Building> TowersList = new List<Building.Building>();
         public int wayPointIndex;
         public int towerIndex;
@@ -35,14 +37,16 @@ namespace Entities.Minion
             Champion
         }
 
-        [Header("Attack Logic")] public MinionAggroState currentAggroState = MinionAggroState.None;
+        [Header("Attack Logic")] 
+        public MinionAggroState currentAggroState = MinionAggroState.None;
         public MinionAggroPreferences whoAggro = MinionAggroPreferences.Tower;
         public LayerMask enemyMinionMask;
         public GameObject currentAttackTarget;
         public List<GameObject> whoIsAttackingMe = new List<GameObject>();
         public bool attackCycle;
 
-        [Header("Stats")] public float currentHealth;
+        [Header("Stats")] 
+        public float currentHealth;
         public float attackDamage;
         public float attackSpeed;
         [Range(2, 8)] public float attackRange;
@@ -57,6 +61,8 @@ namespace Entities.Minion
             myAgent = GetComponent<NavMeshAgent>();
             myController = GetComponent<MinionController>();
             currentHealth = maxHealth;
+            UI.InGame.UIManager.Instance.InstantiateHealthBarForEntity(entityIndex);
+            UI.InGame.UIManager.Instance.InstantiateResourceBarForEntity(entityIndex);
         }
 
         #region State Methods
@@ -69,9 +75,9 @@ namespace Entities.Minion
 
         public void WalkingState()
         {
-            CheckMyWayPoints();
+            CheckMyWaypoints();
             CheckObjectives();
-            //CheckEnemiesMinion();
+            CheckEnemiesMinion();
         }
 
         public void LookingForPathingState()
@@ -82,31 +88,51 @@ namespace Entities.Minion
 
         public void AttackingState()
         {
-            if (TowersList[towerIndex].isAlive)
+            if (currentAggroState == MinionAggroState.Minion)
             {
-                var q = Quaternion.LookRotation(currentAttackTarget.transform.position - transform.position);
-                transform.rotation = Quaternion.RotateTowards(transform.rotation, q, 50f * Time.deltaTime);
-
-                if (attackCycle == false)
+                if (currentAttackTarget.activeSelf)
                 {
-                    StartCoroutine(AttackLogic());
+                    var q = Quaternion.LookRotation(currentAttackTarget.transform.position - transform.position);
+                    transform.rotation = Quaternion.RotateTowards(transform.rotation, q, 50f * Time.deltaTime);
+
+                    if (attackCycle == false)
+                    {
+                        StartCoroutine(AttackLogic());
+                    }
+                }
+                else
+                {
+                    myController.currentState = MinionController.MinionState.LookingForPathing;
+                    currentAggroState = MinionAggroState.None;
+                    currentAttackTarget = null;
                 }
             }
-            else
+            else if (currentAggroState == MinionAggroState.Tower)
             {
-                myController.currentState = MinionController.MinionState.LookingForPathing;
-                currentAggroState = MinionAggroState.None;
-                currentAttackTarget = null;
-                towerIndex++;
+                if (TowersList[towerIndex].isAlive)
+                {
+                    var q = Quaternion.LookRotation(currentAttackTarget.transform.position - transform.position);
+                    transform.rotation = Quaternion.RotateTowards(transform.rotation, q, 50f * Time.deltaTime);
+                    if (attackCycle == false)
+                    {
+                        StartCoroutine(AttackLogic());
+                    }
+                }
+                else
+                {
+                    myController.currentState = MinionController.MinionState.LookingForPathing;
+                    currentAggroState = MinionAggroState.None;
+                    currentAttackTarget = null;
+                    towerIndex++;
+                }
             }
         }
 
         #endregion
 
-        private void CheckMyWayPoints()
+        private void CheckMyWaypoints()
         {
-            if (Vector3.Distance(transform.position, myWaypoints[wayPointIndex].transform.position) <=
-                myAgent.stoppingDistance /* Definir range de detection des waypoints en variable si besoin*/)
+            if (Vector3.Distance(transform.position, myWaypoints[wayPointIndex].transform.position) <= myAgent.stoppingDistance)
             {
                 if (wayPointIndex < myWaypoints.Count - 1)
                 {
@@ -136,6 +162,24 @@ namespace Entities.Minion
                 currentAttackTarget = TowersList[towerIndex].gameObject;
             }
         }
+        
+        private void CheckEnemiesMinion()
+        {
+            var size = Physics.OverlapSphere(transform.position, attackRange, enemyMinionMask);
+            if (size.Length < 1) return;
+        
+            for (int i = 0; i < size.Length; i++)
+            {
+                if (!size[i].CompareTag(gameObject.tag))
+                {
+                    myAgent.SetDestination(transform.position);
+                    myController.currentState = MinionController.MinionState.Attacking;
+                    currentAggroState = MinionAggroState.Minion;
+                    currentAttackTarget = size[i].gameObject;
+                    break;
+                }
+            }
+        }
 
         private IEnumerator AttackLogic()
         {
@@ -143,14 +187,14 @@ namespace Entities.Minion
             {
                 attackCycle = true;
                 AttackTarget(currentAttackTarget);
+                // TODO: Already have cooldown in Capacity, remove this
                 yield return new WaitForSeconds(attackSpeed);
                 attackCycle = false;
             }
         }
 
-        private void AttackTarget(GameObject target) // Attaque de l'entité référencée 
+        private void AttackTarget(GameObject target)
         {
-            Debug.Log("Attack by " + gameObject.name);
             int[] targetEntity = new[] { target.GetComponent<Entity>().entityIndex };
 
             AttackRPC(2, targetEntity, Array.Empty<Vector3>());
@@ -158,9 +202,11 @@ namespace Entities.Minion
 
         #region Attackable
 
+        private bool canAttack = true;
+        
         public bool CanAttack()
         {
-            throw new System.NotImplementedException();
+            return canAttack;
         }
 
         public void RequestSetCanAttack(bool value)
@@ -310,18 +356,6 @@ namespace Entities.Minion
         public event GlobalDelegates.FloatDelegate OnDecreaseAttackSpeedFeedback;
 
         #endregion
-
-        // TODO: Instantiated on Entity
-        /*
-        public override void OnInstantiated()
-        {
-            base.OnInstantiated();
-        }
-
-        public override void OnInstantiatedFeedback()
-        {
-        }
-        */
         
         #region Moveable
 
@@ -446,45 +480,52 @@ namespace Entities.Minion
         #endregion
 
         #region ActiveLifeable
-        
-        public bool AttackAffected()
-        {
-            throw new NotImplementedException();
-        }
 
-        public bool AbilitiesAffected()
-        {
-            throw new NotImplementedException();
-        }
+        [SerializeField] private bool attackAffected = true;
+        [SerializeField] private bool abilitiesAffected = true;
+        private float maxHp;
+        private float currentHp;
 
         public float GetMaxHp()
         {
-            throw new NotImplementedException();
+            return maxHp;
         }
 
         public float GetCurrentHp()
         {
-            throw new NotImplementedException();
+            return currentHp;
         }
 
-        public float GetCurrentHpPercent()
+        public bool AttackAffected()
         {
-            throw new NotImplementedException();
+            return attackAffected;
+        }
+
+        public bool AbilitiesAffected()
+        {
+            return abilitiesAffected;
         }
 
         public void RequestSetMaxHp(float value)
         {
-            throw new NotImplementedException();
+            photonView.RPC("SetMaxHpRPC", RpcTarget.MasterClient, value);
         }
 
+        [PunRPC]
         public void SyncSetMaxHpRPC(float value)
         {
-            throw new NotImplementedException();
+            maxHp = value;
+            currentHp = value;
+            OnSetMaxHpFeedback?.Invoke(value);
         }
 
+        [PunRPC]
         public void SetMaxHpRPC(float value)
         {
-            throw new NotImplementedException();
+            maxHp = value;
+            currentHp = value;
+            OnSetMaxHp?.Invoke(value);
+            photonView.RPC("SyncSetMaxHpRPC", RpcTarget.All, maxHp);
         }
 
         public event GlobalDelegates.FloatDelegate OnSetMaxHp;
@@ -492,17 +533,25 @@ namespace Entities.Minion
 
         public void RequestIncreaseMaxHp(float amount)
         {
-            throw new NotImplementedException();
+            photonView.RPC("IncreaseMaxHpRPC", RpcTarget.MasterClient, amount);
         }
 
+        [PunRPC]
         public void SyncIncreaseMaxHpRPC(float amount)
         {
-            throw new NotImplementedException();
+            maxHp = amount;
+            currentHp = amount;
+            OnIncreaseMaxHpFeedback?.Invoke(amount);
         }
 
+        [PunRPC]
         public void IncreaseMaxHpRPC(float amount)
         {
-            throw new NotImplementedException();
+            maxHp += amount;
+            currentHp = amount;
+            if (maxHp < currentHp) currentHp = maxHp;
+            OnIncreaseMaxHp?.Invoke(amount);
+            photonView.RPC("SyncIncreaseMaxHpRPC", RpcTarget.All, maxHp);
         }
 
         public event GlobalDelegates.FloatDelegate OnIncreaseMaxHp;
@@ -510,17 +559,24 @@ namespace Entities.Minion
 
         public void RequestDecreaseMaxHp(float amount)
         {
-            throw new NotImplementedException();
+            photonView.RPC("DecreaseMaxHpRPC", RpcTarget.MasterClient, amount);
         }
 
+        [PunRPC]
         public void SyncDecreaseMaxHpRPC(float amount)
         {
-            throw new NotImplementedException();
+            maxHp = amount;
+            if (maxHp < currentHp) currentHp = maxHp;
+            OnDecreaseMaxHpFeedback?.Invoke(amount);
         }
 
+        [PunRPC]
         public void DecreaseMaxHpRPC(float amount)
         {
-            throw new NotImplementedException();
+            maxHp -= amount;
+            if (maxHp < currentHp) currentHp = maxHp;
+            OnDecreaseMaxHp?.Invoke(amount);
+            photonView.RPC("SyncDecreaseMaxHpRPC", RpcTarget.All, maxHp);
         }
 
         public event GlobalDelegates.FloatDelegate OnDecreaseMaxHp;
@@ -528,17 +584,22 @@ namespace Entities.Minion
 
         public void RequestSetCurrentHp(float value)
         {
-            throw new NotImplementedException();
+            photonView.RPC("SetCurrentHpRPC", RpcTarget.MasterClient, value);
         }
 
+        [PunRPC]
         public void SyncSetCurrentHpRPC(float value)
         {
-            throw new NotImplementedException();
+            currentHp = value;
+            OnSetCurrentHpFeedback?.Invoke(value);
         }
 
+        [PunRPC]
         public void SetCurrentHpRPC(float value)
         {
-            throw new NotImplementedException();
+            currentHp = value;
+            OnSetCurrentHp?.Invoke(value);
+            photonView.RPC("SyncSetCurrentHpRPC", RpcTarget.All, value);
         }
 
         public event GlobalDelegates.FloatDelegate OnSetCurrentHp;
@@ -546,17 +607,23 @@ namespace Entities.Minion
 
         public void RequestIncreaseCurrentHp(float amount)
         {
-            throw new NotImplementedException();
+            photonView.RPC("IncreaseCurrentHpRPC", RpcTarget.MasterClient, amount);
         }
 
+        [PunRPC]
         public void SyncIncreaseCurrentHpRPC(float amount)
         {
-            throw new NotImplementedException();
+            currentHp = amount;
+            OnIncreaseCurrentHpFeedback?.Invoke(amount);
         }
 
+        [PunRPC]
         public void IncreaseCurrentHpRPC(float amount)
         {
-            throw new NotImplementedException();
+            currentHp += amount;
+            if (currentHp > maxHp) currentHp = maxHp;
+            OnIncreaseCurrentHp?.Invoke(amount);
+            photonView.RPC("SyncIncreaseCurrentHpRPC", RpcTarget.All, currentHp);
         }
 
         public event GlobalDelegates.FloatDelegate OnIncreaseCurrentHp;
@@ -564,28 +631,27 @@ namespace Entities.Minion
 
         public void RequestDecreaseCurrentHp(float amount)
         {
-            Debug.Log(gameObject.name + " attack :" + currentAttackTarget.name + " : with " + amount + " damages");
-            photonView.RPC("DecreaseCurrentHpRPC", RpcTarget.MasterClient, amount);
-        }
-
-        [PunRPC]
-        public void SyncDecreaseCurrentHpRPC(float amount)
-        {
-            currentHealth = amount;
+            photonView.RPC("SyncDecreaseCurrentHpRPC", RpcTarget.MasterClient, amount);
         }
 
         [PunRPC]
         public void DecreaseCurrentHpRPC(float amount)
         {
-            currentHealth -= amount;
-            if (currentHealth < 0) currentHealth = 0;
-
-            photonView.RPC("SyncDecreaseCurrentHpRPC", RpcTarget.All, currentHealth);
-
-            if (currentHealth <= 0)
+            currentHp = amount;
+            if (currentHp <= 0)
             {
+                currentHp = 0;
                 RequestDie();
             }
+            OnDecreaseCurrentHpFeedback?.Invoke(amount);
+        }
+
+        [PunRPC]
+        public void SyncDecreaseCurrentHpRPC(float amount)
+        {
+            currentHp -= amount;
+            OnDecreaseCurrentHp?.Invoke(amount);
+            photonView.RPC("DecreaseCurrentHpRPC", RpcTarget.All, currentHp);
         }
 
         public event GlobalDelegates.FloatDelegate OnDecreaseCurrentHp;
@@ -595,29 +661,35 @@ namespace Entities.Minion
         
         #region Deadable
 
+        public bool isAlive;
+        public bool canDie; 
+        
         public bool IsAlive()
         {
-            throw new NotImplementedException();
+            return isAlive;
         }
 
         public bool CanDie()
         {
-            throw new NotImplementedException();
+            return canDie;
         }
 
         public void RequestSetCanDie(bool value)
         {
-            throw new NotImplementedException();
+            photonView.RPC("SetCanDieRPC", RpcTarget.MasterClient, value);
         }
 
         public void SyncSetCanDieRPC(bool value)
         {
-            throw new NotImplementedException();
+            canDie = value;
+            OnSetCanDieFeedback?.Invoke(value);
         }
 
         public void SetCanDieRPC(bool value)
         {
-            throw new NotImplementedException();
+            canDie = value;
+            OnSetCanDie?.Invoke(value);
+            photonView.RPC("SyncSetCanDieRPC", RpcTarget.All, value);
         }
 
         public event GlobalDelegates.BoolDelegate OnSetCanDie;
@@ -631,10 +703,10 @@ namespace Entities.Minion
         [PunRPC]
         public void SyncDieRPC()
         {
-            // TODO: Requeue and FOW
-            // PoolNetworkManager.Instance.PoolRequeue(this);
-            // FogOfWarManager.Instance.RemoveFOWViewable(this);
-            gameObject.SetActive(false);
+            PoolNetworkManager.Instance.PoolRequeue(this);
+            FogOfWarManager.Instance.RemoveFOWViewable(this);
+            // gameObject.SetActive(false);
+            Destroy(gameObject);
         }
 
         [PunRPC]
@@ -648,17 +720,19 @@ namespace Entities.Minion
 
         public void RequestRevive()
         {
-            throw new NotImplementedException();
+            
         }
 
+        [PunRPC]
         public void SyncReviveRPC()
         {
-            throw new NotImplementedException();
+            
         }
 
+        [PunRPC]
         public void ReviveRPC()
         {
-            throw new NotImplementedException();
+            
         }
 
         public event GlobalDelegates.NoParameterDelegate OnRevive;

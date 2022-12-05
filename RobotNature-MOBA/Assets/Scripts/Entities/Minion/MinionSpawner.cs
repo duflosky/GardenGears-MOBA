@@ -18,9 +18,11 @@ public class MinionSpawner : Building
     public List<Building> enemyTowers = new List<Building>();
     public string unitTag;
     
+    //TODO: Possibility to use GameState to spawn minions
     private void Update()
     {
         // Spawn de minion
+        // TODO: Find a way to stop the spawn when too many minions are on the map
         spawnCycleTime += Time.deltaTime;
         if (spawnCycleTime >= spawnSpeed)
         {
@@ -42,9 +44,10 @@ public class MinionSpawner : Building
     {
         Entity minionGO = PoolNetworkManager.Instance.PoolInstantiate(minionPrefab, spawnPointForMinion.position, Quaternion.identity, transform.root.root.root.root);
         
-        MinionTest minionScript = minionGO.GetComponent<MinionTest>();
+        Minion minionScript = minionGO.GetComponent<Minion>();
         minionScript.myWaypoints = pathfinding;
         minionScript.TowersList = enemyTowers;
+        minionScript.team = unitTag.Contains(Enums.Team.Team1.ToString()) ? Enums.Team.Team1 : Enums.Team.Team2;
         minionScript.tag = unitTag;
         minionGO.GetComponent<MeshRenderer>().material.color = minionColor;
     }

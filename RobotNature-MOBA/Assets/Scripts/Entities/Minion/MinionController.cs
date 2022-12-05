@@ -9,11 +9,11 @@ namespace Entities.Minion
         public MinionState currentState = MinionState.Idle;
         public float brainSpeed = .7f;
         private float brainTimer;
-        private MinionTest myMinionTest;
+        private Minion myMinion;
     
         private void Start()
         {
-            myMinionTest = controlledEntity.GetComponent<MinionTest>();
+            myMinion = controlledEntity.GetComponent<Minion>();
             currentState = MinionState.LookingForPathing;
         }
     
@@ -32,10 +32,10 @@ namespace Entities.Minion
         {
             switch (currentState)
             {
-                case MinionState.Idle: myMinionTest.IdleState(); break;
-                case MinionState.Walking: myMinionTest.WalkingState(); break;
-                case MinionState.LookingForPathing: myMinionTest.LookingForPathingState(); break;
-                case MinionState.Attacking: myMinionTest.AttackingState(); break;
+                case MinionState.Idle: myMinion.IdleState(); break;
+                case MinionState.Walking: myMinion.WalkingState(); break;
+                case MinionState.LookingForPathing: myMinion.LookingForPathingState(); break;
+                case MinionState.Attacking: myMinion.AttackingState(); break;
                 default: throw new ArgumentOutOfRangeException();
             }
         }
