@@ -420,10 +420,20 @@ PrefabInstance:
       propertyPath: sceneViewId
       value: 996
       objectReference: {fileID: 0}
+    - target: {fileID: 7675406472214385062, guid: 9a3d8686d94b5444c9c8d6bcd8e404ee,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8710349831528464810, guid: 9a3d8686d94b5444c9c8d6bcd8e404ee,
         type: 3}
       propertyPath: sceneViewId
       value: 999
+      objectReference: {fileID: 0}
+    - target: {fileID: 9024119698948549953, guid: 9a3d8686d94b5444c9c8d6bcd8e404ee,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9a3d8686d94b5444c9c8d6bcd8e404ee, type: 3}
