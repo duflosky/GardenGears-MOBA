@@ -7,17 +7,19 @@ using Photon.Pun;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody))]
-public class AffectCollider : MonoBehaviour
+public class AffectCollider : Entity
 {
     [HideInInspector] public Entity caster;
     [HideInInspector] public ActiveCapacity capacitySender;
+    [Header("=== AFFECT COLLIDER")]
     [SerializeField] private List<byte> effectIndex = new List<byte>();
-    private bool affectEntityOnly;
+    [SerializeField] private bool affectEntityOnly;
     private Rigidbody rb;
 
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
+        if (!PhotonNetwork.IsMasterClient) GetComponent<Collider>().enabled = false;
     }
 
     public void Launch(Vector3 moveVector)
@@ -27,25 +29,13 @@ public class AffectCollider : MonoBehaviour
         Debug.Log(rb.velocity);
     }
 
-    private void OnDisable()
-    {
-        throw new NotImplementedException();
-    }
-
     private void OnTriggerEnter(Collider other)
     {
+        Debug.Log($"Trigger {other.name}, affectEntityOnly:{affectEntityOnly} ");
         Entity entity = other.GetComponent<Entity>();
-        if (!PhotonNetwork.IsMasterClient)
-        {
-            if(entity != caster)gameObject.SetActive(false);
-            return;
-        }
         
-
         if (entity && entity != caster)
         {
-            IActiveLifeable activeLifeable = entity.GetComponent<IActiveLifeable>();
-                
             if (PhotonNetwork.IsMasterClient)
             {
                 capacitySender.CollideEntityEffect(entity);
@@ -53,7 +43,19 @@ public class AffectCollider : MonoBehaviour
         }
         else if (!entity && !affectEntityOnly)
         {
-            
+            Debug.Log("No entity");
+            Disable();
         }
+    }
+    
+    public void Disable()
+    {
+        photonView.RPC("SyncDisableRPC", RpcTarget.All);
+    }
+    
+    [PunRPC]
+    public void SyncDisableRPC()
+    {
+        gameObject.SetActive(false);
     }
 }

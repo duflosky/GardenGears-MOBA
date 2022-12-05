@@ -50,7 +50,7 @@ namespace Entities
 
         protected virtual void OnStart()
         {
-            FogOfWarManager.Instance.AddFOWViewable(this);
+            if(canView)FogOfWarManager.Instance.AddFOWViewable(this);
         }
     
         void Update()

@@ -10,6 +10,7 @@ public class AutoAttackRange : ActiveCapacity
     private AutoAttackRangeSO SOType;
     private Vector3 lookDir;
     private GameObject bullet;
+    private AffectCollider collider;
 
     public override void OnStart()
     {
@@ -22,8 +23,8 @@ public class AutoAttackRange : ActiveCapacity
         if(!base.TryCast(casterIndex, targetsEntityIndexes, targetPositions)) return false;
         lookDir = targetPositions[0]-casterTransform.position;
         lookDir.y = 0;
-        bullet = PoolLocalManager.Instance.PoolInstantiate(SOType.bulletPrefab, casterTransform.position, Quaternion.LookRotation(lookDir));
-        var collider = bullet.GetComponent<AffectCollider>();
+        bullet = PoolNetworkManager.Instance.PoolInstantiate(SOType.bulletPrefab.GetComponent<Entity>(), casterTransform.position, Quaternion.LookRotation(lookDir)).gameObject;
+        collider = bullet.GetComponent<AffectCollider>();
         collider.caster = caster;
         collider.capacitySender = this;
         Debug.Log($"lookDir : {lookDir}, bulletSpeed:{SOType.bulletSpeed}");
@@ -42,7 +43,7 @@ public class AutoAttackRange : ActiveCapacity
                 if(!lifeable.AttackAffected())return;
             
                 entityAffect.photonView.RPC("DecreaseCurrentHpRPC", RpcTarget.All, SOType.bulletDamage);
-                bullet.gameObject.SetActive(false);
+                collider.Disable();
             }
         }
         else
@@ -58,11 +59,11 @@ public class AutoAttackRange : ActiveCapacity
 
     public override void PlayFeedback(int casterIndex, int[] targetsEntityIndexes, Vector3[] targetPositions)
     {
-        if (PhotonNetwork.IsMasterClient) return;
+        /*if (PhotonNetwork.IsMasterClient) return;
         lookDir = targetPositions[0]-casterTransform.position;
         lookDir.y = 0;
         bullet = PoolLocalManager.Instance.PoolInstantiate(SOType.bulletPrefab, casterTransform.position, Quaternion.LookRotation(lookDir));
         bullet.GetComponent<AffectCollider>().Launch(lookDir*SOType.bulletSpeed);
-        bullet.GetComponent<AffectCollider>().caster = caster;
+        bullet.GetComponent<AffectCollider>().caster = caster;*/
     }
 }

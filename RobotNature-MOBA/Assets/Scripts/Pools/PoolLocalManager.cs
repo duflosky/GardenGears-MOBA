@@ -54,7 +54,6 @@ public class PoolLocalManager : MonoBehaviour
     public void EnqueuePool(GameObject objectPrefab, GameObject go)
     {
         queuesDictionary[objectPrefab].Enqueue(go);
-        go.SetActive(false);
     }
 
     public GameObject PoolInstantiate(GameObject GORef, Vector3 position, Quaternion rotation, Transform parent = null)

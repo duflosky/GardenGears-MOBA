@@ -63,6 +63,11 @@ public partial class Champion : Entity, IMovable, IInventoryable, IResourceable,
         abilitiesIndexes = championSo.activeCapacitiesIndexes;
         ultimateAbilityIndex = championSo.ultimateAbilityIndex;
 
+        foreach (var passif in so.passiveCapacities)
+        {
+            
+        }
+
         team = newTeam;
 
         Transform pos = transform;
