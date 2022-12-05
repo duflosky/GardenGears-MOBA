@@ -13,6 +13,6 @@ public class Enqueuer : MonoBehaviour
     private void OnDisable()
     {
         if(isLocal)PoolLocalManager.Instance.EnqueuePool(GORef, gameObject);
-        PoolNetworkManager.Instance.EnqueuePool(entityRef, GetComponent<Entity>());
+        else PoolNetworkManager.Instance.EnqueuePool(entityRef, GetComponent<Entity>());
     }
 }
