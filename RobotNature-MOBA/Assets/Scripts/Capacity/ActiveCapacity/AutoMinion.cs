@@ -10,10 +10,7 @@ public class AutoMinion : ActiveCapacity
     private Minion _minion;
     private double timer;
 
-    public override void OnStart()
-    {
-        Debug.Log("Starting fire");
-    }
+    public override void OnStart() { }
 
     public override bool TryCast(int casterIndex, int[] targetsEntityIndexes, Vector3[] targetPositions)
     {
@@ -27,9 +24,7 @@ public class AutoMinion : ActiveCapacity
         return true;
     }
 
-    public override void PlayFeedback(int casterIndex, int[] targetsEntityIndexes, Vector3[] targetPositions)
-    {
-    }
+    public override void PlayFeedback(int casterIndex, int[] targetsEntityIndexes, Vector3[] targetPositions) { }
     
     private void DelayWaitingTick()
     {

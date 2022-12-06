@@ -162,7 +162,6 @@ GameObject:
   - component: {fileID: 6720881976496202036}
   - component: {fileID: 4631029676220588112}
   - component: {fileID: 4336164412718733375}
-  - component: {fileID: 7303576517881256443}
   m_Layer: 10
   m_Name: MinionRessource
   m_TagString: Untagged
@@ -345,7 +344,7 @@ MonoBehaviour:
   myAgent: {fileID: 4192120332867856271}
   myWaypoints: []
   TowersList: []
-  wayPointIndex: 0
+  waypointIndex: 0
   towerIndex: 0
   currentAggroState: 0
   whoAggro: 0
@@ -355,14 +354,13 @@ MonoBehaviour:
   currentAttackTarget: {fileID: 0}
   whoIsAttackingMe: []
   attackCycle: 0
-  currentHealth: 10
-  attackDamage: 5
+  attackDamage: 2
   attackSpeed: 2
   attackRange: 6
   delayBeforeAttack: 0.2
-  maxHealth: 20
   attackAffected: 1
   abilitiesAffected: 1
+  maxHp: 10
   isAlive: 1
   canDie: 1
 --- !u!114 &4336164412718733375
@@ -379,22 +377,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentState: 0
   brainSpeed: 0.5
---- !u!208 &7303576517881256443
-NavMeshObstacle:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4011668959297958832}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Shape: 1
-  m_Extents: {x: 0.75, y: 1, z: 0.75}
-  m_MoveThreshold: 0.1
-  m_Carve: 0
-  m_CarveOnlyStationary: 1
-  m_Center: {x: 0, y: 0, z: 0}
-  m_TimeToStationary: 0.5
 --- !u!1 &7543542482307838533
 GameObject:
   m_ObjectHideFlags: 0

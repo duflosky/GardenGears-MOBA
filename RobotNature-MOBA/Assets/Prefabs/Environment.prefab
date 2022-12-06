@@ -114,6 +114,37 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!1 &2406186812250848040
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5867789255705771893}
+  m_Layer: 0
+  m_Name: UI
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5867789255705771893
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2406186812250848040}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5990029554021714889}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2449804689514782592
 GameObject:
   m_ObjectHideFlags: 0
@@ -206,6 +237,37 @@ Transform:
   m_Children: []
   m_Father: {fileID: 5990029555418424724}
   m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &4153887883179361954
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2622813322470576316}
+  m_Layer: 0
+  m_Name: UI
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2622813322470576316
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4153887883179361954}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5990029553807190919}
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &4965711396376374107
 GameObject:
@@ -300,7 +362,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2694164652024378065}
   m_Layer: 0
-  m_Name: SpawnRed
+  m_Name: SpawnBlue
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -758,7 +820,7 @@ GameObject:
   - component: {fileID: 6965137881680746774}
   - component: {fileID: 6228767670337398982}
   m_Layer: 0
-  m_Name: BlueTurret
+  m_Name: RedTurret
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 1
@@ -778,6 +840,7 @@ Transform:
   m_Children:
   - {fileID: 697237207040786056}
   - {fileID: 1276326180728900253}
+  - {fileID: 2622813322470576316}
   m_Father: {fileID: 5990029555861612094}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -809,7 +872,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 37617636b8fab594ca0d9bfb8e543560, type: 2}
+  - {fileID: 2100000, guid: ba71a501b74c67a4883d971c3ee25838, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -882,8 +945,8 @@ MonoBehaviour:
   entityIndex: 0
   canAddPassiveCapacity: 1
   canRemovePassiveCapacity: 1
-  TransformUI: {fileID: 0}
-  OffsetUI: {x: 0, y: 2, z: 0}
+  TransformUI: {fileID: 2622813322470576316}
+  OffsetUI: {x: 0, y: 3, z: 0}
   canShow: 0
   canHide: 0
   elementsToShow: []
@@ -1648,7 +1711,7 @@ GameObject:
   - component: {fileID: 655964109841710072}
   - component: {fileID: 8755515198681832900}
   m_Layer: 0
-  m_Name: RedTurret
+  m_Name: BlueTurret
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 1
@@ -1668,6 +1731,7 @@ Transform:
   m_Children:
   - {fileID: 8367605948113522375}
   - {fileID: 2426079491785736805}
+  - {fileID: 5867789255705771893}
   m_Father: {fileID: 5990029554199364956}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1699,7 +1763,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: ba71a501b74c67a4883d971c3ee25838, type: 2}
+  - {fileID: 2100000, guid: 37617636b8fab594ca0d9bfb8e543560, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1772,8 +1836,8 @@ MonoBehaviour:
   entityIndex: 0
   canAddPassiveCapacity: 1
   canRemovePassiveCapacity: 1
-  TransformUI: {fileID: 0}
-  OffsetUI: {x: 0, y: 2, z: 0}
+  TransformUI: {fileID: 5867789255705771893}
+  OffsetUI: {x: 0, y: 3, z: 0}
   canShow: 0
   canHide: 0
   elementsToShow: []
@@ -2138,7 +2202,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5990029554199364956}
   m_Layer: 0
-  m_Name: RedTeam
+  m_Name: BlueTeam
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2634,7 +2698,7 @@ GameObject:
   - component: {fileID: 245157445216103867}
   - component: {fileID: 9024119698948549953}
   m_Layer: 0
-  m_Name: BlueBase
+  m_Name: RedBase
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2687,7 +2751,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 37617636b8fab594ca0d9bfb8e543560, type: 2}
+  - {fileID: 2100000, guid: ba71a501b74c67a4883d971c3ee25838, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -2768,7 +2832,7 @@ MonoBehaviour:
   spawnMinionAmount: 5
   spawnMinionInterval: 1.7
   spawnCycleTime: 30
-  minionColor: {r: 0, g: 0.060156107, b: 1, a: 0}
+  minionColor: {r: 1, g: 0, b: 0, a: 0}
   pathfinding:
   - {fileID: 4357539848202542634}
   - {fileID: 1379131289242497387}
@@ -6525,7 +6589,7 @@ GameObject:
   - component: {fileID: 8710349831528464810}
   - component: {fileID: 7675406472214385062}
   m_Layer: 0
-  m_Name: RedBase
+  m_Name: BlueBase
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6578,7 +6642,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: ba71a501b74c67a4883d971c3ee25838, type: 2}
+  - {fileID: 2100000, guid: 37617636b8fab594ca0d9bfb8e543560, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -6659,7 +6723,7 @@ MonoBehaviour:
   spawnMinionAmount: 5
   spawnMinionInterval: 1.7
   spawnCycleTime: 30
-  minionColor: {r: 1, g: 0, b: 0, a: 0}
+  minionColor: {r: 0, g: 0, b: 1, a: 0}
   pathfinding:
   - {fileID: 1607346947438002403}
   - {fileID: 4208551416579479104}
@@ -8922,7 +8986,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5990029555861612094}
   m_Layer: 0
-  m_Name: BlueTeam
+  m_Name: RedTeam
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -9053,7 +9117,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2890551448243059101}
   m_Layer: 0
-  m_Name: SpawnBlue
+  m_Name: SpawnRed
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
