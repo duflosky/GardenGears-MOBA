@@ -15,10 +15,10 @@ MonoBehaviour:
   championMeshPrefab: {fileID: 2666811144942490280, guid: e885c26676102fc42ad12e97c74b338a,
     type: 3}
   canvasIndex: 0
-  maxHp: 10
+  maxHp: 50
   maxRessource: 10
   viewRange: 10
-  referenceMoveSpeed: 10
+  referenceMoveSpeed: 15
   isRessourceRegen: 0
   attackAbility: {fileID: 0}
   attackAbilityIndex: 255
