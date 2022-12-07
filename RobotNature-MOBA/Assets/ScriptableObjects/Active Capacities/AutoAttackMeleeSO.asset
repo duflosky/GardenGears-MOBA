@@ -15,8 +15,8 @@ MonoBehaviour:
   referenceName: tomberparterre
   descriptionName: tomberparterreFor
   icon: {fileID: 0}
-  description: 
-  cooldown: 3
+  description: cleave
+  cooldown: 1.5
   isTargeting: 0
   maxRange: 3
   types: 
