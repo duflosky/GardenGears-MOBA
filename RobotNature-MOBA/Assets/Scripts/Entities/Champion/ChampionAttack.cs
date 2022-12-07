@@ -17,11 +17,13 @@ public partial class Champion
         photonView.RPC("SetCanAttackRPC", RpcTarget.MasterClient, value);
     }
 
+    [PunRPC]
     public void SyncSetCanAttackRPC(bool value)
     {
         OnSetCanAttackFeedback?.Invoke(value);
     }
 
+    [PunRPC]
     public void SetCanAttackRPC(bool value)
     {
         OnSetCanAttack?.Invoke(value);
@@ -40,11 +42,13 @@ public partial class Champion
         photonView.RPC("SetAttackDamageRPC", RpcTarget.MasterClient, value);
     }
 
+    [PunRPC]
     public void SyncSetAttackDamageRPC(float value)
     {
         OnSetAttackDamageFeedback?.Invoke(value);
     }
 
+    [PunRPC]
     public void SetAttackDamageRPC(float value)
     {
         OnSetAttackDamage?.Invoke(value);
@@ -58,11 +62,13 @@ public partial class Champion
         photonView.RPC("AttackRPC", RpcTarget.MasterClient, capacityIndex, targetedEntities, targetedPositions);
     }
 
+    [PunRPC]
     public void SyncAttackRPC(byte capacityIndex, int[] targetedEntities, Vector3[] targetedPositions)
     {
         OnAttackFeedback?.Invoke(capacityIndex, targetedEntities, targetedPositions);
     }
 
+    [PunRPC]
     public void AttackRPC(byte capacityIndex, int[] targetedEntities, Vector3[] targetedPositions)
     {
         OnAttack?.Invoke(capacityIndex, targetedEntities, targetedPositions);
@@ -76,11 +82,13 @@ public partial class Champion
         photonView.RPC("IncreaseAttackDamageRPC", RpcTarget.MasterClient, value);
     }
 
+    [PunRPC]
     public void SyncIncreaseAttackDamageRPC(float value)
     {
         OnIncreaseAttackDamageFeedback?.Invoke(value);
     }
 
+    [PunRPC]
     public void IncreaseAttackDamageRPC(float value)
     {
         OnIncreaseAttackDamage?.Invoke(value);
@@ -93,12 +101,14 @@ public partial class Champion
     {
         photonView.RPC("DecreaseAttackDamageRPC", RpcTarget.MasterClient, value);
     }
-
+    
+    [PunRPC]
     public void SyncDecreaseAttackDamageRPC(float value)
     {
         OnDecreaseAttackDamageFeedback?.Invoke(value);
     }
 
+    [PunRPC]
     public void DecreaseAttackDamageRPC(float value)
     {
         OnDecreaseAttackDamage?.Invoke(value);
@@ -107,16 +117,19 @@ public partial class Champion
 
     public event GlobalDelegates.FloatDelegate OnDecreaseAttackDamage;
     public event GlobalDelegates.FloatDelegate OnDecreaseAttackDamageFeedback;
+    
     public void RequestIncreaseAttackSpeed(float value)
     {
         photonView.RPC("IncreaseAttackSpeedRPC", RpcTarget.MasterClient, value);
     }
 
+    [PunRPC]
     public void SyncIncreaseAttackSpeedRPC(float value)
     {
         OnIncreaseAttackSpeedFeedback?.Invoke(value);
     }
 
+    [PunRPC]
     public void IncreaseAttackSpeedRPC(float value)
     {
         OnIncreaseAttackSpeed?.Invoke(value);
@@ -130,11 +143,13 @@ public partial class Champion
         photonView.RPC("DecreaseAttackSpeedRPC", RpcTarget.MasterClient, value);
     }
 
+    [PunRPC]
     public void SyncDecreaseAttackSpeedRPC(float value)
     {
         OnDecreaseAttackSpeedFeedback?.Invoke(value);
     }
 
+    [PunRPC]
     public void DecreaseAttackSpeedRPC(float value)
     {
         OnDecreaseAttackSpeed?.Invoke(value);

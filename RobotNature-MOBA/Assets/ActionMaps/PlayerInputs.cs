@@ -190,6 +190,114 @@ public partial class @PlayerInputs : IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""Inventory"",
+            ""id"": ""b55d1e97-bcae-49d9-a58e-d2726b5a7a44"",
+            ""actions"": [
+                {
+                    ""name"": ""ActivateItem0"",
+                    ""type"": ""Button"",
+                    ""id"": ""bdc6bcf8-4cd9-4fb5-a464-740314e5f01c"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""ActivateItem1"",
+                    ""type"": ""Button"",
+                    ""id"": ""3cb8a159-c4b4-438d-9152-1f9995c2bfc7"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""ActivateItem2"",
+                    ""type"": ""Button"",
+                    ""id"": ""5a84e508-516f-491e-97dd-8a3583ae9242"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""ShowHideInventory"",
+                    ""type"": ""Button"",
+                    ""id"": ""73214987-5c82-4e21-b9f7-b8d034315521"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""ShowHideShop"",
+                    ""type"": ""Button"",
+                    ""id"": ""72a46c12-496e-4aef-8ae1-e18543c2c934"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""e81b6cf9-3bb5-4446-a473-b1d96db72a17"",
+                    ""path"": ""<Keyboard>/1"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ActivateItem0"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""aa3dcf4f-0dac-4b91-9b0b-f30b40fc56bc"",
+                    ""path"": ""<Keyboard>/2"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ActivateItem1"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""0c4bd197-fc82-43b5-a65f-ba9ed725faa3"",
+                    ""path"": ""<Keyboard>/3"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ActivateItem2"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""3d1dac06-959f-4fa4-807b-4cefa88ad282"",
+                    ""path"": ""<Keyboard>/tab"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ShowHideInventory"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""9b264447-1850-4e46-ac1c-613a70e87b5b"",
+                    ""path"": ""<Keyboard>/b"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ShowHideShop"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": []
@@ -205,6 +313,13 @@ public partial class @PlayerInputs : IInputActionCollection2, IDisposable
         // Mouse
         m_Mouse = asset.FindActionMap("Mouse", throwIfNotFound: true);
         m_Mouse_MousePos = m_Mouse.FindAction("MousePos", throwIfNotFound: true);
+        // Inventory
+        m_Inventory = asset.FindActionMap("Inventory", throwIfNotFound: true);
+        m_Inventory_ActivateItem0 = m_Inventory.FindAction("ActivateItem0", throwIfNotFound: true);
+        m_Inventory_ActivateItem1 = m_Inventory.FindAction("ActivateItem1", throwIfNotFound: true);
+        m_Inventory_ActivateItem2 = m_Inventory.FindAction("ActivateItem2", throwIfNotFound: true);
+        m_Inventory_ShowHideInventory = m_Inventory.FindAction("ShowHideInventory", throwIfNotFound: true);
+        m_Inventory_ShowHideShop = m_Inventory.FindAction("ShowHideShop", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -375,6 +490,71 @@ public partial class @PlayerInputs : IInputActionCollection2, IDisposable
         }
     }
     public MouseActions @Mouse => new MouseActions(this);
+
+    // Inventory
+    private readonly InputActionMap m_Inventory;
+    private IInventoryActions m_InventoryActionsCallbackInterface;
+    private readonly InputAction m_Inventory_ActivateItem0;
+    private readonly InputAction m_Inventory_ActivateItem1;
+    private readonly InputAction m_Inventory_ActivateItem2;
+    private readonly InputAction m_Inventory_ShowHideInventory;
+    private readonly InputAction m_Inventory_ShowHideShop;
+    public struct InventoryActions
+    {
+        private @PlayerInputs m_Wrapper;
+        public InventoryActions(@PlayerInputs wrapper) { m_Wrapper = wrapper; }
+        public InputAction @ActivateItem0 => m_Wrapper.m_Inventory_ActivateItem0;
+        public InputAction @ActivateItem1 => m_Wrapper.m_Inventory_ActivateItem1;
+        public InputAction @ActivateItem2 => m_Wrapper.m_Inventory_ActivateItem2;
+        public InputAction @ShowHideInventory => m_Wrapper.m_Inventory_ShowHideInventory;
+        public InputAction @ShowHideShop => m_Wrapper.m_Inventory_ShowHideShop;
+        public InputActionMap Get() { return m_Wrapper.m_Inventory; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(InventoryActions set) { return set.Get(); }
+        public void SetCallbacks(IInventoryActions instance)
+        {
+            if (m_Wrapper.m_InventoryActionsCallbackInterface != null)
+            {
+                @ActivateItem0.started -= m_Wrapper.m_InventoryActionsCallbackInterface.OnActivateItem0;
+                @ActivateItem0.performed -= m_Wrapper.m_InventoryActionsCallbackInterface.OnActivateItem0;
+                @ActivateItem0.canceled -= m_Wrapper.m_InventoryActionsCallbackInterface.OnActivateItem0;
+                @ActivateItem1.started -= m_Wrapper.m_InventoryActionsCallbackInterface.OnActivateItem1;
+                @ActivateItem1.performed -= m_Wrapper.m_InventoryActionsCallbackInterface.OnActivateItem1;
+                @ActivateItem1.canceled -= m_Wrapper.m_InventoryActionsCallbackInterface.OnActivateItem1;
+                @ActivateItem2.started -= m_Wrapper.m_InventoryActionsCallbackInterface.OnActivateItem2;
+                @ActivateItem2.performed -= m_Wrapper.m_InventoryActionsCallbackInterface.OnActivateItem2;
+                @ActivateItem2.canceled -= m_Wrapper.m_InventoryActionsCallbackInterface.OnActivateItem2;
+                @ShowHideInventory.started -= m_Wrapper.m_InventoryActionsCallbackInterface.OnShowHideInventory;
+                @ShowHideInventory.performed -= m_Wrapper.m_InventoryActionsCallbackInterface.OnShowHideInventory;
+                @ShowHideInventory.canceled -= m_Wrapper.m_InventoryActionsCallbackInterface.OnShowHideInventory;
+                @ShowHideShop.started -= m_Wrapper.m_InventoryActionsCallbackInterface.OnShowHideShop;
+                @ShowHideShop.performed -= m_Wrapper.m_InventoryActionsCallbackInterface.OnShowHideShop;
+                @ShowHideShop.canceled -= m_Wrapper.m_InventoryActionsCallbackInterface.OnShowHideShop;
+            }
+            m_Wrapper.m_InventoryActionsCallbackInterface = instance;
+            if (instance != null)
+            {
+                @ActivateItem0.started += instance.OnActivateItem0;
+                @ActivateItem0.performed += instance.OnActivateItem0;
+                @ActivateItem0.canceled += instance.OnActivateItem0;
+                @ActivateItem1.started += instance.OnActivateItem1;
+                @ActivateItem1.performed += instance.OnActivateItem1;
+                @ActivateItem1.canceled += instance.OnActivateItem1;
+                @ActivateItem2.started += instance.OnActivateItem2;
+                @ActivateItem2.performed += instance.OnActivateItem2;
+                @ActivateItem2.canceled += instance.OnActivateItem2;
+                @ShowHideInventory.started += instance.OnShowHideInventory;
+                @ShowHideInventory.performed += instance.OnShowHideInventory;
+                @ShowHideInventory.canceled += instance.OnShowHideInventory;
+                @ShowHideShop.started += instance.OnShowHideShop;
+                @ShowHideShop.performed += instance.OnShowHideShop;
+                @ShowHideShop.canceled += instance.OnShowHideShop;
+            }
+        }
+    }
+    public InventoryActions @Inventory => new InventoryActions(this);
     public interface IMovementActions
     {
         void OnMove(InputAction.CallbackContext context);
@@ -388,5 +568,13 @@ public partial class @PlayerInputs : IInputActionCollection2, IDisposable
     public interface IMouseActions
     {
         void OnMousePos(InputAction.CallbackContext context);
+    }
+    public interface IInventoryActions
+    {
+        void OnActivateItem0(InputAction.CallbackContext context);
+        void OnActivateItem1(InputAction.CallbackContext context);
+        void OnActivateItem2(InputAction.CallbackContext context);
+        void OnShowHideInventory(InputAction.CallbackContext context);
+        void OnShowHideShop(InputAction.CallbackContext context);
     }
 }
