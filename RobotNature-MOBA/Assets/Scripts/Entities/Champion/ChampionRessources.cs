@@ -133,7 +133,7 @@ public partial class Champion
         currentResource += amount;
         if (currentResource > maxResource) currentResource = maxResource;
         OnIncreaseCurrentResource?.Invoke(amount);
-        photonView.RPC("SyncIncreaseCurrentResourceRPC", RpcTarget.All, amount);
+        photonView.RPC("SyncIncreaseCurrentResourceRPC", RpcTarget.All, currentResource);
     }
 
     public event GlobalDelegates.FloatDelegate OnIncreaseCurrentResource;
@@ -155,8 +155,9 @@ public partial class Champion
     public void DecreaseCurrentResourceRPC(float amount)
     {
         currentResource -= amount;
+        Debug.Log($"Decrease ressource :{currentResource}");
         OnDecreaseCurrentResource?.Invoke(amount);
-        photonView.RPC("SyncDecreaseCurrentResourceRPC", RpcTarget.All, amount);
+        photonView.RPC("SyncDecreaseCurrentResourceRPC", RpcTarget.All, currentResource);
     }
 
     public event GlobalDelegates.FloatDelegate OnDecreaseCurrentResource;

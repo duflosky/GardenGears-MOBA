@@ -2,21 +2,50 @@ using System.Collections;
 using System.Collections.Generic;
 using Entities;
 using Entities.Capacities;
+using GameStates;
 using UnityEngine;
+
 
 public class RangePassif : PassiveCapacity
 {
     private RangePassifSO SOType;
+    private Champion champ;
+
+    private int burnTimer;
     
+    private int stackTimer;
     
-    public override PassiveCapacitySO AssociatedPassiveCapacitySO()
+    private bool haveStack;
+
+    public override void OnCreate()
     {
-        return (PassiveCapacitySO)SOType;
+        SOType = (RangePassifSO)SO;
+        champ = (Champion)entity;
+        Debug.Log($"Entity:{entity}, Champion:{champ}");
+        champ.SetMaxResourceRPC(SOType.maxHeatStack);
     }
 
     protected override void OnAddedEffects(Entity target)
     {
-        throw new System.NotImplementedException();
+        stackTimer = 0;
+        if (count > SOType.maxHeatStack)
+        {
+            count = SOType.maxHeatStack;
+            return;
+        }
+        Debug.Log($"Count: {count}, overHeat:{SOType.overheatStack}, isOverheat:{champ.isOverheat}");
+        champ.IncreaseCurrentResourceRPC(1);
+        if (!haveStack)
+        {
+            GameStateMachine.Instance.OnTick += DecreaseStack; 
+            haveStack = true;
+        }
+        if (count >= SOType.overheatStack && !champ.isOverheat)
+        {
+            champ.isOverheat = true;
+            Debug.Log("isOverheat: true");
+            GameStateMachine.Instance.OnTick += BurnFeedback;
+        }
     }
 
     protected override void OnAddedFeedbackEffects(Entity target)
@@ -26,11 +55,48 @@ public class RangePassif : PassiveCapacity
 
     protected override void OnRemovedEffects(Entity target)
     {
-        throw new System.NotImplementedException();
+        if (count < SOType.overheatStack && champ.isOverheat)
+        {
+            champ.isOverheat = false;
+            GameStateMachine.Instance.OnTick -= BurnFeedback;
+        }
     }
 
     protected override void OnRemovedFeedbackEffects(Entity target)
     {
         throw new System.NotImplementedException();
+    }
+
+    void BurnFeedback()
+    {
+        burnTimer++;
+        if (burnTimer == SOType.BurnDelay * GameStateMachine.Instance.tickRate)
+        {
+            burnTimer = 0;
+            //Burn
+        }
+    }
+
+    void DecreaseStack()
+    {
+        stackTimer++;
+        if (stackTimer >= SOType.stackDuration * GameStateMachine.Instance.tickRate)
+        {
+            count--;
+            champ.DecreaseCurrentResourceRPC(1);
+            stackTimer = 0;
+            if (count <= 0)
+            {
+                Debug.Log("Unsuscribre DecreaseStack");
+                GameStateMachine.Instance.OnTick -= DecreaseStack;
+                haveStack = false;
+            }
+            else if (count < SOType.overheatStack && champ.isOverheat)
+            {
+                champ.isOverheat = false;
+                Debug.Log("isOverheat: false");
+                GameStateMachine.Instance.OnTick += BurnFeedback;  
+            }
+        }
     }
 }

@@ -8,20 +8,20 @@ namespace Entities.Capacities
         public byte indexOfSo; //Index Reference in CapacitySOCollectionManager
 
         public bool stackable;
-        private int count; //Amount of Stacks
+        protected int count; //Amount of Stacks
 
         public List<Enums.CapacityType> types; //All types of the capacity
 
-        public abstract PassiveCapacitySO AssociatedPassiveCapacitySO();
+        public PassiveCapacitySO SO;
 
-        protected Entity entity;
-        
+        public Entity entity;
+
+        public virtual void OnCreate(){}
         
         public void OnAdded(Entity target, int amount)
         {
             if (stackable) count+= amount;
             entity = target;
-            Debug.Log("onadded");
             OnAddedEffects(entity);
         }
 

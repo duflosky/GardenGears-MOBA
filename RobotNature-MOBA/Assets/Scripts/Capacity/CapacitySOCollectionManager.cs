@@ -81,6 +81,11 @@ namespace Entities.Capacities
             return (byte)Instance.allPassiveCapacitiesSo.IndexOf(so);
         }
 
+        public PassiveCapacity CreatePassiveCapacity(PassiveCapacitySO so, Entity entity)
+        {
+            return CreatePassiveCapacity((byte)allPassiveCapacitiesSo.IndexOf(so), entity);
+        }
+        
         public PassiveCapacity CreatePassiveCapacity(byte soIndex,Entity entity)
         {
             Debug.Log($"Trying to create passive capacity of so at {soIndex}");
@@ -99,6 +104,9 @@ namespace Entities.Capacities
             capacity = (PassiveCapacity) Activator.CreateInstance(allPassiveCapacitiesSo[soIndex].AssociatedType());
             capacity.stackable = so.stackable;
             capacity.indexOfSo = soIndex;
+            capacity.entity = entity;
+            capacity.SO = so;
+            capacity.OnCreate();
             
             return capacity;
         }

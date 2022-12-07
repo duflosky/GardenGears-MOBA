@@ -28,7 +28,7 @@ namespace Controllers.Inputs
         /// <param name="ctx"></param>
         private void OnAttack(InputAction.CallbackContext ctx)
         {
-            //champion.RequestAttack(champion.attackAbilityIndex,selectedEntity,cursorWorldPos);
+            champion.RequestAttack(champion.championSo.attackAbilityIndex,selectedEntity,cursorWorldPos);
         }
         
         /// <summary>

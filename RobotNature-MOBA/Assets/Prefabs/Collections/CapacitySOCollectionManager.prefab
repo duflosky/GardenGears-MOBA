@@ -47,4 +47,5 @@ MonoBehaviour:
   allActiveCapacities:
   - {fileID: 11400000, guid: 72818ee0e1106e5499e933bf0ce05385, type: 2}
   - {fileID: 11400000, guid: 6380c6b585792cd478baa9dbd9ae15da, type: 2}
-  allPassiveCapacitiesSo: []
+  allPassiveCapacitiesSo:
+  - {fileID: 11400000, guid: 4e9be0a9aa6ed6c46b641b0466ac75c5, type: 2}

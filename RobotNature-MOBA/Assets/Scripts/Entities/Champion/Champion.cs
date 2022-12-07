@@ -51,7 +51,7 @@ public partial class Champion : Entity, IMovable, IInventoryable, IResourceable,
         currentHp = maxHp;
         uiManager = UI.InGame.UIManager.Instance;
         maxResource = so.maxRessource;
-        currentResource = so.maxRessource;
+        currentResource = 0;
         //viewRange = championSo.viewRange;
         referenceMoveSpeed = championSo.referenceMoveSpeed;
         currentMoveSpeed = referenceMoveSpeed;
@@ -64,7 +64,8 @@ public partial class Champion : Entity, IMovable, IInventoryable, IResourceable,
 
         foreach (var passif in so.passiveCapacities)
         {
-            
+           PassiveCapacity capa = CapacitySOCollectionManager.Instance.CreatePassiveCapacity(passif, this);
+           passiveCapacitiesList.Add(capa);
         }
 
         team = newTeam;

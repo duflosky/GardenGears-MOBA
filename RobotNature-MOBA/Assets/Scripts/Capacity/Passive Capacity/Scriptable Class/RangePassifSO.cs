@@ -4,10 +4,16 @@ using System.Collections.Generic;
 using Entities.Capacities;
 using UnityEngine;
 
+[CreateAssetMenu(menuName = "Capacity/PassiveCapacitySO/Range Passif", fileName = "new RangePassifSO")]
 public class RangePassifSO : PassiveCapacitySO
 {
-    [SerializeField] private int maxHeatStack = 10; 
-    [SerializeField] private int overheatStack = 8; 
+    public int maxHeatStack = 10; 
+    public int overheatStack = 8;
+
+    public float stackDuration;
+    
+    public GameObject BurnFX;
+    public float BurnDelay;
 
     public override Type AssociatedType()
     {
