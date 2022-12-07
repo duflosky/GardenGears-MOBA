@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: M_SmokeBandVFX
+  m_Name: M_MainBulletOverheatVFX
   m_Shader: {fileID: -6465566751694194690, guid: e46a71dceda9beb44931c62efc0c68d7,
     type: 3}
   m_ValidKeywords: []
@@ -22,7 +22,7 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _BandFrequency:
-        m_Texture: {fileID: 2800000, guid: d0f289a3005aec64ba008c3831e24def, type: 3}
+        m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _BaseMap:
@@ -50,7 +50,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: 2f9e715f5be2dde4ea547ce39f126f0d, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MetallicGlossMap:
@@ -89,13 +89,13 @@ Material:
     m_Floats:
     - _AlphaClip: 0
     - _BandAmount: 1
-    - _BandScrollSpeed: 0
-    - _Band_Distortion: 0.58
+    - _BandScrollSpeed: 1.5
+    - _Band_Distortion: 0
     - _Blend: 0
     - _BumpScale: 1
     - _ClearCoatMask: 0
     - _ClearCoatSmoothness: 0
-    - _Continous: 0
+    - _Continous: 1
     - _Cull: 2
     - _Cutoff: 0.5
     - _DetailAlbedoMapScale: 1
@@ -107,10 +107,10 @@ Material:
     - _GlossyReflections: 0
     - _InsertAmount: 0.227
     - _InsertStrenght: 0.426
-    - _InsertStrength: 0.72
-    - _Insert_Amount: 15
-    - _MainTexRotate: 0
-    - _MainTexScrolling: 0
+    - _InsertStrength: 0.585
+    - _Insert_Amount: 6.74
+    - _MainTexRotate: 1
+    - _MainTexScrolling: 4.42
     - _Metallic: 0
     - _OcclusionStrength: 1
     - _OwnTrailTexture: 0
@@ -119,7 +119,7 @@ Material:
     - _QueueControl: 0
     - _QueueOffset: 0
     - _ReceiveShadows: 1
-    - _SingleBand: 1
+    - _SingleBand: 0
     - _Smoothness: 0.5
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
@@ -127,16 +127,16 @@ Material:
     - _Surface: 0
     - _Trail_Intensity: 0.59
     - _Trail_Length: 0
-    - _Trail_Scroll_Speed: 1.46
+    - _Trail_Scroll_Speed: 1
     - _WorkflowMode: 1
     - _ZWrite: 1
     m_Colors:
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
-    - _Color: {r: 0, g: 0, b: 0, a: 1}
-    - _Color2: {r: 0.13207549, g: 0.13207549, b: 0.13207549, a: 1}
+    - _Color: {r: 4, g: 0.68698853, b: 0, a: 1}
+    - _Color2: {r: 4, g: 0.51149523, b: 0, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
-    - _TrailTiling: {r: 4.4, g: 0.3, b: 0, a: 0}
+    - _TrailTiling: {r: 1, g: 0.1, b: 0, a: 0}
   m_BuildTextureStacks: []
 --- !u!114 &5781195050744577497
 MonoBehaviour:
