@@ -139,6 +139,18 @@ MonoBehaviour:
   - SyncPoolInstantiateRPCO
   - SyncDisable
   - SyncDisableRPC
+  - DecreaseAttackDamageRPC
+  - DecreaseAttackSpeedRPC
+  - IncreaseAttackDamageRPC
+  - IncreaseAttackSpeedRPC
+  - SetAttackDamageRPC
+  - SetCanAttackRPC
+  - SyncDecreaseAttackDamageRPC
+  - SyncDecreaseAttackSpeedRPC
+  - SyncIncreaseAttackDamageRPC
+  - SyncIncreaseAttackSpeedRPC
+  - SyncSetAttackDamageRPC
+  - SyncSetCanAttackRPC
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1

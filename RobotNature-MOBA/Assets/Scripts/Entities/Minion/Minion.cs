@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Entities.Capacities;
 using Entities.FogOfWar;
 using Photon.Pun;
+using UI.InGame;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -51,6 +52,8 @@ namespace Entities.Minion
         [Range(2, 8)] public float attackRange;
         public float delayBeforeAttack;
 
+        public Transform meshParent;
+
         #endregion
 
         protected override void OnStart()
@@ -59,8 +62,13 @@ namespace Entities.Minion
             myAgent = GetComponent<NavMeshAgent>();
             myController = GetComponent<MinionController>();
             currentHp = maxHp;
-            UI.InGame.UIManager.Instance.InstantiateHealthBarForEntity(entityIndex);
-            UI.InGame.UIManager.Instance.InstantiateResourceBarForEntity(entityIndex);
+            UIManager.Instance.InstantiateHealthBarForEntity(entityIndex);
+            UIManager.Instance.InstantiateResourceBarForEntity(entityIndex);
+            if (GameStates.GameStateMachine.Instance.GetPlayerTeam() != team)
+            {
+                meshParent.gameObject.SetActive(false);
+            }
+            elementsToShow.Add(meshParent.gameObject);
         }
 
         #region State Methods

@@ -8,6 +8,7 @@ using Entities.Champion;
 using Entities.FogOfWar;
 using Items;
 using Photon.Pun;
+using UI.InGame;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody))]
@@ -18,7 +19,7 @@ public partial class Champion : Entity, IMovable, IInventoryable, IResourceable,
 
     [SerializeReference] public List<Item> items = new List<Item>();
 
-    private UI.InGame.UIManager uiManager;
+    private UIManager uiManager;
 
     protected override void OnStart()
     {
@@ -49,7 +50,7 @@ public partial class Champion : Entity, IMovable, IInventoryable, IResourceable,
         championSo = so;
         maxHp = championSo.maxHp;
         currentHp = maxHp;
-        uiManager = UI.InGame.UIManager.Instance;
+        uiManager = UIManager.Instance;
         maxResource = so.maxRessource;
         currentResource = 0;
         //viewRange = championSo.viewRange;
