@@ -21,7 +21,6 @@ public class RangePassif : PassiveCapacity
     {
         SOType = (RangePassifSO)SO;
         champ = (Champion)entity;
-        Debug.Log($"Entity:{entity}, Champion:{champ}");
         champ.SetMaxResourceRPC(SOType.maxHeatStack);
     }
 
@@ -33,7 +32,6 @@ public class RangePassif : PassiveCapacity
             count = SOType.maxHeatStack;
             return;
         }
-        Debug.Log($"Count: {count}, overHeat:{SOType.overheatStack}, isOverheat:{champ.isOverheat}");
         champ.IncreaseCurrentResourceRPC(1);
         if (!haveStack)
         {
@@ -43,7 +41,6 @@ public class RangePassif : PassiveCapacity
         if (count >= SOType.overheatStack && !champ.isOverheat)
         {
             champ.isOverheat = true;
-            Debug.Log("isOverheat: true");
             GameStateMachine.Instance.OnTick += BurnFeedback;
         }
     }
@@ -87,15 +84,13 @@ public class RangePassif : PassiveCapacity
             stackTimer = 0;
             if (count <= 0)
             {
-                Debug.Log("Unsuscribre DecreaseStack");
                 GameStateMachine.Instance.OnTick -= DecreaseStack;
                 haveStack = false;
             }
             else if (count < SOType.overheatStack && champ.isOverheat)
             {
                 champ.isOverheat = false;
-                Debug.Log("isOverheat: false");
-                GameStateMachine.Instance.OnTick += BurnFeedback;  
+                GameStateMachine.Instance.OnTick -= BurnFeedback;  
             }
         }
     }
