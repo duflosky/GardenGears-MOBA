@@ -11,6 +11,8 @@ public class AffectCollider : Entity
 {
     [HideInInspector] public Entity caster;
     [HideInInspector] public ActiveCapacity capacitySender;
+    [HideInInspector] public float maxDistance = 0;
+    [HideInInspector] public Vector3 casterPos;
     [Header("=== AFFECT COLLIDER")]
     [SerializeField] private List<byte> effectIndex = new List<byte>();
     [SerializeField] private bool affectEntityOnly;
@@ -20,6 +22,16 @@ public class AffectCollider : Entity
     {
         rb = GetComponent<Rigidbody>();
         if (!PhotonNetwork.IsMasterClient) GetComponent<Collider>().enabled = false;
+    }
+
+    protected override void OnUpdate()
+    {
+        base.OnUpdate();
+        if(maxDistance == 0)return;
+        if (Vector3.Distance(casterPos, transform.position) > maxDistance)
+        {
+            Disable();
+        }
     }
 
     public void Launch(Vector3 moveVector)
