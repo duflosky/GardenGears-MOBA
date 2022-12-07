@@ -320,6 +320,7 @@ MonoBehaviour:
   items: []
   attackAffect: 1
   abilitiesAffect: 1
+  isOverheat: 0
   abilitiesIndexes: 0000
   ultimateAbilityIndex: 0
   canCast: 0

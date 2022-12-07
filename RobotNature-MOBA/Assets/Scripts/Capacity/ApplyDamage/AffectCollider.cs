@@ -24,14 +24,11 @@ public class AffectCollider : Entity
 
     public void Launch(Vector3 moveVector)
     {
-        Debug.Log($"MoveVector: {moveVector}");
         rb.velocity = moveVector;
-        Debug.Log(rb.velocity);
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log($"Trigger {other.name}, affectEntityOnly:{affectEntityOnly} ");
         Entity entity = other.GetComponent<Entity>();
         
         if (entity && entity != caster)
@@ -43,7 +40,6 @@ public class AffectCollider : Entity
         }
         else if (!entity && !affectEntityOnly)
         {
-            Debug.Log("No entity");
             capacitySender.CollideObjectEffect(other.gameObject);
         }
     }

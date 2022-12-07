@@ -7,6 +7,8 @@ using UnityEngine;
 
 public class AutoAttackRange : ActiveCapacity
 {
+    private Champion champion;
+    
     private AutoAttackRangeSO SOType;
     private Vector3 lookDir;
     private GameObject bullet;
@@ -16,6 +18,7 @@ public class AutoAttackRange : ActiveCapacity
     {
         SOType = (AutoAttackRangeSO)SO;
         casterTransform = caster.transform;
+        champion = (Champion)caster;
     }
 
     public override bool TryCast(int casterIndex, int[] targetsEntityIndexes, Vector3[] targetPositions)
@@ -27,9 +30,13 @@ public class AutoAttackRange : ActiveCapacity
         collider = bullet.GetComponent<AffectCollider>();
         collider.caster = caster;
         collider.capacitySender = this;
-        Debug.Log($"lookDir : {lookDir}, bulletSpeed:{SOType.bulletSpeed}");
-        collider.Launch(lookDir*SOType.bulletSpeed);
-        Debug.Log("AA Range");
+        var shootDir = lookDir;
+        if (champion.isOverheat)
+        {
+            var rdm = Random.Range(-(SOType.sprayAngle / 2), (SOType.sprayAngle / 2));
+            shootDir += new Vector3(Mathf.Cos(rdm), 0, Mathf.Sin(rdm)).normalized;
+        };
+        collider.Launch(shootDir*SOType.bulletSpeed);
         return true;
     }
 
@@ -41,7 +48,7 @@ public class AutoAttackRange : ActiveCapacity
             if (lifeable != null)
             {
                 if(!lifeable.AttackAffected())return;
-            
+                champion.GetPassiveCapacityBySOIndex(CapacitySOCollectionManager.GetPassiveCapacitySOIndex(SOType.overheatSO)).OnAdded(caster,1);
                 entityAffect.photonView.RPC("DecreaseCurrentHpRPC", RpcTarget.All, SOType.bulletDamage);
                 collider.Disable();
             }

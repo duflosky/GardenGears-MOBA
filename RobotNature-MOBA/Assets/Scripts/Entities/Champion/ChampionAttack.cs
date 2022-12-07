@@ -5,6 +5,8 @@ using UnityEngine;
 
 public partial class Champion
 {
+    public bool isOverheat;
+    
     public bool CanAttack()
     {
         throw new System.NotImplementedException();

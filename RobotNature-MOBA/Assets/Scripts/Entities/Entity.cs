@@ -29,7 +29,7 @@ namespace Entities
         /// <summary>
         /// The list of PassiveCapacity on the entity.
         /// </summary>
-        public readonly List<PassiveCapacity> passiveCapacitiesList = new List<PassiveCapacity>();
+        public List<PassiveCapacity> passiveCapacitiesList = new List<PassiveCapacity>();
 
         /// <summary>
         /// The transform of the UI of the entity.

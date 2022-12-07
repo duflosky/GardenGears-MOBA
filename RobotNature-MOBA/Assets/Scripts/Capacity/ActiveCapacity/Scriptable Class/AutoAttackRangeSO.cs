@@ -11,6 +11,9 @@ public class AutoAttackRangeSO : ActiveCapacitySO
 
     public float bulletSpeed;
     public float bulletDamage;
+
+    public PassiveCapacitySO overheatSO;
+    public float sprayAngle = 90;
     
     
     public override Type AssociatedType()

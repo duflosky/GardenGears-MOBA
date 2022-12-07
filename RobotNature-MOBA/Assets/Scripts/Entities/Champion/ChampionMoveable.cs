@@ -39,7 +39,7 @@ public partial class Champion
     private void Rotate()
     {
         RotateMath();
-        rotateParent.transform.rotation = Quaternion.Lerp(rotateParent.transform.rotation,Quaternion.LookRotation(rotateDirection),Time.deltaTime * currentRotateSpeed);
+        if(rotateDirection != Vector3.zero)rotateParent.transform.rotation = Quaternion.Lerp(rotateParent.transform.rotation,Quaternion.LookRotation(rotateDirection),Time.deltaTime * currentRotateSpeed);
     }
 
     public float GetReferenceMoveSpeed()

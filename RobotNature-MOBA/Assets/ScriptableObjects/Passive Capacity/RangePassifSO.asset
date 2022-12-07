@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5df33881ac2fb0e40b2b448bf42fc992, type: 3}
+  m_Name: RangePassifSO
+  m_EditorClassIdentifier: 
+  referenceName: 
+  descriptionName: 
+  icon: {fileID: 0}
+  description: 
+  stackable: 1
+  types: 
+  indexInCollection: 0
+  maxHeatStack: 10
+  overheatStack: 8
+  stackDuration: 5
+  BurnFX: {fileID: 0}
+  BurnDelay: 0
