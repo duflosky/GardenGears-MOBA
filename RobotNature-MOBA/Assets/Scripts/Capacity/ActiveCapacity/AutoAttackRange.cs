@@ -39,7 +39,7 @@ public class AutoAttackRange : ActiveCapacity
             var rdm = Random.Range(-(SOType.sprayAngle / 2), (SOType.sprayAngle / 2));
             shootDir += new Vector3(Mathf.Cos(rdm), 0, Mathf.Sin(rdm)).normalized;
         };
-        collider.Launch(shootDir*SOType.bulletSpeed);
+        collider.Launch(shootDir.normalized*SOType.bulletSpeed);
         return true;
     }
 
