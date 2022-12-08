@@ -58,11 +58,34 @@ namespace Entities
             OnUpdate();   
         }
         protected virtual void OnUpdate(){}
-    
-    
-        public PassiveCapacity GetPassiveCapacityBySOIndex(byte soIndex)
+
+
+        public PassiveCapacity GetPassiveCapacity(byte soIndex)
+        {
+            var passif = TryGetPassiveCapacity(soIndex);
+            if (passif == default)
+            {
+                Debug.Log("Create Passif");
+                passif = CapacitySOCollectionManager.Instance.CreatePassiveCapacity(soIndex, this);
+                passiveCapacitiesList.Add(passif);
+            }
+            return passif;
+        }
+        
+        public PassiveCapacity GetPassiveCapacity(Type type)
+        {
+            var passif = TryGetPassiveCapacity(type);
+            return passif;
+        }
+        
+        public PassiveCapacity TryGetPassiveCapacity(byte soIndex)
         {
             return passiveCapacitiesList.FirstOrDefault(item => item.indexOfSo == soIndex);
+        }
+        
+        public PassiveCapacity TryGetPassiveCapacity(Type type)
+        {
+            return passiveCapacitiesList.FirstOrDefault(item => item.GetType() == type);
         }
     }
 }

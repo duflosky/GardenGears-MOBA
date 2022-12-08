@@ -10,8 +10,10 @@ public class RangePassif : PassiveCapacity
 {
     private RangePassifSO SOType;
     private Champion champ;
+    private SpeedBoostPassive speedBoost;
 
     private int burnTimer;
+    private int actifTimer;
     
     private int stackTimer;
     
@@ -22,6 +24,7 @@ public class RangePassif : PassiveCapacity
         SOType = (RangePassifSO)SO;
         champ = (Champion)entity;
         champ.SetMaxResourceRPC(SOType.maxHeatStack);
+        speedBoost = (SpeedBoostPassive)champ.GetPassiveCapacity(CapacitySOCollectionManager.GetPassiveCapacitySOIndex(SOType.actifSpeedBoost));
     }
 
     protected override void OnAddedEffects(Entity target)
@@ -29,19 +32,22 @@ public class RangePassif : PassiveCapacity
         stackTimer = 0;
         if (count > SOType.maxHeatStack)
         {
-            count = SOType.maxHeatStack;
-            return;
+            FullStackProc();
         }
-        champ.IncreaseCurrentResourceRPC(1);
-        if (!haveStack)
+        else
         {
-            GameStateMachine.Instance.OnTick += DecreaseStack; 
-            haveStack = true;
-        }
-        if (count >= SOType.overheatStack && !champ.isOverheat)
-        {
-            champ.isOverheat = true;
-            GameStateMachine.Instance.OnTick += BurnFeedback;
+            champ.IncreaseCurrentResourceRPC(1);
+            if (!haveStack)
+            {
+                GameStateMachine.Instance.OnTick += DecreaseStack;
+                haveStack = true;
+            }
+
+            if (count >= SOType.overheatStack && !champ.isOverheat)
+            {
+                champ.isOverheat = true;
+                GameStateMachine.Instance.OnTick += BurnFeedback;
+            }
         }
     }
 
@@ -64,10 +70,26 @@ public class RangePassif : PassiveCapacity
         throw new System.NotImplementedException();
     }
 
+    //===================================================================================
+
+    void FullStackProc()
+    {
+        Debug.Log("FullStack Proc");
+        speedBoost.OnAdded(champ);
+        count = 0;
+        haveStack = false;
+        champ.isOverheat = true;
+        champ.SetCurrentResourceRPC(0);
+        GameStateMachine.Instance.OnTick -= DecreaseStack;
+        GameStateMachine.Instance.OnTick += ActifTimer;
+        GameStateMachine.Instance.OnTick += BurnFeedback;
+    }
+    
+    
     void BurnFeedback()
     {
         burnTimer++;
-        if (burnTimer == SOType.BurnDelay * GameStateMachine.Instance.tickRate)
+        if (burnTimer >= SOType.BurnDelay * GameStateMachine.Instance.tickRate)
         {
             burnTimer = 0;
             //Burn
@@ -84,14 +106,26 @@ public class RangePassif : PassiveCapacity
             stackTimer = 0;
             if (count <= 0)
             {
+                count = 0;
                 GameStateMachine.Instance.OnTick -= DecreaseStack;
                 haveStack = false;
             }
-            else if (count < SOType.overheatStack && champ.isOverheat)
-            {
-                champ.isOverheat = false;
-                GameStateMachine.Instance.OnTick -= BurnFeedback;  
-            }
+        }
+    }
+
+    void ActifTimer()
+    {
+        actifTimer++;
+        if (actifTimer >= SOType.actifDuration*GameStateMachine.Instance.tickRate)
+        {
+            Debug.Log("End Passif");
+            actifTimer = 0;
+            champ.isOverheat = false;
+            speedBoost.OnRemoved(champ);
+            GameStateMachine.Instance.OnTick -= ActifTimer;
+            GameStateMachine.Instance.OnTick -= BurnFeedback;
+
+
         }
     }
 }

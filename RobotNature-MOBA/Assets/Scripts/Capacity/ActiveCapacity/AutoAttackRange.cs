@@ -24,21 +24,21 @@ public class AutoAttackRange : ActiveCapacity
     public override bool TryCast(int casterIndex, int[] targetsEntityIndexes, Vector3[] targetPositions)
     {
         if(!base.TryCast(casterIndex, targetsEntityIndexes, targetPositions)) return false;
-        champion.GetPassiveCapacityBySOIndex(CapacitySOCollectionManager.GetPassiveCapacitySOIndex(SOType.overheatSO)).OnAdded(caster,1);
+        champion.GetPassiveCapacity(CapacitySOCollectionManager.GetPassiveCapacitySOIndex(SOType.overheatSO)).OnAdded(caster,1);
         lookDir = targetPositions[0]-casterTransform.position;
         lookDir.y = 0;
-        bullet = PoolNetworkManager.Instance.PoolInstantiate(SOType.bulletPrefab.GetComponent<Entity>(), casterTransform.position, Quaternion.LookRotation(lookDir)).gameObject;
-        collider = bullet.GetComponent<AffectCollider>();
-        collider.caster = caster;
-        collider.casterPos = caster.transform.position;
-        collider.maxDistance = SOType.maxRange;
-        collider.capacitySender = this;
         var shootDir = lookDir;
         if (champion.isOverheat)
         {
             var rdm = Random.Range(-(SOType.sprayAngle / 2), (SOType.sprayAngle / 2));
             shootDir += new Vector3(Mathf.Cos(rdm), 0, Mathf.Sin(rdm)).normalized;
         };
+        bullet = PoolNetworkManager.Instance.PoolInstantiate(SOType.bulletPrefab.GetComponent<Entity>(), casterTransform.position, Quaternion.LookRotation(shootDir)).gameObject;
+        collider = bullet.GetComponent<AffectCollider>();
+        collider.caster = caster;
+        collider.casterPos = caster.transform.position;
+        collider.maxDistance = SOType.maxRange;
+        collider.capacitySender = this;
         collider.Launch(shootDir.normalized*SOType.bulletSpeed);
         return true;
     }
