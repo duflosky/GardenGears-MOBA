@@ -24,3 +24,5 @@ MonoBehaviour:
   stackDuration: 5
   BurnFX: {fileID: 0}
   BurnDelay: 0
+  actifSpeedBoost: {fileID: 11400000, guid: 9421e35ba61e6764ba00e2139a97c00e, type: 2}
+  actifDuration: 7
