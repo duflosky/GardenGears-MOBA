@@ -50,12 +50,12 @@ public class AutoAttackMelee : ActiveCapacity
                 {
                     //Critic
                     Debug.Log("Critic");
-                    entityAffect.photonView.RPC("DecreaseCurrentHpRPC", RpcTarget.All, SOType.damageMelee*SOType.percentageDamageCrit);
+                    entityAffect.photonView.RPC("DecreaseCurrentHpRPC", RpcTarget.All, SOType.damageMelee + (caster.GetComponent<Champion>().attackDamage * SOType.percentageDamageCrit));
                 }
                 else
                 {
                     Debug.Log("Normal hit");
-                    lifeable.DecreaseCurrentHpRPC(SOType.damageMelee*SOType.percentageDamage);  
+                    lifeable.DecreaseCurrentHpRPC(SOType.damageMelee + (caster.GetComponent<Champion>().attackDamage * SOType.percentageDamage));  
                 }
 
             }
