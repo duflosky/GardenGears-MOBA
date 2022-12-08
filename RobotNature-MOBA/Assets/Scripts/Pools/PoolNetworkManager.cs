@@ -75,6 +75,8 @@ public class PoolNetworkManager : MonoBehaviour
             else
             {
                 entity = queue.Dequeue();
+                entity.transform.position = position;
+                entity.gameObject.SetActive(true);
             }
         }
         else

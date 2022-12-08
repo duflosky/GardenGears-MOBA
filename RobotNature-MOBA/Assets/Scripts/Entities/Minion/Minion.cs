@@ -61,7 +61,6 @@ namespace Entities.Minion
             base.OnStart();
             myAgent = GetComponent<NavMeshAgent>();
             myController = GetComponent<MinionController>();
-            currentHp = maxHp;
             UIManager.Instance.InstantiateHealthBarForEntity(entityIndex);
             UIManager.Instance.InstantiateResourceBarForEntity(entityIndex);
             if (GameStates.GameStateMachine.Instance.GetPlayerTeam() != team)
@@ -69,6 +68,11 @@ namespace Entities.Minion
                 meshParent.gameObject.SetActive(false);
             }
             elementsToShow.Add(meshParent.gameObject);
+        }
+
+        private void OnEnable()
+        {
+            currentHp = maxHp;
         }
 
         #region State Methods
