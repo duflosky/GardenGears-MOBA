@@ -24,7 +24,7 @@ public class AutoAttackRange : ActiveCapacity
     public override bool TryCast(int casterIndex, int[] targetsEntityIndexes, Vector3[] targetPositions)
     {
         if(!base.TryCast(casterIndex, targetsEntityIndexes, targetPositions)) return false;
-        champion.GetPassiveCapacityBySOIndex(CapacitySOCollectionManager.GetPassiveCapacitySOIndex(SOType.overheatSO)).OnAdded(caster,1);
+        champion.GetPassiveCapacity(CapacitySOCollectionManager.GetPassiveCapacitySOIndex(SOType.overheatSO)).OnAdded(caster,1);
         lookDir = targetPositions[0]-casterTransform.position;
         lookDir.y = 0;
         var shootDir = lookDir;

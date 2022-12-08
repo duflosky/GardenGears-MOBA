@@ -94,7 +94,7 @@ namespace Entities.Capacities
             PassiveCapacity capacity;
             if (so.stackable)
             {
-                capacity = entity.GetPassiveCapacityBySOIndex(soIndex);
+                capacity = entity.TryGetPassiveCapacity(soIndex);
                 if (capacity != null)
                 {
                     capacity.stackable = so.stackable;

@@ -18,7 +18,7 @@ namespace Entities.Capacities
 
         public virtual void OnCreate(){}
         
-        public void OnAdded(Entity target, int amount)
+        public void OnAdded(Entity target, int amount = 1)
         {
             if (stackable) count+= amount;
             entity = target;
