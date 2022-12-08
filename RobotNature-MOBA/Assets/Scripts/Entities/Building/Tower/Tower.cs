@@ -7,7 +7,7 @@ using Entities.Capacities;
 using Photon.Pun;
 using UnityEngine;
 
-public class Tower : Building, IAttackable, IActiveLifeable, IDeadable
+public class Tower : Building, IAttackable
 {
     [Space]
     [Header("Tower settings")]
@@ -63,6 +63,7 @@ public class Tower : Building, IAttackable, IActiveLifeable, IDeadable
         
         int[] targetEntity = new[] { enemiesInRange[0].GetComponent<Entity>().entityIndex };
         
+        // TODO: Add variable who can store the capacity of the tower
         AttackRPC(3, targetEntity, Array.Empty<Vector3>());
         
         yield return new WaitForSeconds(timeBetweenShots);
@@ -99,6 +100,7 @@ public class Tower : Building, IAttackable, IActiveLifeable, IDeadable
 
     public event GlobalDelegates.BoolDelegate OnSetCanAttack;
     public event GlobalDelegates.BoolDelegate OnSetCanAttackFeedback;
+    
     public float GetAttackDamage()
     {
         throw new System.NotImplementedException();
@@ -148,6 +150,7 @@ public class Tower : Building, IAttackable, IActiveLifeable, IDeadable
 
     public event GlobalDelegates.ByteIntArrayVector3ArrayDelegate OnAttack;
     public event GlobalDelegates.ByteIntArrayVector3ArrayDelegate OnAttackFeedback;
+    
     public void RequestIncreaseAttackDamage(float value)
     {
         throw new NotImplementedException();
@@ -165,6 +168,7 @@ public class Tower : Building, IAttackable, IActiveLifeable, IDeadable
 
     public event GlobalDelegates.FloatDelegate OnIncreaseAttackDamage;
     public event GlobalDelegates.FloatDelegate OnIncreaseAttackDamageFeedback;
+    
     public void RequestDecreaseAttackDamage(float value)
     {
         throw new NotImplementedException();
@@ -217,228 +221,5 @@ public class Tower : Building, IAttackable, IActiveLifeable, IDeadable
     public event GlobalDelegates.FloatDelegate OnDecreaseAttackSpeed;
     public event GlobalDelegates.FloatDelegate OnDecreaseAttackSpeedFeedback;
 
-    #endregion
-    
-    #region ActiveLifeable
-
-    [SerializeField] private bool attackAffected;
-    [SerializeField] private bool abilitiesAffected;
-    
-    public bool AttackAffected()
-    {
-        return attackAffected;
-    }
-
-    public bool AbilitiesAffected()
-    {
-        return abilitiesAffected;
-    }
-
-    public float GetMaxHp()
-    {
-        throw new NotImplementedException();
-    }
-
-    public float GetCurrentHp()
-    {
-        throw new NotImplementedException();
-    }
-
-    public float GetCurrentHpPercent()
-    {
-        throw new NotImplementedException();
-    }
-
-    public void RequestSetMaxHp(float value)
-    {
-        throw new NotImplementedException();
-    }
-
-    public void SyncSetMaxHpRPC(float value)
-    {
-        throw new NotImplementedException();
-    }
-
-    public void SetMaxHpRPC(float value)
-    {
-        throw new NotImplementedException();
-    }
-
-    public event GlobalDelegates.FloatDelegate OnSetMaxHp;
-    public event GlobalDelegates.FloatDelegate OnSetMaxHpFeedback;
-    
-    public void RequestIncreaseMaxHp(float amount)
-    {
-        throw new NotImplementedException();
-    }
-
-    public void SyncIncreaseMaxHpRPC(float amount)
-    {
-        throw new NotImplementedException();
-    }
-
-    public void IncreaseMaxHpRPC(float amount)
-    {
-        throw new NotImplementedException();
-    }
-
-    public event GlobalDelegates.FloatDelegate OnIncreaseMaxHp;
-    public event GlobalDelegates.FloatDelegate OnIncreaseMaxHpFeedback;
-    
-    public void RequestDecreaseMaxHp(float amount)
-    {
-        throw new NotImplementedException();
-    }
-
-    public void SyncDecreaseMaxHpRPC(float amount)
-    {
-        throw new NotImplementedException();
-    }
-
-    public void DecreaseMaxHpRPC(float amount)
-    {
-        throw new NotImplementedException();
-    }
-
-    public event GlobalDelegates.FloatDelegate OnDecreaseMaxHp;
-    public event GlobalDelegates.FloatDelegate OnDecreaseMaxHpFeedback;
-    
-    public void RequestSetCurrentHp(float value)
-    {
-        throw new NotImplementedException();
-    }
-
-    public void SyncSetCurrentHpRPC(float value)
-    {
-        throw new NotImplementedException();
-    }
-
-    public void SetCurrentHpRPC(float value)
-    {
-        throw new NotImplementedException();
-    }
-
-    public event GlobalDelegates.FloatDelegate OnSetCurrentHp;
-    public event GlobalDelegates.FloatDelegate OnSetCurrentHpFeedback;
-    
-    public void RequestIncreaseCurrentHp(float amount)
-    {
-        throw new NotImplementedException();
-    }
-
-    public void SyncIncreaseCurrentHpRPC(float amount)
-    {
-        throw new NotImplementedException();
-    }
-
-    public void IncreaseCurrentHpRPC(float amount)
-    {
-        throw new NotImplementedException();
-    }
-
-    public event GlobalDelegates.FloatDelegate OnIncreaseCurrentHp;
-    public event GlobalDelegates.FloatDelegate OnIncreaseCurrentHpFeedback;
-    
-    public void RequestDecreaseCurrentHp(float amount)
-    {
-        photonView.RPC("DecreaseCurrentHpRPC", RpcTarget.MasterClient, amount);
-    }
-    
-    [PunRPC]
-    public void SyncDecreaseCurrentHpRPC(float amount)
-    {
-        currentHealth = amount;
-    }
-
-    [PunRPC]
-    public void DecreaseCurrentHpRPC(float amount)
-    {
-        currentHealth -= amount;
-        if (currentHealth < 0) currentHealth = 0;
-        
-        photonView.RPC("SyncDecreaseCurrentHpRPC", RpcTarget.All, currentHealth);
-        
-        //TODO: Turrel cannot die
-        if (currentHealth <= 0 && isAlive)
-        {
-            isAlive = false;
-            RequestDie();
-        }
-    }
-
-    public event GlobalDelegates.FloatDelegate OnDecreaseCurrentHp;
-    public event GlobalDelegates.FloatDelegate OnDecreaseCurrentHpFeedback;
-    
-    #endregion
-    
-    #region Deadable
-    
-    public bool IsAlive()
-    {
-        throw new NotImplementedException();
-    }
-
-    public bool CanDie()
-    {
-        throw new NotImplementedException();
-    }
-
-    public void RequestSetCanDie(bool value)
-    {
-        throw new NotImplementedException();
-    }
-
-    public void SyncSetCanDieRPC(bool value)
-    {
-        throw new NotImplementedException();
-    }
-
-    public void SetCanDieRPC(bool value)
-    {
-        throw new NotImplementedException();
-    }
-
-    public event GlobalDelegates.BoolDelegate OnSetCanDie;
-    public event GlobalDelegates.BoolDelegate OnSetCanDieFeedback;
-    
-    public void RequestDie()
-    {
-        photonView.RPC("DieRPC", RpcTarget.MasterClient);
-    }
-
-    [PunRPC]
-    public void SyncDieRPC()
-    {
-        isAlive = false;
-        Destroy(gameObject);
-    }
-
-    [PunRPC]
-    public void DieRPC()
-    {
-        photonView.RPC("SyncDieRPC", RpcTarget.All);
-    }
-
-    public event GlobalDelegates.NoParameterDelegate OnDie;
-    public event GlobalDelegates.NoParameterDelegate OnDieFeedback;
-    
-    public void RequestRevive()
-    {
-        throw new NotImplementedException();
-    }
-
-    public void SyncReviveRPC()
-    {
-        throw new NotImplementedException();
-    }
-
-    public void ReviveRPC()
-    {
-        throw new NotImplementedException();
-    }
-
-    public event GlobalDelegates.NoParameterDelegate OnRevive;
-    public event GlobalDelegates.NoParameterDelegate OnReviveFeedback;
-    
     #endregion
 }
