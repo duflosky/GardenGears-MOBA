@@ -11,7 +11,7 @@ namespace Entities.Minion
         private float brainTimer;
         private Minion myMinion;
     
-        private void Start()
+        private void OnEnable()
         {
             myMinion = controlledEntity.GetComponent<Minion>();
             currentState = MinionState.LookingForPathing;

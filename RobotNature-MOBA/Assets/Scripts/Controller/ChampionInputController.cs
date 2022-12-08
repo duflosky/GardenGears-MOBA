@@ -1,5 +1,6 @@
 using Entities;
 using Entities.Capacities;
+using UI.InGame;
 using UnityEngine;
 using UnityEngine.InputSystem;
 /*using Entities;
@@ -37,7 +38,7 @@ namespace Controllers.Inputs
         /// <param name="ctx"></param>
         private void OnShowHideShop(InputAction.CallbackContext ctx)
         {
-            //UIManager.Instance.ShowHideShop();
+            UIManager.Instance.ShowHideShop();
         }
         
         /// <summary>
@@ -50,6 +51,7 @@ namespace Controllers.Inputs
 
             champion.RequestCast(champion.abilitiesIndexes[0], 0,selectedEntity,cursorWorldPos);
         }
+        
         /// <summary>
         /// Actions Performed on Capacity 2 Activation
         /// </summary>
@@ -58,6 +60,7 @@ namespace Controllers.Inputs
         {
             champion.RequestCast(champion.abilitiesIndexes[1], 1,selectedEntity,cursorWorldPos);
         }
+        
         /// <summary>
         /// Actions Performed on Ultimate Capacity Activation
         /// </summary>
@@ -73,7 +76,7 @@ namespace Controllers.Inputs
         /// <param name="ctx"></param>
         private void OnActivateItem0(InputAction.CallbackContext ctx)
         {
-            //champion.RequestActivateItem(0,selectedEntity,cursorWorldPos);
+            champion.RequestActivateItem(0,selectedEntity,cursorWorldPos);
         }
         
         /// <summary>
@@ -82,8 +85,9 @@ namespace Controllers.Inputs
         /// <param name="ctx"></param>
         private void OnActivateItem1(InputAction.CallbackContext ctx)
         {
-           // champion.RequestActivateItem(1,selectedEntity,cursorWorldPos);
+           champion.RequestActivateItem(1,selectedEntity,cursorWorldPos);
         }
+        
         /// <summary>
         /// Actions Performed on Item 2 Activation
         /// </summary>
@@ -123,8 +127,6 @@ namespace Controllers.Inputs
             }*/
         }
 
-
-
         /// <summary>
         /// Get World Position of mouse
         /// </summary>
@@ -153,7 +155,6 @@ namespace Controllers.Inputs
             moveVector = new Vector3(moveInput.x, 0, moveInput.y);
             champion.SetMoveDirection(moveVector);
         }
-        
 
         protected override void Link(Entity entity)
         {
@@ -163,7 +164,6 @@ namespace Controllers.Inputs
             
             champion = controlledEntity as Champion;
             base.Link(entity);
-            Debug.Log("Link Champ inputs");
             inputs.Movement.Move.performed += OnMoveChange; 
             inputs.Movement.Move.canceled += OnMoveChange;
             
@@ -171,42 +171,36 @@ namespace Controllers.Inputs
             inputs.Capacity.Capacity2.performed += OnActivateCapacity2;
             inputs.Capacity.Ultime.performed += OnActivateUltimateAbility;
             
-            
             inputs.Mouse.MousePos.performed += OnMouseMove;
-            /*
-            
-            inputs.Attack.Attack.performed += OnAttack;
-            
-            
 
-                
-                champion.rb.isKinematic = false;
+            // inputs.Attack.Attack.performed += OnAttack;
 
+            // champion.rb.isKinematic = false;
             
             inputs.Inventory.ActivateItem0.performed += OnActivateItem0;
             inputs.Inventory.ActivateItem1.performed += OnActivateItem1;
             inputs.Inventory.ActivateItem2.performed += OnActivateItem2;
             inputs.Inventory.ShowHideInventory.started += context => UIManager.Instance.ShowHideInventory(true);
             inputs.Inventory.ShowHideInventory.canceled += context => UIManager.Instance.ShowHideInventory(false);
-            inputs.Inventory.ShowHideShop.performed += OnShowHideShop;*/
+            inputs.Inventory.ShowHideShop.performed += OnShowHideShop;
 
         }
         
         protected override void Unlink()
         {
-            /*inputs.Attack.Attack.performed -= OnAttack;
+            // inputs.Attack.Attack.performed -= OnAttack;
             
-            inputs.Capacity.Capacity0.performed -= OnActivateCapacity0;
+            // inputs.Capacity.Capacity0.performed -= OnActivateCapacity0;
             inputs.Capacity.Capacity1.performed -= OnActivateCapacity1;
             inputs.Capacity.Capacity2.performed -= OnActivateUltimateAbility;
             inputs.Inventory.ShowHideShop.performed -= OnShowHideShop;
 
-                inputs.Movement.Move.performed -= OnMoveChange; 
-                inputs.Movement.Move.canceled -= OnMoveChange;
+            inputs.Movement.Move.performed -= OnMoveChange; 
+            inputs.Movement.Move.canceled -= OnMoveChange;
 
-            inputs.MoveMouse.MousePos.performed -= OnMouseMove;
+            // inputs.MoveMouse.MousePos.performed -= OnMouseMove;
 
-            CameraController.Instance.UnLinkCamera();*/
+            CameraController.Instance.UnLinkCamera();
         }
     }
 }

@@ -420,20 +420,10 @@ PrefabInstance:
       propertyPath: sceneViewId
       value: 996
       objectReference: {fileID: 0}
-    - target: {fileID: 7675406472214385062, guid: 9a3d8686d94b5444c9c8d6bcd8e404ee,
-        type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 8710349831528464810, guid: 9a3d8686d94b5444c9c8d6bcd8e404ee,
         type: 3}
       propertyPath: sceneViewId
       value: 999
-      objectReference: {fileID: 0}
-    - target: {fileID: 9024119698948549953, guid: 9a3d8686d94b5444c9c8d6bcd8e404ee,
-        type: 3}
-      propertyPath: m_Enabled
-      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9a3d8686d94b5444c9c8d6bcd8e404ee, type: 3}
@@ -1063,6 +1053,33 @@ PrefabInstance:
       propertyPath: sceneViewId
       value: 45
       objectReference: {fileID: 0}
+    - target: {fileID: 5782913058556930975, guid: 30fe4bb0638482e4ea92a645c72505d5,
+        type: 3}
+      propertyPath: poolElements.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5782913058556930975, guid: 30fe4bb0638482e4ea92a645c72505d5,
+        type: 3}
+      propertyPath: poolElements.Array.data[1].amount
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 5782913058556930975, guid: 30fe4bb0638482e4ea92a645c72505d5,
+        type: 3}
+      propertyPath: poolElements.Array.data[2].amount
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 5782913058556930975, guid: 30fe4bb0638482e4ea92a645c72505d5,
+        type: 3}
+      propertyPath: poolElements.Array.data[1].Element
+      value: 
+      objectReference: {fileID: 4631029676220588112, guid: 6dae29ea442e6e14c9ac081906af2638,
+        type: 3}
+    - target: {fileID: 5782913058556930975, guid: 30fe4bb0638482e4ea92a645c72505d5,
+        type: 3}
+      propertyPath: poolElements.Array.data[2].Element
+      value: 
+      objectReference: {fileID: -5931017334800636100, guid: 0bf2acb7ad65c8945a9300e6946c16c4,
+        type: 3}
     - target: {fileID: 5782913058564815914, guid: 30fe4bb0638482e4ea92a645c72505d5,
         type: 3}
       propertyPath: sceneViewId

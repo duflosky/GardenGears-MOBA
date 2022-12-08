@@ -168,6 +168,114 @@
                     "isPartOfComposite": false
                 }
             ]
+        },
+        {
+            "name": "Inventory",
+            "id": "b55d1e97-bcae-49d9-a58e-d2726b5a7a44",
+            "actions": [
+                {
+                    "name": "ActivateItem0",
+                    "type": "Button",
+                    "id": "bdc6bcf8-4cd9-4fb5-a464-740314e5f01c",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "ActivateItem1",
+                    "type": "Button",
+                    "id": "3cb8a159-c4b4-438d-9152-1f9995c2bfc7",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "ActivateItem2",
+                    "type": "Button",
+                    "id": "5a84e508-516f-491e-97dd-8a3583ae9242",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "ShowHideInventory",
+                    "type": "Button",
+                    "id": "73214987-5c82-4e21-b9f7-b8d034315521",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "ShowHideShop",
+                    "type": "Button",
+                    "id": "72a46c12-496e-4aef-8ae1-e18543c2c934",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "e81b6cf9-3bb5-4446-a473-b1d96db72a17",
+                    "path": "<Keyboard>/1",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ActivateItem0",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "aa3dcf4f-0dac-4b91-9b0b-f30b40fc56bc",
+                    "path": "<Keyboard>/2",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ActivateItem1",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "0c4bd197-fc82-43b5-a65f-ba9ed725faa3",
+                    "path": "<Keyboard>/3",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ActivateItem2",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "3d1dac06-959f-4fa4-807b-4cefa88ad282",
+                    "path": "<Keyboard>/tab",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ShowHideInventory",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "9b264447-1850-4e46-ac1c-613a70e87b5b",
+                    "path": "<Keyboard>/b",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ShowHideShop",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
         }
     ],
     "controlSchemes": []

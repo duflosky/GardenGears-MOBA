@@ -10,15 +10,20 @@ using UnityEngine;
 
 public class MinionSpawner : Building
 {
+    [Header("Minion Prefab")]
+    public Minion minionPrefab;
+
+    [Header("Minion Spawn Settings")]
     public Transform spawnPointForMinion;
-    public Entity minionPrefab;
     public int spawnMinionAmount = 5;
     public float spawnMinionInterval = 1.7f;
     public float spawnCycleTime = 30;
     private readonly float spawnSpeed = 30;
     public Color minionColor;
-    public List<Transform> pathfinding = new List<Transform>();
-    public List<Building> enemyTowers = new List<Building>();
+    
+    [Header("Minion Path Settings")]
+    public List<Transform> pathfinding = new();
+    public List<Building> enemyTowers = new();
     public string unitTag;
     
     //TODO: Possibility to use GameState to spawn minions
@@ -47,11 +52,11 @@ public class MinionSpawner : Building
     {
         Entity minionGO = PoolNetworkManager.Instance.PoolInstantiate(minionPrefab, spawnPointForMinion.position, Quaternion.identity, transform.root.root.root.root);
         
-        Minion minionScript = minionGO.GetComponent<Minion>();
-        minionScript.myWaypoints = pathfinding;
-        minionScript.TowersList = enemyTowers;
-        minionScript.team = unitTag.Contains(Enums.Team.Team1.ToString()) ? Enums.Team.Team1 : Enums.Team.Team2;
-        minionScript.tag = unitTag;
-        minionGO.GetComponent<MeshRenderer>().material.color = minionColor;
+        Minion minion = minionGO.GetComponent<Minion>();
+        minion.myWaypoints = pathfinding;
+        minion.TowersList = enemyTowers;
+        minion.team = unitTag.Contains(Enums.Team.Team1.ToString()) ? Enums.Team.Team1 : Enums.Team.Team2;
+        minion.tag = unitTag;
+        minion.meshParent.GetComponent<MeshRenderer>().material.color = minionColor;
     }
 }

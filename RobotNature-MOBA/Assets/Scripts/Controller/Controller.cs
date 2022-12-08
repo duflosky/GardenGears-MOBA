@@ -26,7 +26,6 @@ namespace Controllers
          protected virtual void Link(Entity entity)
          {
              if(controlledEntity != null) Unlink();
-             Debug.Log("Link");
              controlledEntity = entity;
          }
 
