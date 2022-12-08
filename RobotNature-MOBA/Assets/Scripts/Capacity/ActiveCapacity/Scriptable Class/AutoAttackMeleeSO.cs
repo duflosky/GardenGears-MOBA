@@ -8,8 +8,9 @@ using UnityEngine;
 public class AutoAttackMeleeSO : ActiveCapacitySO
 {
     public GameObject damageZone;
-    public float damageAmount = 1;
-
+    public float damageMelee = 1;
+    public float percentageDamage;
+    public float percentageDamageCrit;
     
     public float normalAmplitude;
     public float perfectAmplitude;
