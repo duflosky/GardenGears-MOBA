@@ -93,13 +93,6 @@ public class PoolNetworkManager : MonoBehaviour
         return entity;
     }
     
-    //TODO: Finish the requeue method
-    public void PoolRequeue(Entity entity)
-    {
-        
-    }
-
-
     public void EnqueuePool(Entity entityRef, Entity entity)
     {
         queuesDictionary[entityRef].Enqueue(entity);

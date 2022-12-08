@@ -43,7 +43,7 @@ public class AffectCollider : Entity
     {
         Entity entity = other.GetComponent<Entity>();
         
-        if (entity && entity != caster)
+        if (entity && entity != caster && entity.team != caster.team)
         {
             if (PhotonNetwork.IsMasterClient)
             {
