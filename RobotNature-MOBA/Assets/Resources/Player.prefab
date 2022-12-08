@@ -304,7 +304,7 @@ MonoBehaviour:
   canAddPassiveCapacity: 1
   canRemovePassiveCapacity: 1
   TransformUI: {fileID: 4021050473540789002}
-  OffsetUI: {x: 0, y: 3, z: 0}
+  OffsetUI: {x: 0, y: 5, z: 0}
   canShow: 0
   canHide: 0
   elementsToShow: []
@@ -321,6 +321,8 @@ MonoBehaviour:
   attackAffect: 1
   abilitiesAffect: 1
   isOverheat: 0
+  attackDamage: 1
+  attackSpeed: 1
   abilitiesIndexes: 0000
   ultimateAbilityIndex: 0
   canCast: 0

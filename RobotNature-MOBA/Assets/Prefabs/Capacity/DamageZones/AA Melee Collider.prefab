@@ -216,6 +216,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: P_AutoAttack_CAC_SwipePlaceHolder
       objectReference: {fileID: 0}
+    - target: {fileID: 5614902743091288480, guid: 0501d7b80283d1347917ae565e593837,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5929957200379491121, guid: 0501d7b80283d1347917ae565e593837,
         type: 3}
       propertyPath: m_RootOrder

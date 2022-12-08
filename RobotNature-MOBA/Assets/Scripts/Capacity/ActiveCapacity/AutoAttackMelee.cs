@@ -50,12 +50,12 @@ public class AutoAttackMelee : ActiveCapacity
                 {
                     //Critic
                     Debug.Log("Critic");
-                    entityAffect.photonView.RPC("DecreaseCurrentHpRPC", RpcTarget.All, SOType.damageAmount*1.5f);
+                    entityAffect.photonView.RPC("DecreaseCurrentHpRPC", RpcTarget.All, SOType.damageMelee + (caster.GetComponent<Champion>().attackDamage * SOType.percentageDamageCrit));
                 }
                 else
                 {
                     Debug.Log("Normal hit");
-                    lifeable.DecreaseCurrentHpRPC(SOType.damageAmount);  
+                    lifeable.DecreaseCurrentHpRPC(SOType.damageMelee + (caster.GetComponent<Champion>().attackDamage * SOType.percentageDamage));  
                 }
 
             }
@@ -63,16 +63,13 @@ public class AutoAttackMelee : ActiveCapacity
     }
 
     public override void PlayFeedback(int casterIndex, int[] targetsEntityIndexes, Vector3[] targetPositions)
-    {
-        Debug.Log("Play FeedBack");
-        if(PhotonNetwork.IsMasterClient) return;
-        Debug.Log("Play FeedBack as Client");
+    { 
         lookDir = targetPositions[0]-casterTransform.position;
         lookDir.y = 0;
-        feedbackObject = PoolLocalManager.Instance.PoolInstantiate(SOType.damageZone, casterTransform.position, Quaternion.LookRotation(lookDir));
-       var col = feedbackObject.GetComponent<Collider>();
-       if (col) col.enabled = false;
-       GameStateMachine.Instance.OnTick += DisableObject;
+        feedbackObject = PoolLocalManager.Instance.PoolInstantiate(SOType.fxPrefab, casterTransform.position, Quaternion.LookRotation(-lookDir), casterTransform); 
+        var col = feedbackObject.GetComponent<Collider>(); 
+        if (col) col.enabled = false; 
+        GameStateMachine.Instance.OnTick += DisableObject;
     }
     
     

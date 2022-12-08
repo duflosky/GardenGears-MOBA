@@ -20,6 +20,7 @@ public partial class Champion : Entity, IMovable, IInventoryable, IResourceable,
     [SerializeReference] public List<Item> items = new List<Item>();
 
     private UIManager uiManager;
+    private Animator animator;
 
     protected override void OnStart()
     {
@@ -62,6 +63,7 @@ public partial class Champion : Entity, IMovable, IInventoryable, IResourceable,
         championMesh.transform.localEulerAngles = Vector3.zero;
         abilitiesIndexes = championSo.activeCapacitiesIndexes;
         ultimateAbilityIndex = championSo.ultimateAbilityIndex;
+        animator = championMesh.GetComponentInChildren<Animator>();
 
         foreach (var passif in so.passiveCapacities)
         {
@@ -113,7 +115,7 @@ public partial class Champion : Entity, IMovable, IInventoryable, IResourceable,
             championMesh.SetActive(false);
         }
         
-        championMesh.GetComponent<ChampionMeshLinker>().LinkTeamColor(this.team);
+        // championMesh.GetComponent<ChampionMeshLinker>().LinkTeamColor(this.team);
         elementsToShow.Add(championMesh);
 
         respawnPos = transform.position = pos.position;
