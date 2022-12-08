@@ -3218,7 +3218,7 @@ MonoBehaviour:
   OwnershipTransfer: 0
   observableSearch: 2
   ObservedComponents: []
-  sceneViewId: 0
+  sceneViewId: 1
   InstantiationId: 0
   isRuntimeInstantiated: 0
 --- !u!114 &772014407571940049
@@ -4006,7 +4006,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 7bfe2c9eca9f9ff4385e1333be6cfcf2, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 4cf437a7faff93f488b5ad31c642ead7, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -4275,7 +4275,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 7bfe2c9eca9f9ff4385e1333be6cfcf2, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 4cf437a7faff93f488b5ad31c642ead7, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1
@@ -4354,7 +4354,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 4cf437a7faff93f488b5ad31c642ead7, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 7bfe2c9eca9f9ff4385e1333be6cfcf2, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1
@@ -4524,7 +4524,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 4cf437a7faff93f488b5ad31c642ead7, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 7bfe2c9eca9f9ff4385e1333be6cfcf2, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1
