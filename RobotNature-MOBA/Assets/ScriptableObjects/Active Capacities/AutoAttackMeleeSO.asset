@@ -26,6 +26,8 @@ MonoBehaviour:
   feedbackPrefab: {fileID: 0}
   damageZone: {fileID: 2337458986253374596, guid: f2dc7cb89fec93b49a88ea5b63e37dbc,
     type: 3}
+  fxPrefab: {fileID: 5572468312039609675, guid: 758adf5f7e4eeea41833ab4d2717d443,
+    type: 3}
   damageAmount: 1
   normalAmplitude: 45
   perfectAmplitude: 15
