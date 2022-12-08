@@ -2826,9 +2826,9 @@ MonoBehaviour:
   isAlive: 0
   maxHealth: 0
   currentHealth: 0
-  spawnPointForMinion: {fileID: 2890551448243059101}
   minionPrefab: {fileID: 4631029676220588112, guid: 6dae29ea442e6e14c9ac081906af2638,
     type: 3}
+  spawnPointForMinion: {fileID: 2890551448243059101}
   spawnMinionAmount: 5
   spawnMinionInterval: 1.7
   spawnCycleTime: 30
@@ -6717,9 +6717,9 @@ MonoBehaviour:
   isAlive: 0
   maxHealth: 0
   currentHealth: 0
-  spawnPointForMinion: {fileID: 2694164652024378065}
   minionPrefab: {fileID: 4631029676220588112, guid: 6dae29ea442e6e14c9ac081906af2638,
     type: 3}
+  spawnPointForMinion: {fileID: 2694164652024378065}
   spawnMinionAmount: 5
   spawnMinionInterval: 1.7
   spawnCycleTime: 30

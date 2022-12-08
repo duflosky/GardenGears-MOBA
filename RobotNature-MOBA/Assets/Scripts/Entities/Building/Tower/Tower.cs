@@ -221,14 +221,17 @@ public class Tower : Building, IAttackable, IActiveLifeable, IDeadable
     
     #region ActiveLifeable
 
+    [SerializeField] private bool attackAffected;
+    [SerializeField] private bool abilitiesAffected;
+    
     public bool AttackAffected()
     {
-        throw new NotImplementedException();
+        return attackAffected;
     }
 
     public bool AbilitiesAffected()
     {
-        throw new NotImplementedException();
+        return abilitiesAffected;
     }
 
     public float GetMaxHp()

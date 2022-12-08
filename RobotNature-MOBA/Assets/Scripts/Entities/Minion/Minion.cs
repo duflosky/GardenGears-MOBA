@@ -719,7 +719,6 @@ namespace Entities.Minion
         [PunRPC]
         public void SyncDieRPC()
         {
-            PoolNetworkManager.Instance.PoolRequeue(this);
             FogOfWarManager.Instance.RemoveFOWViewable(this);
             gameObject.SetActive(false);
         }
