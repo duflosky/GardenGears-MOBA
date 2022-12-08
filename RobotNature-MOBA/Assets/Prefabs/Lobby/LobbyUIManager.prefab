@@ -1,3 +1,7 @@
+<<<<<<< IntegrationTree&Rock
+<<<<<<< HEAD
+=======
+>>>>>>> Preview-Master
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
 --- !u!1 &772014405818028182
@@ -4823,3 +4827,11 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+<<<<<<< IntegrationTree&Rock
+=======
+version https://git-lfs.github.com/spec/v1
+oid sha256:30e961cc1e26196168995e1ce328181e62c551475e90ea0b8af4537d6cc15294
+size 140974
+>>>>>>> IntegrationsProps
+=======
+>>>>>>> Preview-Master
