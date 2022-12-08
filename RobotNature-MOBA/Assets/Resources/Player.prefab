@@ -321,6 +321,8 @@ MonoBehaviour:
   attackAffect: 1
   abilitiesAffect: 1
   isOverheat: 0
+  attackDamage: 1
+  attackSpeed: 1
   abilitiesIndexes: 0000
   ultimateAbilityIndex: 0
   canCast: 0
