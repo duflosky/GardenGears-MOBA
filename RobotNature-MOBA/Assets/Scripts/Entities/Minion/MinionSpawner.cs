@@ -52,11 +52,11 @@ public class MinionSpawner : Building
     {
         Entity minionGO = PoolNetworkManager.Instance.PoolInstantiate(minionPrefab, spawnPointForMinion.position, Quaternion.identity, transform.root.root.root.root);
         
-        Minion minionScript = minionGO.GetComponent<Minion>();
-        minionScript.myWaypoints = pathfinding;
-        minionScript.TowersList = enemyTowers;
-        minionScript.team = unitTag.Contains(Enums.Team.Team1.ToString()) ? Enums.Team.Team1 : Enums.Team.Team2;
-        minionScript.tag = unitTag;
-        minionScript.meshParent.GetComponent<MeshRenderer>().material.color = minionColor;
+        Minion minion = minionGO.GetComponent<Minion>();
+        minion.myWaypoints = pathfinding;
+        minion.TowersList = enemyTowers;
+        minion.team = unitTag.Contains(Enums.Team.Team1.ToString()) ? Enums.Team.Team1 : Enums.Team.Team2;
+        minion.tag = unitTag;
+        minion.meshParent.GetComponent<MeshRenderer>().material.color = minionColor;
     }
 }

@@ -72,7 +72,8 @@ namespace Entities.Minion
 
         private void OnEnable()
         {
-            currentHp = maxHp;
+            RequestSetCurrentHp(maxHp);
+            waypointIndex = 0;
         }
 
         #region State Methods
