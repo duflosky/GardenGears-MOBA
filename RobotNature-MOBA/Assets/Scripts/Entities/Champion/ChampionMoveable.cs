@@ -21,6 +21,9 @@ public partial class Champion
     
     void Move()
     {
+        if (animator == null) return;
+        if (lastDir != Vector3.zero) animator.SetBool("IsRunning", true);
+        else animator.SetBool("IsRunning", false);
         rb.velocity = lastDir * currentMoveSpeed;
     }
 
