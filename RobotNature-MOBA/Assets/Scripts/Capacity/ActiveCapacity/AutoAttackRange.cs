@@ -45,13 +45,13 @@ public class AutoAttackRange : ActiveCapacity
 
     public override void CollideEntityEffect(Entity entityAffect)
     {
+        if (caster.team != entityAffect.team) return;
         if (PhotonNetwork.IsMasterClient)
         {
             var lifeable = entityAffect.GetComponent<IActiveLifeable>();
             if (lifeable != null)
             {
-                if(!lifeable.AttackAffected())return;
-                
+                if (!lifeable.AttackAffected()) return;
                 entityAffect.photonView.RPC("DecreaseCurrentHpRPC", RpcTarget.All, caster.GetComponent<Champion>().attackDamage * SOType.percentageDamage);
                 collider.Disable();
             }
