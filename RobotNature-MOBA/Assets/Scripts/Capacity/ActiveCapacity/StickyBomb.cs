@@ -26,6 +26,8 @@ public class StickyBomb : ActiveCapacity
         stickyBombGO = PoolLocalManager.Instance.PoolInstantiate(SOType.stickyBombZone, casterTransform.position, Quaternion.LookRotation(lookDir));
         AffectCollider collider = stickyBombGO.GetComponent<AffectCollider>(); 
         collider.GetComponent<SphereCollider>().radius = SOType.radiusStick;
+        collider.maxDistance = SOType.maxRange;
+        collider.casterPos = caster.transform.position;
         collider.capacitySender = this;
         collider.caster = caster;
         collider.Launch(shootDir.normalized * SOType.speedBomb);
@@ -63,7 +65,7 @@ public class StickyBomb : ActiveCapacity
 
     private void ExplodeBomb()
     {
-        Collider[] entities = Physics.OverlapSphere(stickyBombGO.transform.position, SOType.maxRange);
+        Collider[] entities = Physics.OverlapSphere(stickyBombGO.transform.position, SOType.radiusExplosion);
         foreach (Collider entity in entities)
         {
             IActiveLifeable lifeable = entity.GetComponent<IActiveLifeable>();

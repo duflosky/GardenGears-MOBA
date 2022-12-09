@@ -10,6 +10,7 @@ public class StickyBombSO : ActiveCapacitySO
     public float speedBomb;
     public float durationBomb;
     public float radiusStick;
+    public float radiusExplosion;
 
     public override Type AssociatedType()
     {

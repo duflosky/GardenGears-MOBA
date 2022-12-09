@@ -30,7 +30,19 @@ public class AffectCollider : Entity
         if(maxDistance == 0)return;
         if (Vector3.Distance(casterPos, transform.position) > maxDistance)
         {
-            Disable();
+            switch (capacitySender.SO.shootType)
+            {
+                case Enums.CapacityShootType.skillshot:
+                    Disable();
+                    break;
+
+                case Enums.CapacityShootType.targetEntity:
+                    break;
+
+                case Enums.CapacityShootType.targetPosition:
+                    rb.velocity = Vector3.zero;
+                    break;
+            }
         }
     }
 
