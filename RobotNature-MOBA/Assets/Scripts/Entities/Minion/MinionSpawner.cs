@@ -6,9 +6,7 @@ using Entities.Minion;
 using Photon.Pun;
 using UnityEngine;
 
-// TODO: Add a way to spawn minions at the start of the game not immediately after the scene loads
-
-public class MinionSpawner : Building
+public class MinionSpawner : MonoBehaviourPun
 {
     [Header("Minion Prefab")]
     public Minion minionPrefab;
@@ -26,15 +24,13 @@ public class MinionSpawner : Building
     public List<Building> enemyTowers = new();
     public string unitTag;
     
-    //TODO: Possibility to use GameState to spawn minions
     private void Update()
     {
-        // Spawn de minion
-        // TODO: Find a way to stop the spawn when too many minions are on the map
+        if (!PhotonNetwork.IsMasterClient) return;
         spawnCycleTime += Time.deltaTime;
         if (spawnCycleTime >= spawnSpeed)
         {
-            if (PhotonNetwork.LocalPlayer.IsMasterClient) StartCoroutine(SpawnMinionCo());
+            StartCoroutine(SpawnMinionCo());
             spawnCycleTime = 0;
         }
     }
@@ -51,8 +47,13 @@ public class MinionSpawner : Building
     private void SpawnMinion()
     {
         Entity minionGO = PoolNetworkManager.Instance.PoolInstantiate(minionPrefab, spawnPointForMinion.position, Quaternion.identity, transform.root.root.root.root);
-        
-        Minion minion = minionGO.GetComponent<Minion>();
+        photonView.RPC("SyncMinionRPC", RpcTarget.All, minionGO.photonView.ViewID);
+    }
+
+    [PunRPC]
+    public void SyncMinionRPC(int photonID)
+    {
+        Minion minion = PhotonNetwork.GetPhotonView(photonID).GetComponent<Minion>();
         minion.myWaypoints = pathfinding;
         minion.TowersList = enemyTowers;
         minion.team = unitTag.Contains(Enums.Team.Team1.ToString()) ? Enums.Team.Team1 : Enums.Team.Team2;

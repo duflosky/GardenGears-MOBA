@@ -149,6 +149,8 @@ namespace Entities.Minion
         }
 
         #endregion
+        
+        #region Check Methods
 
         private void CheckMyWaypoints()
         {
@@ -201,6 +203,8 @@ namespace Entities.Minion
                 }
             }
         }
+        
+        #endregion
 
         private IEnumerator AttackLogic()
         {
@@ -259,11 +263,13 @@ namespace Entities.Minion
             photonView.RPC("SetAttackDamageRPC", RpcTarget.MasterClient, value);
         }
 
+        [PunRPC]
         public void SyncSetAttackDamageRPC(float value)
         {
             OnSetAttackDamageFeedback?.Invoke(value);
         }
 
+        [PunRPC]
         public void SetAttackDamageRPC(float value)
         {
             OnSetAttackDamage?.Invoke(value);
