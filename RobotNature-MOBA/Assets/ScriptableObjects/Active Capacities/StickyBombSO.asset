@@ -21,13 +21,12 @@ MonoBehaviour:
   maxRange: 2
   types: 
   shootType: 0
-  indexInCollection: 0
+  indexInCollection: 4
   feedbackDuration: 0
   feedbackPrefab: {fileID: 0}
   stickyBombZone: {fileID: 8904802200473973118, guid: 6e549783bf50190419b42c03dd81bd46,
     type: 3}
-  damageBomb: 4
   percentageDamage: 0.6
-  speedBomb: 1
+  speedBomb: 5
   durationBomb: 6
   radiusStick: 0.2
