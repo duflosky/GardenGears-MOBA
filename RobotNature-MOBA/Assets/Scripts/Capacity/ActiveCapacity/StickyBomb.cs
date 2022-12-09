@@ -38,11 +38,10 @@ public class StickyBomb : ActiveCapacity
         IActiveLifeable lifeable = entityAffect.GetComponent<IActiveLifeable>();
         if (lifeable != null)
         {
-            if (lifeable.AttackAffected())
-            { 
-                stickyBombGO.transform.parent = entityAffect.transform;
-                stickyBombGO.transform.localPosition += Vector3.up;
-            }
+            if(!lifeable.AttackAffected()) return;
+            stickyBombGO.GetComponent<Rigidbody>().velocity = Vector3.zero;
+            stickyBombGO.transform.parent = entityAffect.transform;
+            stickyBombGO.transform.localPosition += Vector3.up;
         }
     }
 
