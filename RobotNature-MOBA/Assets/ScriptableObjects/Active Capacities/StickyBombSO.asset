@@ -20,7 +20,7 @@ MonoBehaviour:
   isTargeting: 0
   maxRange: 2
   types: 
-  shootType: 0
+  shootType: 1
   indexInCollection: 4
   feedbackDuration: 0
   feedbackPrefab: {fileID: 0}
@@ -30,3 +30,4 @@ MonoBehaviour:
   speedBomb: 5
   durationBomb: 6
   radiusStick: 0.2
+  radiusExplosion: 0
