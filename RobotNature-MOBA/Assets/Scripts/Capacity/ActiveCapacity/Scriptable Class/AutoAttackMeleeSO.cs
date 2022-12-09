@@ -9,7 +9,6 @@ public class AutoAttackMeleeSO : ActiveCapacitySO
 {
     public GameObject damageZone;
     public GameObject fxPrefab;
-    public float damageMelee = 1;
     public float percentageDamage;
     public float percentageDamageCrit;
     

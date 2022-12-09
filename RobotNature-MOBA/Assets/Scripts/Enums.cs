@@ -18,6 +18,6 @@ public class Enums
 
     public enum CapacityShootType
     {
-        Skillshot, targetPosition, targetEntity
+        skillshot, targetPosition, targetEntity
     } 
 }

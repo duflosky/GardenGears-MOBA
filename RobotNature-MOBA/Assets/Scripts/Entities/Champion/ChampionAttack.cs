@@ -6,8 +6,8 @@ using UnityEngine;
 public partial class Champion
 {
     public bool isOverheat;
-    public float attackDamage = 1;
-    public float attackSpeed = 1;
+    public float attackDamage;
+    public float attackSpeed;
 
     public bool CanAttack()
     {

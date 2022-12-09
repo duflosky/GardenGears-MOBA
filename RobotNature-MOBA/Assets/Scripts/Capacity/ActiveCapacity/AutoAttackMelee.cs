@@ -50,12 +50,12 @@ public class AutoAttackMelee : ActiveCapacity
                 {
                     //Critic
                     Debug.Log("Critic");
-                    entityAffect.photonView.RPC("DecreaseCurrentHpRPC", RpcTarget.All, SOType.damageMelee + (caster.GetComponent<Champion>().attackDamage * SOType.percentageDamageCrit));
+                    entityAffect.photonView.RPC("DecreaseCurrentHpRPC", RpcTarget.All, caster.GetComponent<Champion>().attackDamage * SOType.percentageDamageCrit);
                 }
                 else
                 {
                     Debug.Log("Normal hit");
-                    lifeable.DecreaseCurrentHpRPC(SOType.damageMelee + (caster.GetComponent<Champion>().attackDamage * SOType.percentageDamage));  
+                    lifeable.DecreaseCurrentHpRPC(caster.GetComponent<Champion>().attackDamage * SOType.percentageDamage);  
                 }
 
             }
@@ -73,7 +73,7 @@ public class AutoAttackMelee : ActiveCapacity
     }
     
     
-    void DisableObject()
+    private void DisableObject()
     {
         timer += 1;
         if(timer < 1.5f*GameStateMachine.Instance.tickRate)return;

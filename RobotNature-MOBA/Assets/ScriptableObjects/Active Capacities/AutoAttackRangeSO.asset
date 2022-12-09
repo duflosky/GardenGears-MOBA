@@ -28,7 +28,7 @@ MonoBehaviour:
   feedbackPrefab: {fileID: 0}
   bulletPrefab: {fileID: 8739522949654536987, guid: 0bf2acb7ad65c8945a9300e6946c16c4,
     type: 3}
-  bulletSpeed: 3.5
+  bulletSpeed: 25
   bulletDamage: 1
   percentageDamage: 0.8
   overheatSO: {fileID: 11400000, guid: 4e9be0a9aa6ed6c46b641b0466ac75c5, type: 2}
