@@ -1,7 +1,7 @@
+using System.Linq;
 using Entities;
 using Entities.Capacities;
 using GameStates;
-using Photon.Pun;
 using UnityEngine;
 
 public class StickyBomb : ActiveCapacity
@@ -25,10 +25,11 @@ public class StickyBomb : ActiveCapacity
         var shootDir = lookDir;
         stickyBombGO = PoolLocalManager.Instance.PoolInstantiate(SOType.stickyBombZone, casterTransform.position, Quaternion.LookRotation(lookDir));
         AffectCollider collider = stickyBombGO.GetComponent<AffectCollider>(); 
-        collider.GetComponent<SphereCollider>().radius = SOType.maxRange;
+        collider.GetComponent<SphereCollider>().radius = SOType.radiusStick;
         collider.capacitySender = this;
         collider.caster = caster;
-        GameStateMachine.Instance.OnTick += DisableObject;
+        collider.Launch(shootDir.normalized * SOType.speedBomb);
+        GameStateMachine.Instance.OnTick += TimerBomb;
         return true;
     }
 
@@ -37,7 +38,6 @@ public class StickyBomb : ActiveCapacity
         IActiveLifeable lifeable = entityAffect.GetComponent<IActiveLifeable>();
         if (lifeable != null)
         {
-            // TODO: Stick to the entity and explode after a delay
             if (lifeable.AttackAffected())
             { 
                 stickyBombGO.transform.parent = entityAffect.transform;
@@ -46,17 +46,36 @@ public class StickyBomb : ActiveCapacity
         }
     }
 
-    public override void PlayFeedback(int casterIndex, int[] targetsEntityIndexes, Vector3[] targetPositions)
+    public override void CollideObjectEffect(GameObject obj)
     {
-        throw new System.NotImplementedException();
+        stickyBombGO.transform.position = obj.transform.position;
     }
-    
-    void DisableObject()
+
+    public override void PlayFeedback(int casterIndex, int[] targetsEntityIndexes, Vector3[] targetPositions) { }
+
+    private void TimerBomb()
     {
         timer += 1;
-        if(timer < 1.5f * GameStateMachine.Instance.tickRate) return;
-        GameStateMachine.Instance.OnTick -= DisableObject;
+        if(timer < SOType.durationBomb * GameStateMachine.Instance.tickRate) return;
+        GameStateMachine.Instance.OnTick -= TimerBomb;
+        ExplodeBomb();
         timer = 0;
+    }
+
+    private void ExplodeBomb()
+    {
+        Collider[] entities = Physics.OverlapSphere(stickyBombGO.transform.position, SOType.maxRange);
+        foreach (Collider entity in entities)
+        {
+            IActiveLifeable lifeable = entity.GetComponent<IActiveLifeable>();
+            if (lifeable != null)
+            {
+                if (lifeable.AttackAffected())
+                {
+                    lifeable.RequestDecreaseCurrentHp(caster.GetComponent<Champion>().attackDamage * SOType.percentageDamage);
+                }
+            }
+        }
         if(stickyBombGO) stickyBombGO.SetActive(false);
     }
 }

@@ -10,7 +10,6 @@ public class AutoAttackRangeSO : ActiveCapacitySO
     public GameObject bulletPrefab;
 
     public float bulletSpeed;
-    public float bulletDamage;
     public float percentageDamage;
 
     public PassiveCapacitySO overheatSO;

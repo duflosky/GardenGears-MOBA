@@ -1117,6 +1117,17 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2359361958455763916, guid: 30fe4bb0638482e4ea92a645c72505d5,
+        type: 3}
+      propertyPath: allActiveCapacities.Array.size
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2359361958455763916, guid: 30fe4bb0638482e4ea92a645c72505d5,
+        type: 3}
+      propertyPath: allActiveCapacities.Array.data[4]
+      value: 
+      objectReference: {fileID: 11400000, guid: 375f410e3cf84744cac37b14d9571bce,
+        type: 2}
     - target: {fileID: 5330630405997883412, guid: 30fe4bb0638482e4ea92a645c72505d5,
         type: 3}
       propertyPath: sceneViewId
