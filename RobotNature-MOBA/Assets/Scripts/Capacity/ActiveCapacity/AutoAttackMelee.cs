@@ -37,7 +37,7 @@ public class AutoAttackMelee : ActiveCapacity
 
     public override void CollideEntityEffect(Entity entityAffect)
     {
-        if (caster.team != entityAffect.team) return;
+        if (caster.team == entityAffect.team) return;
         IActiveLifeable lifeable = entityAffect.GetComponent<IActiveLifeable>();
         if (lifeable != null)
         {

@@ -68,14 +68,13 @@ public class StickyBomb : ActiveCapacity
         Collider[] entities = Physics.OverlapSphere(stickyBombGO.transform.position, SOType.radiusExplosion);
         foreach (Collider entity in entities)
         {
+            Entity entityAffect = entity.GetComponent<Entity>();
+            if (entityAffect == null) continue;
+            if (caster.team == entityAffect.team) continue; 
             IActiveLifeable lifeable = entity.GetComponent<IActiveLifeable>();
-            if (lifeable != null)
-            {
-                if (lifeable.AttackAffected())
-                {
-                    lifeable.RequestDecreaseCurrentHp(caster.GetComponent<Champion>().attackDamage * SOType.percentageDamage);
-                }
-            }
+            if (lifeable == null) continue;
+            if (!lifeable.AttackAffected()) continue;
+            lifeable.RequestDecreaseCurrentHp(caster.GetComponent<Champion>().attackDamage * SOType.percentageDamage);
         }
         if(stickyBombGO) stickyBombGO.SetActive(false);
     }
