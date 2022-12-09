@@ -48288,7 +48288,7 @@ ParticleSystem:
   CustomDataModule:
     enabled: 1
     mode0: 1
-    vectorComponentCount0: 1
+    vectorComponentCount0: 2
     color0:
       serializedVersion: 2
       minMaxState: 0
@@ -48364,23 +48364,23 @@ ParticleSystem:
         - serializedVersion: 3
           time: 0
           value: 0
-          inSlope: 8.065806
-          outSlope: 8.065806
+          inSlope: 0.8414901
+          outSlope: 0.8414901
           tangentMode: 0
           weightedMode: 0
           inWeight: 0
-          outWeight: 0.2503904
+          outWeight: 0.5370313
         - serializedVersion: 3
-          time: 0.22080898
+          time: 0.40831408
           value: 1
-          inSlope: 0
+          inSlope: 3.9923146
           outSlope: 0
-          tangentMode: 0
+          tangentMode: 1
           weightedMode: 0
-          inWeight: 0.33333334
+          inWeight: 0.29843634
           outWeight: 0.33333334
         - serializedVersion: 3
-          time: 0.8437358
+          time: 0.5260173
           value: 1
           inSlope: 0
           outSlope: 0
@@ -48391,11 +48391,11 @@ ParticleSystem:
         - serializedVersion: 3
           time: 1
           value: 0.17567569
-          inSlope: -8.633187
-          outSlope: -8.633187
+          inSlope: -3.4841678
+          outSlope: -3.4841678
           tangentMode: 0
           weightedMode: 0
-          inWeight: 0.430731
+          inWeight: 0.38459578
           outWeight: 0
         m_PreInfinity: 2
         m_PostInfinity: 2
@@ -48428,7 +48428,7 @@ ParticleSystem:
     vector0_1:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 0
+      scalar: 0.53
       minScalar: 0
       maxCurve:
         serializedVersion: 2
@@ -48931,7 +48931,7 @@ ParticleSystemRenderer:
   m_AllowRoll: 1
   m_FreeformStretching: 0
   m_RotateWithStretchDirection: 1
-  m_VertexStreams: 000103041f
+  m_VertexStreams: 0001030420
   m_Mesh: {fileID: 3613567641014311022, guid: 334277315bf0b344c90cb35a7511bf4a, type: 3}
   m_Mesh1: {fileID: 0}
   m_Mesh2: {fileID: 0}
