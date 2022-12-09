@@ -1,5 +1,3 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using Entities;
 using Entities.Capacities;
@@ -27,7 +25,7 @@ public class AffectCollider : Entity
     protected override void OnUpdate()
     {
         base.OnUpdate();
-        if(maxDistance == 0)return;
+        if (maxDistance == 0) return;
         if (Vector3.Distance(casterPos, transform.position) > maxDistance)
         {
             switch (capacitySender.SO.shootType)
@@ -55,7 +53,8 @@ public class AffectCollider : Entity
     {
         Entity entity = other.GetComponent<Entity>();
         
-        if (entity && entity != caster && entity.team != caster.team)
+        // if the entity is not null and is not the caster
+        if (entity && entity != caster)
         {
             if (PhotonNetwork.IsMasterClient)
             {

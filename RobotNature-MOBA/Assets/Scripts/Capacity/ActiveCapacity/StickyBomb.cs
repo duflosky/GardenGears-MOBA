@@ -1,4 +1,3 @@
-using System.Linq;
 using Entities;
 using Entities.Capacities;
 using GameStates;
@@ -37,6 +36,7 @@ public class StickyBomb : ActiveCapacity
 
     public override void CollideEntityEffect(Entity entityAffect)
     {
+        if (entityAffect.name.Contains("Minion")) return;
         IActiveLifeable lifeable = entityAffect.GetComponent<IActiveLifeable>();
         if (lifeable != null)
         {
