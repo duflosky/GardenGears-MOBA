@@ -57,7 +57,7 @@ public partial class Champion : Entity, IMovable, IInventoryable, IResourceable,
         //viewRange = championSo.viewRange;
         referenceMoveSpeed = championSo.referenceMoveSpeed;
         currentMoveSpeed = referenceMoveSpeed;
-        //attackDamage = championSo.attackDamage;
+        attackDamage = championSo.attackDamage;
         //attackAbilityIndex = championSo.attackAbilityIndex;
         var championMesh = Instantiate(championSo.championMeshPrefab, rotateParent.position, Quaternion.identity, rotateParent);
         championMesh.transform.localEulerAngles = Vector3.zero;
@@ -115,7 +115,6 @@ public partial class Champion : Entity, IMovable, IInventoryable, IResourceable,
             championMesh.SetActive(false);
         }
         
-        // championMesh.GetComponent<ChampionMeshLinker>().LinkTeamColor(this.team);
         elementsToShow.Add(championMesh);
 
         respawnPos = transform.position = pos.position;

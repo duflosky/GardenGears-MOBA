@@ -52,7 +52,7 @@ public class AutoAttackRange : ActiveCapacity
             {
                 if(!lifeable.AttackAffected())return;
                 
-                entityAffect.photonView.RPC("DecreaseCurrentHpRPC", RpcTarget.All, SOType.bulletDamage + (caster.GetComponent<Champion>().attackDamage * SOType.percentageDamage));
+                entityAffect.photonView.RPC("DecreaseCurrentHpRPC", RpcTarget.All, caster.GetComponent<Champion>().attackDamage * SOType.percentageDamage);
                 collider.Disable();
             }
         }

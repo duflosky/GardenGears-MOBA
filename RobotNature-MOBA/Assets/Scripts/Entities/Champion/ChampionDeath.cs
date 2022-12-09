@@ -63,7 +63,7 @@ public partial class Champion
             InputManager.PlayerMap.Capacity.Disable();
             InputManager.PlayerMap.Inventory.Disable();
         }
-        animator.SetBool("isDead", true);
+        if (animator) animator.SetBool("isDead", true);
         rotateParent.gameObject.SetActive(false);
         TransformUI.gameObject.SetActive(false);
         FogOfWarManager.Instance.RemoveFOWViewable(this);
@@ -105,7 +105,7 @@ public partial class Champion
             InputManager.PlayerMap.Capacity.Enable();
             InputManager.PlayerMap.Inventory.Enable();
         }
-        animator.SetBool("isDead", false);
+        if (animator) animator.SetBool("isDead", false);
         FogOfWarManager.Instance.AddFOWViewable(this);
         rotateParent.gameObject.SetActive(true);
         TransformUI.gameObject.SetActive(true);
