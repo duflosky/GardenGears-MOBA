@@ -18,7 +18,7 @@ MonoBehaviour:
   description: 
   cooldown: 0
   isTargeting: 0
-  maxRange: 2
+  maxRange: 6
   types: 
   shootType: 1
   indexInCollection: 4
@@ -27,7 +27,7 @@ MonoBehaviour:
   stickyBombZone: {fileID: 8904802200473973118, guid: 6e549783bf50190419b42c03dd81bd46,
     type: 3}
   percentageDamage: 0.6
-  speedBomb: 5
-  durationBomb: 6
+  speedBomb: 6
+  durationBomb: 5
   radiusStick: 0.2
-  radiusExplosion: 0
+  radiusExplosion: 2.5

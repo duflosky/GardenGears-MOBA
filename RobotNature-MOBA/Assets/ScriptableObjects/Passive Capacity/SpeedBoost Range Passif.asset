@@ -18,7 +18,7 @@ MonoBehaviour:
   description: 
   stackable: 0
   types: 
-  indexInCollection: 0
+  indexInCollection: 1
   isRatio: 1
-  speedBonus: 50
-  duration: 0
+  speedBonus: 20
+  duration: 5
