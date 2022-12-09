@@ -61,6 +61,8 @@ namespace Controllers.Inputs
             champion.RequestCast(champion.abilitiesIndexes[1], 1,selectedEntity,cursorWorldPos);
         }
         
+        
+        
         /// <summary>
         /// Actions Performed on Ultimate Capacity Activation
         /// </summary>
@@ -201,6 +203,11 @@ namespace Controllers.Inputs
             // inputs.MoveMouse.MousePos.performed -= OnMouseMove;
 
             CameraController.Instance.UnLinkCamera();
+        }
+        
+        private void OnDrawGizmos()
+        {
+             if(cursorWorldPos != null)Gizmos.DrawSphere(cursorWorldPos[0], 0.2f);
         }
     }
 }
