@@ -23,8 +23,7 @@ public class AutoAttackMelee : ActiveCapacity
 
     public override bool TryCast(int casterIndex, int[] targetsEntityIndexes, Vector3[] targetPositions)
     {
-        if(!base.TryCast(casterIndex, targetsEntityIndexes, targetPositions)) return false;
-        //SOType = (AutoAttackMeleeSO)SO;
+        if (!base.TryCast(casterIndex, targetsEntityIndexes, targetPositions)) return false;
         lookDir = targetPositions[0]-casterTransform.position;
         lookDir.y = 0;
         feedbackObject = PoolLocalManager.Instance.PoolInstantiate(SOType.damageZone, casterTransform.position, Quaternion.LookRotation(lookDir));
@@ -38,6 +37,7 @@ public class AutoAttackMelee : ActiveCapacity
 
     public override void CollideEntityEffect(Entity entityAffect)
     {
+        if (caster.team != entityAffect.team) return;
         IActiveLifeable lifeable = entityAffect.GetComponent<IActiveLifeable>();
         if (lifeable != null)
         {
