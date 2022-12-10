@@ -6,18 +6,18 @@ using UnityEngine;
 
 public class AutoMinion : ActiveCapacity
 {
-    private Entity _target;
-    private Minion _minion;
+    private Entity target;
+    private Minion minion;
     private double timer;
 
     public override void OnStart() { }
 
     public override bool TryCast(int casterIndex, int[] targetsEntityIndexes, Vector3[] targetPositions)
     {
-        _minion = caster.GetComponent<Minion>();
-        _target = _minion.currentAttackTarget.GetComponent<Entity>();
+        minion = caster.GetComponent<Minion>();
+        target = minion.currentAttackTarget.GetComponent<Entity>();
         
-        if (Vector3.Distance(_minion.transform.position, _target.transform.position) > _minion.attackRange){return false;}
+        if (Vector3.Distance(minion.transform.position, target.transform.position) > minion.attackRange) return false;
         
         GameStateMachine.Instance.OnTick += DelayWaitingTick;
         
@@ -30,7 +30,7 @@ public class AutoMinion : ActiveCapacity
     {
         timer += 1 / GameStateMachine.Instance.tickRate;
 
-        if (timer >= _minion.delayBeforeAttack) 
+        if (timer >= minion.delayBeforeAttack) 
         {
             ApplyEffect();
             GameStateMachine.Instance.OnTick -= DelayWaitingTick;
@@ -39,10 +39,10 @@ public class AutoMinion : ActiveCapacity
 
     private void ApplyEffect()
     {
-        if (Vector3.Distance(_target.transform.position, _minion.transform.position) < _minion.attackRange)
+        if (Vector3.Distance(target.transform.position, minion.transform.position) < minion.attackRange)
         {
-            IActiveLifeable entityActiveLifeable = _target.GetComponent<IActiveLifeable>();
-            entityActiveLifeable.RequestDecreaseCurrentHp(_minion.attackDamage);
+            IActiveLifeable entityActiveLifeable = target.GetComponent<IActiveLifeable>();
+            entityActiveLifeable.RequestDecreaseCurrentHp(minion.attackDamage);
         }
     }
 }
