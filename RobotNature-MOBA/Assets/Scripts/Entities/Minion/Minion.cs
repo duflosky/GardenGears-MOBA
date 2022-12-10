@@ -64,10 +64,6 @@ namespace Entities.Minion
             myController = GetComponent<MinionController>();
             UIManager.Instance.InstantiateHealthBarForEntity(entityIndex);
             UIManager.Instance.InstantiateResourceBarForEntity(entityIndex);
-            if (GameStateMachine.Instance.GetPlayerTeam() != team)
-            {
-                meshParent.gameObject.SetActive(false);
-            }
             elementsToShow.Add(meshParent.gameObject);
         }
 
