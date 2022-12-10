@@ -15,6 +15,7 @@ public class AutoMinion : ActiveCapacity
     public override bool TryCast(int[] targetsEntityIndexes, Vector3[] targetPositions)
     {
         minion = caster.GetComponent<Minion>();
+        if (minion.currentAttackTarget == null) return false;
         target = minion.currentAttackTarget.GetComponent<Entity>();
         
         if (Vector3.Distance(minion.transform.position, target.transform.position) > minion.attackRange) return false;
