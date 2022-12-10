@@ -125,5 +125,4 @@ public partial class Champion : Entity, IMovable, IInventoryable, IResourceable,
             uiManager.InstantiateResourceBarForEntity(entityIndex);
         }
     }
-    
 }
