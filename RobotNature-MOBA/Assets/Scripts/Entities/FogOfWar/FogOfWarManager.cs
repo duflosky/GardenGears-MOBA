@@ -72,6 +72,8 @@ namespace Entities.FogOfWar
         /// <param name="viewable"></param>
         public void AddFOWViewable(Entity viewable)
         {
+            if (allViewables.Contains(viewable)) return;
+            if (currentViewablesWithEntitiesShowables.ContainsKey(viewable)) return;
             allViewables.Add(viewable);
             currentViewablesWithEntitiesShowables.Add(viewable, new List<Entity>());
             viewable.meshFilterFoV.gameObject.SetActive(true);
@@ -83,6 +85,8 @@ namespace Entities.FogOfWar
         /// <param name="viewable"></param>
         public void RemoveFOWViewable(Entity viewable)
         {
+            if (!allViewables.Contains(viewable)) return;
+            if (!currentViewablesWithEntitiesShowables.ContainsKey(viewable)) return;
             allViewables.Remove(viewable);
             currentViewablesWithEntitiesShowables.Remove(viewable);
             viewable.meshFilterFoV.gameObject.SetActive(false);

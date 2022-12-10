@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Entities.Capacities;
 using Entities.FogOfWar;
+using GameStates;
 using Photon.Pun;
 using UI.InGame;
 using UnityEngine;
@@ -63,7 +64,7 @@ namespace Entities.Minion
             myController = GetComponent<MinionController>();
             UIManager.Instance.InstantiateHealthBarForEntity(entityIndex);
             UIManager.Instance.InstantiateResourceBarForEntity(entityIndex);
-            if (GameStates.GameStateMachine.Instance.GetPlayerTeam() != team)
+            if (GameStateMachine.Instance.GetPlayerTeam() != team)
             {
                 meshParent.gameObject.SetActive(false);
             }
@@ -743,22 +744,13 @@ namespace Entities.Minion
         public event GlobalDelegates.NoParameterDelegate OnDie;
         public event GlobalDelegates.NoParameterDelegate OnDieFeedback;
 
-        public void RequestRevive()
-        {
-            
-        }
+        public void RequestRevive() { }
 
         [PunRPC]
-        public void SyncReviveRPC()
-        {
-            
-        }
+        public void SyncReviveRPC() { }
 
         [PunRPC]
-        public void ReviveRPC()
-        {
-            
-        }
+        public void ReviveRPC() { }
 
         public event GlobalDelegates.NoParameterDelegate OnRevive;
         public event GlobalDelegates.NoParameterDelegate OnReviveFeedback;
