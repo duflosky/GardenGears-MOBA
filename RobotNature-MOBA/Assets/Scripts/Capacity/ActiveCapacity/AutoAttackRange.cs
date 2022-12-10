@@ -45,7 +45,7 @@ public class AutoAttackRange : ActiveCapacity
 
     public override void CollideEntityEffect(Entity entityAffect)
     {
-        if (caster.team != entityAffect.team) return;
+        if (caster.team == entityAffect.team) return;
         if (PhotonNetwork.IsMasterClient)
         {
             var lifeable = entityAffect.GetComponent<IActiveLifeable>();
