@@ -162,7 +162,7 @@ GameObject:
   - component: {fileID: 4631029676220588112}
   - component: {fileID: 4336164412718733375}
   m_Layer: 10
-  m_Name: Minion
+  m_Name: MinionFirstTeam
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
