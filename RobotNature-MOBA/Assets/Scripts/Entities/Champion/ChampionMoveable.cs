@@ -11,6 +11,7 @@ public partial class Champion
 
     public Transform rotateParent;
     public float currentRotateSpeed;
+    public bool canRotate = true;
     private Vector3 rotateDirection;
 
     public void SetMoveDirection(Vector3 dir)
@@ -41,7 +42,7 @@ public partial class Champion
     private void Rotate()
     {
         RotateMath();
-        if(rotateDirection != Vector3.zero)rotateParent.transform.rotation = Quaternion.Lerp(rotateParent.transform.rotation,Quaternion.LookRotation(rotateDirection),Time.deltaTime * currentRotateSpeed);
+        if(rotateDirection != Vector3.zero && canRotate)rotateParent.transform.rotation = Quaternion.Lerp(rotateParent.transform.rotation,Quaternion.LookRotation(rotateDirection),Time.deltaTime * currentRotateSpeed);
     }
 
     public float GetReferenceMoveSpeed()

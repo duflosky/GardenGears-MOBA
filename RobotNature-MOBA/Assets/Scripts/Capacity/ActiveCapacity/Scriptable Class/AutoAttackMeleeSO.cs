@@ -11,9 +11,10 @@ public class AutoAttackMeleeSO : ActiveCapacitySO
     public GameObject fxPrefab;
     public float percentageDamage;
     public float percentageDamageCrit;
-    
+    [Space]
     public float normalAmplitude;
     public float perfectAmplitude;
+    [Space] public SpeedModifierPassiveSO attackSlowSO;
 
     public override Type AssociatedType()
     {

@@ -10,7 +10,7 @@ public class RangePassif : PassiveCapacity
 {
     private RangePassifSO SOType;
     private Champion champ;
-    private SpeedBoostPassive speedBoost;
+    private SpeedModifierPassive speedBoost;
 
     private int burnTimer;
     private int actifTimer;
@@ -24,7 +24,7 @@ public class RangePassif : PassiveCapacity
         SOType = (RangePassifSO)SO;
         champ = (Champion)entity;
         champ.SetMaxResourceRPC(SOType.maxHeatStack);
-        speedBoost = (SpeedBoostPassive)champ.GetPassiveCapacity(CapacitySOCollectionManager.GetPassiveCapacitySOIndex(SOType.actifSpeedBoost));
+        speedBoost = (SpeedModifierPassive)champ.GetPassiveCapacity(CapacitySOCollectionManager.GetPassiveCapacitySOIndex(SOType.actifSpeedBoost));
     }
 
     protected override void OnAddedEffects(Entity target)
@@ -74,8 +74,7 @@ public class RangePassif : PassiveCapacity
 
     void FullStackProc()
     {
-        Debug.Log("FullStack Proc");
-        speedBoost.OnAdded(champ);
+        speedBoost.OnAdded();
         count = 0;
         haveStack = false;
         champ.isOverheat = true;
@@ -118,10 +117,9 @@ public class RangePassif : PassiveCapacity
         actifTimer++;
         if (actifTimer >= SOType.actifDuration*GameStateMachine.Instance.tickRate)
         {
-            Debug.Log("End Passif");
             actifTimer = 0;
             champ.isOverheat = false;
-            speedBoost.OnRemoved(champ);
+            speedBoost.OnRemoved();
             GameStateMachine.Instance.OnTick -= ActifTimer;
             GameStateMachine.Instance.OnTick -= BurnFeedback;
 

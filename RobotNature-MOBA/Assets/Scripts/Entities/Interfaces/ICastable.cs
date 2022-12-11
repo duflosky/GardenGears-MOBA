@@ -36,13 +36,21 @@ public interface ICastable
         /// <param name="targetedEntities">the entities targeted by the activeCapacity</param>
         /// <param name="targetedPositions">the positions targeted by  the activeCapacities</param>
         public void CastRPC(byte capacityIndex, byte championCapacityIndex, int[] targetedEntities, Vector3[] targetedPositions);
+
         /// <summary>
         /// Sends an RPC to all clients to cast an ActiveCapacity.
         /// </summary>
         /// <param name="capacityIndex">the index on the CapacitySOCollectionManager of the activeCapacitySO to cast</param>
         /// <param name="targetedEntities">the entities targeted by the activeCapacity</param>
         /// <param name="targetedPositions">the positions targeted by  the activeCapacities</param>
+
+        public void CastAnimationCast(Transform transform);
+        public void CastAnimationEnd();
+        
+        
         public void SyncCastRPC(byte capacityIndex, int[] targetedEntities, Vector3[] targetedPositions);
         public event GlobalDelegates.ByteIntArrayVector3ArrayDelegate OnCast;
+        public event GlobalDelegates.TransformDelegate OnCastAnimationCast;
+        public event GlobalDelegates.NoParameterDelegate OnCastAnimationEnd;
         public event GlobalDelegates.ByteIntArrayVector3ArrayCapacityDelegate OnCastFeedback;
 }

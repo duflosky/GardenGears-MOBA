@@ -64,11 +64,12 @@ public partial class Champion
     public void CastRPC(byte capacityIndex, byte championCapacityIndex, int[] targetedEntities, Vector3[] targetedPositions)
     {
         var activeCapacity = CapacitySOCollectionManager.CreateActiveCapacity(capacityIndex,this);
-        if (!activeCapacity.TryCast(entityIndex, targetedEntities, targetedPositions) || abilityCooldowns[championCapacityIndex]>0) return;
+        if (!activeCapacity.TryCast(targetedEntities, targetedPositions) && abilityCooldowns[championCapacityIndex]>0) return;
         abilityCooldowns[championCapacityIndex] = CapacitySOCollectionManager.GetActiveCapacitySOByIndex(capacityIndex).cooldown*GameStateMachine.Instance.tickRate;
         OnCast?.Invoke(capacityIndex, targetedEntities, targetedPositions);
         photonView.RPC("SyncCastRPC", RpcTarget.All, capacityIndex, targetedEntities, targetedPositions);
     }
+    
 
     [PunRPC]
     public void SyncCastRPC(byte capacityIndex, int[] targetedEntities, Vector3[] targetedPositions)
@@ -76,10 +77,23 @@ public partial class Champion
         var activeCapacity = CapacitySOCollectionManager.CreateActiveCapacity(capacityIndex, this);
         activeCapacity.PlayFeedback(capacityIndex, targetedEntities, targetedPositions);
         if (animator) animator.SetTrigger("Attack");
+        else OnCastAnimationCast.Invoke(transform);
         OnCastFeedback?.Invoke(capacityIndex, targetedEntities, targetedPositions, activeCapacity);
     }
 
+    public void CastAnimationCast(Transform transform)
+    {
+        OnCastAnimationCast?.Invoke(transform);
+    }
+
+    public void CastAnimationEnd()
+    {
+        OnCastAnimationEnd?.Invoke();
+    }
+    
     public event GlobalDelegates.ByteIntArrayVector3ArrayDelegate OnCast;
+    public event GlobalDelegates.TransformDelegate OnCastAnimationCast;
+    public event GlobalDelegates.NoParameterDelegate OnCastAnimationEnd;
     public event GlobalDelegates.ByteIntArrayVector3ArrayCapacityDelegate OnCastFeedback;
 
 }

@@ -142,7 +142,7 @@ public class Tower : Building, IAttackable
     {
         var attackCapacity = CapacitySOCollectionManager.CreateActiveCapacity(capacityIndex,this);
 
-        if (!attackCapacity.TryCast(entityIndex, targetedEntities, targetedPositions)) return;
+        if (!attackCapacity.TryCast(targetedEntities, targetedPositions)) return;
             
         OnAttack?.Invoke(capacityIndex,targetedEntities,targetedPositions);
         photonView.RPC("SyncAttackRPC",RpcTarget.All,capacityIndex,targetedEntities,targetedPositions);

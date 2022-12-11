@@ -18,10 +18,9 @@ namespace Entities.Capacities
 
         public virtual void OnCreate(){}
         
-        public void OnAdded(Entity target, int amount = 1)
+        public void OnAdded( int amount = 1)
         {
             if (stackable) count+= amount;
-            entity = target;
             OnAddedEffects(entity);
         }
 
@@ -44,9 +43,9 @@ namespace Entities.Capacities
         /// <summary>
         /// Call when a Stack of the capacity is Removed
         /// </summary>
-        public void OnRemoved(Entity target)
+        public void OnRemoved()
         {
-            OnRemovedEffects(target);
+            OnRemovedEffects(entity);
         }
         
         protected abstract void OnRemovedEffects(Entity target);
