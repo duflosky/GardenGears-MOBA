@@ -12,7 +12,7 @@ public class AutoMinion : ActiveCapacity
 
     public override void OnStart() { }
 
-    public override bool TryCast(int casterIndex, int[] targetsEntityIndexes, Vector3[] targetPositions)
+    public override bool TryCast(int[] targetsEntityIndexes, Vector3[] targetPositions)
     {
         minion = caster.GetComponent<Minion>();
         target = minion.currentAttackTarget.GetComponent<Entity>();
@@ -22,6 +22,16 @@ public class AutoMinion : ActiveCapacity
         GameStateMachine.Instance.OnTick += DelayWaitingTick;
         
         return true;
+    }
+
+    public override void CapacityPress()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public override void CapacityEffect(Transform castTransform)
+    {
+        throw new System.NotImplementedException();
     }
 
     public override void PlayFeedback(int casterIndex, int[] targetsEntityIndexes, Vector3[] targetPositions) { }

@@ -65,7 +65,7 @@ namespace Entities
             var passif = TryGetPassiveCapacity(soIndex);
             if (passif == default)
             {
-                Debug.Log("Create Passif");
+                //Debug.Log("Create Passif");
                 passif = CapacitySOCollectionManager.Instance.CreatePassiveCapacity(soIndex, this);
                 passiveCapacitiesList.Add(passif);
             }
@@ -78,6 +78,17 @@ namespace Entities
             return passif;
         }
         
+        public PassiveCapacity GetPassiveCapacity(PassiveCapacitySO SOType)
+        {
+            var passif = TryGetPassiveCapacity(SOType);
+            if (passif == null)
+            {
+               passif = CapacitySOCollectionManager.Instance.CreatePassiveCapacity(SOType, this);
+               passiveCapacitiesList.Add(passif);
+            }
+            return passif;
+        }
+        
         public PassiveCapacity TryGetPassiveCapacity(byte soIndex)
         {
             return passiveCapacitiesList.FirstOrDefault(item => item.indexOfSo == soIndex);
@@ -86,6 +97,11 @@ namespace Entities
         public PassiveCapacity TryGetPassiveCapacity(Type type)
         {
             return passiveCapacitiesList.FirstOrDefault(item => item.GetType() == type);
+        }
+        
+        public PassiveCapacity TryGetPassiveCapacity(PassiveCapacitySO type)
+        {
+            return passiveCapacitiesList.FirstOrDefault(item => item.SO == type);
         }
     }
 }

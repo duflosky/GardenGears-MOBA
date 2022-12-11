@@ -15,7 +15,7 @@ public class RangePassifSO : PassiveCapacitySO
     public GameObject BurnFX;
     public float BurnDelay;
 
-    public SpeedBoostPassiveSO actifSpeedBoost;
+    public SpeedModifierPassiveSO actifSpeedBoost;
     public float actifDuration;
     
     public override Type AssociatedType()

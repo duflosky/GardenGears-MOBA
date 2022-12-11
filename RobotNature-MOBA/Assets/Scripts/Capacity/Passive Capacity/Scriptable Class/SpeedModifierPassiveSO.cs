@@ -5,15 +5,16 @@ using Entities.Capacities;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "Capacity/PassiveCapacitySO/SpeedBoostPassive", fileName = "new SpeedBoostPassiveSO")]
-public class SpeedBoostPassiveSO : PassiveCapacitySO
+public class SpeedModifierPassiveSO : PassiveCapacitySO
 {
     public override Type AssociatedType()
     {
-        return typeof(SpeedBoostPassive);
+        return typeof(SpeedModifierPassive);
     }
 
     [Header("=== SpeedBoostPassiveSO")] 
+    public bool isBuff = true;
     public bool isRatio;
     public float speedBonus=5;
-    public int duration = 5;
+    public int duration;
 }

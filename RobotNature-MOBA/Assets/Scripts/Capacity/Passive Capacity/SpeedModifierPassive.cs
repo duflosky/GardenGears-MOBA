@@ -6,9 +6,9 @@ using GameStates;
 using MoreMountains.Tools;
 using UnityEngine;
 
-public class SpeedBoostPassive : PassiveCapacity
+public class SpeedModifierPassive : PassiveCapacity
 {
-    private SpeedBoostPassiveSO SOType;
+    private SpeedModifierPassiveSO SOType;
     private Champion champ;
 
     private float boost;
@@ -16,7 +16,7 @@ public class SpeedBoostPassive : PassiveCapacity
 
     public override void OnCreate()
     {
-        SOType = (SpeedBoostPassiveSO)SO;
+        SOType = (SpeedModifierPassiveSO)SO;
         champ = (Champion)entity;
     }
 
@@ -27,8 +27,14 @@ public class SpeedBoostPassive : PassiveCapacity
         {
             boost = champ.GetCurrentMoveSpeed()* (SOType.speedBonus/100);
         }
-        champ.IncreaseCurrentMoveSpeedRPC(boost);
-        if(SOType.duration != 0)GameStateMachine.Instance.OnTick += DecreaseTimer; 
+
+        if (SOType.isBuff) champ.IncreaseCurrentMoveSpeedRPC(boost);
+        else champ.DecreaseCurrentMoveSpeedRPC(boost);
+        if (SOType.duration != 0)
+        {
+            GameStateMachine.Instance.OnTick += DecreaseTimer;
+            Debug.Log($"Add {SOType.name} to OnTick");
+        } 
     }
 
     protected override void OnAddedFeedbackEffects(Entity target)
@@ -39,7 +45,8 @@ public class SpeedBoostPassive : PassiveCapacity
     
     protected override void OnRemovedEffects(Entity target)
     {
-        champ.DecreaseCurrentMoveSpeedRPC(boost);
+       if(SOType.isBuff)champ.DecreaseCurrentMoveSpeedRPC(boost);
+       else champ.IncreaseCurrentMoveSpeedRPC(boost);
     }
 
     protected override void OnRemovedFeedbackEffects(Entity target)
@@ -53,7 +60,7 @@ public class SpeedBoostPassive : PassiveCapacity
         if (timer >= SOType.duration * GameStateMachine.Instance.tickRate)
         {
             GameStateMachine.Instance.OnTick -= DecreaseTimer; 
-            OnRemoved(entity);
+            OnRemoved();
         }
 
     }

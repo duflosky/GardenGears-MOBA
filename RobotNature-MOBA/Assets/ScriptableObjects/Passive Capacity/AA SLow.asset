@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 31cb26bfb220ab046972c3ad54ba5e06, type: 3}
-  m_Name: SpeedBoost Range Passif
+  m_Name: AA SLow
   m_EditorClassIdentifier: 
   referenceName: 
   descriptionName: 
@@ -18,8 +18,8 @@ MonoBehaviour:
   description: 
   stackable: 0
   types: 
-  indexInCollection: 1
-  isBuff: 1
+  indexInCollection: 2
+  isBuff: 0
   isRatio: 1
-  speedBonus: 20
+  speedBonus: 50
   duration: 0

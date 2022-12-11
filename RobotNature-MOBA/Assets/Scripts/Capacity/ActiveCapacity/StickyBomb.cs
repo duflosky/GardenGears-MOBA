@@ -16,9 +16,9 @@ public class StickyBomb : ActiveCapacity
         casterTransform = caster.transform;
     }
     
-    public override bool TryCast(int casterIndex, int[] targetsEntityIndexes, Vector3[] targetPositions)
+    public override bool TryCast(int[] targetsEntityIndexes, Vector3[] targetPositions)
     {
-        if(!base.TryCast(casterIndex, targetsEntityIndexes, targetPositions)) return false;
+        if(!base.TryCast(targetsEntityIndexes, targetPositions)) return false;
         lookDir = targetPositions[0]-casterTransform.position;
         lookDir.y = 0;
         var shootDir = lookDir;
@@ -32,6 +32,16 @@ public class StickyBomb : ActiveCapacity
         collider.Launch(shootDir.normalized * SOType.speedBomb);
         GameStateMachine.Instance.OnTick += TimerBomb;
         return true;
+    }
+
+    public override void CapacityPress()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public override void CapacityEffect(Transform castTransform)
+    {
+        throw new System.NotImplementedException();
     }
 
     public override void CollideEntityEffect(Entity entityAffect)

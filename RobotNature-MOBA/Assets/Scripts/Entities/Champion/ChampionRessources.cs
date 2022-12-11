@@ -155,7 +155,6 @@ public partial class Champion
     public void DecreaseCurrentResourceRPC(float amount)
     {
         currentResource -= amount;
-        Debug.Log($"Decrease ressource :{currentResource}");
         OnDecreaseCurrentResource?.Invoke(amount);
         photonView.RPC("SyncDecreaseCurrentResourceRPC", RpcTarget.All, currentResource);
     }
