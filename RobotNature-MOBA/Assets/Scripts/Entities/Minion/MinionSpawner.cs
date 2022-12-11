@@ -61,12 +61,18 @@ public class MinionSpawner : MonoBehaviourPun
         minion.team = unitTag.Contains(Enums.Team.Team1.ToString()) ? Enums.Team.Team1 : Enums.Team.Team2;
         minion.tag = unitTag;
         minion.meshParent.GetComponent<MeshRenderer>().material.color = minionColor;
-        if (minion.canView && GameStateMachine.Instance.GetPlayerTeam() == minion.team) FogOfWarManager.Instance.AddFOWViewable(minion);
         if (GameStateMachine.Instance.GetPlayerTeam() != minion.team)
         {
             minion.meshParent.gameObject.SetActive(false);
             if (minion.TransformUI.childCount < 1) return;
             minion.TransformUI.GetChild(0).gameObject.SetActive(false);
         }
+        else
+        {
+            minion.meshParent.gameObject.SetActive(true);
+            if (minion.TransformUI.childCount < 1) return;
+            minion.TransformUI.GetChild(0).gameObject.SetActive(true);
+        }
+        if (minion.canView) FogOfWarManager.Instance.AddFOWViewable(minion);
     }
 }
