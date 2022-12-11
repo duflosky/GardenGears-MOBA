@@ -162,7 +162,7 @@ GameObject:
   - component: {fileID: 4631029676220588112}
   - component: {fileID: 4336164412718733375}
   m_Layer: 10
-  m_Name: MinionRessource
+  m_Name: MinionFirstTeam
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -210,7 +210,7 @@ NavMeshAgent:
   m_GameObject: {fileID: 4011668959297958832}
   m_Enabled: 1
   m_AgentTypeID: 0
-  m_Radius: 0.7
+  m_Radius: 1.2
   m_Speed: 3.5
   m_Acceleration: 8
   avoidancePriority: 50
