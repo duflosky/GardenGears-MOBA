@@ -10,6 +10,7 @@ public class MeshTrail : MonoBehaviour
     [Header("Mesh Related")]
     public float meshRefreshRate = 0.1f;
     public Transform positionToSpawn;
+    public float meshDestroyDelay = 3f;
 
     [Header("Shader Related")]
     public Material mat;
@@ -66,7 +67,7 @@ public class MeshTrail : MonoBehaviour
 
                 StartCoroutine(AnimateMaterialFloat(mr.material, 0, shaderVarRate, shaderVarRefreshRate));
 
-                // Destroy(gObj, meshDestroyDelay);
+                Destroy(gObj, meshDestroyDelay);
 
             }
 
@@ -83,7 +84,7 @@ public class MeshTrail : MonoBehaviour
         while (valueToAnimate > goal)
         {
             valueToAnimate -= rate;
-            // mat.SetFloat(shaderVarRate, valueToAnimate);
+            mat.SetFloat(shaderVarRef, valueToAnimate);
             yield return new WaitForSeconds(refreshRate);
         }
     }
