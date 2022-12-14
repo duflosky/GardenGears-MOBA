@@ -20,7 +20,7 @@ MonoBehaviour:
   viewRange: 10
   referenceMoveSpeed: 13
   isRessourceRegen: 0
-  attackAbility: {fileID: 0}
+  attackAbility: {fileID: 11400000, guid: 6380c6b585792cd478baa9dbd9ae15da, type: 2}
   attackAbilityIndex: 255
   attackDamage: 5
   passiveCapacities: []
