@@ -100,6 +100,15 @@ public partial class @PlayerInputs : IInputActionCollection2, IDisposable
             ""id"": ""1ad1369f-3054-4487-84cc-92a46f61278a"",
             ""actions"": [
                 {
+                    ""name"": ""Attack"",
+                    ""type"": ""Button"",
+                    ""id"": ""b7d95e2b-6e6e-454d-93f7-3859ed6db663"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
                     ""name"": ""Capacity1"",
                     ""type"": ""Button"",
                     ""id"": ""69b3dbeb-9d62-4040-8069-29ece82405be"",
@@ -130,17 +139,6 @@ public partial class @PlayerInputs : IInputActionCollection2, IDisposable
             ""bindings"": [
                 {
                     ""name"": """",
-                    ""id"": ""dfccd1af-df03-4fdc-990f-4d6028599b7f"",
-                    ""path"": ""<Keyboard>/q"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Capacity1"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
                     ""id"": ""31ef5a54-20fe-4f1b-a2ab-ff4c933f194a"",
                     ""path"": ""<Keyboard>/e"",
                     ""interactions"": """",
@@ -158,6 +156,28 @@ public partial class @PlayerInputs : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Ultime"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""f56615d0-90a6-463f-994e-502b8893177b"",
+                    ""path"": ""<Mouse>/rightButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Attack"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""dfccd1af-df03-4fdc-990f-4d6028599b7f"",
+                    ""path"": ""<Keyboard>/q"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Capacity1"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -307,6 +327,7 @@ public partial class @PlayerInputs : IInputActionCollection2, IDisposable
         m_Movement_Move = m_Movement.FindAction("Move", throwIfNotFound: true);
         // Capacity
         m_Capacity = asset.FindActionMap("Capacity", throwIfNotFound: true);
+        m_Capacity_Attack = m_Capacity.FindAction("Attack", throwIfNotFound: true);
         m_Capacity_Capacity1 = m_Capacity.FindAction("Capacity1", throwIfNotFound: true);
         m_Capacity_Capacity2 = m_Capacity.FindAction("Capacity2", throwIfNotFound: true);
         m_Capacity_Ultime = m_Capacity.FindAction("Ultime", throwIfNotFound: true);
@@ -412,6 +433,7 @@ public partial class @PlayerInputs : IInputActionCollection2, IDisposable
     // Capacity
     private readonly InputActionMap m_Capacity;
     private ICapacityActions m_CapacityActionsCallbackInterface;
+    private readonly InputAction m_Capacity_Attack;
     private readonly InputAction m_Capacity_Capacity1;
     private readonly InputAction m_Capacity_Capacity2;
     private readonly InputAction m_Capacity_Ultime;
@@ -419,6 +441,7 @@ public partial class @PlayerInputs : IInputActionCollection2, IDisposable
     {
         private @PlayerInputs m_Wrapper;
         public CapacityActions(@PlayerInputs wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Attack => m_Wrapper.m_Capacity_Attack;
         public InputAction @Capacity1 => m_Wrapper.m_Capacity_Capacity1;
         public InputAction @Capacity2 => m_Wrapper.m_Capacity_Capacity2;
         public InputAction @Ultime => m_Wrapper.m_Capacity_Ultime;
@@ -431,6 +454,9 @@ public partial class @PlayerInputs : IInputActionCollection2, IDisposable
         {
             if (m_Wrapper.m_CapacityActionsCallbackInterface != null)
             {
+                @Attack.started -= m_Wrapper.m_CapacityActionsCallbackInterface.OnAttack;
+                @Attack.performed -= m_Wrapper.m_CapacityActionsCallbackInterface.OnAttack;
+                @Attack.canceled -= m_Wrapper.m_CapacityActionsCallbackInterface.OnAttack;
                 @Capacity1.started -= m_Wrapper.m_CapacityActionsCallbackInterface.OnCapacity1;
                 @Capacity1.performed -= m_Wrapper.m_CapacityActionsCallbackInterface.OnCapacity1;
                 @Capacity1.canceled -= m_Wrapper.m_CapacityActionsCallbackInterface.OnCapacity1;
@@ -444,6 +470,9 @@ public partial class @PlayerInputs : IInputActionCollection2, IDisposable
             m_Wrapper.m_CapacityActionsCallbackInterface = instance;
             if (instance != null)
             {
+                @Attack.started += instance.OnAttack;
+                @Attack.performed += instance.OnAttack;
+                @Attack.canceled += instance.OnAttack;
                 @Capacity1.started += instance.OnCapacity1;
                 @Capacity1.performed += instance.OnCapacity1;
                 @Capacity1.canceled += instance.OnCapacity1;
@@ -561,6 +590,7 @@ public partial class @PlayerInputs : IInputActionCollection2, IDisposable
     }
     public interface ICapacityActions
     {
+        void OnAttack(InputAction.CallbackContext context);
         void OnCapacity1(InputAction.CallbackContext context);
         void OnCapacity2(InputAction.CallbackContext context);
         void OnUltime(InputAction.CallbackContext context);
