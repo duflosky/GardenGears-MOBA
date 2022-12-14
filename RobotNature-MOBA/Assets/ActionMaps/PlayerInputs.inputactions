@@ -78,6 +78,15 @@
             "id": "1ad1369f-3054-4487-84cc-92a46f61278a",
             "actions": [
                 {
+                    "name": "Attack",
+                    "type": "Button",
+                    "id": "b7d95e2b-6e6e-454d-93f7-3859ed6db663",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
                     "name": "Capacity1",
                     "type": "Button",
                     "id": "69b3dbeb-9d62-4040-8069-29ece82405be",
@@ -108,17 +117,6 @@
             "bindings": [
                 {
                     "name": "",
-                    "id": "dfccd1af-df03-4fdc-990f-4d6028599b7f",
-                    "path": "<Keyboard>/q",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Capacity1",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "31ef5a54-20fe-4f1b-a2ab-ff4c933f194a",
                     "path": "<Keyboard>/e",
                     "interactions": "",
@@ -136,6 +134,28 @@
                     "processors": "",
                     "groups": "",
                     "action": "Ultime",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "f56615d0-90a6-463f-994e-502b8893177b",
+                    "path": "<Mouse>/rightButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Attack",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "dfccd1af-df03-4fdc-990f-4d6028599b7f",
+                    "path": "<Keyboard>/q",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Capacity1",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

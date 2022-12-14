@@ -175,7 +175,7 @@ namespace Controllers.Inputs
             
             inputs.Mouse.MousePos.performed += OnMouseMove;
 
-            // inputs.Attack.Attack.performed += OnAttack;
+            inputs.Capacity.Attack.performed += OnAttack;
 
             // champion.rb.isKinematic = false;
             
@@ -190,7 +190,7 @@ namespace Controllers.Inputs
         
         protected override void Unlink()
         {
-            // inputs.Attack.Attack.performed -= OnAttack;
+            inputs.Capacity.Attack.performed -= OnAttack;
             
             // inputs.Capacity.Capacity0.performed -= OnActivateCapacity0;
             inputs.Capacity.Capacity1.performed -= OnActivateCapacity1;
