@@ -9,6 +9,7 @@ public class StickyBomb : ActiveCapacity
     
     public StickyBombSO SOType;
     private GameObject stickyBombGO;
+    private GameObject explosionGO;
     private double timer;
     private Vector3 lookDir;
 
@@ -21,12 +22,14 @@ public class StickyBomb : ActiveCapacity
     
     public override bool TryCast(int[] targetsEntityIndexes, Vector3[] targetPositions)
     {
+        Debug.Log("TryCastSticky");
         if(!base.TryCast(targetsEntityIndexes, targetPositions)) return false;
         return true;
     }
 
     public override void CapacityPress()
     {
+        Debug.Log("CapacityPressSticky");
         champion.OnCastAnimationCast += CapacityEffect;
         champion.OnCastAnimationEnd += CapacityEndAnimation; 
         // TODO: Add animation event
@@ -39,7 +42,9 @@ public class StickyBomb : ActiveCapacity
         lookDir = targetPositions[0]-casterTransform.position;
         lookDir.y = 0;
         var shootDir = lookDir;
+        Debug.Log("CapacityEffectSticky");
         stickyBombGO = PoolLocalManager.Instance.PoolInstantiate(SOType.stickyBombZone, casterTransform.position, Quaternion.LookRotation(lookDir));
+        Debug.Log("After Instantiate");
         AffectCollider collider = stickyBombGO.GetComponent<AffectCollider>(); 
         collider.GetComponent<SphereCollider>().radius = SOType.radiusStick;
         collider.maxDistance = SOType.maxRange;
@@ -81,8 +86,8 @@ public class StickyBomb : ActiveCapacity
         timer += 1;
         if(timer < SOType.durationBomb * GameStateMachine.Instance.tickRate) return;
         GameStateMachine.Instance.OnTick -= TimerBomb;
-        ExplodeBomb();
         timer = 0;
+        ExplodeBomb();
     }
 
     private void ExplodeBomb()
@@ -98,6 +103,15 @@ public class StickyBomb : ActiveCapacity
             if (!lifeable.AttackAffected()) continue;
             lifeable.RequestDecreaseCurrentHp(caster.GetComponent<Champion>().attackDamage * SOType.percentageDamage);
         }
+        explosionGO = PoolLocalManager.Instance.PoolInstantiate(SOType.feedbackPrefab, stickyBombGO.transform.position, Quaternion.identity, stickyBombGO.transform);
+        explosionGO.GetComponent<ParticleSystem>().Play();
+        GameStateMachine.Instance.OnTick += DestroyExplosion;
+    }
+    
+    private void DestroyExplosion()
+    {
+        if(!explosionGO.GetComponent<ParticleSystem>().isStopped) return;
+        GameStateMachine.Instance.OnTick -= DestroyExplosion;
         if(stickyBombGO) stickyBombGO.SetActive(false);
     }
 }

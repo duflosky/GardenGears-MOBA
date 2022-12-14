@@ -70,7 +70,6 @@ public class PoolLocalManager : MonoBehaviour
                 var queuer = returnGO.AddComponent<Enqueuer>();
                 queuer.GORef = GORef;
             }
-            
             else
             {
                 returnGO = queue.Dequeue();
