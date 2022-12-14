@@ -9,6 +9,7 @@ public class StickyBomb : ActiveCapacity
     
     public StickyBombSO SOType;
     private GameObject stickyBombGO;
+    private GameObject explosionGO;
     private double timer;
     private Vector3 lookDir;
 
@@ -81,8 +82,8 @@ public class StickyBomb : ActiveCapacity
         timer += 1;
         if(timer < SOType.durationBomb * GameStateMachine.Instance.tickRate) return;
         GameStateMachine.Instance.OnTick -= TimerBomb;
-        ExplodeBomb();
         timer = 0;
+        ExplodeBomb();
     }
 
     private void ExplodeBomb()
@@ -98,6 +99,15 @@ public class StickyBomb : ActiveCapacity
             if (!lifeable.AttackAffected()) continue;
             lifeable.RequestDecreaseCurrentHp(caster.GetComponent<Champion>().attackDamage * SOType.percentageDamage);
         }
+        explosionGO = PoolLocalManager.Instance.PoolInstantiate(SOType.feedbackPrefab, stickyBombGO.transform.position, Quaternion.identity, stickyBombGO.transform);
+        explosionGO.GetComponent<ParticleSystem>().Play();
+        GameStateMachine.Instance.OnTick += DestroyExplosion;
+    }
+    
+    private void DestroyExplosion()
+    {
+        if(!explosionGO.GetComponent<ParticleSystem>().isStopped) return;
+        GameStateMachine.Instance.OnTick -= DestroyExplosion;
         if(stickyBombGO) stickyBombGO.SetActive(false);
     }
 }
