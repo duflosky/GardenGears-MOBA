@@ -1,11 +1,12 @@
 using System;
 using System.Collections.Generic;
 using Entities;
+using GameStates;
 using Photon.Pun;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class PoolNetworkManager : MonoBehaviour
+public class PoolNetworkManager : MonoBehaviourPun
 {
     [Serializable]
     public class ElementData
@@ -75,9 +76,7 @@ public class PoolNetworkManager : MonoBehaviour
             else
             {
                 entity = queue.Dequeue();
-                entity.transform.position = position;
-                entity.transform.rotation = rotation;
-                entity.gameObject.SetActive(true);
+                photonView.RPC("SyncInstantiateRPC", RpcTarget.All, entity.entityIndex, position, rotation);
             }
         }
         else
@@ -95,5 +94,14 @@ public class PoolNetworkManager : MonoBehaviour
     public void EnqueuePool(Entity entityRef, Entity entity)
     {
         queuesDictionary[entityRef].Enqueue(entity);
+    }
+    
+    [PunRPC]
+    public void SyncInstantiateRPC(int entityRef, Vector3 position, Quaternion rotation)
+    {
+        Entity entity = EntityCollectionManager.GetEntityByIndex(entityRef);
+        entity.transform.position = position;
+        entity.transform.rotation = rotation;
+        entity.gameObject.SetActive(true);
     }
 }

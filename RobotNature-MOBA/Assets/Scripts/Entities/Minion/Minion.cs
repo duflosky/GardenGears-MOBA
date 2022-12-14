@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Entities.Capacities;
 using Entities.FogOfWar;
+using GameStates;
 using Photon.Pun;
 using UI.InGame;
 using UnityEngine;
@@ -63,10 +64,6 @@ namespace Entities.Minion
             myController = GetComponent<MinionController>();
             UIManager.Instance.InstantiateHealthBarForEntity(entityIndex);
             UIManager.Instance.InstantiateResourceBarForEntity(entityIndex);
-            if (GameStates.GameStateMachine.Instance.GetPlayerTeam() != team)
-            {
-                meshParent.gameObject.SetActive(false);
-            }
             elementsToShow.Add(meshParent.gameObject);
         }
 
@@ -149,6 +146,8 @@ namespace Entities.Minion
         }
 
         #endregion
+        
+        #region Check Methods
 
         private void CheckMyWaypoints()
         {
@@ -201,6 +200,8 @@ namespace Entities.Minion
                 }
             }
         }
+        
+        #endregion
 
         private IEnumerator AttackLogic()
         {
@@ -259,11 +260,13 @@ namespace Entities.Minion
             photonView.RPC("SetAttackDamageRPC", RpcTarget.MasterClient, value);
         }
 
+        [PunRPC]
         public void SyncSetAttackDamageRPC(float value)
         {
             OnSetAttackDamageFeedback?.Invoke(value);
         }
 
+        [PunRPC]
         public void SetAttackDamageRPC(float value)
         {
             OnSetAttackDamage?.Invoke(value);
@@ -291,7 +294,7 @@ namespace Entities.Minion
         {
             var attackCapacity = CapacitySOCollectionManager.CreateActiveCapacity(capacityIndex, this);
 
-            if (!attackCapacity.TryCast(entityIndex, targetedEntities, targetedPositions)) return;
+            if (!attackCapacity.TryCast(targetedEntities, targetedPositions)) return;
 
             OnAttack?.Invoke(capacityIndex, targetedEntities, targetedPositions);
             photonView.RPC("SyncAttackRPC", RpcTarget.All, capacityIndex, targetedEntities, targetedPositions);
@@ -737,22 +740,13 @@ namespace Entities.Minion
         public event GlobalDelegates.NoParameterDelegate OnDie;
         public event GlobalDelegates.NoParameterDelegate OnDieFeedback;
 
-        public void RequestRevive()
-        {
-            
-        }
+        public void RequestRevive() { }
 
         [PunRPC]
-        public void SyncReviveRPC()
-        {
-            
-        }
+        public void SyncReviveRPC() { }
 
         [PunRPC]
-        public void ReviveRPC()
-        {
-            
-        }
+        public void ReviveRPC() { }
 
         public event GlobalDelegates.NoParameterDelegate OnRevive;
         public event GlobalDelegates.NoParameterDelegate OnReviveFeedback;

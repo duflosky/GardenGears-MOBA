@@ -11,6 +11,9 @@ namespace Entities.Capacities
         public ActiveCapacitySO SO;
         public Entity caster;
         public Transform casterTransform;
+
+        protected int[] targetsEntityIndexes;
+        protected Vector3[] targetPositions;
         
         private double cooldownTimer;
         public bool onCooldown;
@@ -48,7 +51,7 @@ namespace Entities.Capacities
             }
         }
 
-        public virtual bool TryCast(int casterIndex, int[] targetsEntityIndexes, Vector3[] targetPositions)
+        public virtual bool TryCast( int[] targetsEntityIndexes, Vector3[] targetPositions)
         {
             // if (Vector3.Distance(EntityCollectionManager.GetEntityByIndex(casterIndex).transform.position, EntityCollectionManager.GetEntityByIndex(targetsEntityIndexes[0]).transform.position)> 
             //     AssociatedActiveCapacitySO().maxRange) return false;
@@ -56,10 +59,23 @@ namespace Entities.Capacities
             if (!onCooldown)
             {
                 InitiateCooldown();
+                this.targetsEntityIndexes = targetsEntityIndexes;
+
+                this.targetPositions = new Vector3[targetPositions.Length];
+                for (int i = 0; i < targetPositions.Length; i++)
+                {
+                    this.targetPositions[i] = targetPositions[i];
+                }
+                CapacityPress();
                 return true;
             }
             else return false;
         }
+
+        public abstract void CapacityPress();
+        public abstract void CapacityEffect(Transform transform);
+        public virtual void CapacityEndAnimation(){}
+        public virtual void CapacityRelease(){}
 
         public virtual void CollideEntityEffect(Entity entityAffect)
         {

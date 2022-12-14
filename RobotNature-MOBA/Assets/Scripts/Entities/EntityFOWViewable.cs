@@ -19,7 +19,7 @@ namespace Entities
         public bool canView;
         public List<IFOWShowable> seenShowables = new List<IFOWShowable>();
         public MeshFilter meshFilterFoV;
-       public Transform fogOfWarStartDetection;
+        public Transform fogOfWarStartDetection;
         
         public Enums.Team GetTeam()
         {

@@ -332,6 +332,7 @@ MonoBehaviour:
   referenceMoveSpeed: 10
   rotateParent: {fileID: 2355554548384556205}
   currentRotateSpeed: 10
+  canRotate: 1
   maxResource: 100
   currentResource: 10
   references:

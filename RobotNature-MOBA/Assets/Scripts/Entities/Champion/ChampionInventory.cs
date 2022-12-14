@@ -134,7 +134,7 @@ public partial class Champion
         {
             var capacityIndex = bytes[i];
             var activeCapacity = CapacitySOCollectionManager.CreateActiveCapacity(capacityIndex, this);
-            successesActives[i] = activeCapacity.TryCast(entityIndex, selectedEntities, positions);
+            successesActives[i] = activeCapacity.TryCast(selectedEntities, positions);
         }
 
         items[itemIndexInInventory].OnItemActivated(selectedEntities, positions);

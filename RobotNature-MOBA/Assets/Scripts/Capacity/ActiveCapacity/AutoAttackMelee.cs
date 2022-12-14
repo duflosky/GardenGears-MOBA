@@ -13,31 +13,40 @@ public class AutoAttackMelee : ActiveCapacity
     public AutoAttackMeleeSO SOType;
     private double timer;
     private Vector3 lookDir;
+    private Champion champion;
 
 
     public override void OnStart()
     {
         SOType = (AutoAttackMeleeSO)SO;
+        champion = (Champion)caster;
         casterTransform = caster.transform;
     }
-
-    public override bool TryCast(int casterIndex, int[] targetsEntityIndexes, Vector3[] targetPositions)
+    
+    public override void CapacityPress()
     {
-        if (!base.TryCast(casterIndex, targetsEntityIndexes, targetPositions)) return false;
-        lookDir = targetPositions[0]-casterTransform.position;
+        champion.GetPassiveCapacity(SOType.attackSlowSO).OnAdded();
+        champion.OnCastAnimationCast += CapacityEffect;
+        
+    }
+
+    public override void CapacityEffect(Transform castTransform)
+    {
+        champion.OnCastAnimationCast -= CapacityEffect;
+        champion.GetPassiveCapacity(SOType.attackSlowSO).OnRemoved();
+        lookDir = targetPositions[0] - casterTransform.position;
         lookDir.y = 0;
         feedbackObject = PoolLocalManager.Instance.PoolInstantiate(SOType.damageZone, casterTransform.position, Quaternion.LookRotation(lookDir));
-        AffectCollider collider = feedbackObject.GetComponent<AffectCollider>(); 
+        AffectCollider collider = feedbackObject.GetComponent<AffectCollider>();
         collider.GetComponent<SphereCollider>().radius = SOType.maxRange;
         collider.capacitySender = this;
         collider.caster = caster;
         GameStateMachine.Instance.OnTick += DisableObject;
-        return true;
     }
 
     public override void CollideEntityEffect(Entity entityAffect)
     {
-        if (caster.team != entityAffect.team) return;
+        if (caster.team == entityAffect.team) return;
         IActiveLifeable lifeable = entityAffect.GetComponent<IActiveLifeable>();
         if (lifeable != null)
         {

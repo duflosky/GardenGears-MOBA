@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class StickyBomb : ActiveCapacity
 {
+    private Champion champion;
+    
     public StickyBombSO SOType;
     private GameObject stickyBombGO;
     private double timer;
@@ -14,11 +16,26 @@ public class StickyBomb : ActiveCapacity
     {
         SOType = (StickyBombSO)SO;
         casterTransform = caster.transform;
+        champion = (Champion)caster;
     }
     
-    public override bool TryCast(int casterIndex, int[] targetsEntityIndexes, Vector3[] targetPositions)
+    public override bool TryCast(int[] targetsEntityIndexes, Vector3[] targetPositions)
     {
-        if(!base.TryCast(casterIndex, targetsEntityIndexes, targetPositions)) return false;
+        if(!base.TryCast(targetsEntityIndexes, targetPositions)) return false;
+        return true;
+    }
+
+    public override void CapacityPress()
+    {
+        champion.OnCastAnimationCast += CapacityEffect;
+        champion.OnCastAnimationEnd += CapacityEndAnimation; 
+        // TODO: Add animation event
+        // champion.canRotate = false;
+    }
+
+    public override void CapacityEffect(Transform castTransform)
+    {
+        champion.OnCastAnimationCast -= CapacityEffect;
         lookDir = targetPositions[0]-casterTransform.position;
         lookDir.y = 0;
         var shootDir = lookDir;
@@ -31,7 +48,12 @@ public class StickyBomb : ActiveCapacity
         collider.caster = caster;
         collider.Launch(shootDir.normalized * SOType.speedBomb);
         GameStateMachine.Instance.OnTick += TimerBomb;
-        return true;
+    }
+    
+    public override void CapacityEndAnimation()
+    {
+        champion.OnCastAnimationEnd -= CapacityEndAnimation;
+        // champion.canRotate = true;
     }
 
     public override void CollideEntityEffect(Entity entityAffect)
@@ -68,14 +90,13 @@ public class StickyBomb : ActiveCapacity
         Collider[] entities = Physics.OverlapSphere(stickyBombGO.transform.position, SOType.radiusExplosion);
         foreach (Collider entity in entities)
         {
+            Entity entityAffect = entity.GetComponent<Entity>();
+            if (entityAffect == null) continue;
+            if (caster.team == entityAffect.team) continue; 
             IActiveLifeable lifeable = entity.GetComponent<IActiveLifeable>();
-            if (lifeable != null)
-            {
-                if (lifeable.AttackAffected())
-                {
-                    lifeable.RequestDecreaseCurrentHp(caster.GetComponent<Champion>().attackDamage * SOType.percentageDamage);
-                }
-            }
+            if (lifeable == null) continue;
+            if (!lifeable.AttackAffected()) continue;
+            lifeable.RequestDecreaseCurrentHp(caster.GetComponent<Champion>().attackDamage * SOType.percentageDamage);
         }
         if(stickyBombGO) stickyBombGO.SetActive(false);
     }

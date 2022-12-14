@@ -32,3 +32,4 @@ MonoBehaviour:
   percentageDamageCrit: 1
   normalAmplitude: 45
   perfectAmplitude: 15
+  attackSlowSO: {fileID: 11400000, guid: 4520a40069532594ebc5b59db1b46511, type: 2}

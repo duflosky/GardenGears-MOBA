@@ -64,6 +64,7 @@ public partial class Champion : Entity, IMovable, IInventoryable, IResourceable,
         abilitiesIndexes = championSo.activeCapacitiesIndexes;
         ultimateAbilityIndex = championSo.ultimateAbilityIndex;
         animator = championMesh.GetComponentInChildren<Animator>();
+        if(animator)animator.GetComponent<AnimationCallbacks>().caster = this;
 
         foreach (var passif in so.passiveCapacities)
         {
@@ -125,5 +126,4 @@ public partial class Champion : Entity, IMovable, IInventoryable, IResourceable,
             uiManager.InstantiateResourceBarForEntity(entityIndex);
         }
     }
-    
 }

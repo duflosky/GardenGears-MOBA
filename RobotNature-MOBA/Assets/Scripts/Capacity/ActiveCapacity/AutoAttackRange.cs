@@ -21,10 +21,24 @@ public class AutoAttackRange : ActiveCapacity
         champion = (Champion)caster;
     }
 
-    public override bool TryCast(int casterIndex, int[] targetsEntityIndexes, Vector3[] targetPositions)
+    public override bool TryCast(int[] targetsEntityIndexes, Vector3[] targetPositions)
     {
-        if(!base.TryCast(casterIndex, targetsEntityIndexes, targetPositions)) return false;
-        champion.GetPassiveCapacity(CapacitySOCollectionManager.GetPassiveCapacitySOIndex(SOType.overheatSO)).OnAdded(caster,1);
+        if(!base.TryCast(targetsEntityIndexes, targetPositions)) return false;
+        return true;
+    }
+
+    public override void CapacityPress()
+    {
+        champion.GetPassiveCapacity(CapacitySOCollectionManager.GetPassiveCapacitySOIndex(SOType.attackSlowSO)).OnAdded();
+        champion.OnCastAnimationCast += CapacityEffect;
+        champion.OnCastAnimationEnd += CapacityEndAnimation; 
+        champion.canRotate = false;
+    }
+
+    public override void CapacityEffect(Transform castTransform)
+    {
+        champion.OnCastAnimationCast -= CapacityEffect;
+        champion.GetPassiveCapacity(CapacitySOCollectionManager.GetPassiveCapacitySOIndex(SOType.overheatSO)).OnAdded();
         lookDir = targetPositions[0]-casterTransform.position;
         lookDir.y = 0;
         var shootDir = lookDir;
@@ -40,12 +54,18 @@ public class AutoAttackRange : ActiveCapacity
         collider.maxDistance = SOType.maxRange;
         collider.capacitySender = this;
         collider.Launch(shootDir.normalized*SOType.bulletSpeed);
-        return true;
+    }
+
+    public override void CapacityEndAnimation()
+    {
+        champion.OnCastAnimationEnd -= CapacityEndAnimation;
+        champion.GetPassiveCapacity(CapacitySOCollectionManager.GetPassiveCapacitySOIndex(SOType.attackSlowSO)).OnRemoved();
+        champion.canRotate = true;
     }
 
     public override void CollideEntityEffect(Entity entityAffect)
     {
-        if (caster.team != entityAffect.team) return;
+        if (caster.team == entityAffect.team) return;
         if (PhotonNetwork.IsMasterClient)
         {
             var lifeable = entityAffect.GetComponent<IActiveLifeable>();
