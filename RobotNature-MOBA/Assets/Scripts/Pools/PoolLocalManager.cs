@@ -59,7 +59,6 @@ public class PoolLocalManager : MonoBehaviour
     public GameObject PoolInstantiate(GameObject GORef, Vector3 position, Quaternion rotation, Transform parent = null)
     {
         GameObject returnGO;
-        Debug.Log($"Instantiate {GORef.name} to {parent}");
         if (parent == null) parent = transform;
         if (queuesDictionary.ContainsKey(GORef))
         {
@@ -80,7 +79,6 @@ public class PoolLocalManager : MonoBehaviour
         }
         else
         {
-            Debug.Log("New pool of " + GORef.name);
             queuesDictionary.Add(GORef, new Queue<GameObject>());
             
             returnGO = Instantiate(GORef, position, rotation, parent);
