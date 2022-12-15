@@ -303,10 +303,9 @@ MonoBehaviour:
   currentAttackTarget: {fileID: 0}
   whoIsAttackingMe: []
   attackCycle: 0
+  attackAbility: {fileID: 11400000, guid: 9fe9f8c38b42d1f47a15dd82cc81f4cc, type: 2}
+  attackAbilityIndex: 0
   attackDamage: 2
-  attackSpeed: 2
-  attackRange: 6
-  delayBeforeAttack: 0.2
   meshParent: {fileID: 8354536543918890676}
   attackAffected: 1
   abilitiesAffected: 1
