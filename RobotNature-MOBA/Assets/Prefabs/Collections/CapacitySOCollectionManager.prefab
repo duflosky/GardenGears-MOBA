@@ -50,7 +50,10 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 9fe9f8c38b42d1f47a15dd82cc81f4cc, type: 2}
   - {fileID: 11400000, guid: 6f0ea9b7d4bc7d84f915332a679b1a4d, type: 2}
   - {fileID: 11400000, guid: 375f410e3cf84744cac37b14d9571bce, type: 2}
+  - {fileID: 11400000, guid: 7456d0336fa0a584aa46fb32fcbbd321, type: 2}
   allPassiveCapacitiesSo:
   - {fileID: 11400000, guid: 4e9be0a9aa6ed6c46b641b0466ac75c5, type: 2}
   - {fileID: 11400000, guid: 9421e35ba61e6764ba00e2139a97c00e, type: 2}
   - {fileID: 11400000, guid: 4520a40069532594ebc5b59db1b46511, type: 2}
+  - {fileID: 11400000, guid: becfcf8ab184b714aa80791842ad4814, type: 2}
+  - {fileID: 11400000, guid: 0a43f13c289692b4a87dc0a9a5a23f76, type: 2}

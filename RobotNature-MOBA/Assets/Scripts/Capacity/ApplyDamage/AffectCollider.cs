@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Entities;
 using Entities.Capacities;
@@ -25,7 +26,7 @@ public class AffectCollider : Entity
     protected override void OnUpdate()
     {
         base.OnUpdate();
-        if (maxDistance == 0) return;
+        if (!CanDisable()) return;
         if (Vector3.Distance(casterPos, transform.position) > maxDistance)
         {
             switch (capacitySender.SO.shootType)
@@ -42,6 +43,12 @@ public class AffectCollider : Entity
                     break;
             }
         }
+    }
+
+    protected virtual bool CanDisable()
+    {
+        if (maxDistance == 0) return false;
+        return true;
     }
 
     public void Launch(Vector3 moveVector)
@@ -66,7 +73,12 @@ public class AffectCollider : Entity
             capacitySender.CollideObjectEffect(other.gameObject);
         }
     }
-    
+
+    private void OnTriggerExit(Collider other)
+    {
+        capacitySender.CollideExitEffect(other.gameObject);
+    }
+
     public void Disable()
     {
         photonView.RPC("SyncDisableRPC", RpcTarget.All);

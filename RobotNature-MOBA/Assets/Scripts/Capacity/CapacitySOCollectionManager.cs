@@ -71,6 +71,7 @@ namespace Entities.Capacities
         /// <returns></returns>
         public static ActiveCapacitySO GetActiveCapacitySOByIndex(byte index)
         {
+            Debug.Log($"Try get Capacity of index {index}");
             return Instance.allActiveCapacities[index];
         }
 
