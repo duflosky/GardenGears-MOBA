@@ -57,7 +57,7 @@ public partial class Champion
     public void RequestCast(byte capacityIndex, byte championCapacityIndex, int[] targetedEntities, Vector3[] targetedPositions)
     {
         if(abilityCooldowns[championCapacityIndex]>0)return;
-        Debug.Log($"abilityCooldowns[championCapacityIndex]: {abilityCooldowns[championCapacityIndex]}");
+        Debug.Log($"request Cast");
         photonView.RPC("CastRPC",RpcTarget.MasterClient,capacityIndex, championCapacityIndex,targetedEntities,targetedPositions);
     }
 
@@ -65,7 +65,6 @@ public partial class Champion
     public void CastRPC(byte capacityIndex, byte championCapacityIndex, int[] targetedEntities, Vector3[] targetedPositions)
     {
         if (abilityCooldowns[championCapacityIndex] > 0) return;
-        Debug.Log($"Capacity {championCapacityIndex} launch, CD: {abilityCooldowns[championCapacityIndex]}");
         var activeCapacity = CapacitySOCollectionManager.CreateActiveCapacity(capacityIndex,this);
         if (!activeCapacity.TryCast(targetedEntities, targetedPositions)) return;
         abilityCooldowns[championCapacityIndex] = CapacitySOCollectionManager.GetActiveCapacitySOByIndex(capacityIndex).cooldown*GameStateMachine.Instance.tickRate;

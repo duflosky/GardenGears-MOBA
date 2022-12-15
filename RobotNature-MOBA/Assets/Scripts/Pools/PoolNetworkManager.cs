@@ -16,6 +16,7 @@ public class PoolNetworkManager : MonoBehaviourPun
     }
 
     private bool isSetup;
+    private int instantiateCount;
 
     public static PoolNetworkManager Instance;
 
@@ -69,6 +70,8 @@ public class PoolNetworkManager : MonoBehaviourPun
             if (queue.Count == 0)
             {
                 entity = PhotonNetwork.Instantiate(entityRef.gameObject.name, position, rotation).GetComponent<Entity>();
+                entity.gameObject.name = $"{entityRef.gameObject.name} ({instantiateCount})";
+                instantiateCount++;
                 var enqueuer = entity.AddComponent<Enqueuer>();
                 enqueuer.isLocal = false;
                 enqueuer.entityRef = entityRef;
@@ -83,6 +86,8 @@ public class PoolNetworkManager : MonoBehaviourPun
         {
             queuesDictionary.Add(entityRef, new Queue<Entity>());
             entity = PhotonNetwork.Instantiate(entityRef.gameObject.name, position, rotation).GetComponent<Entity>();
+            entity.gameObject.name = $"{entityRef.gameObject.name} ({instantiateCount})";
+            instantiateCount++;
             var enqueuer = entity.AddComponent<Enqueuer>();
             enqueuer.isLocal = false;
             enqueuer.entityRef = entityRef;

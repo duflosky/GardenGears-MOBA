@@ -67,7 +67,7 @@ public partial class Champion
     [PunRPC]
     public void SyncAttackRPC(byte capacityIndex, int[] targetedEntities, Vector3[] targetedPositions)
     {
-        CastRPC(capacityIndex, 0, targetedEntities, targetedPositions);
+        
         OnAttackFeedback?.Invoke(capacityIndex, targetedEntities, targetedPositions);
     }
 
@@ -75,6 +75,7 @@ public partial class Champion
     public void AttackRPC(byte capacityIndex, int[] targetedEntities, Vector3[] targetedPositions)
     {
         OnAttack?.Invoke(capacityIndex, targetedEntities, targetedPositions);
+        CastRPC(capacityIndex, 0, targetedEntities, targetedPositions);
         photonView.RPC("SyncAttackRPC", RpcTarget.All, capacityIndex, targetedEntities, targetedPositions);
     }
 
