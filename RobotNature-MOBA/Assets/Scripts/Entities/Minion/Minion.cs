@@ -19,8 +19,8 @@ namespace Entities.Minion
         private MinionController myController;
 
         [Header("Pathfinding")] 
-        public List<Transform> myWaypoints = new List<Transform>();
-        public List<Building.Building> TowersList = new List<Building.Building>();
+        public List<Transform> myWaypoints = new();
+        public List<Building.Building> TowersList = new();
         public int waypointIndex;
         public int towerIndex;
 
@@ -46,12 +46,12 @@ namespace Entities.Minion
         public GameObject currentAttackTarget;
         public List<GameObject> whoIsAttackingMe = new List<GameObject>();
         public bool attackCycle;
+        public ActiveCapacitySO attackAbility;
+        [HideInInspector] public byte attackAbilityIndex;
+        private double timer;
 
         [Header("Stats")]
         public float attackDamage;
-        public float attackSpeed;
-        [Range(2, 8)] public float attackRange;
-        public float delayBeforeAttack;
 
         public Transform meshParent;
 
@@ -65,6 +65,7 @@ namespace Entities.Minion
             UIManager.Instance.InstantiateHealthBarForEntity(entityIndex);
             UIManager.Instance.InstantiateResourceBarForEntity(entityIndex);
             elementsToShow.Add(meshParent.gameObject);
+            attackAbilityIndex = CapacitySOCollectionManager.GetActiveCapacitySOIndex(attackAbility);
         }
 
         private void OnEnable()
@@ -170,7 +171,7 @@ namespace Entities.Minion
             if (TowersList is null) return;
             if (!TowersList[towerIndex].isAlive) return;
 
-            if (Vector3.Distance(transform.position, TowersList[towerIndex].transform.position) > attackRange)
+            if (Vector3.Distance(transform.position, TowersList[towerIndex].transform.position) > attackAbility.maxRange)
             {
                 myController.currentState = MinionController.MinionState.Walking;
             }
@@ -185,7 +186,7 @@ namespace Entities.Minion
         
         private void CheckEnemiesMinion()
         {
-            var size = Physics.OverlapSphere(transform.position, attackRange, enemyMinionMask);
+            var size = Physics.OverlapSphere(transform.position, attackAbility.maxRange, enemyMinionMask);
             if (size.Length < 1) return;
         
             for (int i = 0; i < size.Length; i++)
@@ -208,9 +209,9 @@ namespace Entities.Minion
             if (TowersList[towerIndex].isAlive)
             {
                 attackCycle = true;
+                Debug.Log($"I'm attacking {currentAttackTarget.name}");
                 AttackTarget(currentAttackTarget);
-                // TODO: Already have cooldown in Capacity, remove this
-                yield return new WaitForSeconds(attackSpeed);
+                yield return new WaitForSeconds(attackAbility.cooldown);
                 attackCycle = false;
             }
         }
@@ -219,7 +220,7 @@ namespace Entities.Minion
         {
             int[] targetEntity = new[] { target.GetComponent<Entity>().entityIndex };
 
-            RequestAttack(2, targetEntity, Array.Empty<Vector3>());
+            RequestAttack(attackAbilityIndex, targetEntity, Array.Empty<Vector3>());
         }
 
         #region Attackable
@@ -673,6 +674,7 @@ namespace Entities.Minion
         [PunRPC]
         public void DecreaseCurrentHpRPC(float amount)
         {
+            Debug.Log($"I'm decreasing my hp by {amount}");
             currentHp -= amount;
             OnDecreaseCurrentHp?.Invoke(amount);
             photonView.RPC("SyncDecreaseCurrentHpRPC", RpcTarget.All, currentHp);

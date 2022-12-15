@@ -310,8 +310,8 @@ MonoBehaviour:
   elementsToShow: []
   canChangeTeam: 0
   team: 0
-  baseViewRange: 5
-  viewRange: 5
+  baseViewRange: 10
+  viewRange: 10
   viewAngle: 360
   canView: 1
   meshFilterFoV: {fileID: 2665167733416484502}
