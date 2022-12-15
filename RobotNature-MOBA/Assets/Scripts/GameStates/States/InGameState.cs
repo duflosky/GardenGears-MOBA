@@ -24,6 +24,7 @@ namespace GameStates.States
         {
             InputManager.EnablePlayerMap(true);
             lastTickTime = lastSecondTime = PhotonNetwork.Time;
+            if (!PhotonNetwork.IsMasterClient) return;
             var timer = sm.InitGameTimer();
             timer.sm = this;
             timer.StartTimer();
