@@ -209,7 +209,6 @@ namespace Entities.Minion
             if (TowersList[towerIndex].isAlive)
             {
                 attackCycle = true;
-                Debug.Log($"I'm attacking {currentAttackTarget.name}");
                 AttackTarget(currentAttackTarget);
                 yield return new WaitForSeconds(attackAbility.cooldown);
                 attackCycle = false;
@@ -674,7 +673,6 @@ namespace Entities.Minion
         [PunRPC]
         public void DecreaseCurrentHpRPC(float amount)
         {
-            Debug.Log($"I'm decreasing my hp by {amount}");
             currentHp -= amount;
             OnDecreaseCurrentHp?.Invoke(amount);
             photonView.RPC("SyncDecreaseCurrentHpRPC", RpcTarget.All, currentHp);

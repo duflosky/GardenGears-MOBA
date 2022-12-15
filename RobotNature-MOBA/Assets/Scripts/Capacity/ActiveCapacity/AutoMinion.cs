@@ -26,7 +26,6 @@ public class AutoMinion : ActiveCapacity
         if (minion.currentAttackTarget == null) return false;
         target = minion.currentAttackTarget.GetComponent<Entity>();
         if (Vector3.Distance(target.transform.position, target.transform.position) > minion.attackAbility.maxRange) return false;
-        Debug.Log($"i'm {caster.name} and i'm attacking {target.name}");
         ApplyEffect();
         return true;
     }
