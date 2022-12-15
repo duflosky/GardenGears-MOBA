@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Entities.FogOfWar;
 using GameStates;
+using GameStates.States;
 using Photon.Pun;
 using UnityEngine;
 
@@ -50,7 +51,7 @@ public partial class Champion
 
     public void RequestDie()
     {
-        photonView.RPC("DieRPC", RpcTarget.MasterClient);
+            photonView.RPC("DieRPC", RpcTarget.MasterClient);
     }
 
     [PunRPC]
@@ -81,6 +82,7 @@ public partial class Champion
             return;
         }
         isAlive = false;
+        ((InGameState)GameStateMachine.Instance.currentState).AddKill(team);
         OnDie?.Invoke();
         GameStateMachine.Instance.OnTick += Revive;
         photonView.RPC("SyncDieRPC", RpcTarget.All);

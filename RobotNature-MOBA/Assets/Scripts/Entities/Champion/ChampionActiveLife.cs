@@ -162,6 +162,11 @@ public partial class Champion
     public void DecreaseCurrentHpRPC(float amount)
     {
         currentHp -= amount;
+        if (currentHp <= 0)
+        {
+            currentHp = 0;
+            DieRPC();
+        }
         OnDecreaseCurrentHp?.Invoke(amount);
         photonView.RPC("SyncDecreaseCurrentHpRPC", RpcTarget.All, currentHp);
     }
@@ -170,11 +175,11 @@ public partial class Champion
     public void SyncDecreaseCurrentHpRPC(float amount)
     {
         currentHp = amount;
-        if (currentHp <= 0)
+        /*if (currentHp <= 0)
         {
             currentHp = 0;
             RequestDie();
-        }
+        }*/
         OnDecreaseCurrentHpFeedback?.Invoke(amount);
     }
 
