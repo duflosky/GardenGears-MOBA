@@ -176,6 +176,7 @@ MonoBehaviour:
   cameraFog: {fileID: 1126480335}
   sceneToRenderFog:
   - InGameDebug
+  - InGameScene
   fogColor: {r: 0.254717, g: 0.254717, b: 0.254717, a: 1}
   layerTargetFogOfWar:
     serializedVersion: 2
