@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 9213496991735981094}
   - component: {fileID: 7980032006865931771}
   - component: {fileID: 1291458990987675027}
+  - component: {fileID: 5269519476462639819}
   - component: {fileID: 526634022273285597}
   m_Layer: 0
   m_Name: StickyBomb
@@ -33,7 +34,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.2, y: 0.1, z: 0.2}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 2722041647929350480}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -134,10 +136,27 @@ MonoBehaviour:
   Synchronization: 3
   OwnershipTransfer: 0
   observableSearch: 2
-  ObservedComponents: []
+  ObservedComponents:
+  - {fileID: 5269519476462639819}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
+--- !u!114 &5269519476462639819
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8904802200473973118}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SynchronizePosition: 1
+  m_SynchronizeRotation: 1
+  m_SynchronizeScale: 0
+  m_UseLocal: 1
 --- !u!114 &526634022273285597
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -170,4 +189,79 @@ MonoBehaviour:
   maxDistance: 0
   casterPos: {x: 0, y: 0, z: 0}
   effectIndex: 
-  affectEntityOnly: 1
+  affectEntityOnly: 0
+--- !u!1001 &5529668611638340496
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 4572009442094469766}
+    m_Modifications:
+    - target: {fileID: 7600939529296507584, guid: 6f1b84171f2155e42be21d796ee97639,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7600939529296507584, guid: 6f1b84171f2155e42be21d796ee97639,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7600939529296507584, guid: 6f1b84171f2155e42be21d796ee97639,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7600939529296507584, guid: 6f1b84171f2155e42be21d796ee97639,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7600939529296507584, guid: 6f1b84171f2155e42be21d796ee97639,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7600939529296507584, guid: 6f1b84171f2155e42be21d796ee97639,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7600939529296507584, guid: 6f1b84171f2155e42be21d796ee97639,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7600939529296507584, guid: 6f1b84171f2155e42be21d796ee97639,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7600939529296507584, guid: 6f1b84171f2155e42be21d796ee97639,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7600939529296507584, guid: 6f1b84171f2155e42be21d796ee97639,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7600939529296507584, guid: 6f1b84171f2155e42be21d796ee97639,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7600939529296507599, guid: 6f1b84171f2155e42be21d796ee97639,
+        type: 3}
+      propertyPath: m_Name
+      value: P_ProjectileCaC_Explosion
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 6f1b84171f2155e42be21d796ee97639, type: 3}
+--- !u!4 &2722041647929350480 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7600939529296507584, guid: 6f1b84171f2155e42be21d796ee97639,
+    type: 3}
+  m_PrefabInstance: {fileID: 5529668611638340496}
+  m_PrefabAsset: {fileID: 0}
