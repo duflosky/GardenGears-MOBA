@@ -57,7 +57,6 @@ public partial class Champion
     public void RequestCast(byte capacityIndex, byte championCapacityIndex, int[] targetedEntities, Vector3[] targetedPositions)
     {
         if(abilityCooldowns[championCapacityIndex]>0)return;
-        Debug.Log($"request Cast");
         photonView.RPC("CastRPC",RpcTarget.MasterClient,capacityIndex, championCapacityIndex,targetedEntities,targetedPositions);
     }
 

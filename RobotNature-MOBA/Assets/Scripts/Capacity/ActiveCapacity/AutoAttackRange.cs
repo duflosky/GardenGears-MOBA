@@ -50,7 +50,7 @@ public class AutoAttackRange : ActiveCapacity
         bullet = PoolNetworkManager.Instance.PoolInstantiate(SOType.bulletPrefab.GetComponent<Entity>(), casterTransform.position, Quaternion.LookRotation(shootDir)).gameObject;
         collider = bullet.GetComponent<AffectCollider>();
         collider.caster = caster;
-        collider.casterPos = caster.transform.position;
+        collider.casterPos = casterTransform.position;
         collider.maxDistance = SOType.maxRange;
         collider.capacitySender = this;
         collider.Launch(shootDir.normalized*SOType.bulletSpeed);

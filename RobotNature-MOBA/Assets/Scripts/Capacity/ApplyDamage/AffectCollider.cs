@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Entities;
 using Entities.Capacities;
@@ -25,7 +26,7 @@ public class AffectCollider : Entity
     protected override void OnUpdate()
     {
         base.OnUpdate();
-        if (maxDistance == 0) return;
+        if (!CanDisable()) return;
         if (Vector3.Distance(casterPos, transform.position) > maxDistance)
         {
             switch (capacitySender.SO.shootType)
@@ -44,6 +45,12 @@ public class AffectCollider : Entity
         }
     }
 
+    protected virtual bool CanDisable()
+    {
+        if (maxDistance == 0) return false;
+        return true;
+    }
+
     public void Launch(Vector3 moveVector)
     {
         rb.velocity = moveVector;
@@ -52,8 +59,6 @@ public class AffectCollider : Entity
     private void OnTriggerEnter(Collider other)
     {
         Entity entity = other.GetComponent<Entity>();
-        
-        // if the entity is not null and is not the caster
         if (entity && entity != caster)
         {
             if (PhotonNetwork.IsMasterClient)
@@ -66,8 +71,13 @@ public class AffectCollider : Entity
             capacitySender.CollideObjectEffect(other.gameObject);
         }
     }
-    
-    public void Disable()
+
+    private void OnTriggerExit(Collider other)
+    {
+        capacitySender.CollideExitEffect(other.gameObject);
+    }
+
+    public virtual void Disable()
     {
         photonView.RPC("SyncDisableRPC", RpcTarget.All);
     }

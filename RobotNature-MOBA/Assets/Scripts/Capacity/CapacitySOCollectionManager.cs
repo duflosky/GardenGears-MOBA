@@ -49,7 +49,9 @@ namespace Entities.Capacities
 
         public static byte GetActiveCapacitySOIndex(ActiveCapacitySO so)
         {
-            return (byte)Instance.allActiveCapacities.IndexOf(so);
+            byte index =(byte)Instance.allActiveCapacities.IndexOf(so);
+            //if(index >= 200)Debug.LogError($"SO: {so.name} is not Set to CapacitySOCollection");
+            return index;
         }
 
         public static ActiveCapacity CreateActiveCapacity(byte soIndex,Entity caster)
@@ -71,6 +73,7 @@ namespace Entities.Capacities
         /// <returns></returns>
         public static ActiveCapacitySO GetActiveCapacitySOByIndex(byte index)
         {
+            //Debug.Log($"Try get Capacity of index {index}");
             return Instance.allActiveCapacities[index];
         }
 
