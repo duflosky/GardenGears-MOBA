@@ -18,7 +18,7 @@ MonoBehaviour:
   description: cleave
   cooldown: 1.5
   isTargeting: 0
-  maxRange: 7
+  maxRange: 3
   types: 
   shootType: 0
   indexInCollection: 0
