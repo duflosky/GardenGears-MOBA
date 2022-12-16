@@ -59,7 +59,7 @@ public class AffectCollider : Entity
     private void OnTriggerEnter(Collider other)
     {
         Entity entity = other.GetComponent<Entity>();
-        
+        Debug.Log($"collide {other.gameObject.name}");
         // if the entity is not null and is not the caster
         if (entity && entity != caster)
         {
@@ -79,7 +79,7 @@ public class AffectCollider : Entity
         capacitySender.CollideExitEffect(other.gameObject);
     }
 
-    public void Disable()
+    public virtual void Disable()
     {
         photonView.RPC("SyncDisableRPC", RpcTarget.All);
     }

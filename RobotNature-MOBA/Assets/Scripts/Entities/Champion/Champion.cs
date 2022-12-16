@@ -118,6 +118,7 @@ public partial class Champion : Entity, IMovable, IInventoryable, IResourceable,
         
         elementsToShow.Add(championMesh);
 
+        
         respawnPos = transform.position = pos.position;
 
         if (uiManager != null)

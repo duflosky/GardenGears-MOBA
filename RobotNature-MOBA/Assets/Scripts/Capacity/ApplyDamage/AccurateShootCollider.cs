@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class AccurateShootCollider : AffectCollider
 {
-    private Vector3 lastCountPos;
     private bool canRangeDestroy = true;
+
+    private Dictionary<GameObject, Vector3> gameObjectDistances = new Dictionary<GameObject, Vector3>();
 
     protected override bool CanDisable()
     {
@@ -13,15 +14,25 @@ public class AccurateShootCollider : AffectCollider
         return base.CanDisable();
     }
 
-    public void EnterWall()
+    public void EnterWall(GameObject go)
     {
-        lastCountPos = transform.position;
+        gameObjectDistances.Add(go, transform.position);
         canRangeDestroy = false;
     }
 
-    public void ExitWall()
+    public void ExitWall(GameObject go)
     {
+        if (!gameObjectDistances.ContainsKey(go)) return;
+        Vector3 lastCountPos = gameObjectDistances[go]; 
         maxDistance += Vector3.Distance(lastCountPos, transform.position);
+        gameObjectDistances.Remove(go);
+        //Debug.Log($"Add {Vector3.Distance(lastCountPos, transform.position)} to maxDistance");
         canRangeDestroy = true;
+    }
+
+    public override void Disable()
+    {
+        //Debug.Log($"disable with maxdistance : {maxDistance}");
+        base.Disable();
     }
 }

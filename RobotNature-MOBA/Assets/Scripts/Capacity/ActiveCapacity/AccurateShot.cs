@@ -47,16 +47,20 @@ public class AccurateShot : ActiveCapacity
         
         if (PhotonNetwork.IsMasterClient)
         {
+            Debug.Log($"touch {entityAffect.gameObject.name}");
             if (caster.team == entityAffect.team)
             {
                 collider.maxDistance++;
+                //Debug.Log("Add 1 to maxDistance");
             }
             else
             {
+                Debug.Log("Hit enemi");
                 var lifeable = entityAffect.GetComponent<IActiveLifeable>();
                 if (lifeable != null)
                 {
                     if (!lifeable.AttackAffected()) return;
+                    Debug.Log($"Deal damage to {entityAffect.gameObject}");
                     entityAffect.photonView.RPC("DecreaseCurrentHpRPC", RpcTarget.All,
                         caster.GetComponent<Champion>().attackDamage * SOType.percentageDamage/100);
                     collider.Disable();
@@ -65,6 +69,7 @@ public class AccurateShot : ActiveCapacity
                 var moveable = entityAffect.GetComponent<IMovable>();
                 if (moveable != null)
                 {
+                    Debug.Log($"Slow {entityAffect.gameObject}");
                       entityAffect.GetPassiveCapacity(SOType.SlowEffectSO).OnAdded();
                 }
             }
@@ -77,13 +82,15 @@ public class AccurateShot : ActiveCapacity
     {
         if (obj.CompareTag("Obstacle"))
         {
-            collider.EnterWall();
+            collider.EnterWall(obj);
+            //Debug.Log($"Enter {obj.name}");
         }
     }
 
     public override void CollideExitEffect(GameObject obj)
     {
-        collider.ExitWall();
+        collider.ExitWall(obj);
+        //Debug.Log($"Exit {obj.name}");
     }
     
     public override void CapacityEndAnimation()
@@ -95,6 +102,6 @@ public class AccurateShot : ActiveCapacity
 
     public override void PlayFeedback(int casterIndex, int[] targetsEntityIndexes, Vector3[] targetPositions)
     {
-        throw new System.NotImplementedException();
+      
     }
 }

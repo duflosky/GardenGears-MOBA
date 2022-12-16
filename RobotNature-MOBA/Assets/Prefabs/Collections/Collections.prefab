@@ -356,23 +356,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: CapacitySOCollectionManager
       objectReference: {fileID: 0}
-    - target: {fileID: 9161316344970758488, guid: af65ac8adae188140b4eebc684ee34ae,
-        type: 3}
-      propertyPath: allActiveCapacities.Array.size
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 9161316344970758488, guid: af65ac8adae188140b4eebc684ee34ae,
-        type: 3}
-      propertyPath: allActiveCapacities.Array.data[2]
-      value: 
-      objectReference: {fileID: 11400000, guid: 9fe9f8c38b42d1f47a15dd82cc81f4cc,
-        type: 2}
-    - target: {fileID: 9161316344970758488, guid: af65ac8adae188140b4eebc684ee34ae,
-        type: 3}
-      propertyPath: allActiveCapacities.Array.data[3]
-      value: 
-      objectReference: {fileID: 11400000, guid: 6f0ea9b7d4bc7d84f915332a679b1a4d,
-        type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: af65ac8adae188140b4eebc684ee34ae, type: 3}
 --- !u!4 &8196336475427367646 stripped
