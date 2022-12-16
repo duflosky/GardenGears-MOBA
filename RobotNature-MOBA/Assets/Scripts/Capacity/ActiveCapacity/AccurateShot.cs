@@ -15,6 +15,7 @@ public class AccurateShot : ActiveCapacity
     
     public override void OnStart()
     {
+        casterTransform = caster.transform;
         champion = (Champion)caster;
         SOType = (AccurateShotSO)SO;
     }
@@ -30,13 +31,13 @@ public class AccurateShot : ActiveCapacity
     public override void CapacityEffect(Transform castTransform)
     {
         champion.OnCastAnimationCast -= CapacityEffect;
-        lookDir = targetPositions[0]-castTransform.position;
+        lookDir = targetPositions[0]-casterTransform.position;
         lookDir.y = 0;
         var shootDir = lookDir;
-        bullet = PoolNetworkManager.Instance.PoolInstantiate(SOType.bulletPrefab.GetComponent<Entity>(), castTransform.position, Quaternion.LookRotation(shootDir)).gameObject;
+        bullet = PoolNetworkManager.Instance.PoolInstantiate(SOType.bulletPrefab.GetComponent<Entity>(), casterTransform.position, Quaternion.LookRotation(shootDir)).gameObject;
         collider = bullet.GetComponent<AccurateShootCollider>();
         collider.caster = caster;
-        collider.casterPos = castTransform.position;
+        collider.casterPos = casterTransform.position;
         collider.maxDistance = SOType.maxRange;
         collider.capacitySender = this;
         collider.Launch(shootDir.normalized*SOType.bulletSpeed);

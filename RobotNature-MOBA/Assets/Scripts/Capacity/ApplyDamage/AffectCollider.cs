@@ -59,8 +59,6 @@ public class AffectCollider : Entity
     private void OnTriggerEnter(Collider other)
     {
         Entity entity = other.GetComponent<Entity>();
-        Debug.Log($"collide {other.gameObject.name}");
-        // if the entity is not null and is not the caster
         if (entity && entity != caster)
         {
             if (PhotonNetwork.IsMasterClient)

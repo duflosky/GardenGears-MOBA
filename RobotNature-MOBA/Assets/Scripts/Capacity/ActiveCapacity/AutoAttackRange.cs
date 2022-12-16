@@ -39,7 +39,7 @@ public class AutoAttackRange : ActiveCapacity
     {
         champion.OnCastAnimationCast -= CapacityEffect;
         champion.GetPassiveCapacity(CapacitySOCollectionManager.GetPassiveCapacitySOIndex(SOType.overheatSO)).OnAdded();
-        lookDir = targetPositions[0]-castTransform.position;
+        lookDir = targetPositions[0]-casterTransform.position;
         lookDir.y = 0;
         var shootDir = lookDir;
         if (champion.isOverheat)
@@ -47,10 +47,10 @@ public class AutoAttackRange : ActiveCapacity
             var rdm = Random.Range(-(SOType.sprayAngle / 2), (SOType.sprayAngle / 2));
             shootDir += new Vector3(Mathf.Cos(rdm), 0, Mathf.Sin(rdm)).normalized;
         };
-        bullet = PoolNetworkManager.Instance.PoolInstantiate(SOType.bulletPrefab.GetComponent<Entity>(), castTransform.position, Quaternion.LookRotation(shootDir)).gameObject;
+        bullet = PoolNetworkManager.Instance.PoolInstantiate(SOType.bulletPrefab.GetComponent<Entity>(), casterTransform.position, Quaternion.LookRotation(shootDir)).gameObject;
         collider = bullet.GetComponent<AffectCollider>();
         collider.caster = caster;
-        collider.casterPos = castTransform.position;
+        collider.casterPos = casterTransform.position;
         collider.maxDistance = SOType.maxRange;
         collider.capacitySender = this;
         collider.Launch(shootDir.normalized*SOType.bulletSpeed);
