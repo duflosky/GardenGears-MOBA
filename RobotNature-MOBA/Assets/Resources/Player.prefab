@@ -310,7 +310,11 @@ MonoBehaviour:
   elementsToShow: []
   canChangeTeam: 0
   team: 0
+<<<<<<< HEAD
   baseViewRange: 20
+=======
+  baseViewRange: 5
+>>>>>>> moreTweaks
   viewRange: 20
   viewAngle: 360
   canView: 1

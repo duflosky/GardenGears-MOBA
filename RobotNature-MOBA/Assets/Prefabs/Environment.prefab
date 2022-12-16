@@ -1,5 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+<<<<<<< HEAD
 --- !u!1 &186149480
 GameObject:
   m_ObjectHideFlags: 0
@@ -439,6 +440,9 @@ Transform:
   m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &314179997067985725
+=======
+--- !u!1 &1463145490756419430
+>>>>>>> moreTweaks
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -15371,7 +15375,11 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
   m_IsActive: 1
+<<<<<<< HEAD
 --- !u!4 &8790539866306295512
+=======
+--- !u!4 &5990029553731564165
+>>>>>>> moreTweaks
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -15433,9 +15441,15 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
+<<<<<<< HEAD
   m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!4 &7747834679102829476
+=======
+  m_StaticEditorFlags: 2147483647
+  m_IsActive: 1
+--- !u!4 &5990029553756346082
+>>>>>>> moreTweaks
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -20245,7 +20259,11 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
   m_IsActive: 1
+<<<<<<< HEAD
 --- !u!4 &6861228152762088369
+=======
+--- !u!4 &5990029553782650699
+>>>>>>> moreTweaks
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -29901,10 +29919,17 @@ GameObject:
   m_Name: Particle System
   m_TagString: Untagged
   m_Icon: {fileID: 0}
+<<<<<<< HEAD
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!4 &2807558778580279388
+=======
+  m_NavMeshLayer: 1
+  m_StaticEditorFlags: 2147483647
+  m_IsActive: 1
+--- !u!4 &5990029553819341620
+>>>>>>> moreTweaks
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -34798,7 +34823,11 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
   m_IsActive: 1
+<<<<<<< HEAD
 --- !u!4 &7358638022619654151
+=======
+--- !u!4 &5990029553826333580
+>>>>>>> moreTweaks
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -34910,7 +34939,11 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
   m_IsActive: 1
+<<<<<<< HEAD
 --- !u!4 &2426079491785736805
+=======
+--- !u!4 &5990029553843503244
+>>>>>>> moreTweaks
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -40134,7 +40167,11 @@ GameObject:
   m_NavMeshLayer: 1
   m_StaticEditorFlags: 2147483647
   m_IsActive: 1
+<<<<<<< HEAD
 --- !u!4 &5990029553782650699
+=======
+--- !u!4 &5990029554019400099
+>>>>>>> moreTweaks
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -40495,7 +40532,11 @@ GameObject:
   m_NavMeshLayer: 1
   m_StaticEditorFlags: 2147483647
   m_IsActive: 1
+<<<<<<< HEAD
 --- !u!4 &5990029553826333580
+=======
+--- !u!4 &5990029554085570860
+>>>>>>> moreTweaks
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -40592,7 +40633,11 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
   m_IsActive: 1
+<<<<<<< HEAD
 --- !u!4 &5990029553843503244
+=======
+--- !u!4 &5990029554155144934
+>>>>>>> moreTweaks
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -40811,7 +40856,11 @@ GameObject:
   m_NavMeshLayer: 1
   m_StaticEditorFlags: 2147483647
   m_IsActive: 1
+<<<<<<< HEAD
 --- !u!4 &5990029553941759932
+=======
+--- !u!4 &5990029554239564257
+>>>>>>> moreTweaks
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -41040,7 +41089,11 @@ GameObject:
   m_NavMeshLayer: 1
   m_StaticEditorFlags: 2147483647
   m_IsActive: 1
+<<<<<<< HEAD
 --- !u!4 &5990029554021714889
+=======
+--- !u!4 &5990029554250545743
+>>>>>>> moreTweaks
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -41107,8 +41160,47 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+<<<<<<< HEAD
 --- !u!136 &5990029554021714890
 CapsuleCollider:
+=======
+--- !u!1 &5990029554272486240
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5990029554272486236}
+  - component: {fileID: 5990029554272486239}
+  - component: {fileID: 5990029554272486238}
+  - component: {fileID: 5990029554272486241}
+  m_Layer: 0
+  m_Name: BottomJungleWalls
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 1
+  m_StaticEditorFlags: 2147483647
+  m_IsActive: 1
+--- !u!4 &5990029554272486236
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5990029554272486240}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 111.5, y: 10.608058, z: -57.844543}
+  m_LocalScale: {x: 3, y: 0.75, z: 3}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5990029554851958411}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!33 &5990029554272486239
+MeshFilter:
+>>>>>>> moreTweaks
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -41436,7 +41528,11 @@ GameObject:
   m_NavMeshLayer: 1
   m_StaticEditorFlags: 2147483647
   m_IsActive: 1
+<<<<<<< HEAD
 --- !u!4 &5990029554155204974
+=======
+--- !u!4 &5990029554300038009
+>>>>>>> moreTweaks
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -41650,7 +41746,11 @@ GameObject:
   m_NavMeshLayer: 1
   m_StaticEditorFlags: 2147483647
   m_IsActive: 1
+<<<<<<< HEAD
 --- !u!4 &5990029554241979676
+=======
+--- !u!4 &5990029554367832152
+>>>>>>> moreTweaks
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -41928,7 +42028,11 @@ GameObject:
   m_NavMeshLayer: 1
   m_StaticEditorFlags: 2147483647
   m_IsActive: 1
+<<<<<<< HEAD
 --- !u!4 &5990029554285360019
+=======
+--- !u!4 &5990029554491642783
+>>>>>>> moreTweaks
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -42163,7 +42267,11 @@ GameObject:
   m_NavMeshLayer: 1
   m_StaticEditorFlags: 2147483647
   m_IsActive: 1
+<<<<<<< HEAD
 --- !u!4 &5990029554300038009
+=======
+--- !u!4 &5990029554519027672
+>>>>>>> moreTweaks
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -42441,7 +42549,11 @@ GameObject:
   m_NavMeshLayer: 1
   m_StaticEditorFlags: 2147483647
   m_IsActive: 1
+<<<<<<< HEAD
 --- !u!4 &5990029554388072671
+=======
+--- !u!4 &5990029554591560020
+>>>>>>> moreTweaks
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -42636,7 +42748,11 @@ GameObject:
   m_NavMeshLayer: 1
   m_StaticEditorFlags: 2147483647
   m_IsActive: 1
+<<<<<<< HEAD
 --- !u!4 &5990029554491642783
+=======
+--- !u!4 &5990029554757072782
+>>>>>>> moreTweaks
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -42733,7 +42849,11 @@ GameObject:
   m_NavMeshLayer: 1
   m_StaticEditorFlags: 2147483647
   m_IsActive: 1
+<<<<<<< HEAD
 --- !u!4 &5990029554506965723
+=======
+--- !u!4 &5990029554760466867
+>>>>>>> moreTweaks
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -42927,7 +43047,11 @@ GameObject:
   m_NavMeshLayer: 1
   m_StaticEditorFlags: 2147483647
   m_IsActive: 1
+<<<<<<< HEAD
 --- !u!4 &5990029554572567479
+=======
+--- !u!4 &5990029554818208726
+>>>>>>> moreTweaks
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -43128,10 +43252,72 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
+<<<<<<< HEAD
   m_GameObject: {fileID: 5990029554591560024}
   m_LocalRotation: {x: -0, y: 0.92387867, z: -0, w: 0.38268548}
   m_LocalPosition: {x: 76.11382, y: 11.658058, z: -62.758583}
   m_LocalScale: {x: 5, y: 4, z: 3}
+=======
+  m_GameObject: {fileID: 5990029554851958410}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 5990029554388072671}
+  - {fileID: 5990029555316013632}
+  - {fileID: 5990029555449115952}
+  - {fileID: 5990029555142019850}
+  - {fileID: 5990029555280621205}
+  - {fileID: 5990029555747190138}
+  - {fileID: 5990029554272486236}
+  - {fileID: 5990029554902369325}
+  - {fileID: 5990029554300038009}
+  - {fileID: 5990029555780417934}
+  - {fileID: 5990029555731699642}
+  - {fileID: 5990029555510089267}
+  - {fileID: 5990029554591560020}
+  - {fileID: 5990029554519027672}
+  - {fileID: 5990029553819341620}
+  - {fileID: 5990029553826333580}
+  - {fileID: 5990029555117276800}
+  - {fileID: 5990029555502395812}
+  - {fileID: 5990029553887451055}
+  - {fileID: 5990029555652655294}
+  - {fileID: 5990029555743977501}
+  m_Father: {fileID: 5990029555207610702}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &5990029554902369329
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5990029554902369325}
+  - component: {fileID: 5990029554902369324}
+  - component: {fileID: 5990029554902369327}
+  - component: {fileID: 5990029554902369326}
+  m_Layer: 0
+  m_Name: BottomJungleWalls
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 1
+  m_StaticEditorFlags: 2147483647
+  m_IsActive: 1
+--- !u!4 &5990029554902369325
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5990029554902369329}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 99.62384, y: 10.67, z: -70.14955}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+>>>>>>> moreTweaks
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5990029554851958411}
@@ -43315,7 +43501,11 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
   m_IsActive: 1
+<<<<<<< HEAD
 --- !u!4 &5990029554757072782
+=======
+--- !u!4 &5990029554932541206
+>>>>>>> moreTweaks
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -43482,7 +43672,11 @@ GameObject:
   m_NavMeshLayer: 1
   m_StaticEditorFlags: 2147483647
   m_IsActive: 1
+<<<<<<< HEAD
 --- !u!4 &5990029554784276038
+=======
+--- !u!4 &5990029554980792202
+>>>>>>> moreTweaks
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -43662,7 +43856,11 @@ GameObject:
   m_NavMeshLayer: 1
   m_StaticEditorFlags: 2147483647
   m_IsActive: 1
+<<<<<<< HEAD
 --- !u!4 &5990029554850881767
+=======
+--- !u!4 &5990029555044891253
+>>>>>>> moreTweaks
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -43811,7 +44009,11 @@ GameObject:
   m_NavMeshLayer: 1
   m_StaticEditorFlags: 2147483647
   m_IsActive: 1
+<<<<<<< HEAD
 --- !u!4 &5990029554902369325
+=======
+--- !u!4 &5990029555080485038
+>>>>>>> moreTweaks
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -43909,7 +44111,11 @@ GameObject:
   m_NavMeshLayer: 1
   m_StaticEditorFlags: 2147483647
   m_IsActive: 1
+<<<<<<< HEAD
 --- !u!4 &5990029554922539571
+=======
+--- !u!4 &5990029555117276800
+>>>>>>> moreTweaks
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -44005,7 +44211,11 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
   m_IsActive: 1
+<<<<<<< HEAD
 --- !u!4 &5990029554932541206
+=======
+--- !u!4 &5990029555142019850
+>>>>>>> moreTweaks
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -44379,7 +44589,54 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
   m_IsActive: 1
+<<<<<<< HEAD
 --- !u!4 &5990029555044891253
+=======
+--- !u!4 &5990029555207610702
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5990029555207610705}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1100530338641320568}
+  - {fileID: 5990029554851958411}
+  - {fileID: 5990029554075169039}
+  - {fileID: 5990029555483118114}
+  - {fileID: 5990029553894837963}
+  - {fileID: 5990029555456212241}
+  - {fileID: 5990029553954421828}
+  - {fileID: 5990029555369721959}
+  - {fileID: 563850928433347160}
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &5990029555215623277
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5990029555215623273}
+  - component: {fileID: 5990029555215623272}
+  - component: {fileID: 5990029555215623275}
+  - component: {fileID: 5990029555215623274}
+  m_Layer: 0
+  m_Name: BottomBorder (2)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 1
+  m_StaticEditorFlags: 2147483647
+  m_IsActive: 1
+--- !u!4 &5990029555215623273
+>>>>>>> moreTweaks
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -44560,7 +44817,11 @@ GameObject:
   m_NavMeshLayer: 1
   m_StaticEditorFlags: 2147483647
   m_IsActive: 1
+<<<<<<< HEAD
 --- !u!4 &5990029555117276800
+=======
+--- !u!4 &5990029555280621205
+>>>>>>> moreTweaks
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -44658,7 +44919,11 @@ GameObject:
   m_NavMeshLayer: 1
   m_StaticEditorFlags: 2147483647
   m_IsActive: 1
+<<<<<<< HEAD
 --- !u!4 &5990029555142019850
+=======
+--- !u!4 &5990029555293318228
+>>>>>>> moreTweaks
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -45550,10 +45815,66 @@ BoxCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
+<<<<<<< HEAD
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &5990029555316013638
+=======
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 0}
+--- !u!1 &5990029555456212240
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5990029555456212241}
+  m_Layer: 0
+  m_Name: Bushes
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 2147483647
+  m_IsActive: 1
+--- !u!4 &5990029555456212241
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5990029555456212240}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 5990029555469751282}
+  - {fileID: 5990029555691751369}
+  - {fileID: 5990029553843503244}
+  - {fileID: 5990029554367832152}
+  - {fileID: 5990029554818208726}
+  - {fileID: 5990029554932541206}
+  - {fileID: 5990029554155144934}
+  - {fileID: 5990029554757072782}
+  - {fileID: 5990029555556697247}
+  - {fileID: 5990029554239564257}
+  - {fileID: 5990029554250545743}
+  - {fileID: 5990029555548035414}
+  - {fileID: 5990029553756346082}
+  - {fileID: 5990029555044891253}
+  - {fileID: 5990029554760466867}
+  - {fileID: 5990029555803244743}
+  - {fileID: 5990029555814503149}
+  m_Father: {fileID: 5990029555207610702}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &5990029555469542052
+>>>>>>> moreTweaks
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -45670,7 +45991,11 @@ GameObject:
   m_NavMeshLayer: 1
   m_StaticEditorFlags: 2147483647
   m_IsActive: 1
+<<<<<<< HEAD
 --- !u!4 &5990029555318526861
+=======
+--- !u!4 &5990029555469751282
+>>>>>>> moreTweaks
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -46035,7 +46360,11 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
   m_IsActive: 1
+<<<<<<< HEAD
 --- !u!4 &5990029555427502801
+=======
+--- !u!4 &5990029555510089267
+>>>>>>> moreTweaks
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -46133,7 +46462,11 @@ GameObject:
   m_NavMeshLayer: 1
   m_StaticEditorFlags: 2147483647
   m_IsActive: 1
+<<<<<<< HEAD
 --- !u!4 &5990029555449115952
+=======
+--- !u!4 &5990029555548035414
+>>>>>>> moreTweaks
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -46228,7 +46561,11 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
   m_IsActive: 1
+<<<<<<< HEAD
 --- !u!4 &5990029555456212241
+=======
+--- !u!4 &5990029555556697247
+>>>>>>> moreTweaks
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -46696,7 +47033,11 @@ GameObject:
   m_NavMeshLayer: 1
   m_StaticEditorFlags: 2147483647
   m_IsActive: 1
+<<<<<<< HEAD
 --- !u!4 &5990029555510089267
+=======
+--- !u!4 &5990029555652655294
+>>>>>>> moreTweaks
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -46793,7 +47134,11 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
   m_IsActive: 1
+<<<<<<< HEAD
 --- !u!4 &5990029555548035414
+=======
+--- !u!4 &5990029555691751369
+>>>>>>> moreTweaks
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -46876,7 +47221,11 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
   m_IsActive: 1
+<<<<<<< HEAD
 --- !u!4 &5990029555556697247
+=======
+--- !u!4 &5990029555731699642
+>>>>>>> moreTweaks
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -46960,7 +47309,11 @@ GameObject:
   m_NavMeshLayer: 1
   m_StaticEditorFlags: 2147483647
   m_IsActive: 1
+<<<<<<< HEAD
 --- !u!4 &5990029555631019548
+=======
+--- !u!4 &5990029555743977501
+>>>>>>> moreTweaks
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -47057,7 +47410,11 @@ GameObject:
   m_NavMeshLayer: 1
   m_StaticEditorFlags: 2147483647
   m_IsActive: 1
+<<<<<<< HEAD
 --- !u!4 &5990029555632669181
+=======
+--- !u!4 &5990029555747190138
+>>>>>>> moreTweaks
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -47154,7 +47511,11 @@ GameObject:
   m_NavMeshLayer: 1
   m_StaticEditorFlags: 2147483647
   m_IsActive: 1
+<<<<<<< HEAD
 --- !u!4 &5990029555651516672
+=======
+--- !u!4 &5990029555780417934
+>>>>>>> moreTweaks
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -47251,7 +47612,11 @@ GameObject:
   m_NavMeshLayer: 1
   m_StaticEditorFlags: 2147483647
   m_IsActive: 1
+<<<<<<< HEAD
 --- !u!4 &5990029555652655294
+=======
+--- !u!4 &5990029555803244743
+>>>>>>> moreTweaks
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -47347,7 +47712,11 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
   m_IsActive: 1
+<<<<<<< HEAD
 --- !u!4 &5990029555691751369
+=======
+--- !u!4 &5990029555814503149
+>>>>>>> moreTweaks
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -48150,6 +48519,7 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+<<<<<<< HEAD
 --- !u!65 &5990029555849929485
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -72921,6 +73291,8 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+=======
+>>>>>>> moreTweaks
 --- !u!1001 &634840414812962195
 PrefabInstance:
   m_ObjectHideFlags: 0
