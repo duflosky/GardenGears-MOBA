@@ -17,8 +17,8 @@ MonoBehaviour:
   canvasIndex: 0
   maxHp: 40
   maxRessource: 10
-  viewRange: 10
-  referenceMoveSpeed: 13
+  viewRange: 100
+  referenceMoveSpeed: 16
   isRessourceRegen: 0
   attackAbility: {fileID: 0}
   attackAbilityIndex: 255

@@ -311,7 +311,7 @@ MonoBehaviour:
   canChangeTeam: 0
   team: 0
   baseViewRange: 5
-  viewRange: 5
+  viewRange: 20
   viewAngle: 360
   canView: 1
   meshFilterFoV: {fileID: 2665167733416484502}
