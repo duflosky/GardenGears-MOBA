@@ -59,17 +59,20 @@ public partial class Champion : Entity, IMovable, IInventoryable, IResourceable,
         currentMoveSpeed = referenceMoveSpeed;
         attackDamage = championSo.attackDamage;
         //attackAbilityIndex = championSo.attackAbilityIndex;
-        var championMesh = PhotonNetwork.Instantiate(championSo.championMeshPrefab.name, rotateParent.position, Quaternion.identity);
+        
+        var championMesh = Instantiate(championSo.championMeshPrefab, rotateParent.position, Quaternion.identity);
         championMesh.transform.SetParent(rotateParent);
+        championMesh.GetComponent<PhotonView>().ViewID = PhotonNetwork.AllocateViewID(gameObject.GetComponent<PhotonView>().OwnerActorNr);
         if (gameObject.GetComponent<PhotonView>().Owner != PhotonNetwork.LocalPlayer)
         {
             championMesh.GetComponent<PhotonView>().TransferOwnership(gameObject.GetComponent<PhotonView>().Owner);
         }
         championMesh.transform.localEulerAngles = Vector3.zero;
+        animator = championMesh.GetComponent<Animator>();
+        if(animator)animator.GetComponent<AnimationCallbacks>().caster = this;
+
         abilitiesIndexes = championSo.activeCapacitiesIndexes;
         ultimateAbilityIndex = championSo.ultimateAbilityIndex;
-        animator = championMesh.GetComponentInChildren<Animator>();
-        if(animator)animator.GetComponent<AnimationCallbacks>().caster = this;
 
         foreach (var passif in so.passiveCapacities)
         {
@@ -116,13 +119,9 @@ public partial class Champion : Entity, IMovable, IInventoryable, IResourceable,
                 break;
         }
         
-        if (GameStates.GameStateMachine.Instance.GetPlayerTeam() != team)
-        {
-            championMesh.SetActive(false);
-        }
-        
-        elementsToShow.Add(championMesh);
+        if (GameStateMachine.Instance.GetPlayerTeam() != team) championMesh.SetActive(false);
 
+        elementsToShow.Add(championMesh);
         
         respawnPos = transform.position = pos.position;
 
