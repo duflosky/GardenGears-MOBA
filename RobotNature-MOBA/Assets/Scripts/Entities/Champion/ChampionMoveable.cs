@@ -22,9 +22,10 @@ public partial class Champion
     
     void Move()
     {
-        if (lastDir != Vector3.zero && animator) animator.SetBool("IsRunning", true);
-        else if (animator) animator.SetBool("IsRunning", false);
+        if (!animator) return;
         rb.velocity = lastDir * currentMoveSpeed;
+        if (isMoving) animator.SetBool("isRunning", true);
+        else animator.SetBool("isRunning", false);
     }
 
     private void RotateMath()

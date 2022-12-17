@@ -77,7 +77,7 @@ public partial class Champion
     {
         var activeCapacity = CapacitySOCollectionManager.CreateActiveCapacity(capacityIndex, this);
         activeCapacity.PlayFeedback(capacityIndex, targetedEntities, targetedPositions);
-        if (animator) animator.SetTrigger("Attack");
+        if (animator) animator.SetTrigger("isAttacking");
         else OnCastAnimationCast.Invoke(transform);
         OnCastFeedback?.Invoke(capacityIndex, targetedEntities, targetedPositions, activeCapacity);
     }
