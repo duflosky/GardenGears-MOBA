@@ -59,7 +59,12 @@ public partial class Champion : Entity, IMovable, IInventoryable, IResourceable,
         currentMoveSpeed = referenceMoveSpeed;
         attackDamage = championSo.attackDamage;
         //attackAbilityIndex = championSo.attackAbilityIndex;
-        var championMesh = Instantiate(championSo.championMeshPrefab, rotateParent.position, Quaternion.identity, rotateParent);
+        var championMesh = PhotonNetwork.Instantiate(championSo.championMeshPrefab.name, rotateParent.position, Quaternion.identity);
+        championMesh.transform.SetParent(rotateParent);
+        if (gameObject.GetComponent<PhotonView>().Owner != PhotonNetwork.LocalPlayer)
+        {
+            championMesh.GetComponent<PhotonView>().TransferOwnership(gameObject.GetComponent<PhotonView>().Owner);
+        }
         championMesh.transform.localEulerAngles = Vector3.zero;
         abilitiesIndexes = championSo.activeCapacitiesIndexes;
         ultimateAbilityIndex = championSo.ultimateAbilityIndex;
