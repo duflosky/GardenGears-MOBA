@@ -7,26 +7,29 @@ using Entities.Inventory;
 // using Entities.Inventory;
 using Photon.Pun;
 using GameStates.States;
+using UI.InGame;
 using UI.Menu;
 using UnityEngine;
 
 namespace GameStates
 {
     [RequireComponent(typeof(PhotonView))]
-    public class GameStateMachine : MonoBehaviourPun
+    public partial class GameStateMachine : MonoBehaviourPun
     {
         public static GameStateMachine Instance;
         public bool IsMaster => PhotonNetwork.IsMasterClient;
 
         [SerializeField] private string gameSceneName;
 
-        private GameState currentState;
+        public GameState currentState;
         private GameState[] gamesStates;
 
         [Tooltip("Ticks per second")] public double tickRate = 1;
         
         public event GlobalDelegates.NoParameterDelegate OnTick;
         public event GlobalDelegates.NoParameterDelegate OnTickFeedback;
+        public event GlobalDelegates.NoParameterDelegate OnSecondTick;
+        public event GlobalDelegates.NoParameterDelegate OnSecondTickFeedback;
 
         public Enums.Team winner = Enums.Team.Neutral;
         public List<int> allPlayersIDs = new List<int>();
@@ -160,10 +163,22 @@ namespace GameStates
             photonView.RPC("TickRPC", RpcTarget.All);
         }
 
+        public void SecondTick()
+        {
+            OnSecondTick?.Invoke();
+        }
+        
+
         [PunRPC]
         private void TickRPC()
         {
             OnTickFeedback?.Invoke();
+        }
+        
+        [PunRPC]
+        private void SecondTickRPC()
+        {
+            OnSecondTickFeedback?.Invoke();
         }
 
         public int GetPlayerChampionPhotonViewId(int actorNumber)
@@ -479,16 +494,16 @@ namespace GameStates
                 UI.InGame.UIManager.Instance.AssignInventory(actorNumber.Key);
             }
         }
+        
+        
+        [PunRPC]void SyncTeamKillRPC(int team1Kill, int team2Kill)
+        {
+            UIManager.Instance.UpdateKillCount(team1Kill, team2Kill);
+        }
 
         public void SendWinner(Enums.Team team)
         {
             photonView.RPC("SyncWinnerRPC", RpcTarget.All, (byte)team);
-        }
-
-        [PunRPC]
-        private void SyncWinnerRPC(byte team)
-        {
-            winner = (Enums.Team)team;
         }
     }
 }

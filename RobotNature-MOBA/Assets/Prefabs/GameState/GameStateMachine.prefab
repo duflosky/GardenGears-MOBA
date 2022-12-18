@@ -71,32 +71,6 @@ MonoBehaviour:
   tickRate: 10
   winner: 0
   allPlayersIDs: 
-  debugList:
-  - team: 0
-    championSOIndex: 0
-    playerReady: 0
-    championPhotonViewId: 0
-    champion: {fileID: 0}
-  - team: 0
-    championSOIndex: 0
-    playerReady: 0
-    championPhotonViewId: 0
-    champion: {fileID: 0}
-  - team: 0
-    championSOIndex: 0
-    playerReady: 0
-    championPhotonViewId: 0
-    champion: {fileID: 0}
-  - team: 0
-    championSOIndex: 0
-    playerReady: 0
-    championPhotonViewId: 0
-    champion: {fileID: 0}
-  - team: 0
-    championSOIndex: 0
-    playerReady: 0
-    championPhotonViewId: 0
-    champion: {fileID: 0}
   expectedPlayerCount: 4
   allChampionsSo:
   - {fileID: 11400000, guid: 2c51b2f0db1daba44a6638a38491f553, type: 2}
@@ -107,4 +81,5 @@ MonoBehaviour:
     color: {r: 0, g: 0.39215687, b: 1, a: 1}
   - team: 2
     color: {r: 1, g: 0, b: 0.39215687, a: 1}
-  currentStateDebugString: 
+  timerPrefab: {fileID: 3862315104509282056, guid: 4a33e8b4e2685a2459a28b3992feb54c,
+    type: 3}

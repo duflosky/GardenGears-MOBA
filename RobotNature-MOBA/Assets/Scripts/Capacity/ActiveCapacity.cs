@@ -77,15 +77,14 @@ namespace Entities.Capacities
         public virtual void CapacityEndAnimation(){}
         public virtual void CapacityRelease(){}
 
-        public virtual void CollideEntityEffect(Entity entityAffect)
-        {
-            
-        }
+        public virtual void CollideEntityEffect(Entity entityAffect){}
 
         public virtual void CollideObjectEffect(GameObject obj)
         {
             Debug.Log("Collide Obejct");
         }
+
+        public virtual void CollideExitEffect(GameObject obj){}
 
         public virtual bool isInRange(int casterIndex, Vector3 position)
         {

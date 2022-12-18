@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e4deae976b78b78428ab98e858af85cd, type: 3}
+  m_Name: AccurateShotSO
+  m_EditorClassIdentifier: 
+  referenceName: 
+  descriptionName: 
+  icon: {fileID: 0}
+  description: 
+  cooldown: 5
+  isTargeting: 0
+  maxRange: 15
+  types: 
+  shootType: 0
+  indexInCollection: 5
+  feedbackDuration: 0
+  feedbackPrefab: {fileID: 0}
+  bulletPrefab: {fileID: 7410663796599104942, guid: 292dd96149892fa4690cf18c0130bbfb,
+    type: 3}
+  bulletSpeed: 25
+  percentageDamage: 100
+  SlowEffectSO: {fileID: 11400000, guid: 0a43f13c289692b4a87dc0a9a5a23f76, type: 2}
+  attackAnimationSlowSO: {fileID: 11400000, guid: becfcf8ab184b714aa80791842ad4814,
+    type: 2}

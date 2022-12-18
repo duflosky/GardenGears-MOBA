@@ -71,6 +71,11 @@ public class AutoAttackMelee : ActiveCapacity
         }
     }
 
+    public override void CapacityEndAnimation()
+    {
+        champion.GetPassiveCapacity(SOType.attackSlowSO).OnRemoved();
+    }
+
     public override void PlayFeedback(int casterIndex, int[] targetsEntityIndexes, Vector3[] targetPositions)
     { 
         lookDir = targetPositions[0]-casterTransform.position;

@@ -29,7 +29,11 @@ public class SpeedModifierPassive : PassiveCapacity
         }
 
         if (SOType.isBuff) champ.IncreaseCurrentMoveSpeedRPC(boost);
-        else champ.DecreaseCurrentMoveSpeedRPC(boost);
+        else
+        {
+            champ.DecreaseCurrentMoveSpeedRPC(boost);
+            Debug.Log($"Slow {champ.gameObject.name} with {SOType.name}");
+        }
         if (SOType.duration != 0)
         {
             GameStateMachine.Instance.OnTick += DecreaseTimer;

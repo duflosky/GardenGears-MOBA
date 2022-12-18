@@ -6,7 +6,7 @@ using UnityEngine.Serialization;
 namespace Entities.Capacities
 {
 //Asset Menu Synthax :
-//TODO: [CreateAssetMenu(menuName = "Capacity/ActiveCapacitySO", fileName = "new ActiveCapacitySO")]
+//TODO: [CreateAssetMenu(menuName = "Capacity/ActiveCapacitySO/", fileName = "new ActiveCapacitySO")]
     public abstract class ActiveCapacitySO : ScriptableObject
     {
         [Tooltip("GP Name")] public string referenceName;

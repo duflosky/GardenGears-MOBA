@@ -63,8 +63,9 @@ public partial class Champion
     [PunRPC]
     public void CastRPC(byte capacityIndex, byte championCapacityIndex, int[] targetedEntities, Vector3[] targetedPositions)
     {
+        if (abilityCooldowns[championCapacityIndex] > 0) return;
         var activeCapacity = CapacitySOCollectionManager.CreateActiveCapacity(capacityIndex,this);
-        if (!activeCapacity.TryCast(targetedEntities, targetedPositions) && abilityCooldowns[championCapacityIndex]>0) return;
+        if (!activeCapacity.TryCast(targetedEntities, targetedPositions)) return;
         abilityCooldowns[championCapacityIndex] = CapacitySOCollectionManager.GetActiveCapacitySOByIndex(capacityIndex).cooldown*GameStateMachine.Instance.tickRate;
         OnCast?.Invoke(capacityIndex, targetedEntities, targetedPositions);
         photonView.RPC("SyncCastRPC", RpcTarget.All, capacityIndex, targetedEntities, targetedPositions);
@@ -76,7 +77,7 @@ public partial class Champion
     {
         var activeCapacity = CapacitySOCollectionManager.CreateActiveCapacity(capacityIndex, this);
         activeCapacity.PlayFeedback(capacityIndex, targetedEntities, targetedPositions);
-        if (animator) animator.SetTrigger("Attack");
+        if (animator) animator.SetTrigger("isAttacking");
         else OnCastAnimationCast.Invoke(transform);
         OnCastFeedback?.Invoke(capacityIndex, targetedEntities, targetedPositions, activeCapacity);
     }

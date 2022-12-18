@@ -237,6 +237,7 @@ MonoBehaviour:
   observableSearch: 2
   ObservedComponents:
   - {fileID: 5216063283110905563}
+  - {fileID: 0}
   - {fileID: 1082294273818369790}
   sceneViewId: 0
   InstantiationId: 0
@@ -304,14 +305,14 @@ MonoBehaviour:
   canAddPassiveCapacity: 1
   canRemovePassiveCapacity: 1
   TransformUI: {fileID: 4021050473540789002}
-  OffsetUI: {x: 0, y: 5, z: 0}
+  OffsetUI: {x: 0, y: 6, z: 0}
   canShow: 0
   canHide: 0
   elementsToShow: []
   canChangeTeam: 0
   team: 0
-  baseViewRange: 5
-  viewRange: 5
+  baseViewRange: 20
+  viewRange: 20
   viewAngle: 360
   canView: 1
   meshFilterFoV: {fileID: 2665167733416484502}

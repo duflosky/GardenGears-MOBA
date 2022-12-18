@@ -12,16 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 61ba6ac30a5ce5548850d215437d2a35, type: 3}
   m_Name: Champion Melee
   m_EditorClassIdentifier: 
-  championMeshPrefab: {fileID: 939176126738527526, guid: dd57854aee0f0954fbf3ebfb600eb5d7,
+  championMeshPrefab: {fileID: 7870505573474583790, guid: e4c9d4a04cd13a94e85f4e986380e77f,
     type: 3}
   canvasIndex: 0
   maxHp: 50
   maxRessource: 10
   viewRange: 10
-  referenceMoveSpeed: 13
+  referenceMoveSpeed: 16
   isRessourceRegen: 0
-  attackAbility: {fileID: 0}
-  attackAbilityIndex: 255
+  attackAbility: {fileID: 11400000, guid: 72818ee0e1106e5499e933bf0ce05385, type: 2}
+  attackAbilityIndex: 0
   attackDamage: 5
   passiveCapacities: []
   passiveCapacitiesIndexes: 
