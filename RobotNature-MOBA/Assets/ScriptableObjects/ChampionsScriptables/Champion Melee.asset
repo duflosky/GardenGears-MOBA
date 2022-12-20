@@ -26,8 +26,7 @@ MonoBehaviour:
   passiveCapacities: []
   passiveCapacitiesIndexes: 
   activeCapacities:
-  - {fileID: 11400000, guid: 72818ee0e1106e5499e933bf0ce05385, type: 2}
   - {fileID: 11400000, guid: 375f410e3cf84744cac37b14d9571bce, type: 2}
-  activeCapacitiesIndexes: 0004
+  activeCapacitiesIndexes: 04
   ultimateAbility: {fileID: 0}
   ultimateAbilityIndex: 255
