@@ -139,6 +139,7 @@ public class ChampionHUD : MonoBehaviour
 
     private void UpdateCooldown(byte capacityIndex, int[] intArray, Vector3[] vectors, ActiveCapacity capacity)
     {
+        if (!spellHolderDict.ContainsKey(capacityIndex)) return;
         spellHolderDict[capacityIndex].StartTimer(CapacitySOCollectionManager.GetActiveCapacitySOByIndex(capacityIndex).cooldown) ;
     }
     
