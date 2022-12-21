@@ -37,7 +37,7 @@ public class AffectCollider : Entity
                     break;
 
                 case Enums.CapacityShootType.targetPosition:
-                    rb.velocity = Vector3.zero;
+                    rb.isKinematic = true;
                     break;
             }
         }
@@ -51,6 +51,7 @@ public class AffectCollider : Entity
 
     public void Launch(Vector3 moveVector)
     {
+        rb.isKinematic = false;
         rb.velocity = moveVector;
     }
 
@@ -60,7 +61,7 @@ public class AffectCollider : Entity
         if (entity && entity != caster)
         {
             capacitySender.CollideFeedbackEffect(entity);
-            if (PhotonNetwork.IsMasterClient) return;
+            if (!PhotonNetwork.IsMasterClient) return;
             capacitySender.CollideEntityEffect(entity);
         }
         else if (!entity && !affectEntityOnly)

@@ -61,7 +61,7 @@ public class StickyBomb : ActiveCapacity
         IActiveLifeable lifeable = entityAffect.GetComponent<IActiveLifeable>();
         if (lifeable == null) return;
         if (entityAffect.name.Contains("Minion")) return;
-        stickyBombGO.GetComponent<Rigidbody>().velocity = Vector3.zero;
+        stickyBombGO.GetComponent<Rigidbody>().isKinematic = true;
         stickyBombGO.transform.parent = entityAffect.transform;
         stickyBombGO.transform.position += new Vector3(0, entityAffect.transform.localScale.y, 0) + Vector3.up * 2;
     }
@@ -73,6 +73,7 @@ public class StickyBomb : ActiveCapacity
         lookDir.y = 0;
         stickyBombGO = PoolLocalManager.Instance.PoolInstantiate(SOType.stickyBombZone, casterTransform.position, Quaternion.LookRotation(lookDir));
         AffectCollider collider = stickyBombGO.GetComponent<AffectCollider>();
+        collider.GetComponent<SphereCollider>().radius = SOType.radiusStick;
         collider.maxDistance = SOType.maxRange;
         collider.casterPos = caster.transform.position;
         collider.capacitySender = this;
