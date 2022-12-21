@@ -1,11 +1,9 @@
 using System.Collections.Generic;
-using System.Linq;
 using Entities;
 using Entities.Capacities;
 using Entities.Inventory;
 using GameStates;
 using Entities.Champion;
-using Entities.FogOfWar;
 using Items;
 using Photon.Pun;
 using UI.InGame;
@@ -17,7 +15,7 @@ public partial class Champion : Entity, IMovable, IInventoryable, IResourceable,
     private Rigidbody rb;
     public ChampionSO championSo;
 
-    [SerializeReference] public List<Item> items = new List<Item>();
+    [SerializeReference] public List<Item> items = new();
 
     private UIManager uiManager;
     private Animator animator;
@@ -63,13 +61,11 @@ public partial class Champion : Entity, IMovable, IInventoryable, IResourceable,
         var championMesh = Instantiate(championSo.championMeshPrefab, rotateParent.position, Quaternion.identity);
         championMesh.transform.SetParent(rotateParent);
         championMesh.GetComponent<PhotonView>().ViewID = PhotonNetwork.AllocateViewID(gameObject.GetComponent<PhotonView>().OwnerActorNr);
-        if (gameObject.GetComponent<PhotonView>().Owner != PhotonNetwork.LocalPlayer)
-        {
-            championMesh.GetComponent<PhotonView>().TransferOwnership(gameObject.GetComponent<PhotonView>().Owner);
-        }
+        if (gameObject.GetComponent<PhotonView>().Owner != PhotonNetwork.LocalPlayer) championMesh.GetComponent<PhotonView>().TransferOwnership(gameObject.GetComponent<PhotonView>().Owner);
         championMesh.transform.localEulerAngles = Vector3.zero;
         animator = championMesh.GetComponent<Animator>();
-        if(animator)animator.GetComponent<AnimationCallbacks>().caster = this;
+        if (animator) animator.GetComponent<AnimationCallbacks>().caster = this;
+        elementsToShow.Add(championMesh);
 
         abilitiesIndexes = championSo.activeCapacitiesIndexes;
         ultimateAbilityIndex = championSo.ultimateAbilityIndex;
@@ -118,17 +114,13 @@ public partial class Champion : Entity, IMovable, IInventoryable, IResourceable,
                 pos = transform;
                 break;
         }
+        respawnPos = transform.position = pos.position;
         
         if (GameStateMachine.Instance.GetPlayerTeam() != team) championMesh.SetActive(false);
-
-        elementsToShow.Add(championMesh);
         
-        respawnPos = transform.position = pos.position;
-
-        if (uiManager != null)
-        {
-            uiManager.InstantiateHealthBarForEntity(entityIndex);
-            uiManager.InstantiateResourceBarForEntity(entityIndex);
-        }
+        if (uiManager == null) return;
+        EntityCollectionManager.AddEntity(this);
+        uiManager.InstantiateHealthBarForEntity(entityIndex);
+        uiManager.InstantiateResourceBarForEntity(entityIndex);
     }
 }

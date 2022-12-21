@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   championMeshPrefab: {fileID: 3048456950910020092, guid: 6edadc2144ba24c43822272492981e8d,
     type: 3}
-  canvasIndex: 0
+  canvasIndex: 1
   maxHp: 40
   maxRessource: 10
   viewRange: 10

@@ -74,6 +74,7 @@ public class PoolLocalManager : MonoBehaviour
                 returnGO = queue.Dequeue();
                 returnGO.transform.position = position;
                 returnGO.transform.rotation = rotation;
+                returnGO.transform.parent = parent;
                 returnGO.SetActive(true);
             }
         }

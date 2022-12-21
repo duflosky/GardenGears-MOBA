@@ -1195,7 +1195,7 @@ GameObject:
   - component: {fileID: 1269655521366278313}
   - component: {fileID: 8532207813079190186}
   m_Layer: 5
-  m_Name: ChampionHUDPlayer
+  m_Name: ChampionRangeHUDPlayer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -50,22 +50,21 @@ namespace Entities
 
         protected virtual void OnStart()
         {
-            if(canView)FogOfWarManager.Instance.AddFOWViewable(this);
+            if (canView) FogOfWarManager.Instance.AddFOWViewable(this);
         }
     
         void Update()
         {
             OnUpdate();   
         }
-        protected virtual void OnUpdate(){}
-
-
+        
+        protected virtual void OnUpdate() { }
+        
         public PassiveCapacity GetPassiveCapacity(byte soIndex)
         {
             var passif = TryGetPassiveCapacity(soIndex);
             if (passif == default)
             {
-                //Debug.Log("Create Passif");
                 passif = CapacitySOCollectionManager.Instance.CreatePassiveCapacity(soIndex, this);
                 passiveCapacitiesList.Add(passif);
             }

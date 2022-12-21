@@ -485,18 +485,19 @@ namespace GameStates
         
         private void SetupUI()
         {
-            if (UI.InGame.UIManager.Instance == null) return;
+            if (UIManager.Instance == null) return;
             
-            UI.InGame.UIManager.Instance.InstantiateChampionHUD();
+            UIManager.Instance.InstantiateChampionHUD();
             
             foreach (var actorNumber in playersReadyDict)
             {
-                UI.InGame.UIManager.Instance.AssignInventory(actorNumber.Key);
+                UIManager.Instance.AssignInventory(actorNumber.Key);
             }
         }
         
         
-        [PunRPC]void SyncTeamKillRPC(int team1Kill, int team2Kill)
+        [PunRPC]
+        void SyncTeamKillRPC(int team1Kill, int team2Kill)
         {
             UIManager.Instance.UpdateKillCount(team1Kill, team2Kill);
         }
