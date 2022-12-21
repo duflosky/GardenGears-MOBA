@@ -9,9 +9,10 @@ public class StickyBomb : ActiveCapacity
     private Champion champion;
     
     public StickyBombSO SOType;
-    private Entity stickyBombGO;
+    private GameObject stickyBombGO;
     private double timer;
     private Vector3 lookDir;
+    private PhotonView photonView;
 
     public override void OnStart()
     {
@@ -38,15 +39,14 @@ public class StickyBomb : ActiveCapacity
         champion.OnCastAnimationCast -= CapacityEffect;
         lookDir = targetPositions[0]-casterTransform.position;
         lookDir.y = 0;
-        var shootDir = lookDir;
-        stickyBombGO = PoolNetworkManager.Instance.PoolInstantiate(SOType.stickyBombZone.GetComponent<Entity>(), casterTransform.position, Quaternion.LookRotation(lookDir));
+        stickyBombGO = PoolLocalManager.Instance.PoolInstantiate(SOType.stickyBombZone, casterTransform.position, Quaternion.LookRotation(lookDir));
         AffectCollider collider = stickyBombGO.GetComponent<AffectCollider>(); 
         collider.GetComponent<SphereCollider>().radius = SOType.radiusStick;
         collider.maxDistance = SOType.maxRange;
         collider.casterPos = caster.transform.position;
         collider.capacitySender = this;
         collider.caster = caster;
-        collider.Launch(shootDir.normalized * SOType.speedBomb);
+        collider.Launch(lookDir.normalized * SOType.speedBomb);
         GameStateMachine.Instance.OnTick += TimerBomb;
     }
     
@@ -56,25 +56,31 @@ public class StickyBomb : ActiveCapacity
         champion.canRotate = true;
     }
 
-    public override void CollideEntityEffect(Entity entityAffect)
+    public override void CollideFeedbackEffect(Entity entityAffect)
     {
-        if (entityAffect.name.Contains("Minion")) return;
         IActiveLifeable lifeable = entityAffect.GetComponent<IActiveLifeable>();
-        if (lifeable != null)
-        {
-            if(!lifeable.AttackAffected()) return;
-            stickyBombGO.GetComponent<Rigidbody>().velocity = Vector3.zero;
-            stickyBombGO.transform.parent = entityAffect.transform;
-            stickyBombGO.transform.localPosition += new Vector3(0, entityAffect.transform.localScale.y, 0) + Vector3.up;
-        }
+        if (lifeable == null) return;
+        if (entityAffect.name.Contains("Minion")) return;
+        stickyBombGO.GetComponent<Rigidbody>().isKinematic = true;
+        stickyBombGO.transform.parent = entityAffect.transform;
+        stickyBombGO.transform.position += new Vector3(0, entityAffect.transform.localScale.y, 0) + Vector3.up * 2;
     }
 
-    public override void CollideObjectEffect(GameObject obj)
+    public override void PlayFeedback(int casterIndex, int[] targetsEntityIndexes, Vector3[] targetPositions)
     {
-        stickyBombGO.transform.position = obj.transform.position;
+        if (PhotonNetwork.IsMasterClient) return;
+        lookDir = targetPositions[0] - casterTransform.position;
+        lookDir.y = 0;
+        stickyBombGO = PoolLocalManager.Instance.PoolInstantiate(SOType.stickyBombZone, casterTransform.position, Quaternion.LookRotation(lookDir));
+        AffectCollider collider = stickyBombGO.GetComponent<AffectCollider>();
+        collider.GetComponent<SphereCollider>().radius = SOType.radiusStick;
+        collider.maxDistance = SOType.maxRange;
+        collider.casterPos = caster.transform.position;
+        collider.capacitySender = this;
+        collider.caster = caster;
+        collider.Launch(lookDir.normalized * SOType.speedBomb);
+        GameStateMachine.Instance.OnTick += TimerBombFeedback;
     }
-
-    public override void PlayFeedback(int casterIndex, int[] targetsEntityIndexes, Vector3[] targetPositions) { }
 
     private void TimerBomb()
     {
@@ -101,11 +107,26 @@ public class StickyBomb : ActiveCapacity
         stickyBombGO.GetComponentInChildren<ParticleSystem>().Play();
         GameStateMachine.Instance.OnTick += DestroyExplosion;
     }
-    
+
     private void DestroyExplosion()
     {
         if(!stickyBombGO.GetComponentInChildren<ParticleSystem>().isStopped) return;
         if(stickyBombGO) stickyBombGO.gameObject.SetActive(false);
         GameStateMachine.Instance.OnTick -= DestroyExplosion;
+    }
+
+    private void TimerBombFeedback()
+    {
+        timer += 1;
+        if(timer < SOType.durationBomb * GameStateMachine.Instance.tickRate) return;
+        GameStateMachine.Instance.OnTick -= TimerBombFeedback;
+        timer = 0;
+        ExplodeBombFeedback();
+    }
+
+    private void ExplodeBombFeedback()
+    {
+        stickyBombGO.GetComponentInChildren<ParticleSystem>().Play();
+        GameStateMachine.Instance.OnTick += DestroyExplosion;
     }
 }
