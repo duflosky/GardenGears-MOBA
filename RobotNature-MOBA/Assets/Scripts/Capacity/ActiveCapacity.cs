@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using GameStates;
 using UnityEngine;
 
@@ -73,18 +71,20 @@ namespace Entities.Capacities
         }
 
         public abstract void CapacityPress();
+        
         public abstract void CapacityEffect(Transform transform);
-        public virtual void CapacityEndAnimation(){}
-        public virtual void CapacityRelease(){}
+        
+        public virtual void CapacityEndAnimation() { }
+        
+        public virtual void CapacityRelease() { }
 
-        public virtual void CollideEntityEffect(Entity entityAffect){}
+        public virtual void CollideEntityEffect(Entity entityAffect) { }
 
-        public virtual void CollideObjectEffect(GameObject obj)
-        {
-            Debug.Log("Collide Obejct");
-        }
+        public virtual void CollideObjectEffect(GameObject obj) { }
+        
+        public virtual void CollideFeedbackEffect(Entity entityAffect) { }
 
-        public virtual void CollideExitEffect(GameObject obj){}
+        public virtual void CollideExitEffect(GameObject obj) { }
 
         public virtual bool isInRange(int casterIndex, Vector3 position)
         {

@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using Entities;
 using Entities.Capacities;
@@ -10,17 +9,16 @@ public class AffectCollider : Entity
 {
     [HideInInspector] public Entity caster;
     [HideInInspector] public ActiveCapacity capacitySender;
-    [HideInInspector] public float maxDistance = 0;
+    [HideInInspector] public float maxDistance;
     [HideInInspector] public Vector3 casterPos;
     [Header("=== AFFECT COLLIDER")]
-    [SerializeField] private List<byte> effectIndex = new List<byte>();
+    [SerializeField] private List<byte> effectIndex = new();
     [SerializeField] private bool affectEntityOnly;
     private Rigidbody rb;
 
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
-        if (!PhotonNetwork.IsMasterClient) GetComponent<Collider>().enabled = false;
     }
 
     protected override void OnUpdate()
@@ -61,10 +59,9 @@ public class AffectCollider : Entity
         Entity entity = other.GetComponent<Entity>();
         if (entity && entity != caster)
         {
-            if (PhotonNetwork.IsMasterClient)
-            {
-                capacitySender.CollideEntityEffect(entity);
-            }
+            capacitySender.CollideFeedbackEffect(entity);
+            if (PhotonNetwork.IsMasterClient) return;
+            capacitySender.CollideEntityEffect(entity);
         }
         else if (!entity && !affectEntityOnly)
         {
