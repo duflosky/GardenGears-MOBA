@@ -1,6 +1,3 @@
-using UnityEngine;
-using UnityEngine.InputSystem;
-
 namespace GameStates.States
 {
     public class LoadingState : GameState
