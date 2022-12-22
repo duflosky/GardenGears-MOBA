@@ -47,9 +47,8 @@ namespace Controllers.Inputs
         /// <param name="ctx"></param>
         private void OnActivateCapacity1(InputAction.CallbackContext ctx)
         {
-            ActiveCapacitySO capacity1 = CapacitySOCollectionManager.GetActiveCapacitySOByIndex(champion.abilitiesIndexes[0]);
-
-            champion.RequestCast(champion.abilitiesIndexes[0], 0,selectedEntity,cursorWorldPos);
+            if (champion.abilitiesIndexes.Length == 0) return;
+            champion.RequestCast(champion.abilitiesIndexes[0], 1,selectedEntity,cursorWorldPos);
         }
         
         /// <summary>
@@ -58,10 +57,9 @@ namespace Controllers.Inputs
         /// <param name="ctx"></param>
         private void OnActivateCapacity2(InputAction.CallbackContext ctx)
         {
-            champion.RequestCast(champion.abilitiesIndexes[1], 1,selectedEntity,cursorWorldPos);
+            if (champion.abilitiesIndexes.Length == 1) return;
+            champion.RequestCast(champion.abilitiesIndexes[1], 2,selectedEntity,cursorWorldPos);
         }
-        
-        
         
         /// <summary>
         /// Actions Performed on Ultimate Capacity Activation
@@ -69,7 +67,7 @@ namespace Controllers.Inputs
         /// <param name="ctx"></param>
         private void OnActivateUltimateAbility(InputAction.CallbackContext ctx)
         {
-            champion.RequestCast(champion.ultimateAbilityIndex, 2,selectedEntity,cursorWorldPos);
+            champion.RequestCast(champion.ultimateAbilityIndex, 3,selectedEntity,cursorWorldPos);
         }
 
         /// <summary>
@@ -171,7 +169,7 @@ namespace Controllers.Inputs
             
             inputs.Capacity.Capacity1.performed += OnActivateCapacity1;
             inputs.Capacity.Capacity2.performed += OnActivateCapacity2;
-            inputs.Capacity.Ultime.performed += OnActivateUltimateAbility;
+            // inputs.Capacity.Ultime.performed += OnActivateUltimateAbility;
             
             inputs.Mouse.MousePos.performed += OnMouseMove;
 
@@ -192,9 +190,9 @@ namespace Controllers.Inputs
         {
             inputs.Capacity.Attack.performed -= OnAttack;
             
-            // inputs.Capacity.Capacity0.performed -= OnActivateCapacity0;
             inputs.Capacity.Capacity1.performed -= OnActivateCapacity1;
-            inputs.Capacity.Capacity2.performed -= OnActivateUltimateAbility;
+            inputs.Capacity.Capacity2.performed -= OnActivateCapacity2;
+            // inputs.Capacity.Capacity2.performed -= OnActivateUltimateAbility;
             inputs.Inventory.ShowHideShop.performed -= OnShowHideShop;
 
             inputs.Movement.Move.performed -= OnMoveChange; 

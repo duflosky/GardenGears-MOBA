@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using Entities;
 using Entities.Capacities;
 using Photon.Pun;
@@ -41,19 +39,18 @@ public class AutoAttackRange : ActiveCapacity
         champion.GetPassiveCapacity(CapacitySOCollectionManager.GetPassiveCapacitySOIndex(SOType.overheatSO)).OnAdded();
         lookDir = targetPositions[0]-casterTransform.position;
         lookDir.y = 0;
-        var shootDir = lookDir;
         if (champion.isOverheat)
         {
             var rdm = Random.Range(-(SOType.sprayAngle / 2), (SOType.sprayAngle / 2));
-            shootDir += new Vector3(Mathf.Cos(rdm), 0, Mathf.Sin(rdm)).normalized;
-        };
-        bullet = PoolNetworkManager.Instance.PoolInstantiate(SOType.bulletPrefab.GetComponent<Entity>(), casterTransform.position, Quaternion.LookRotation(shootDir)).gameObject;
+            lookDir += new Vector3(Mathf.Cos(rdm), 0, Mathf.Sin(rdm)).normalized;
+        }
+        bullet = PoolNetworkManager.Instance.PoolInstantiate(SOType.bulletPrefab.GetComponent<Entity>(), casterTransform.position, Quaternion.LookRotation(lookDir)).gameObject;
         collider = bullet.GetComponent<AffectCollider>();
         collider.caster = caster;
         collider.casterPos = casterTransform.position;
         collider.maxDistance = SOType.maxRange;
         collider.capacitySender = this;
-        collider.Launch(shootDir.normalized*SOType.bulletSpeed);
+        collider.Launch(lookDir.normalized*SOType.bulletSpeed);
     }
 
     public override void CapacityEndAnimation()
@@ -69,12 +66,10 @@ public class AutoAttackRange : ActiveCapacity
         if (PhotonNetwork.IsMasterClient)
         {
             var lifeable = entityAffect.GetComponent<IActiveLifeable>();
-            if (lifeable != null)
-            {
-                if (!lifeable.AttackAffected()) return;
-                entityAffect.photonView.RPC("DecreaseCurrentHpRPC", RpcTarget.All, caster.GetComponent<Champion>().attackDamage * SOType.percentageDamage);
-                collider.Disable();
-            }
+            if (lifeable == null) return;
+            if (!lifeable.AttackAffected()) return;
+            entityAffect.photonView.RPC("DecreaseCurrentHpRPC", RpcTarget.All, caster.GetComponent<Champion>().attackDamage * SOType.percentageDamage);
+            collider.Disable();
         }
         else
         { 
@@ -87,13 +82,5 @@ public class AutoAttackRange : ActiveCapacity
        collider.Disable();
     }
 
-    public override void PlayFeedback(int casterIndex, int[] targetsEntityIndexes, Vector3[] targetPositions)
-    {
-        /*if (PhotonNetwork.IsMasterClient) return;
-        lookDir = targetPositions[0]-casterTransform.position;
-        lookDir.y = 0;
-        bullet = PoolLocalManager.Instance.PoolInstantiate(SOType.bulletPrefab, casterTransform.position, Quaternion.LookRotation(lookDir));
-        bullet.GetComponent<AffectCollider>().Launch(lookDir*SOType.bulletSpeed);
-        bullet.GetComponent<AffectCollider>().caster = caster;*/
-    }
+    public override void PlayFeedback(int casterIndex, int[] targetsEntityIndexes, Vector3[] targetPositions) { }
 }

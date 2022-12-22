@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -26,13 +25,11 @@ public class AccurateShootCollider : AffectCollider
         Vector3 lastCountPos = gameObjectDistances[go]; 
         maxDistance += Vector3.Distance(lastCountPos, transform.position);
         gameObjectDistances.Remove(go);
-        //Debug.Log($"Add {Vector3.Distance(lastCountPos, transform.position)} to maxDistance");
         canRangeDestroy = true;
     }
 
     public override void Disable()
     {
-        //Debug.Log($"disable with maxdistance : {maxDistance}");
         base.Disable();
     }
 }

@@ -11,15 +11,14 @@ namespace Entities.Capacities
         /// <summary>
         /// Reference of All Active Capacities 
         /// </summary>
-        [SerializeField] private List<ActiveCapacitySO> allActiveCapacities = new List<ActiveCapacitySO>();
+        [SerializeField] private List<ActiveCapacitySO> allActiveCapacities = new();
         
         /// <summary>
         /// Reference of All Passive Capacities 
         /// </summary>
-        [SerializeField] private List<PassiveCapacitySO> allPassiveCapacitiesSo = new List<PassiveCapacitySO>();
+        [SerializeField] private List<PassiveCapacitySO> allPassiveCapacitiesSo = new();
 
-        private static Dictionary<ActiveCapacitySO, ActiveCapacity> capacityReferences =
-            new Dictionary<ActiveCapacitySO, ActiveCapacity>();
+        private static Dictionary<ActiveCapacitySO, ActiveCapacity> capacityReferences = new();
 
         private void Awake()
         {
@@ -30,7 +29,6 @@ namespace Entities.Capacities
             }
 
             Instance = this;
-
         }
 
         private void Start()
@@ -56,7 +54,6 @@ namespace Entities.Capacities
 
         public static ActiveCapacity CreateActiveCapacity(byte soIndex,Entity caster)
         {
-           
             var active = (ActiveCapacity) Activator.CreateInstance(Instance.allActiveCapacities[soIndex].AssociatedType());
             
             active.indexOfSOInCollection = soIndex;
@@ -73,7 +70,6 @@ namespace Entities.Capacities
         /// <returns></returns>
         public static ActiveCapacitySO GetActiveCapacitySOByIndex(byte index)
         {
-            //Debug.Log($"Try get Capacity of index {index}");
             return Instance.allActiveCapacities[index];
         }
 
