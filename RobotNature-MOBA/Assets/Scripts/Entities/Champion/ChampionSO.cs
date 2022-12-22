@@ -32,7 +32,6 @@ namespace Entities.Champion
         
         public void SetIndexes()
         {
-            
             // Attack
             attackAbilityIndex = CapacitySOCollectionManager.GetActiveCapacitySOIndex(attackAbility);
         
@@ -50,12 +49,10 @@ namespace Entities.Champion
             for (var index = 0; index < activeCapacitiesIndexes.Length; index++)
             {
                 var activeCapacitySo = activeCapacities[index];
-                activeCapacitiesIndexes[index] =
-                    CapacitySOCollectionManager.GetActiveCapacitySOIndex(activeCapacitySo);
+                activeCapacitiesIndexes[index] = CapacitySOCollectionManager.GetActiveCapacitySOIndex(activeCapacitySo);
             }
             
             ultimateAbilityIndex = CapacitySOCollectionManager.GetActiveCapacitySOIndex(ultimateAbility);
-            
         }
     }
 }
