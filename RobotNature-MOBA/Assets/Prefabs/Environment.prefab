@@ -15298,7 +15298,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1816654886756779952}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.5, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.33333334, y: 0.25, z: 0.33333334}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -39878,7 +39878,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5924000711057206587}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.5, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.33333334, y: 0.25, z: 0.33333334}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -40357,7 +40357,7 @@ MonoBehaviour:
   canHide: 0
   elementsToShow: []
   canChangeTeam: 0
-  team: 0
+  team: 2
   baseViewRange: 10
   viewRange: 10
   viewAngle: 360
@@ -40367,18 +40367,15 @@ MonoBehaviour:
   isAlive: 1
   maxHealth: 100
   currentHealth: 0
-  detectionRange: 6
-  enemiesInRange: []
+  range: 0
   damage: 10
-  delayBeforeAttack: 0.3
-  detectionDelay: 0.2
-  brainSpeed: 1
+  attackAbility: {fileID: 0}
+  enemiesInRange: []
   timeBetweenShots: 0
   canBeHitByTowerMask:
     serializedVersion: 2
     m_Bits: 1024
-  isCycleAttack: 0
-  enemyUnit: Team1Unit
+  timer: 0
 --- !u!1 &5990029553819341624
 GameObject:
   m_ObjectHideFlags: 0
@@ -41164,28 +41161,25 @@ MonoBehaviour:
   canHide: 0
   elementsToShow: []
   canChangeTeam: 0
-  team: 0
-  baseViewRange: 0
-  viewRange: 0
-  viewAngle: 0
+  team: 1
+  baseViewRange: 10
+  viewRange: 10
+  viewAngle: 360
   canView: 0
   meshFilterFoV: {fileID: 1454730284253091917}
   fogOfWarStartDetection: {fileID: 2426079491785736805}
   isAlive: 1
   maxHealth: 100
   currentHealth: 0
-  detectionRange: 6
-  enemiesInRange: []
+  range: 0
   damage: 10
-  delayBeforeAttack: 0.3
-  detectionDelay: 0.2
-  brainSpeed: 1
+  attackAbility: {fileID: 0}
+  enemiesInRange: []
   timeBetweenShots: 0
   canBeHitByTowerMask:
     serializedVersion: 2
     m_Bits: 1024
-  isCycleAttack: 0
-  enemyUnit: Team2Unit
+  timer: 0
 --- !u!1 &5990029554075169038
 GameObject:
   m_ObjectHideFlags: 0
@@ -42124,7 +42118,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5990029554295172836}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7d034a07e20870e44b87b75fc5f73d8a, type: 3}
   m_Name: 
@@ -43098,7 +43092,7 @@ CapsuleCollider:
   m_GameObject: {fileID: 5990029554576893744}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   m_Radius: 0.5000001
   m_Height: 2
   m_Direction: 1
@@ -45997,7 +45991,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5990029555418424728}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7d034a07e20870e44b87b75fc5f73d8a, type: 3}
   m_Name: 
@@ -46110,7 +46104,7 @@ CapsuleCollider:
   m_GameObject: {fileID: 5990029555427502805}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   m_Radius: 0.5000001
   m_Height: 2
   m_Direction: 1

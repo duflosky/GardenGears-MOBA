@@ -17,10 +17,11 @@ MonoBehaviour:
   icon: {fileID: 0}
   description: 
   cooldown: 1
-  isTargeting: 0
+  isTargeting: 1
   maxRange: 6
   types: 04000000
-  shootType: 2
+  shootType: 0
   indexInCollection: 2
   feedbackDuration: 0
-  feedbackPrefab: {fileID: 0}
+  feedbackPrefab: {fileID: 8591853369318993438, guid: b15f782543dd8474aa6adac1fc45f3ac,
+    type: 3}

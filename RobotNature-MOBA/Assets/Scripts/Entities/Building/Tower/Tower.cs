@@ -1,9 +1,9 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using Entities;
 using Entities.Building;
 using Entities.Capacities;
+using GameStates;
 using Photon.Pun;
 using UnityEngine;
 
@@ -11,122 +11,95 @@ public class Tower : Building, IAttackable
 {
     [Space]
     [Header("Tower settings")]
-    public float detectionRange;
-    public List<Entity> enemiesInRange = new List<Entity>();
+    public float range;
     public int damage;
-    public float delayBeforeAttack;
-    public float detectionDelay;
-    public float brainSpeed;
-    public float timeBetweenShots;
-    public LayerMask canBeHitByTowerMask;
-    public bool isCycleAttack = false;
-    public string enemyUnit;
-    private float brainTimer;
+    public ActiveCapacitySO attackAbility;
+    public List<Entity> enemiesInRange = new();
 
-    protected override void OnUpdate()
+    [SerializeField] private float timeBetweenShots;
+    [SerializeField] private LayerMask canBeHitByTowerMask;
+    [SerializeField] private double timer;
+
+    private byte attackAbilityIndex;
+
+    private void OnEnable()
     {
-        // Créer des tick pour éviter le saut de frame en plus avec le multi ça risque d'arriver
-        brainTimer += Time.deltaTime;
-        if (brainTimer > brainSpeed)
-        {
-            TowerDetection();
-            brainTimer = 0;
-        }
+        GameStateMachine.Instance.OnTick += TowerDetection;
+    }
+
+    private void OnDisable()
+    {
+        GameStateMachine.Instance.OnTick -= TowerDetection;
+    }
+    
+    protected override void OnStart()
+    {
+        base.OnStart();
+        attackAbilityIndex = CapacitySOCollectionManager.GetActiveCapacitySOIndex(attackAbility);
     }
 
     private void TowerDetection()
     {
+        timer += 1 / GameStateMachine.Instance.tickRate;
+
+        if (timer >= timeBetweenShots) return;
         enemiesInRange.Clear();
         
-        var size = Physics.OverlapSphere(transform.position, detectionRange, canBeHitByTowerMask);
+        var colliders = Physics.OverlapSphere(transform.position, range, canBeHitByTowerMask);
         
-
-        foreach (var result in size)
+        foreach (var collider in colliders)
         {
-            if (result.CompareTag(enemyUnit))
-            {
-                enemiesInRange.Add(result.GetComponent<Entity>());
-            }
+            if (!collider.GetComponent<Entity>()) continue;
+            var entity = collider.GetComponent<Entity>();
+            if (entity.team != team) enemiesInRange.Add(entity);
         }
 
-        if (isCycleAttack == false && enemiesInRange.Count > 0)
-        {
-            StartCoroutine(AttackTarget());
-        }
-    }
-
-    private IEnumerator AttackTarget()
-    {
-        isCycleAttack = true;
-        
-        yield return new WaitForSeconds(detectionDelay);
-        
-        int[] targetEntity = new[] { enemiesInRange[0].GetComponent<Entity>().entityIndex };
-        
-        // TODO: Add variable who can store the capacity of the tower
-        AttackRPC(3, targetEntity, Array.Empty<Vector3>());
-        
-        yield return new WaitForSeconds(timeBetweenShots);
-        isCycleAttack = false;
+        if (enemiesInRange.Count < 1) return;
+        int[] targetEntity = { enemiesInRange[0].GetComponent<Entity>().entityIndex };
+        RequestAttack(attackAbilityIndex, targetEntity, Array.Empty<Vector3>());
     }
 
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, detectionRange);
+        Gizmos.DrawWireSphere(transform.position, range);
     }
     
     #region Attackable
+
+    private bool canAttack = true;
     
     public bool CanAttack()
     {
-        throw new System.NotImplementedException();
+        return canAttack;
     }
 
-    public void RequestSetCanAttack(bool value)
-    {
-        throw new System.NotImplementedException();
-    }
+    public void RequestSetCanAttack(bool value) { }
 
-    public void SetCanAttackRPC(bool value)
-    {
-        throw new System.NotImplementedException();
-    }
+    public void SetCanAttackRPC(bool value) { }
 
-    public void SyncSetCanAttackRPC(bool value)
-    {
-        throw new System.NotImplementedException();
-    }
+    public void SyncSetCanAttackRPC(bool value) { }
 
     public event GlobalDelegates.BoolDelegate OnSetCanAttack;
     public event GlobalDelegates.BoolDelegate OnSetCanAttackFeedback;
-    
+
     public float GetAttackDamage()
     {
-        throw new System.NotImplementedException();
+        return damage;
     }
 
-    public void RequestSetAttackDamage(float value)
-    {
-        throw new System.NotImplementedException();
-    }
+    public void RequestSetAttackDamage(float value) { }
 
-    public void SyncSetAttackDamageRPC(float value)
-    {
-        throw new System.NotImplementedException();
-    }
+    public void SyncSetAttackDamageRPC(float value) { }
 
-    public void SetAttackDamageRPC(float value)
-    {
-        throw new System.NotImplementedException();
-    }
+    public void SetAttackDamageRPC(float value) { }
 
     public event GlobalDelegates.FloatDelegate OnSetAttackDamage;
     public event GlobalDelegates.FloatDelegate OnSetAttackDamageFeedback;
     
     public void RequestAttack(byte capacityIndex, int[] targetedEntities, Vector3[] targetedPositions)
     {
-        throw new System.NotImplementedException();
+        photonView.RPC("AttackRPC", RpcTarget.All, capacityIndex, targetedEntities, targetedPositions);
     }
 
     [PunRPC]
@@ -151,72 +124,38 @@ public class Tower : Building, IAttackable
     public event GlobalDelegates.ByteIntArrayVector3ArrayDelegate OnAttack;
     public event GlobalDelegates.ByteIntArrayVector3ArrayDelegate OnAttackFeedback;
     
-    public void RequestIncreaseAttackDamage(float value)
-    {
-        throw new NotImplementedException();
-    }
+    public void RequestIncreaseAttackDamage(float value) { }
 
-    public void SyncIncreaseAttackDamageRPC(float value)
-    {
-        throw new NotImplementedException();
-    }
+    public void SyncIncreaseAttackDamageRPC(float value) { }
 
-    public void IncreaseAttackDamageRPC(float value)
-    {
-        throw new NotImplementedException();
-    }
+    public void IncreaseAttackDamageRPC(float value) { }
 
     public event GlobalDelegates.FloatDelegate OnIncreaseAttackDamage;
     public event GlobalDelegates.FloatDelegate OnIncreaseAttackDamageFeedback;
     
-    public void RequestDecreaseAttackDamage(float value)
-    {
-        throw new NotImplementedException();
-    }
+    public void RequestDecreaseAttackDamage(float value) { }
 
-    public void SyncDecreaseAttackDamageRPC(float value)
-    {
-        throw new NotImplementedException();
-    }
+    public void SyncDecreaseAttackDamageRPC(float value) { }
 
-    public void DecreaseAttackDamageRPC(float value)
-    {
-        throw new NotImplementedException();
-    }
+    public void DecreaseAttackDamageRPC(float value) { }
 
     public event GlobalDelegates.FloatDelegate OnDecreaseAttackDamage;
     public event GlobalDelegates.FloatDelegate OnDecreaseAttackDamageFeedback;
-    public void RequestIncreaseAttackSpeed(float value)
-    {
-        throw new NotImplementedException();
-    }
+    
+    public void RequestIncreaseAttackSpeed(float value) { }
 
-    public void SyncIncreaseAttackSpeedRPC(float value)
-    {
-        throw new NotImplementedException();
-    }
+    public void SyncIncreaseAttackSpeedRPC(float value) { }
 
-    public void IncreaseAttackSpeedRPC(float value)
-    {
-        throw new NotImplementedException();
-    }
+    public void IncreaseAttackSpeedRPC(float value) { }
 
     public event GlobalDelegates.FloatDelegate OnIncreaseAttackSpeed;
     public event GlobalDelegates.FloatDelegate OnIncreaseAttackSpeedFeedback;
-    public void RequestDecreaseAttackSpeed(float value)
-    {
-        throw new NotImplementedException();
-    }
+    
+    public void RequestDecreaseAttackSpeed(float value) { }
 
-    public void SyncDecreaseAttackSpeedRPC(float value)
-    {
-        throw new NotImplementedException();
-    }
+    public void SyncDecreaseAttackSpeedRPC(float value) { }
 
-    public void DecreaseAttackSpeedRPC(float value)
-    {
-        throw new NotImplementedException();
-    }
+    public void DecreaseAttackSpeedRPC(float value) { }
 
     public event GlobalDelegates.FloatDelegate OnDecreaseAttackSpeed;
     public event GlobalDelegates.FloatDelegate OnDecreaseAttackSpeedFeedback;

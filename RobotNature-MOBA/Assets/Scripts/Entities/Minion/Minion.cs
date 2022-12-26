@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using Entities.Capacities;
 using Entities.FogOfWar;
-using GameStates;
 using Photon.Pun;
 using UI.InGame;
 using UnityEngine;
@@ -44,7 +43,7 @@ namespace Entities.Minion
         public MinionAggroPreferences whoAggro = MinionAggroPreferences.Tower;
         public LayerMask enemyMinionMask;
         public GameObject currentAttackTarget;
-        public List<GameObject> whoIsAttackingMe = new List<GameObject>();
+        public List<GameObject> whoIsAttackingMe = new();
         public bool attackCycle;
         public ActiveCapacitySO attackAbility;
         [HideInInspector] public byte attackAbilityIndex;
@@ -92,6 +91,7 @@ namespace Entities.Minion
         public void LookingForPathingState()
         {
             if (myWaypoints is null) return;
+            if (!gameObject.activeSelf) return;
             if (myWaypoints.Count > 0)
             {
                 myAgent.SetDestination(myWaypoints[waypointIndex].position);
@@ -106,43 +106,64 @@ namespace Entities.Minion
 
         public void AttackingState()
         {
-            if (currentAggroState == MinionAggroState.Minion)
+            switch (currentAggroState)
             {
-                if (currentAttackTarget.activeSelf)
-                {
-                    var q = Quaternion.LookRotation(currentAttackTarget.transform.position - transform.position);
-                    transform.rotation = Quaternion.RotateTowards(transform.rotation, q, 50f * Time.deltaTime);
-
-                    if (attackCycle == false)
+                case MinionAggroState.Minion:
+                    if (currentAttackTarget.activeSelf)
                     {
-                        StartCoroutine(AttackLogic());
+                        var q = Quaternion.LookRotation(currentAttackTarget.transform.position - transform.position);
+                        transform.rotation = Quaternion.RotateTowards(transform.rotation, q, 50f * Time.deltaTime);
+                        if (attackCycle == false)
+                        {
+                            StartCoroutine(AttackLogic());
+                        }
                     }
-                }
-                else
-                {
-                    myController.currentState = MinionController.MinionState.LookingForPathing;
-                    currentAggroState = MinionAggroState.None;
-                    currentAttackTarget = null;
-                }
-            }
-            else if (currentAggroState == MinionAggroState.Tower)
-            {
-                if (TowersList[towerIndex].isAlive)
-                {
-                    var q = Quaternion.LookRotation(currentAttackTarget.transform.position - transform.position);
-                    transform.rotation = Quaternion.RotateTowards(transform.rotation, q, 50f * Time.deltaTime);
-                    if (attackCycle == false)
+                    else
                     {
-                        StartCoroutine(AttackLogic());
+                        myController.currentState = MinionController.MinionState.LookingForPathing;
+                        currentAggroState = MinionAggroState.None;
+                        currentAttackTarget = null;
                     }
-                }
-                else
-                {
-                    myController.currentState = MinionController.MinionState.LookingForPathing;
-                    currentAggroState = MinionAggroState.None;
-                    currentAttackTarget = null;
-                    towerIndex++;
-                }
+                    break;
+                
+                case MinionAggroState.Tower:
+                    if (TowersList is not null)
+                    {
+                        var q = Quaternion.LookRotation(currentAttackTarget.transform.position - transform.position);
+                        transform.rotation = Quaternion.RotateTowards(transform.rotation, q, 50f * Time.deltaTime);
+                        if (attackCycle == false)
+                        {
+                            StartCoroutine(AttackLogic());
+                        }
+                    }
+                    else
+                    {
+                        myController.currentState = MinionController.MinionState.LookingForPathing;
+                        currentAggroState = MinionAggroState.None;
+                        currentAttackTarget = null;
+                        towerIndex++;
+                    }
+                    break;
+                
+                case MinionAggroState.Champion:
+                    if (currentAttackTarget.activeSelf)
+                    {
+                        var q = Quaternion.LookRotation(currentAttackTarget.transform.position - transform.position);
+                        transform.rotation = Quaternion.RotateTowards(transform.rotation, q, 50f * Time.deltaTime);
+                        if (attackCycle == false)
+                        {
+                            StartCoroutine(AttackLogic());
+                        }
+                    }
+                    else
+                    {
+                        myController.currentState = MinionController.MinionState.LookingForPathing;
+                        currentAggroState = MinionAggroState.None;
+                        currentAttackTarget = null;
+                    }
+                    break;
+                
+                default: throw new ArgumentOutOfRangeException();
             }
         }
 
@@ -152,6 +173,7 @@ namespace Entities.Minion
 
         private void CheckMyWaypoints()
         {
+            if (!gameObject.activeSelf) return;
             if (Vector3.Distance(transform.position, myWaypoints[waypointIndex].transform.position) <= myAgent.stoppingDistance)
             {
                 if (waypointIndex < myWaypoints.Count - 1)
@@ -169,7 +191,6 @@ namespace Entities.Minion
         private void CheckObjectives()
         {
             if (TowersList is null) return;
-            if (!TowersList[towerIndex].isAlive) return;
 
             if (Vector3.Distance(transform.position, TowersList[towerIndex].transform.position) > attackAbility.maxRange)
             {
@@ -186,9 +207,9 @@ namespace Entities.Minion
         
         private void CheckEnemiesMinion()
         {
+            if (!gameObject.activeSelf) return;
             var size = Physics.OverlapSphere(transform.position, attackAbility.maxRange, enemyMinionMask);
             if (size.Length < 1) return;
-        
             for (int i = 0; i < size.Length; i++)
             {
                 if (!size[i].CompareTag(gameObject.tag))
@@ -206,7 +227,7 @@ namespace Entities.Minion
 
         private IEnumerator AttackLogic()
         {
-            if (TowersList[towerIndex].isAlive)
+            if (TowersList is not null)
             {
                 attackCycle = true;
                 AttackTarget(currentAttackTarget);
@@ -217,7 +238,7 @@ namespace Entities.Minion
 
         private void AttackTarget(GameObject target)
         {
-            int[] targetEntity = new[] { target.GetComponent<Entity>().entityIndex };
+            int[] targetEntity = { target.GetComponent<Entity>().entityIndex };
 
             RequestAttack(attackAbilityIndex, targetEntity, Array.Empty<Vector3>());
         }
@@ -252,7 +273,7 @@ namespace Entities.Minion
 
         public float GetAttackDamage()
         {
-            throw new System.NotImplementedException();
+            return attackDamage;
         }
 
         public void RequestSetAttackDamage(float value)
