@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using Entities;
 using Entities.Capacities;
 using GameStates;
@@ -11,10 +10,6 @@ public class AutoMinionCollider : Entity
     [HideInInspector] public Entity caster;
     [HideInInspector] public Entity target;
     [HideInInspector] public ActiveCapacity capacitySender;
-    
-    [Header("=== AFFECT COLLIDER")]
-    [SerializeField] private List<byte> effectIndex = new();
-    [SerializeField] private bool affectEntityOnly;
 
     [SerializeField] private double desiredDuration = 1f;
     private double elapsedTime;
@@ -38,7 +33,7 @@ public class AutoMinionCollider : Entity
         elapsedTime += Time.deltaTime;
         percentageComplete = elapsedTime / desiredDuration * GameStateMachine.Instance.tickRate;
         transform.position = Vector3.Lerp(caster.transform.position, target.transform.position, (float)percentageComplete);
-        if (!target.gameObject.activeSelf) SyncDisableRPC(); 
+        if (!target.gameObject.activeSelf) Disable(); 
     }
 
     protected virtual bool CanDisable()
@@ -60,14 +55,8 @@ public class AutoMinionCollider : Entity
     {
         capacitySender.CollideExitEffect(other.gameObject);
     }
-
-    public virtual void Disable()
-    {
-        photonView.RPC("SyncDisableRPC", RpcTarget.All);
-    }
     
-    [PunRPC]
-    public void SyncDisableRPC()
+    public void Disable()
     {
         gameObject.SetActive(false);
     }

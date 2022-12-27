@@ -54,13 +54,13 @@ public class AutoMinion : ActiveCapacity
         if (lifeable == null) return;
         if (!lifeable.AttackAffected()) return;
         entityAffect.photonView.RPC("DecreaseCurrentHpRPC", RpcTarget.All, minion.attackDamage);
-        autoMinionCollider.SyncDisableRPC();
+        autoMinionCollider.Disable();
     }
 
     public override void CollideFeedbackEffect(Entity entityAffect)
     {
         if (PhotonNetwork.IsMasterClient) return;
-        autoMinionCollider.SyncDisableRPC();
+        autoMinionCollider.Disable();
     }
 
     public override void CapacityEndAnimation()
@@ -77,6 +77,6 @@ public class AutoMinion : ActiveCapacity
         autoMinionCollider.capacitySender = this;
         autoMinionCollider.caster = caster;
         autoMinionCollider.target = target;
-        autoMinionCollider.SyncDisableRPC();
+        autoMinionCollider.Disable();
     }
 }

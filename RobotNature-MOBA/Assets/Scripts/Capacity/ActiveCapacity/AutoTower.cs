@@ -51,7 +51,7 @@ public class AutoTower : ActiveCapacity
         if (lifeable == null) return;
         if (!lifeable.AttackAffected()) return;
         entityAffect.photonView.RPC("DecreaseCurrentHpRPC", RpcTarget.All, tower.damage);
-        autoTowerCollider.SyncDisableRPC();
+        autoTowerCollider.Disable();
     }
 
     public override void PlayFeedback(int casterIndex, int[] targetsEntityIndexes, Vector3[] targetPositions)
@@ -61,6 +61,6 @@ public class AutoTower : ActiveCapacity
         autoTowerCollider.capacitySender = this;
         autoTowerCollider.caster = caster;
         autoTowerCollider.target = target;
-        autoTowerCollider.SyncDisableRPC();
+        autoTowerCollider.Disable();
     }
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Entities;
 using Entities.Building;
 using Entities.Capacities;
+using Entities.Minion;
 using GameStates;
 using Photon.Pun;
 using UnityEngine;
@@ -16,9 +17,8 @@ public class Tower : Building, IAttackable
     public ActiveCapacitySO attackAbility;
     public List<Entity> enemiesInRange = new();
 
-    [SerializeField] private float timeBetweenShots;
     [SerializeField] private LayerMask canBeHitByTowerMask;
-    [SerializeField] private double timer;
+    private double timer;
 
     private byte attackAbilityIndex;
 
@@ -42,7 +42,7 @@ public class Tower : Building, IAttackable
     {
         timer += 1 / GameStateMachine.Instance.tickRate;
 
-        if (timer >= timeBetweenShots) return;
+        if (timer >= attackAbility.cooldown) return;
         enemiesInRange.Clear();
         
         var colliders = Physics.OverlapSphere(transform.position, range, canBeHitByTowerMask);
@@ -51,12 +51,15 @@ public class Tower : Building, IAttackable
         {
             if (!collider.GetComponent<Entity>()) continue;
             var entity = collider.GetComponent<Entity>();
-            if (entity.team != team) enemiesInRange.Add(entity);
+            if (entity.team == team) continue;
+            if (entity is Minion) enemiesInRange.Add(entity);
+            else if (entity is Champion) enemiesInRange.Add(entity);
         }
 
         if (enemiesInRange.Count < 1) return;
         int[] targetEntity = { enemiesInRange[0].GetComponent<Entity>().entityIndex };
         RequestAttack(attackAbilityIndex, targetEntity, Array.Empty<Vector3>());
+        timer = 0;
     }
 
     private void OnDrawGizmosSelected()
