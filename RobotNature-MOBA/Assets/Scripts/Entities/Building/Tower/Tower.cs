@@ -12,14 +12,15 @@ public class Tower : Building, IAttackable
 {
     [Space]
     [Header("Tower settings")]
-    public float range;
-    public int damage;
-    public ActiveCapacitySO attackAbility;
-    public List<Entity> enemiesInRange = new();
+    public float damage;
+    public Transform shootSpot;
 
+    [SerializeField] private ActiveCapacitySO attackAbility;
+    [SerializeField] private List<Entity> enemiesInRange = new();
     [SerializeField] private LayerMask canBeHitByTowerMask;
+    [SerializeField] private Transform baseSpot;
+    
     private double timer;
-
     private byte attackAbilityIndex;
 
     private void OnEnable()
@@ -42,15 +43,13 @@ public class Tower : Building, IAttackable
     {
         timer += 1 / GameStateMachine.Instance.tickRate;
 
-        if (timer >= attackAbility.cooldown) return;
+        if (timer <= attackAbility.cooldown) return;
         enemiesInRange.Clear();
-        
-        var colliders = Physics.OverlapSphere(transform.position, range, canBeHitByTowerMask);
-        
-        foreach (var collider in colliders)
+        foreach (var collider in Physics.OverlapSphere(baseSpot.position, attackAbility.maxRange, canBeHitByTowerMask))
         {
             if (!collider.GetComponent<Entity>()) continue;
             var entity = collider.GetComponent<Entity>();
+            if (entity.GetComponent<Tower>()) return;
             if (entity.team == team) continue;
             if (entity is Minion) enemiesInRange.Add(entity);
             else if (entity is Champion) enemiesInRange.Add(entity);
@@ -58,14 +57,15 @@ public class Tower : Building, IAttackable
 
         if (enemiesInRange.Count < 1) return;
         int[] targetEntity = { enemiesInRange[0].GetComponent<Entity>().entityIndex };
-        RequestAttack(attackAbilityIndex, targetEntity, Array.Empty<Vector3>());
         timer = 0;
+        if (!PhotonNetwork.IsMasterClient) return;
+        RequestAttack(attackAbilityIndex, targetEntity, Array.Empty<Vector3>());
     }
-
-    private void OnDrawGizmosSelected()
+    
+    private void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, range);
+        Gizmos.DrawWireSphere(baseSpot.position, attackAbility.maxRange);
     }
     
     #region Attackable
@@ -102,7 +102,7 @@ public class Tower : Building, IAttackable
     
     public void RequestAttack(byte capacityIndex, int[] targetedEntities, Vector3[] targetedPositions)
     {
-        photonView.RPC("AttackRPC", RpcTarget.All, capacityIndex, targetedEntities, targetedPositions);
+        photonView.RPC("AttackRPC", RpcTarget.MasterClient, capacityIndex, targetedEntities, targetedPositions);
     }
 
     [PunRPC]

@@ -290,20 +290,20 @@ MonoBehaviour:
   canView: 1
   meshFilterFoV: {fileID: 139276482044157067}
   fogOfWarStartDetection: {fileID: 1902901348691630139}
+  rotateParent: {fileID: 5771435391329465323}
   myAgent: {fileID: 4192120332867856271}
   myWaypoints: []
   TowersList: []
   waypointIndex: 0
   towerIndex: 0
+  attackDamage: 2
+  currentAttackTarget: {fileID: 0}
   currentAggroState: 0
   enemyMinionMask:
     serializedVersion: 2
     m_Bits: 536871936
-  currentAttackTarget: {fileID: 0}
   attackCycle: 0
   attackAbility: {fileID: 11400000, guid: 9fe9f8c38b42d1f47a15dd82cc81f4cc, type: 2}
-  attackAbilityIndex: 0
-  attackDamage: 2
   meshParent: {fileID: 8354536543918890676}
   attackAffected: 1
   abilitiesAffected: 1

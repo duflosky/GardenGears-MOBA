@@ -9,9 +9,8 @@ public class AutoMinion : ActiveCapacity
     [SerializeField] private AutoMinionSO SOType;
        
     private Entity target;
-    private GameObject projectileGO;
     private Minion minion;
-    private double timer;
+    private GameObject projectileGO;
     private AutoMinionCollider autoMinionCollider;
 
     public override void OnStart()
@@ -48,18 +47,15 @@ public class AutoMinion : ActiveCapacity
     
     public override void CollideEntityEffect(Entity entityAffect)
     {
-        if (!PhotonNetwork.IsMasterClient) return;
-        if (caster.team == entityAffect.team) return;
         var lifeable = entityAffect.GetComponent<IActiveLifeable>();
         if (lifeable == null) return;
         if (!lifeable.AttackAffected()) return;
-        entityAffect.photonView.RPC("DecreaseCurrentHpRPC", RpcTarget.All, minion.attackDamage);
+        lifeable.RequestDecreaseCurrentHp(minion.attackDamage);
         autoMinionCollider.Disable();
     }
 
     public override void CollideFeedbackEffect(Entity entityAffect)
     {
-        if (PhotonNetwork.IsMasterClient) return;
         autoMinionCollider.Disable();
     }
 
@@ -70,13 +66,11 @@ public class AutoMinion : ActiveCapacity
 
     public override void PlayFeedback(int casterIndex, int[] targetsEntityIndexes, Vector3[] targetPositions)
     {
-        var entity = EntityCollectionManager.GetEntityByIndex(casterIndex);
-        if (entity == null) return;
-        projectileGO = PoolLocalManager.Instance.PoolInstantiate(SOType.feedbackPrefab, entity.transform.position, entity.transform.rotation);
+        if (PhotonNetwork.IsMasterClient) return;
+        projectileGO = PoolLocalManager.Instance.PoolInstantiate(SOType.feedbackPrefab, minion.transform.position, minion.transform.rotation);
         autoMinionCollider = projectileGO.GetComponent<AutoMinionCollider>();
         autoMinionCollider.capacitySender = this;
         autoMinionCollider.caster = caster;
-        autoMinionCollider.target = target;
-        autoMinionCollider.Disable();
+        autoMinionCollider.target = EntityCollectionManager.GetEntityByIndex(targetsEntityIndexes[0]);
     }
 }

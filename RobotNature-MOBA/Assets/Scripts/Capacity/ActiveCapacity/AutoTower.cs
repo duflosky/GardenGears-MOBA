@@ -5,9 +5,10 @@ using UnityEngine;
 
 public class AutoTower : ActiveCapacity
 {
+    [SerializeField] private AutoTowerSO SOType;
+    
     private Entity target;
     private Tower tower;
-    public AutoTowerSO SOType;
     private GameObject autoTowerGO;
     private AutoTowerCollider autoTowerCollider;
     
@@ -23,8 +24,7 @@ public class AutoTower : ActiveCapacity
         target = EntityCollectionManager.GetEntityByIndex(targetsEntityIndexes[0]);
         tower = caster.GetComponent<Tower>();
         
-        if (Vector3.Distance(casterTransform.position, target.transform.position) > tower.range) return false;
-        
+        if (Vector3.Distance(casterTransform.position, target.transform.position) > SOType.maxRange) return false;
         if (!base.TryCast(targetsEntityIndexes, targetPositions)) return false;
         return true;
     }
@@ -36,7 +36,7 @@ public class AutoTower : ActiveCapacity
 
     public override void CapacityEffect(Transform castTransform)
     {
-        autoTowerGO = PoolLocalManager.Instance.PoolInstantiate(SOType.feedbackPrefab, castTransform.position, castTransform.rotation);
+        autoTowerGO = PoolLocalManager.Instance.PoolInstantiate(SOType.feedbackPrefab, tower.shootSpot.transform.position, castTransform.rotation);
         autoTowerCollider = autoTowerGO.GetComponent<AutoTowerCollider>();
         autoTowerCollider.capacitySender = this;
         autoTowerCollider.caster = caster;
@@ -45,22 +45,25 @@ public class AutoTower : ActiveCapacity
     
     public override void CollideEntityEffect(Entity entityAffect)
     {
-        if (!PhotonNetwork.IsMasterClient) return;
-        if (caster.team == entityAffect.team) return;
         var lifeable = entityAffect.GetComponent<IActiveLifeable>();
         if (lifeable == null) return;
         if (!lifeable.AttackAffected()) return;
-        entityAffect.photonView.RPC("DecreaseCurrentHpRPC", RpcTarget.All, tower.damage);
+        lifeable.RequestDecreaseCurrentHp(tower.damage);
+        autoTowerCollider.Disable();
+    }
+    
+    public override void CollideFeedbackEffect(Entity entityAffect)
+    {
         autoTowerCollider.Disable();
     }
 
     public override void PlayFeedback(int casterIndex, int[] targetsEntityIndexes, Vector3[] targetPositions)
     {
-        autoTowerGO = PoolLocalManager.Instance.PoolInstantiate(SOType.feedbackPrefab, casterTransform.position, casterTransform.rotation);
+        if (PhotonNetwork.IsMasterClient) return;
+        autoTowerGO = PoolLocalManager.Instance.PoolInstantiate(SOType.feedbackPrefab, tower.shootSpot.transform.position, caster.transform.rotation);
         autoTowerCollider = autoTowerGO.GetComponent<AutoTowerCollider>();
         autoTowerCollider.capacitySender = this;
         autoTowerCollider.caster = caster;
         autoTowerCollider.target = target;
-        autoTowerCollider.Disable();
     }
 }

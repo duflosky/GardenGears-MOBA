@@ -548,6 +548,11 @@ PrefabInstance:
       propertyPath: sceneViewId
       value: 997
       objectReference: {fileID: 0}
+    - target: {fileID: 5990029554021714893, guid: 9a3d8686d94b5444c9c8d6bcd8e404ee,
+        type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5990029555207610702, guid: 9a3d8686d94b5444c9c8d6bcd8e404ee,
         type: 3}
       propertyPath: m_RootOrder
@@ -608,57 +613,20 @@ PrefabInstance:
       propertyPath: m_Name
       value: Environment
       objectReference: {fileID: 0}
-    - target: {fileID: 6228767670337398982, guid: 9a3d8686d94b5444c9c8d6bcd8e404ee,
-        type: 3}
-      propertyPath: range
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 6228767670337398982, guid: 9a3d8686d94b5444c9c8d6bcd8e404ee,
-        type: 3}
-      propertyPath: attackAbility
-      value: 
-      objectReference: {fileID: 11400000, guid: 6f0ea9b7d4bc7d84f915332a679b1a4d,
-        type: 2}
-    - target: {fileID: 6228767670337398982, guid: 9a3d8686d94b5444c9c8d6bcd8e404ee,
-        type: 3}
-      propertyPath: canBeHitByTowerMask.m_Bits
-      value: 536871936
-      objectReference: {fileID: 0}
-    - target: {fileID: 6965137881680746774, guid: 9a3d8686d94b5444c9c8d6bcd8e404ee,
+    - target: {fileID: 7007489393734502834, guid: 9a3d8686d94b5444c9c8d6bcd8e404ee,
         type: 3}
       propertyPath: sceneViewId
       value: 996
       objectReference: {fileID: 0}
     - target: {fileID: 7675406472214385062, guid: 9a3d8686d94b5444c9c8d6bcd8e404ee,
         type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8755515198681832900, guid: 9a3d8686d94b5444c9c8d6bcd8e404ee,
-        type: 3}
-      propertyPath: range
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 8755515198681832900, guid: 9a3d8686d94b5444c9c8d6bcd8e404ee,
-        type: 3}
-      propertyPath: canView
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8755515198681832900, guid: 9a3d8686d94b5444c9c8d6bcd8e404ee,
-        type: 3}
-      propertyPath: attackAbility
+      propertyPath: enemyTowers.Array.data[0]
       value: 
-      objectReference: {fileID: 11400000, guid: 6f0ea9b7d4bc7d84f915332a679b1a4d,
-        type: 2}
-    - target: {fileID: 8755515198681832900, guid: 9a3d8686d94b5444c9c8d6bcd8e404ee,
+      objectReference: {fileID: 1178005772}
+    - target: {fileID: 7994268994242061250, guid: 9a3d8686d94b5444c9c8d6bcd8e404ee,
         type: 3}
-      propertyPath: canBeHitByTowerMask.m_Bits
-      value: 536871936
-      objectReference: {fileID: 0}
-    - target: {fileID: 9024119698948549953, guid: 9a3d8686d94b5444c9c8d6bcd8e404ee,
-        type: 3}
-      propertyPath: m_Enabled
-      value: 1
+      propertyPath: m_Layer
+      value: 30
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9a3d8686d94b5444c9c8d6bcd8e404ee, type: 3}
@@ -686,6 +654,18 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1178005767}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1178005772 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2584379910981245886, guid: 9a3d8686d94b5444c9c8d6bcd8e404ee,
+    type: 3}
+  m_PrefabInstance: {fileID: 1178005767}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f114977ffe0e4a945a964e57436bc717, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1311360863
 PrefabInstance:
   m_ObjectHideFlags: 0

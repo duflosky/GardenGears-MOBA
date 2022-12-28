@@ -14,6 +14,8 @@ namespace Entities.Minion
     {
         #region Minion Variables
 
+        [SerializeField] private Transform rotateParent;
+        
         [SerializeField] private NavMeshAgent myAgent;
         private MinionController myController;
 
@@ -66,6 +68,7 @@ namespace Entities.Minion
 
         private IEnumerator AttackLogic()
         {
+            if (!PhotonNetwork.IsMasterClient) yield break;
             if (TowersList is null) yield break;
             attackCycle = true;
             int[] targetEntity = { currentAttackTarget.GetComponent<Entity>().entityIndex };
@@ -99,13 +102,19 @@ namespace Entities.Minion
 
         public void AttackingState()
         {
+            if (Vector3.Distance(transform.position, currentAttackTarget.transform.position) > attackAbility.maxRange)
+            {
+                myController.currentState = MinionController.MinionState.LookingForPathing;
+                currentAggroState = MinionAggroState.None;
+                currentAttackTarget = null;
+            }
             switch (currentAggroState)
             {
                 case MinionAggroState.Minion:
-                    if (currentAttackTarget.activeSelf)
+                    if (currentAttackTarget.activeSelf && gameObject.activeSelf)
                     {
                         var q = Quaternion.LookRotation(currentAttackTarget.transform.position - transform.position);
-                        transform.rotation = Quaternion.RotateTowards(transform.rotation, q, 50f * Time.deltaTime);
+                        rotateParent.rotation = Quaternion.RotateTowards(transform.rotation, q, 50f * Time.deltaTime);
                         if (attackCycle == false)
                         {
                             StartCoroutine(AttackLogic());
@@ -120,22 +129,17 @@ namespace Entities.Minion
                     break;
                 
                 case MinionAggroState.Tower:
-                    if (TowersList is not null)
+                    if (TowersList is not null && gameObject.activeSelf)
                     {
-                        var q = Quaternion.LookRotation(currentAttackTarget.transform.position - transform.position);
-                        transform.rotation = Quaternion.RotateTowards(transform.rotation, q, 50f * Time.deltaTime);
-                        if (attackCycle == false)
-                        {
-                            StartCoroutine(AttackLogic());
-                        }
+                        Debug.Log("Tower in range");
                     }
                     break;
                 
                 case MinionAggroState.Champion:
-                    if (currentAttackTarget.activeSelf)
+                    if (currentAttackTarget.activeSelf && gameObject.activeSelf)
                     {
                         var q = Quaternion.LookRotation(currentAttackTarget.transform.position - transform.position);
-                        transform.rotation = Quaternion.RotateTowards(transform.rotation, q, 50f * Time.deltaTime);
+                        rotateParent.rotation = Quaternion.RotateTowards(transform.rotation, q, 50f * Time.deltaTime);
                         if (attackCycle == false)
                         {
                             StartCoroutine(AttackLogic());
@@ -166,17 +170,16 @@ namespace Entities.Minion
         private void CheckMyWaypoints()
         {
             if (!gameObject.activeSelf) return;
-            if (Vector3.Distance(transform.position, myWaypoints[waypointIndex].transform.position) <= myAgent.stoppingDistance)
+            if (myWaypoints is null) return;
+            if (!(Vector3.Distance(transform.position, myWaypoints[waypointIndex].transform.position) <= myAgent.stoppingDistance)) return;
+            if (waypointIndex < myWaypoints.Count - 1)
             {
-                if (waypointIndex < myWaypoints.Count - 1)
-                {
-                    waypointIndex++;
-                    myAgent.SetDestination(myWaypoints[waypointIndex].position);
-                }
-                else
-                {
-                    myAgent.SetDestination(TowersList[towerIndex].transform.position);
-                }
+                waypointIndex++;
+                myAgent.SetDestination(myWaypoints[waypointIndex].position);
+            }
+            else
+            {
+                myAgent.SetDestination(TowersList[towerIndex].transform.position);
             }
         }
 
@@ -200,9 +203,7 @@ namespace Entities.Minion
         private void CheckEnemies()
         {
             if (!gameObject.activeSelf) return;
-            var colliders = Physics.OverlapSphere(transform.position, attackAbility.maxRange, enemyMinionMask);
-            if (colliders.Length < 1) return;
-            foreach (var collider in colliders)
+            foreach (var collider in Physics.OverlapSphere(transform.position, attackAbility.maxRange, enemyMinionMask))
             {
                 if (!collider.GetComponent<Entity>()) continue;
                 var entity = collider.GetComponent<Entity>();

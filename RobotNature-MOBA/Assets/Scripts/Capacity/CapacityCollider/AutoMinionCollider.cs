@@ -33,7 +33,7 @@ public class AutoMinionCollider : Entity
         elapsedTime += Time.deltaTime;
         percentageComplete = elapsedTime / desiredDuration * GameStateMachine.Instance.tickRate;
         transform.position = Vector3.Lerp(caster.transform.position, target.transform.position, (float)percentageComplete);
-        if (!target.gameObject.activeSelf) Disable(); 
+        if (!target.gameObject.activeSelf) Disable();
     }
 
     protected virtual bool CanDisable()
