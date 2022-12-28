@@ -4,15 +4,15 @@ using Photon.Pun;
 using UnityEngine;
 
 public partial class Champion
-{
-     [Header("=== CAST")] public byte[] abilitiesIndexes = new byte[2];
+{ 
+    [Header("=== CAST")] 
+    public byte[] abilitiesIndexes = new byte[2];
     public byte ultimateAbilityIndex;
 
-    private double[] abilityCooldowns = new double[3];
+    private double[] abilityCooldowns = new double[4];
 
     public bool canCast;
-
-
+    
     public bool CanCast()
     {
         return canCast;
@@ -38,13 +38,11 @@ public partial class Champion
         OnSetCanCastFeedback?.Invoke(value);
     }
 
-
     public event GlobalDelegates.BoolDelegate OnSetCanCast;
     public event GlobalDelegates.BoolDelegate OnSetCanCastFeedback;
 
     public void DecreaseCooldown()
     {
-        
         for (int i = 0; i < abilityCooldowns.Length; i++)
         {
             if (abilityCooldowns[i] > 0)
@@ -56,7 +54,7 @@ public partial class Champion
     
     public void RequestCast(byte capacityIndex, byte championCapacityIndex, int[] targetedEntities, Vector3[] targetedPositions)
     {
-        if(abilityCooldowns[championCapacityIndex]>0)return;
+        if (abilityCooldowns[championCapacityIndex] > 0) return;
         photonView.RPC("CastRPC",RpcTarget.MasterClient,capacityIndex, championCapacityIndex,targetedEntities,targetedPositions);
     }
 
@@ -96,5 +94,4 @@ public partial class Champion
     public event GlobalDelegates.TransformDelegate OnCastAnimationCast;
     public event GlobalDelegates.NoParameterDelegate OnCastAnimationEnd;
     public event GlobalDelegates.ByteIntArrayVector3ArrayCapacityDelegate OnCastFeedback;
-
 }

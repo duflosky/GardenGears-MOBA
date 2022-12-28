@@ -67,7 +67,6 @@ public partial class Champion
     [PunRPC]
     public void SyncAttackRPC(byte capacityIndex, int[] targetedEntities, Vector3[] targetedPositions)
     {
-        
         OnAttackFeedback?.Invoke(capacityIndex, targetedEntities, targetedPositions);
     }
 

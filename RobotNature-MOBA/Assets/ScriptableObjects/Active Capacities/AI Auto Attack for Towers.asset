@@ -16,12 +16,12 @@ MonoBehaviour:
   descriptionName: 
   icon: {fileID: 0}
   description: 
-  cooldown: 0
-  isTargeting: 0
-  maxRange: 0
+  cooldown: 8
+  isTargeting: 1
+  maxRange: 10
   types: 04000000
   shootType: 0
   indexInCollection: 0
   feedbackDuration: 0
-  feedbackPrefab: {fileID: 0}
-  damage: 0
+  feedbackPrefab: {fileID: 3649034926571792354, guid: 3283aefb6f44c01439dca18b015fc190,
+    type: 3}

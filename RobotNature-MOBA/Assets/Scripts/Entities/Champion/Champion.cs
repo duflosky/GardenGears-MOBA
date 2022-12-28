@@ -76,8 +76,19 @@ public partial class Champion : Entity, IMovable, IInventoryable, IResourceable,
            passiveCapacitiesList.Add(capa);
         }
 
-        team = newTeam;
+        CheckSpawnPos(newTeam);
 
+        if (GameStateMachine.Instance.GetPlayerTeam() != team) championMesh.SetActive(false);
+        
+        if (uiManager == null) return;
+        EntityCollectionManager.AddEntity(this);
+        uiManager.InstantiateHealthBarForEntity(entityIndex);
+        uiManager.InstantiateResourceBarForEntity(entityIndex);
+    }
+
+    private void CheckSpawnPos(Enums.Team newTeam)
+    {
+        team = newTeam;
         Transform pos = transform;
         switch (team)
         {
@@ -114,13 +125,7 @@ public partial class Champion : Entity, IMovable, IInventoryable, IResourceable,
                 pos = transform;
                 break;
         }
+
         respawnPos = transform.position = pos.position;
-        
-        if (GameStateMachine.Instance.GetPlayerTeam() != team) championMesh.SetActive(false);
-        
-        if (uiManager == null) return;
-        EntityCollectionManager.AddEntity(this);
-        uiManager.InstantiateHealthBarForEntity(entityIndex);
-        uiManager.InstantiateResourceBarForEntity(entityIndex);
     }
 }

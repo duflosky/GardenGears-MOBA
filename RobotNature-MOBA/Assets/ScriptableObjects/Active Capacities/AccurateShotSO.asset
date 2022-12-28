@@ -24,7 +24,7 @@ MonoBehaviour:
   indexInCollection: 5
   feedbackDuration: 0
   feedbackPrefab: {fileID: 0}
-  bulletPrefab: {fileID: 7410663796599104942, guid: 292dd96149892fa4690cf18c0130bbfb,
+  bulletPrefab: {fileID: 9083956369217742468, guid: af00b9ed221dec44c993f8b77bbba481,
     type: 3}
   bulletSpeed: 25
   percentageDamage: 100

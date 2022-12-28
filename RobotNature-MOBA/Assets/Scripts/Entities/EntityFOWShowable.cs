@@ -7,10 +7,11 @@ namespace  Entities
 {
     public abstract partial class Entity : IFOWShowable
     {
-        public List<IFOWViewable> enemiesThatCanSeeMe = new List<IFOWViewable>();
+        public List<IFOWViewable> enemiesThatCanSeeMe = new();
         public bool canShow;
         public bool canHide;
-        public List<GameObject> elementsToShow = new List<GameObject>();
+        public List<GameObject> elementsToShow = new();
+        
         public bool CanShow() 
         {
             return canShow;
@@ -42,6 +43,7 @@ namespace  Entities
 
         public event GlobalDelegates.BoolDelegate OnSetCanShow;
         public event GlobalDelegates.BoolDelegate OnSetCanShowFeedback;
+        
         public void RequestSetCanHide(bool value)
         {
             photonView.RPC("SetCanHideRPC",RpcTarget.MasterClient,value);

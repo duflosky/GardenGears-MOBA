@@ -27,10 +27,8 @@ namespace Entities.Capacities
 
         protected virtual void InitiateCooldown()
         {
-
             cooldownTimer = SO.cooldown;
             onCooldown = true;
-
 
             GameStateMachine.Instance.OnTick += CooldownTimer;
         }
@@ -88,8 +86,7 @@ namespace Entities.Capacities
 
         public virtual bool isInRange(int casterIndex, Vector3 position)
         {
-            float distance = Vector3.Distance(EntityCollectionManager.GetEntityByIndex(casterIndex).transform.position,
-                position);
+            float distance = Vector3.Distance(EntityCollectionManager.GetEntityByIndex(casterIndex).transform.position, position);
             //Debug.Log($"distance:{distance}  >  range:{ AssociatedActiveCapacitySO().maxRange}");
             if (distance > SO.maxRange) return false;
 

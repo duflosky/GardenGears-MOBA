@@ -13,11 +13,12 @@ namespace Entities
         public bool canChangeTeam;
         public Enums.Team team;
 
-        [Header("Field Of View Settings")] public float baseViewRange;
+        [Header("Field Of View Settings")] 
+        public float baseViewRange;
         public float viewRange;
         [Range(0, 360)] public float viewAngle;
         public bool canView;
-        public List<IFOWShowable> seenShowables = new List<IFOWShowable>();
+        public List<IFOWShowable> seenShowables = new();
         public MeshFilter meshFilterFoV;
         public Transform fogOfWarStartDetection;
         
@@ -28,8 +29,7 @@ namespace Entities
 
         public List<Enums.Team> GetEnemyTeams()
         {
-            return Enum.GetValues(typeof(Enums.Team)).Cast<Enums.Team>().Where(someTeam => someTeam != team)
-                .ToList(); //returns all teams that are not 'team'
+            return Enum.GetValues(typeof(Enums.Team)).Cast<Enums.Team>().Where(someTeam => someTeam != team).ToList();
         }
 
         public bool CanChangeTeam()

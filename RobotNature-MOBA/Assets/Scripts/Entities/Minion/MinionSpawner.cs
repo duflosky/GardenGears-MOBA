@@ -18,9 +18,9 @@ public class MinionSpawner : MonoBehaviourPun
     public int spawnMinionAmount = 5;
     public float spawnMinionInterval = 1.7f;
     public float spawnCycleTime = 30;
-    private readonly float spawnSpeed = 30;
     public Color minionColor;
-    
+    private float spawnSpeed = 30;
+
     [Header("Minion Path Settings")]
     public List<Transform> pathfinding = new();
     public List<Building> enemyTowers = new();
@@ -30,11 +30,9 @@ public class MinionSpawner : MonoBehaviourPun
     {
         if (!PhotonNetwork.IsMasterClient) return;
         spawnCycleTime += Time.deltaTime;
-        if (spawnCycleTime >= spawnSpeed)
-        {
-            StartCoroutine(SpawnMinionCo());
-            spawnCycleTime = 0;
-        }
+        if (spawnCycleTime < spawnSpeed) return;
+        StartCoroutine(SpawnMinionCo());
+        spawnCycleTime = 0;
     }
     
     private IEnumerator SpawnMinionCo()
