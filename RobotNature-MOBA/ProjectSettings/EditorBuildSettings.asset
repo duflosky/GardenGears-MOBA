@@ -9,9 +9,6 @@ EditorBuildSettings:
     path: Assets/_Scenes/ServeurConnector.unity
     guid: 99c9720ab356a0642a771bea13969a05
   - enabled: 1
-    path: Assets/_Scenes/ServeurLobby.unity
-    guid: 20d726a20cbf68649a5b7f08212e72b3
-  - enabled: 1
     path: Assets/_Scenes/LobbyScene.unity
     guid: a07e7c100942d6c4fbe2ab3a7f6b29d1
   - enabled: 1
@@ -20,7 +17,4 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/_Scenes/InGameDebug.unity
     guid: 06cc557e354c05d4dbd9c306053f16eb
-  - enabled: 1
-    path: Assets/_Scenes/InGamePAM.unity
-    guid: b44561f6af409eb4e8d71d4839acc5ee
   m_configObjects: {}
