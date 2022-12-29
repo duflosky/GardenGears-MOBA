@@ -50,7 +50,11 @@ public class SpeedModifierPassive : PassiveCapacity
     protected override void OnRemovedEffects(Entity target)
     {
        if(SOType.isBuff)champ.DecreaseCurrentMoveSpeedRPC(boost);
-       else champ.IncreaseCurrentMoveSpeedRPC(boost);
+       else
+       {
+           Debug.Log($"Unslow {champ.gameObject.name} with {SOType.name}");
+           champ.IncreaseCurrentMoveSpeedRPC(boost);
+       }
     }
 
     protected override void OnRemovedFeedbackEffects(Entity target)
