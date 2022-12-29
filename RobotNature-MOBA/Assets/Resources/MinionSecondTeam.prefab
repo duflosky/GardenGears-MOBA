@@ -210,7 +210,7 @@ NavMeshAgent:
   m_GameObject: {fileID: 4011668959297958832}
   m_Enabled: 1
   m_AgentTypeID: 0
-  m_Radius: 1.2
+  m_Radius: 0.7
   m_Speed: 3.5
   m_Acceleration: 8
   avoidancePriority: 50
@@ -290,22 +290,20 @@ MonoBehaviour:
   canView: 1
   meshFilterFoV: {fileID: 139276482044157067}
   fogOfWarStartDetection: {fileID: 1902901348691630139}
+  rotateParent: {fileID: 5771435391329465323}
   myAgent: {fileID: 4192120332867856271}
   myWaypoints: []
   TowersList: []
   waypointIndex: 0
   towerIndex: 0
+  attackDamage: 2
+  currentAttackTarget: {fileID: 0}
   currentAggroState: 0
-  whoAggro: 0
   enemyMinionMask:
     serializedVersion: 2
-    m_Bits: 1024
-  currentAttackTarget: {fileID: 0}
-  whoIsAttackingMe: []
+    m_Bits: 536871936
   attackCycle: 0
   attackAbility: {fileID: 11400000, guid: 9fe9f8c38b42d1f47a15dd82cc81f4cc, type: 2}
-  attackAbilityIndex: 0
-  attackDamage: 2
   meshParent: {fileID: 8354536543918890676}
   attackAffected: 1
   abilitiesAffected: 1
@@ -325,7 +323,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentState: 0
-  brainSpeed: 0.5
 --- !u!1 &6191710041856398351
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,4 +1,5 @@
 using System;
+using GameStates;
 using UnityEngine;
 
 namespace Entities.Minion
@@ -7,29 +8,21 @@ namespace Entities.Minion
     {
         public enum MinionState { Idle, Walking, LookingForPathing, Attacking }
         public MinionState currentState = MinionState.Idle;
-        public float brainSpeed = .7f;
-        private float brainTimer;
+        private float timer;
         private Minion myMinion;
     
         private void OnEnable()
         {
             myMinion = controlledEntity.GetComponent<Minion>();
             currentState = MinionState.LookingForPathing;
-        }
-    
-        void Update()
-        {
-            // Créer des ticks pour éviter le saut de frame
-            brainTimer += Time.deltaTime;
-            if (brainTimer >= brainSpeed)
-            {
-                AiLogic();
-                brainTimer = 0;
-            }
+            GameStateMachine.Instance.OnTick += AiLogic;
         }
 
         private void AiLogic()
         {
+            timer += Time.deltaTime;
+            if (timer >= GameStateMachine.Instance.tickRate) return;
+            timer = 0;
             switch (currentState)
             {
                 case MinionState.Idle: myMinion.IdleState(); break;
