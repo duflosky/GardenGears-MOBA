@@ -102,5 +102,6 @@ namespace Entities
         {
             return passiveCapacitiesList.FirstOrDefault(item => item.SO == type);
         }
+
     }
 }

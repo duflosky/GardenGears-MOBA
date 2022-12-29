@@ -27,13 +27,14 @@ public class AutoAttackMelee : ActiveCapacity
     {
         champion.GetPassiveCapacity(SOType.attackSlowSO).OnAdded();
         champion.OnCastAnimationCast += CapacityEffect;
-        
+        champion.OnCastAnimationEnd += CapacityEndAnimation; 
+
     }
 
     public override void CapacityEffect(Transform castTransform)
     {
         champion.OnCastAnimationCast -= CapacityEffect;
-        champion.GetPassiveCapacity(SOType.attackSlowSO).OnRemoved();
+        //champion.GetPassiveCapacity(SOType.attackSlowSO).OnRemoved();
         lookDir = targetPositions[0] - casterTransform.position;
         lookDir.y = 0;
         feedbackObject = PoolLocalManager.Instance.PoolInstantiate(SOType.damageZone, casterTransform.position, Quaternion.LookRotation(lookDir));
@@ -51,19 +52,22 @@ public class AutoAttackMelee : ActiveCapacity
         if (lifeable != null)
         {
             var angle = Vector3.Angle(lookDir.normalized, (entityAffect.transform.position - casterTransform.position).normalized);
-            Debug.Log($"collide {entityAffect.gameObject.name} at {angle}°");
+            //Debug.Log($"collide {entityAffect.gameObject.name} at {angle}°");
             if (lifeable.AttackAffected())
             { 
-                if(angle>SOType.normalAmplitude)return; 
+                if(angle>SOType.normalAmplitude)return;
+                var hitPos = entityAffect.transform.position + (entityAffect.transform.position - casterTransform.position).normalized*.5f;
                 if(angle <= SOType.perfectAmplitude)
                 {
                     //Critic
-                    Debug.Log("Critic");
+                    //Debug.Log("Critic");
+                    PoolLocalManager.Instance.RequestPoolInstantiate(SOType.criticalHitPrefab, hitPos, Quaternion.identity, null, 1f);
                     entityAffect.photonView.RPC("DecreaseCurrentHpRPC", RpcTarget.All, caster.GetComponent<Champion>().attackDamage * SOType.percentageDamageCrit);
                 }
                 else
                 {
-                    Debug.Log("Normal hit");
+                    //Debug.Log("Normal hit");
+                    PoolLocalManager.Instance.RequestPoolInstantiate(SOType.hitPrefab, hitPos, Quaternion.identity, null, 1f);
                     lifeable.DecreaseCurrentHpRPC(caster.GetComponent<Champion>().attackDamage * SOType.percentageDamage);  
                 }
 
@@ -74,6 +78,8 @@ public class AutoAttackMelee : ActiveCapacity
     public override void CapacityEndAnimation()
     {
         champion.GetPassiveCapacity(SOType.attackSlowSO).OnRemoved();
+        champion.OnCastAnimationEnd -= CapacityEndAnimation; 
+
     }
 
     public override void PlayFeedback(int casterIndex, int[] targetsEntityIndexes, Vector3[] targetPositions)

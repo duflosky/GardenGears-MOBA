@@ -28,6 +28,10 @@ MonoBehaviour:
     type: 3}
   fxPrefab: {fileID: 5572468312039609675, guid: 758adf5f7e4eeea41833ab4d2717d443,
     type: 3}
+  hitPrefab: {fileID: 5081785944356589043, guid: 8bf16e1a1d32fa94d81d41ea3bc6c9a5,
+    type: 3}
+  criticalHitPrefab: {fileID: 5081785944356589043, guid: 9df862e4229915e49a0f6f84ff9ad738,
+    type: 3}
   percentageDamage: 0.7
   percentageDamageCrit: 1
   normalAmplitude: 45
