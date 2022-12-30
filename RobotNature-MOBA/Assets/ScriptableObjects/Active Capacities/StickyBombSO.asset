@@ -23,8 +23,9 @@ MonoBehaviour:
   shootType: 1
   indexInCollection: 4
   feedbackDuration: 0
-  feedbackPrefab: {fileID: 0}
-  stickyBombZone: {fileID: 8904802200473973118, guid: 971fce73ab22f8c45b257826bf1d4750,
+  feedbackPrefab: {fileID: 8904802200473973118, guid: 971fce73ab22f8c45b257826bf1d4750,
+    type: 3}
+  feedbackHitPrefab: {fileID: 590173655871428254, guid: 644bcdcc620c5e9498fce81669ee1143,
     type: 3}
   percentageDamage: 0.6
   speedBomb: 6

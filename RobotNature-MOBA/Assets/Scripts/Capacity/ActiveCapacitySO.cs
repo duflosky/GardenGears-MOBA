@@ -38,5 +38,6 @@ namespace Entities.Capacities
 
         public float feedbackDuration;
         public GameObject feedbackPrefab;
+        public GameObject feedbackHitPrefab;
     }
 }
