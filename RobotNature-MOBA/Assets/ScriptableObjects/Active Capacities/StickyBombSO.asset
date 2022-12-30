@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e545408d15f8a64fbf20a2168a82c7b, type: 3}
   m_Name: StickyBombSO
   m_EditorClassIdentifier: 
-  referenceName: 
+  referenceName: CapacityOne
   descriptionName: 
   icon: {fileID: 21300000, guid: cd22fdbf68a3e0a48984646ddaa13539, type: 3}
   description: 
