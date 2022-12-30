@@ -55,7 +55,7 @@ public class MinionSpawner : MonoBehaviourPun
     {
         Minion minion = PhotonNetwork.GetPhotonView(photonID).GetComponent<Minion>();
         minion.myWaypoints = pathfinding;
-        minion.TowersList = enemyTowers;
+        minion.towersList = enemyTowers;
         minion.team = unitTag.Contains(Enums.Team.Team1.ToString()) ? Enums.Team.Team1 : Enums.Team.Team2;
         minion.tag = unitTag;
         minion.meshParent.GetComponent<MeshRenderer>().material.color = minionColor;

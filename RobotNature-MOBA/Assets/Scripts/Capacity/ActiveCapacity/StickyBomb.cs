@@ -40,7 +40,7 @@ public class StickyBomb : ActiveCapacity
         lookDir = targetPositions[0]-casterTransform.position;
         lookDir.y = 0;
         stickyBombGO = PoolLocalManager.Instance.PoolInstantiate(SOType.stickyBombZone, casterTransform.position, Quaternion.LookRotation(lookDir));
-        AffectCollider collider = stickyBombGO.GetComponent<AffectCollider>(); 
+        var collider = stickyBombGO.GetComponent<AffectCollider>(); 
         collider.GetComponent<SphereCollider>().radius = SOType.radiusStick;
         collider.maxDistance = SOType.maxRange;
         collider.casterPos = caster.transform.position;
@@ -58,7 +58,7 @@ public class StickyBomb : ActiveCapacity
 
     public override void CollideFeedbackEffect(Entity entityAffect)
     {
-        IActiveLifeable lifeable = entityAffect.GetComponent<IActiveLifeable>();
+        var lifeable = entityAffect.GetComponent<IActiveLifeable>();
         if (lifeable == null) return;
         if (entityAffect.name.Contains("Minion")) return;
         stickyBombGO.GetComponent<Rigidbody>().isKinematic = true;
@@ -72,7 +72,7 @@ public class StickyBomb : ActiveCapacity
         lookDir = targetPositions[0] - casterTransform.position;
         lookDir.y = 0;
         stickyBombGO = PoolLocalManager.Instance.PoolInstantiate(SOType.stickyBombZone, casterTransform.position, Quaternion.LookRotation(lookDir));
-        AffectCollider collider = stickyBombGO.GetComponent<AffectCollider>();
+        var collider = stickyBombGO.GetComponent<AffectCollider>();
         collider.GetComponent<SphereCollider>().radius = SOType.radiusStick;
         collider.maxDistance = SOType.maxRange;
         collider.casterPos = caster.transform.position;
@@ -93,15 +93,13 @@ public class StickyBomb : ActiveCapacity
 
     private void ExplodeBomb()
     {
-        Collider[] entities = Physics.OverlapSphere(stickyBombGO.transform.position, SOType.radiusExplosion);
+        var entities = Physics.OverlapSphere(stickyBombGO.transform.position, SOType.radiusExplosion);
         foreach (Collider entity in entities)
         {
-            Entity entityAffect = entity.GetComponent<Entity>();
-            if (entityAffect == null) continue;
-            if (caster.team == entityAffect.team) continue; 
-            IActiveLifeable lifeable = entity.GetComponent<IActiveLifeable>();
-            if (lifeable == null) continue;
-            if (!lifeable.AttackAffected()) continue;
+            var entityAffect = entity.GetComponent<Entity>();
+            if (entityAffect == null || caster.team == entityAffect.team) continue;
+            var lifeable = entity.GetComponent<IActiveLifeable>();
+            if (lifeable == null || !lifeable.AttackAffected()) continue;
             lifeable.RequestDecreaseCurrentHp(caster.GetComponent<Champion>().attackDamage * SOType.percentageDamage);
         }
         stickyBombGO.GetComponentInChildren<ParticleSystem>().Play();

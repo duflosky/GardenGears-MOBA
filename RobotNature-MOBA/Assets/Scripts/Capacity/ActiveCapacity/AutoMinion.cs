@@ -25,8 +25,7 @@ public class AutoMinion : ActiveCapacity
         minion = caster.GetComponent<Minion>();
         if (minion.currentAttackTarget == null) return false;
         target = minion.currentAttackTarget.GetComponent<Entity>();
-        if (!base.TryCast(targetsEntityIndexes, targetPositions)) return false;
-        return true;
+        return base.TryCast(targetsEntityIndexes, targetPositions);
     }
 
     public override void CapacityPress()

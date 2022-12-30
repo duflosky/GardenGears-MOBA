@@ -293,7 +293,7 @@ MonoBehaviour:
   rotateParent: {fileID: 5771435391329465323}
   myAgent: {fileID: 4192120332867856271}
   myWaypoints: []
-  TowersList: []
+  towersList: []
   waypointIndex: 0
   towerIndex: 0
   attackDamage: 2

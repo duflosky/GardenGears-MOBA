@@ -85,4 +85,10 @@ public class AffectCollider : Entity
     {
         gameObject.SetActive(false);
     }
+    
+    public void OnParticleSystemStopped()
+    {
+        gameObject.SetActive(false);
+        Debug.Log("Stop Explosion");
+    }
 }

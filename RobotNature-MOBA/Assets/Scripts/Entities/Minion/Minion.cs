@@ -21,7 +21,7 @@ namespace Entities.Minion
 
         [Header("Pathfinding")] 
         public List<Transform> myWaypoints = new();
-        public List<Building.Building> TowersList = new();
+        public List<Building.Building> towersList = new();
         [SerializeField] private int waypointIndex;
         [SerializeField] private int towerIndex;
 
@@ -69,7 +69,7 @@ namespace Entities.Minion
         private IEnumerator AttackLogic()
         {
             if (!PhotonNetwork.IsMasterClient) yield break;
-            if (TowersList is null) yield break;
+            if (towersList is null) yield break;
             attackCycle = true;
             int[] targetEntity = { currentAttackTarget.GetComponent<Entity>().entityIndex };
             RequestAttack(attackAbilityIndex, targetEntity, Array.Empty<Vector3>());
@@ -129,14 +129,14 @@ namespace Entities.Minion
                     break;
                 
                 case MinionAggroState.Tower:
-                    if (TowersList is not null && gameObject.activeSelf)
+                    if (towersList is not null && gameObject.activeSelf)
                     {
                         Debug.Log("Tower in range");
                     }
                     break;
                 
                 case MinionAggroState.Champion:
-                    if (currentAttackTarget.activeSelf && gameObject.activeSelf)
+                    if (currentAttackTarget != null && currentAttackTarget.activeSelf && gameObject.activeSelf)
                     {
                         var q = Quaternion.LookRotation(currentAttackTarget.transform.position - transform.position);
                         rotateParent.rotation = Quaternion.RotateTowards(transform.rotation, q, 50f * Time.deltaTime);
@@ -179,15 +179,15 @@ namespace Entities.Minion
             }
             else
             {
-                myAgent.SetDestination(TowersList[towerIndex].transform.position);
+                myAgent.SetDestination(towersList[towerIndex].transform.position);
             }
         }
 
         private void CheckObjectives()
         {
-            if (TowersList is null) return;
+            if (towersList is null) return;
 
-            if (Vector3.Distance(transform.position, TowersList[towerIndex].transform.position) > attackAbility.maxRange)
+            if (Vector3.Distance(transform.position, towersList[towerIndex].transform.position) > attackAbility.maxRange)
             {
                 myController.currentState = MinionController.MinionState.Walking;
             }
@@ -196,17 +196,17 @@ namespace Entities.Minion
                 myAgent.SetDestination(transform.position);
                 myController.currentState = MinionController.MinionState.Attacking;
                 currentAggroState = MinionAggroState.Tower;
-                currentAttackTarget = TowersList[towerIndex].gameObject;
+                currentAttackTarget = towersList[towerIndex].gameObject;
             }
         }
 
         private void CheckEnemies()
         {
             if (!gameObject.activeSelf) return;
-            foreach (var collider in Physics.OverlapSphere(transform.position, attackAbility.maxRange, enemyMinionMask))
+            foreach (var objects in Physics.OverlapSphere(transform.position, attackAbility.maxRange, enemyMinionMask))
             {
-                if (!collider.GetComponent<Entity>()) continue;
-                var entity = collider.GetComponent<Entity>();
+                if (!objects.GetComponent<Entity>()) continue;
+                var entity = objects.GetComponent<Entity>();
                 if (entity.team == team) continue;
                 if (Vector3.Distance(transform.position, entity.transform.position) > attackAbility.maxRange) continue;
                 if (entity is Minion)
@@ -215,6 +215,7 @@ namespace Entities.Minion
                     myController.currentState = MinionController.MinionState.Attacking;
                     currentAggroState = MinionAggroState.Minion;
                     currentAttackTarget = entity.gameObject;
+                    break;
                 }
                 else if (entity is global::Champion)
                 {
@@ -222,9 +223,8 @@ namespace Entities.Minion
                     myController.currentState = MinionController.MinionState.Attacking;
                     currentAggroState = MinionAggroState.Champion;
                     currentAttackTarget = entity.gameObject;
+                    break;
                 }
-                
-                break;
             }
         }
 
