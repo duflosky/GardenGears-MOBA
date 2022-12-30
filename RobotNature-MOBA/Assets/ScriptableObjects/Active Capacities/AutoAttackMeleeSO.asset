@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2b70048b8b2cbbf4ba028d67121ae391, type: 3}
   m_Name: AutoAttackMeleeSO
   m_EditorClassIdentifier: 
-  referenceName: tomberparterre
+  referenceName: AutoAttack
   descriptionName: tomberparterreFor
   icon: {fileID: 0}
   description: cleave

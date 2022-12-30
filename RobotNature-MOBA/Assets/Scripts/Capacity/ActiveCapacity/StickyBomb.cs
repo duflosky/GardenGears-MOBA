@@ -40,6 +40,7 @@ public class StickyBomb : ActiveCapacity
         lookDir = targetPositions[0]-casterTransform.position;
         lookDir.y = 0;
         stickyBombGO = PoolLocalManager.Instance.PoolInstantiate(SOType.stickyBombZone, casterTransform.position, Quaternion.LookRotation(lookDir));
+        stickyBombGO.GetComponent<MeshRenderer>().enabled = true;
         var collider = stickyBombGO.GetComponent<AffectCollider>(); 
         collider.GetComponent<SphereCollider>().radius = SOType.radiusStick;
         collider.maxDistance = SOType.maxRange;
@@ -72,6 +73,7 @@ public class StickyBomb : ActiveCapacity
         lookDir = targetPositions[0] - casterTransform.position;
         lookDir.y = 0;
         stickyBombGO = PoolLocalManager.Instance.PoolInstantiate(SOType.stickyBombZone, casterTransform.position, Quaternion.LookRotation(lookDir));
+        stickyBombGO.GetComponent<MeshRenderer>().enabled = true;
         var collider = stickyBombGO.GetComponent<AffectCollider>();
         collider.GetComponent<SphereCollider>().radius = SOType.radiusStick;
         collider.maxDistance = SOType.maxRange;

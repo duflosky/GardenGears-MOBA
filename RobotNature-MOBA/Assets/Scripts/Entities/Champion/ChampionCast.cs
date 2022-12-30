@@ -1,3 +1,4 @@
+using System.Linq;
 using Entities.Capacities;
 using GameStates;
 using Photon.Pun;
@@ -75,7 +76,14 @@ public partial class Champion
     {
         var activeCapacity = CapacitySOCollectionManager.CreateActiveCapacity(capacityIndex, this);
         activeCapacity.PlayFeedback(capacityIndex, targetedEntities, targetedPositions);
-        if (animator) animator.SetTrigger("isAttacking");
+        if (animator)
+        {
+            foreach (var animatorControllerParameter in animator.parameters)
+            {
+                if (!animatorControllerParameter.name.Contains(activeCapacity.SO.referenceName)) continue;
+                animator.SetTrigger(animatorControllerParameter.name);
+            }
+        }
         else OnCastAnimationCast.Invoke(transform);
         OnCastFeedback?.Invoke(capacityIndex, targetedEntities, targetedPositions, activeCapacity);
     }
