@@ -23,10 +23,7 @@ public class AutoTower : ActiveCapacity
         if (targetsEntityIndexes.Length == 0) return false;
         target = EntityCollectionManager.GetEntityByIndex(targetsEntityIndexes[0]);
         tower = caster.GetComponent<Tower>();
-        
-        if (Vector3.Distance(casterTransform.position, target.transform.position) > SOType.maxRange) return false;
-        if (!base.TryCast(targetsEntityIndexes, targetPositions)) return false;
-        return true;
+        return base.TryCast(targetsEntityIndexes, targetPositions);
     }
 
     public override void CapacityPress()

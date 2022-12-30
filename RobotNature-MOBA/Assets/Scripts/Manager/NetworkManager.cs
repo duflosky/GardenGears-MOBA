@@ -14,12 +14,12 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     [SerializeField] private TMP_InputField createRoomTMPInputField;
     
     [Header("Room List UI Panel")]
-    [SerializeField] GameObject roomListPanel;
-    [SerializeField] GameObject roomListEntryPrefab;
-    [SerializeField] GameObject roomListParentGameObject;
+    [SerializeField] private GameObject roomListPanel;
+    [SerializeField] private GameObject roomListEntryPrefab;
+    [SerializeField] private GameObject roomListParentGameObject;
     
-    Dictionary<string, RoomInfo> cachedRoomList;
-    Dictionary<string, GameObject> roomListGameObjects;
+    private Dictionary<string, RoomInfo> cachedRoomList;
+    private Dictionary<string, GameObject> roomListGameObjects;
 
     #region Unity Methods
     
@@ -100,7 +100,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
             GameObject roomListEntryGameObject = Instantiate(roomListEntryPrefab, roomListParentGameObject.transform, true);
             roomListEntryGameObject.transform.localScale = Vector3.one;
             roomListEntryGameObject.transform.Find("RoomNameText").GetComponent<Text>().text = room.Name;
-            roomListEntryGameObject.transform.Find("RoomPlayersText").GetComponent<Text>().text = room.PlayerCount+ " / "+ 4;
+            roomListEntryGameObject.transform.Find("RoomPlayersText").GetComponent<Text>().text = room.PlayerCount + " / " + 4;
             roomListEntryGameObject.transform.Find("JoinRoomButton").GetComponent<Button>().onClick.AddListener(()=>OnJoinRoomButtonClicked(room.Name));
             roomListGameObjects.Add(room.Name,roomListEntryGameObject);
         }
