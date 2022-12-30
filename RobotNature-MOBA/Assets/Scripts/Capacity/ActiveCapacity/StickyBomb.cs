@@ -102,6 +102,7 @@ public class StickyBomb : ActiveCapacity
             if (lifeable == null || !lifeable.AttackAffected()) continue;
             lifeable.RequestDecreaseCurrentHp(caster.GetComponent<Champion>().attackDamage * SOType.percentageDamage);
         }
+        stickyBombGO.GetComponent<MeshRenderer>().enabled = false;
         stickyBombGO.GetComponentInChildren<ParticleSystem>().Play();
         GameStateMachine.Instance.OnTick += DestroyExplosion;
     }
@@ -124,6 +125,7 @@ public class StickyBomb : ActiveCapacity
 
     private void ExplodeBombFeedback()
     {
+        stickyBombGO.GetComponent<MeshRenderer>().enabled = false;
         stickyBombGO.GetComponentInChildren<ParticleSystem>().Play();
         GameStateMachine.Instance.OnTick += DestroyExplosion;
     }
