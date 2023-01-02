@@ -10,7 +10,7 @@ using UnityEngine.AI;
 
 namespace Entities.Minion
 {
-    public class Minion : Entity, IMovable, IAttackable, IActiveLifeable
+    public class Minion : Entity, IMovable, IAttackable, IActiveLifeable, IDeadable
     {
         #region Minion Variables
 
@@ -735,6 +735,7 @@ namespace Entities.Minion
         [PunRPC]
         public void SyncDieRPC()
         {
+            OnDieFeedback?.Invoke();
             FogOfWarManager.Instance.RemoveFOWViewable(this);
             gameObject.SetActive(false);
         }
@@ -742,19 +743,30 @@ namespace Entities.Minion
         [PunRPC]
         public void DieRPC()
         {
+            OnDie?.Invoke();
             photonView.RPC("SyncDieRPC", RpcTarget.All);
         }
 
         public event GlobalDelegates.NoParameterDelegate OnDie;
         public event GlobalDelegates.NoParameterDelegate OnDieFeedback;
 
-        public void RequestRevive() { }
+        public void RequestRevive()
+        {
+            photonView.RPC("ReviveRPC", RpcTarget.MasterClient);
+        }
 
         [PunRPC]
-        public void SyncReviveRPC() { }
+        public void SyncReviveRPC()
+        {
+            OnReviveFeedback?.Invoke();
+        }
 
         [PunRPC]
-        public void ReviveRPC() { }
+        public void ReviveRPC()
+        {
+            OnRevive?.Invoke();
+            photonView.RPC("SyncReviveRPC", RpcTarget.All);
+        }
 
         public event GlobalDelegates.NoParameterDelegate OnRevive;
         public event GlobalDelegates.NoParameterDelegate OnReviveFeedback;

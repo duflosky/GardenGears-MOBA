@@ -72,5 +72,6 @@ public class MinionSpawner : MonoBehaviourPun
             minion.TransformUI.GetChild(0).gameObject.SetActive(true);
         }
         if (minion.canView) FogOfWarManager.Instance.AddFOWViewable(minion);
+        minion.RequestRevive();
     }
 }

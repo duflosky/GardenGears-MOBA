@@ -89,6 +89,7 @@ GameObject:
   - component: {fileID: 6697044441209506823}
   - component: {fileID: 1261360784717155114}
   - component: {fileID: 7426729066650472341}
+  - component: {fileID: -7911681655436625964}
   m_Layer: 5
   m_Name: CanvasPlayerResource
   m_TagString: Untagged
@@ -160,7 +161,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 1
+  m_PresetInfoIsWorld: 0
 --- !u!114 &1261360784717155114
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -191,6 +192,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   resourceBar: {fileID: 3244139995173317083}
+--- !u!1818360608 &-7911681655436625964
+PositionConstraint:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2726223938128807887}
+  m_Enabled: 1
+  m_Weight: 1
+  m_TranslationAtRest: {x: 0, y: 0, z: 0}
+  m_TranslationOffset: {x: 0, y: 0, z: 0}
+  m_AffectTranslationX: 1
+  m_AffectTranslationY: 1
+  m_AffectTranslationZ: 1
+  m_IsContraintActive: 0
+  m_IsLocked: 0
+  m_Sources: []
 --- !u!1 &4814497694918639100
 GameObject:
   m_ObjectHideFlags: 0
