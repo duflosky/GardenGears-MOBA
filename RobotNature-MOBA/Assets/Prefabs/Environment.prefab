@@ -83,6 +83,68 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!1 &788991417
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 788991418}
+  m_Layer: 0
+  m_Name: SpawnPoint1Blue
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &788991418
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 788991417}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0.5}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1949793160209704339}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1148559519
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1148559520}
+  m_Layer: 0
+  m_Name: SpawnPoint2Blue
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1148559520
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1148559519}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: -0.5}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1949793160209704339}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1167931303
 GameObject:
   m_ObjectHideFlags: 0
@@ -438,6 +500,37 @@ Transform:
   m_Father: {fileID: 5990029555207610702}
   m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1304789538
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1304789539}
+  m_Layer: 0
+  m_Name: SpawnPoint1Red
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1304789539
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1304789538}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0.5}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8283182269958760630}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1323075789
 GameObject:
   m_ObjectHideFlags: 0
@@ -499,6 +592,37 @@ Transform:
   m_Children: []
   m_Father: {fileID: 5990029554021714889}
   m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1935889729
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1935889730}
+  m_Layer: 0
+  m_Name: SpawnPoint2Red
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1935889730
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1935889729}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: -0.5}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8283182269958760630}
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &270469155583901392
 GameObject:
@@ -40783,7 +40907,7 @@ GameObject:
   - component: {fileID: 5990029554021714890}
   - component: {fileID: 655964109841710072}
   - component: {fileID: 8755515198681832900}
-  m_Layer: 29
+  m_Layer: 0
   m_Name: BlueTurret
   m_TagString: Obstacle
   m_Icon: {fileID: 0}
@@ -40917,8 +41041,8 @@ MonoBehaviour:
   elementsToShow: []
   canChangeTeam: 0
   team: 1
-  baseViewRange: 10
-  viewRange: 10
+  baseViewRange: 20
+  viewRange: 20
   viewAngle: 360
   canView: 1
   meshFilterFoV: {fileID: 1454730284253091917}
@@ -72146,7 +72270,7 @@ GameObject:
   - component: {fileID: 8846515482289574290}
   - component: {fileID: 7007489393734502834}
   - component: {fileID: 2584379910981245886}
-  m_Layer: 29
+  m_Layer: 30
   m_Name: RedTurret
   m_TagString: Obstacle
   m_Icon: {fileID: 0}
@@ -72280,8 +72404,8 @@ MonoBehaviour:
   elementsToShow: []
   canChangeTeam: 0
   team: 2
-  baseViewRange: 10
-  viewRange: 10
+  baseViewRange: 20
+  viewRange: 20
   viewAngle: 360
   canView: 1
   meshFilterFoV: {fileID: 5378821495520259996}
@@ -101292,6 +101416,61 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3469bb6de2081d74a9308350b9122d7b, type: 3}
+--- !u!1 &1172306035826327337 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5366397934317652561, guid: 3469bb6de2081d74a9308350b9122d7b,
+    type: 3}
+  m_PrefabInstance: {fileID: 6502520965532857720}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1178005780
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1172306035826327337}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d034a07e20870e44b87b75fc5f73d8a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  minionPrefab: {fileID: 4631029676220588112, guid: 7049e42c236d101488d61c7ab0fa571b,
+    type: 3}
+  spawnPointForMinion: {fileID: 2694164652024378065}
+  spawnMinionAmount: 5
+  spawnMinionInterval: 1.7
+  spawnCycleTime: 30
+  minionColor: {r: 0, g: 0, b: 1, a: 0}
+  pathfinding:
+  - {fileID: 1607346947438002403}
+  - {fileID: 4208551416579479104}
+  - {fileID: 1379131289242497387}
+  - {fileID: 4357539848202542634}
+  enemyTowers:
+  - {fileID: 2584379910981245886}
+  unitTag: Team1Unit
+--- !u!114 &4960603856456236516
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1172306035826327337}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents: []
+  sceneViewId: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!4 &1949793160209704339 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4697983188861227243, guid: 3469bb6de2081d74a9308350b9122d7b,
@@ -101393,3 +101572,36 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 7952759966243481024}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &8770785356644938252 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1722054846005581772, guid: 82d6135ac6fec9544b9b1df180915037,
+    type: 3}
+  m_PrefabInstance: {fileID: 7952759966243481024}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1178005781
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8770785356644938252}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d034a07e20870e44b87b75fc5f73d8a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  minionPrefab: {fileID: 4631029676220588112, guid: 7049e42c236d101488d61c7ab0fa571b,
+    type: 3}
+  spawnPointForMinion: {fileID: 2890551448243059101}
+  spawnMinionAmount: 5
+  spawnMinionInterval: 1.7
+  spawnCycleTime: 30
+  minionColor: {r: 1, g: 0, b: 0, a: 0}
+  pathfinding:
+  - {fileID: 4357539848202542634}
+  - {fileID: 1379131289242497387}
+  - {fileID: 4208551416579479104}
+  - {fileID: 1607346947438002403}
+  enemyTowers:
+  - {fileID: 8755515198681832900}
+  unitTag: Team2Unit
