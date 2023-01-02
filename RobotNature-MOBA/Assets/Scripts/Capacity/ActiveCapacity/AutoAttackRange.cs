@@ -68,11 +68,11 @@ public class AutoAttackRange : ActiveCapacity
         if (!lifeable.AttackAffected()) return;
         entityAffect.photonView.RPC("DecreaseCurrentHpRPC", RpcTarget.All, caster.GetComponent<Champion>().attackDamage * SOType.percentageDamage);
         collider.Disable();
-        PoolLocalManager.Instance.RequestPoolInstantiate(SOType.feedbackHitPrefab, entityAffect.transform.position, Quaternion.identity);
     }
 
     public override void CollideFeedbackEffect(Entity entityAffect)
     {
+        if (caster.team == entityAffect.team) return;
         PoolLocalManager.Instance.RequestPoolInstantiate(SOType.feedbackHitPrefab, entityAffect.transform.position, Quaternion.identity);
     }
 
