@@ -11,7 +11,6 @@ public class StickyBomb : ActiveCapacity
     
     public StickyBombSO SOType;
     private GameObject stickyBombGO;
-    private GameObject stickyBombHitGO;
     private double timer;
     private Vector3 lookDir;
     private PhotonView photonView;
@@ -105,8 +104,7 @@ public class StickyBomb : ActiveCapacity
             if (entityAffect == null || caster.team == entityAffect.team) continue;
             var lifeable = entity.GetComponent<IActiveLifeable>();
             if (lifeable == null || !lifeable.AttackAffected()) continue;
-            stickyBombHitGO = PoolLocalManager.Instance.PoolInstantiate(SOType.feedbackHitPrefab, entityAffect.transform.position, Quaternion.identity);
-            stickyBombHitGO.GetComponent<ParticleSystem>().Play();
+            PoolLocalManager.Instance.RequestPoolInstantiate(SOType.feedbackHitPrefab, entityAffect.transform.position, Quaternion.identity);
             lifeable.RequestDecreaseCurrentHp(caster.GetComponent<Champion>().attackDamage * SOType.percentageDamage);
         }
         stickyBombGO.GetComponent<MeshRenderer>().enabled = false;

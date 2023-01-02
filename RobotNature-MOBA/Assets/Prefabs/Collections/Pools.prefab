@@ -66,9 +66,19 @@ MonoBehaviour:
   - Element: {fileID: 5081785944356589043, guid: 8bf16e1a1d32fa94d81d41ea3bc6c9a5,
       type: 3}
     amount: 2
+    duration: 0
   - Element: {fileID: 5081785944356589043, guid: 9df862e4229915e49a0f6f84ff9ad738,
       type: 3}
     amount: 2
+    duration: 0
+  - Element: {fileID: 693690632283133517, guid: f13e6ef504a84e94ea3e1729848bf335,
+      type: 3}
+    amount: 2
+    duration: 0
+  - Element: {fileID: 590173655871428254, guid: 644bcdcc620c5e9498fce81669ee1143,
+      type: 3}
+    amount: 2
+    duration: 0
 --- !u!114 &1976357601591734503
 MonoBehaviour:
   m_ObjectHideFlags: 0
