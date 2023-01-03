@@ -55,6 +55,7 @@ public partial class Champion
     [PunRPC]
     public void SyncDieRPC()
     {
+        isAlive = false;
         if (photonView.IsMine)
         {
             VolumeManager.Instance.colorAdjustments.active = true;
@@ -80,7 +81,6 @@ public partial class Champion
             Debug.LogWarning($"{name} can't die!");
             return;
         }
-        isAlive = false;
         ((InGameState)GameStateMachine.Instance.currentState).AddKill(team);
         OnDie?.Invoke();
         photonView.RPC("SyncDieRPC", RpcTarget.All);
