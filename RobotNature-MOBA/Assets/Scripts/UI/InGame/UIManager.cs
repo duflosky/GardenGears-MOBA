@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Animations;
 
 namespace UI.InGame
 {
@@ -6,6 +7,8 @@ namespace UI.InGame
     {
         public static UIManager Instance;
 
+        private ConstraintSource constraintSource;
+        
         private void Awake()
         {
             if (Instance != null && Instance != this)
