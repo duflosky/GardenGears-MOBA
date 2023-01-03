@@ -5,7 +5,6 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Capacity/ActiveCapacitySO/Sticky Bomb", fileName = "new StickyBombSO")]
 public class StickyBombSO : ActiveCapacitySO
 {
-    public GameObject stickyBombZone;
     public float percentageDamage;
     public float speedBomb;
     public float durationBomb;

@@ -32,12 +32,12 @@ namespace GameStates
         public event GlobalDelegates.NoParameterDelegate OnSecondTickFeedback;
 
         public Enums.Team winner = Enums.Team.Neutral;
-        public List<int> allPlayersIDs = new List<int>();
+        public List<int> allPlayersIDs = new();
 
         /// <summary>
         /// Key : actorNumber, Values : Team, ChampionSOindex, ready
         /// </summary>
-        private readonly Dictionary<int, PlayerData> playersReadyDict = new Dictionary<int, PlayerData>();
+        private readonly Dictionary<int, PlayerData> playersReadyDict = new();
 
         public uint expectedPlayerCount = 4;
 
@@ -495,9 +495,8 @@ namespace GameStates
             }
         }
         
-        
         [PunRPC]
-        void SyncTeamKillRPC(int team1Kill, int team2Kill)
+        private void SyncTeamKillRPC(int team1Kill, int team2Kill)
         {
             UIManager.Instance.UpdateKillCount(team1Kill, team2Kill);
         }

@@ -23,10 +23,7 @@ public class AutoTower : ActiveCapacity
         if (targetsEntityIndexes.Length == 0) return false;
         target = EntityCollectionManager.GetEntityByIndex(targetsEntityIndexes[0]);
         tower = caster.GetComponent<Tower>();
-        
-        if (Vector3.Distance(casterTransform.position, target.transform.position) > SOType.maxRange) return false;
-        if (!base.TryCast(targetsEntityIndexes, targetPositions)) return false;
-        return true;
+        return base.TryCast(targetsEntityIndexes, targetPositions);
     }
 
     public override void CapacityPress()
@@ -36,7 +33,7 @@ public class AutoTower : ActiveCapacity
 
     public override void CapacityEffect(Transform castTransform)
     {
-        autoTowerGO = PoolLocalManager.Instance.PoolInstantiate(SOType.feedbackPrefab, tower.shootSpot.transform.position, castTransform.rotation);
+        autoTowerGO = PoolLocalManager.Instance.PoolInstantiate(SOType.feedbackPrefab, tower.shootSpot.position, castTransform.rotation);
         autoTowerCollider = autoTowerGO.GetComponent<AutoTowerCollider>();
         autoTowerCollider.capacitySender = this;
         autoTowerCollider.caster = caster;
@@ -60,10 +57,11 @@ public class AutoTower : ActiveCapacity
     public override void PlayFeedback(int casterIndex, int[] targetsEntityIndexes, Vector3[] targetPositions)
     {
         if (PhotonNetwork.IsMasterClient) return;
-        autoTowerGO = PoolLocalManager.Instance.PoolInstantiate(SOType.feedbackPrefab, tower.shootSpot.transform.position, caster.transform.rotation);
+        Tower towerFeedback = caster.GetComponent<Tower>();
+        autoTowerGO = PoolLocalManager.Instance.PoolInstantiate(SOType.feedbackPrefab, towerFeedback.shootSpot.position, towerFeedback.shootSpot.rotation);
         autoTowerCollider = autoTowerGO.GetComponent<AutoTowerCollider>();
         autoTowerCollider.capacitySender = this;
         autoTowerCollider.caster = caster;
-        autoTowerCollider.target = target;
+        autoTowerCollider.target = EntityCollectionManager.GetEntityByIndex(targetsEntityIndexes[0]);
     }
 }

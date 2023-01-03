@@ -63,23 +63,22 @@ public class AutoAttackRange : ActiveCapacity
     public override void CollideEntityEffect(Entity entityAffect)
     {
         if (caster.team == entityAffect.team) return;
-        if (PhotonNetwork.IsMasterClient)
-        {
-            var lifeable = entityAffect.GetComponent<IActiveLifeable>();
-            if (lifeable == null) return;
-            if (!lifeable.AttackAffected()) return;
-            entityAffect.photonView.RPC("DecreaseCurrentHpRPC", RpcTarget.All, caster.GetComponent<Champion>().attackDamage * SOType.percentageDamage);
-            collider.Disable();
-        }
-        else
-        { 
-            bullet.gameObject.SetActive(false);
-        }
+        var lifeable = entityAffect.GetComponent<IActiveLifeable>();
+        if (lifeable == null) return;
+        if (!lifeable.AttackAffected()) return;
+        entityAffect.photonView.RPC("DecreaseCurrentHpRPC", RpcTarget.All, caster.GetComponent<Champion>().attackDamage * SOType.percentageDamage);
+        collider.Disable();
+    }
+
+    public override void CollideFeedbackEffect(Entity entityAffect)
+    {
+        if (caster.team == entityAffect.team) return;
+        PoolLocalManager.Instance.RequestPoolInstantiate(SOType.feedbackHitPrefab, entityAffect.transform.position, Quaternion.identity);
     }
 
     public override void CollideObjectEffect(GameObject obj)
-    {
-       collider.Disable();
+    { 
+        collider.Disable();
     }
 
     public override void PlayFeedback(int casterIndex, int[] targetsEntityIndexes, Vector3[] targetPositions) { }

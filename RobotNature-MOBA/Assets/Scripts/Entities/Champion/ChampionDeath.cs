@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using Entities.FogOfWar;
 using GameStates;
 using GameStates.States;
@@ -50,8 +48,8 @@ public partial class Champion
     public event GlobalDelegates.BoolDelegate OnSetCanDieFeedback;
 
     public void RequestDie()
-    {
-            photonView.RPC("DieRPC", RpcTarget.MasterClient);
+    { 
+        photonView.RPC("DieRPC", RpcTarget.MasterClient);
     }
 
     [PunRPC]
@@ -60,22 +58,22 @@ public partial class Champion
         if (photonView.IsMine)
         {
             InputManager.PlayerMap.Movement.Disable();
-            // InputManager.PlayerMap.Attack.Disable();
             InputManager.PlayerMap.Capacity.Disable();
             InputManager.PlayerMap.Inventory.Disable();
         }
-        if (animator) animator.SetBool("isDying", true);
-        rotateParent.gameObject.SetActive(false);
-        TransformUI.gameObject.SetActive(false);
-        FogOfWarManager.Instance.RemoveFOWViewable(this);
-
+        if (animator) animator.SetTrigger("isDying");
+        else
+        {
+            rotateParent.gameObject.SetActive(false);
+            FogOfWarManager.Instance.RemoveFOWViewable(this);
+            GameStateMachine.Instance.OnTick += Revive;
+        }
         OnDieFeedback?.Invoke();
     }
 
     [PunRPC]
     public void DieRPC()
     {
-        // TODO : More useful to use that mechanic on decreaseCurrentHp ?
         if (!canDie)
         {
             Debug.LogWarning($"{name} can't die!");
@@ -84,7 +82,6 @@ public partial class Champion
         isAlive = false;
         ((InGameState)GameStateMachine.Instance.currentState).AddKill(team);
         OnDie?.Invoke();
-        GameStateMachine.Instance.OnTick += Revive;
         photonView.RPC("SyncDieRPC", RpcTarget.All);
     }
 
@@ -103,14 +100,12 @@ public partial class Champion
         if (photonView.IsMine)
         {
             InputManager.PlayerMap.Movement.Enable();
-            // InputManager.PlayerMap.Attack.Enable();
             InputManager.PlayerMap.Capacity.Enable();
             InputManager.PlayerMap.Inventory.Enable();
         }
-        if (animator) animator.SetBool("isDying", false);
+        if (animator) animator.SetTrigger("isDying");
         FogOfWarManager.Instance.AddFOWViewable(this);
         rotateParent.gameObject.SetActive(true);
-        TransformUI.gameObject.SetActive(true);
         OnReviveFeedback?.Invoke();
     }
 
@@ -118,14 +113,13 @@ public partial class Champion
     public void ReviveRPC()
     {
         isAlive = true;
-
         SetCurrentHpRPC(maxHp);
         SetCurrentResourceRPC(maxResource);
         OnRevive?.Invoke();
         photonView.RPC("SyncReviveRPC", RpcTarget.All);
     }
 
-    private void Revive()
+    public void Revive()
     {
         respawnTimer += 1 / GameStateMachine.Instance.tickRate;
         if (!(respawnTimer >= respawnDuration)) return;
@@ -136,5 +130,4 @@ public partial class Champion
 
     public event GlobalDelegates.NoParameterDelegate OnRevive;
     public event GlobalDelegates.NoParameterDelegate OnReviveFeedback;
-
 }

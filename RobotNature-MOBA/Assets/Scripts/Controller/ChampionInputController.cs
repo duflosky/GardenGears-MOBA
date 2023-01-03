@@ -1,3 +1,4 @@
+using System;
 using Entities;
 using Entities.Capacities;
 using UI.InGame;
@@ -22,13 +23,19 @@ namespace Controllers.Inputs
         private Vector3 moveVector;
         private Camera cam;
         private bool isActivebuttonPress;
-        
+
+
+        private void Update()
+        {
+            OnMouseMove();
+        }
+
         /// <summary>
         /// Actions Performed on Attack Activation
         /// </summary>
         /// <param name="ctx"></param>
         private void OnAttack(InputAction.CallbackContext ctx)
-        {
+        { 
             champion.RequestAttack(champion.championSo.attackAbilityIndex,selectedEntity,cursorWorldPos);
         }
         
@@ -97,9 +104,9 @@ namespace Controllers.Inputs
             //champion.RequestActivateItem(2,selectedEntity,cursorWorldPos);
         }
 
-        private void OnMouseMove(InputAction.CallbackContext ctx)
+        private void OnMouseMove()
         {
-            mousePos = ctx.ReadValue<Vector2>();
+            if (!cam) return;
             var mouseRay = cam.ScreenPointToRay(Input.mousePosition);
             if (!Physics.Raycast(mouseRay, out var hit, mousePostionMask)) return;
             cursorWorldPos[0] = hit.point;
@@ -171,7 +178,7 @@ namespace Controllers.Inputs
             inputs.Capacity.Capacity2.performed += OnActivateCapacity2;
             // inputs.Capacity.Ultime.performed += OnActivateUltimateAbility;
             
-            inputs.Mouse.MousePos.performed += OnMouseMove;
+            //inputs.Mouse.MousePos.performed += OnMouseMove;
 
             inputs.Capacity.Attack.performed += OnAttack;
 

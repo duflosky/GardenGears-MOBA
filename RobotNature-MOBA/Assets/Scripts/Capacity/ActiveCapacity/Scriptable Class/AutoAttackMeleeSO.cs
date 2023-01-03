@@ -8,7 +8,11 @@ using UnityEngine;
 public class AutoAttackMeleeSO : ActiveCapacitySO
 {
     public GameObject damageZone;
+    
     public GameObject fxPrefab;
+    public GameObject hitPrefab;
+    public GameObject criticalHitPrefab;
+    
     public float percentageDamage;
     public float percentageDamageCrit;
     [Space]

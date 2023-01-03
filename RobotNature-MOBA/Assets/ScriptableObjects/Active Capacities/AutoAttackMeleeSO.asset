@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2b70048b8b2cbbf4ba028d67121ae391, type: 3}
   m_Name: AutoAttackMeleeSO
   m_EditorClassIdentifier: 
-  referenceName: tomberparterre
+  referenceName: AutoAttack
   descriptionName: tomberparterreFor
   icon: {fileID: 0}
   description: cleave
@@ -27,6 +27,10 @@ MonoBehaviour:
   damageZone: {fileID: 2337458986253374596, guid: f2dc7cb89fec93b49a88ea5b63e37dbc,
     type: 3}
   fxPrefab: {fileID: 5572468312039609675, guid: 758adf5f7e4eeea41833ab4d2717d443,
+    type: 3}
+  hitPrefab: {fileID: 5081785944356589043, guid: 8bf16e1a1d32fa94d81d41ea3bc6c9a5,
+    type: 3}
+  criticalHitPrefab: {fileID: 5081785944356589043, guid: 9df862e4229915e49a0f6f84ff9ad738,
     type: 3}
   percentageDamage: 0.7
   percentageDamageCrit: 1
