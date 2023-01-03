@@ -129,10 +129,7 @@ namespace Entities.Minion
                     break;
                 
                 case MinionAggroState.Tower:
-                    if (towersList is not null && gameObject.activeSelf)
-                    {
-                        Debug.Log("Tower in range");
-                    }
+                    if (towersList is not null && gameObject.activeSelf) myController.currentState = MinionController.MinionState.Idle;
                     break;
                 
                 case MinionAggroState.Champion:
