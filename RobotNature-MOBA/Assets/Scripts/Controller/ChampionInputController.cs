@@ -106,7 +106,7 @@ namespace Controllers.Inputs
 
         private void OnMouseMove()
         {
-            mousePos = Input.mousePosition;
+            if (!cam) return;
             var mouseRay = cam.ScreenPointToRay(Input.mousePosition);
             if (!Physics.Raycast(mouseRay, out var hit, mousePostionMask)) return;
             cursorWorldPos[0] = hit.point;
