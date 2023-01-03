@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class BenchBehavior : MonoBehaviour
 {
-    public Animation AnBench;
+    public Animation An_bench;
     public Collider BenchCollider;
 
     // Start is called before the first frame update
@@ -19,9 +19,9 @@ public class BenchBehavior : MonoBehaviour
         
     }
 
-    void OnTriggerEnter(Collider other)
+    private void OnTriggerEnter(Collider other)
     {
-        AnBench.Play();
+        An_bench.Play();
         BenchCollider.enabled = false;
     }
 }
