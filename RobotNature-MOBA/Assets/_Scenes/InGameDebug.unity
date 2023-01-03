@@ -583,6 +583,11 @@ PrefabInstance:
       propertyPath: sceneViewId
       value: 998
       objectReference: {fileID: 0}
+    - target: {fileID: 2584379910981245886, guid: 9a3d8686d94b5444c9c8d6bcd8e404ee,
+        type: 3}
+      propertyPath: cooldownCatchMinion
+      value: 22
+      objectReference: {fileID: 0}
     - target: {fileID: 4960603856456236516, guid: 9a3d8686d94b5444c9c8d6bcd8e404ee,
         type: 3}
       propertyPath: sceneViewId
@@ -652,6 +657,11 @@ PrefabInstance:
         type: 3}
       propertyPath: sceneViewId
       value: 996
+      objectReference: {fileID: 0}
+    - target: {fileID: 8755515198681832900, guid: 9a3d8686d94b5444c9c8d6bcd8e404ee,
+        type: 3}
+      propertyPath: cooldownCatchMinion
+      value: 22
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9a3d8686d94b5444c9c8d6bcd8e404ee, type: 3}
