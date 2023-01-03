@@ -17,8 +17,8 @@ namespace UI.InGame
             lifeable = (IActiveLifeable)entity;
             deadable = (IDeadable)entity;
 
-            transform.LookAt(transform.position + Camera.main.transform.rotation * Vector3.forward,
-                Camera.main.transform.rotation * Vector3.up);
+            transform.LookAt(transform.position + Camera.main.transform.rotation * Vector3.forward, Camera.main.transform.rotation * Vector3.up);
+            if (GameStateMachine.Instance.GetPlayerTeam() != entity.team) healthBar.color = Color.red;
             healthBar.fillAmount = lifeable.GetCurrentHp() / lifeable.GetMaxHp();
             lifeable.OnSetCurrentHpFeedback += UpdateFillPercent;
             lifeable.OnIncreaseCurrentHpFeedback += UpdateFillPercent;

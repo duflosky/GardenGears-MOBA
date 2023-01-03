@@ -55,8 +55,10 @@ public partial class Champion
     [PunRPC]
     public void SyncDieRPC()
     {
+        isAlive = false;
         if (photonView.IsMine)
         {
+            VolumeManager.Instance.colorAdjustments.active = true;
             InputManager.PlayerMap.Movement.Disable();
             InputManager.PlayerMap.Capacity.Disable();
             InputManager.PlayerMap.Inventory.Disable();
@@ -74,12 +76,15 @@ public partial class Champion
     [PunRPC]
     public void DieRPC()
     {
-        if (!canDie)
+        if (!canDie || !isAlive)
         {
             Debug.LogWarning($"{name} can't die!");
             return;
         }
-        isAlive = false;
+        for (int i = 0; i < passiveCapacitiesList.Count; i++)
+        {
+            if(passiveCapacitiesList[i].isActive) passiveCapacitiesList[i].OnRemoved();
+        }
         ((InGameState)GameStateMachine.Instance.currentState).AddKill(team);
         OnDie?.Invoke();
         photonView.RPC("SyncDieRPC", RpcTarget.All);
@@ -99,6 +104,7 @@ public partial class Champion
         transform.position = respawnPos;
         if (photonView.IsMine)
         {
+            VolumeManager.Instance.colorAdjustments.active = false;
             InputManager.PlayerMap.Movement.Enable();
             InputManager.PlayerMap.Capacity.Enable();
             InputManager.PlayerMap.Inventory.Enable();

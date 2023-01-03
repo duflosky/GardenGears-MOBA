@@ -9,6 +9,7 @@ namespace Entities.Capacities
 
         public bool stackable;
         protected int count; //Amount of Stacks
+        public bool isActive;
 
         public List<Enums.CapacityType> types; //All types of the capacity
 
@@ -20,6 +21,7 @@ namespace Entities.Capacities
         
         public void OnAdded( int amount = 1)
         {
+            isActive = true;
             if (stackable) count+= amount;
             OnAddedEffects(entity);
         }
@@ -45,6 +47,7 @@ namespace Entities.Capacities
         /// </summary>
         public void OnRemoved()
         {
+            isActive = false;
             OnRemovedEffects(entity);
         }
         

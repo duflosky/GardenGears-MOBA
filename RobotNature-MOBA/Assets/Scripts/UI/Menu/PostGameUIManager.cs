@@ -35,12 +35,8 @@ namespace UI.Menu
             resultText.text = playerTeam == winner ? "You won!" : "You lost!";
         }
 
-        // TODO: Implement rematch functionality
-        
         public void OnRematchClick()
         {
-            Debug.Log("Does not work yet");
-            return;
             rematchButton.interactable = false;
             GameStateMachine.Instance.SendSetToggleReady(true);
         }

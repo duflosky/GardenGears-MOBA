@@ -25,4 +25,3 @@ public class BenchBehavior : MonoBehaviour
         BenchCollider.enabled = false;
     }
 }
-
