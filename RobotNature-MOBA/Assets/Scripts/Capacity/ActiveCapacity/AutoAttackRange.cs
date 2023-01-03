@@ -44,7 +44,9 @@ public class AutoAttackRange : ActiveCapacity
             var rdm = Random.Range(-(SOType.sprayAngle / 2), (SOType.sprayAngle / 2));
             lookDir += new Vector3(Mathf.Cos(rdm), 0, Mathf.Sin(rdm)).normalized;
         }
-        bullet = PoolNetworkManager.Instance.PoolInstantiate(SOType.bulletPrefab.GetComponent<Entity>(), casterTransform.position, Quaternion.LookRotation(lookDir)).gameObject;
+
+        var bulletPref = champion.isOverheat ? SOType.overheatBulletPrefab : SOType.bulletPrefab;
+        bullet = PoolNetworkManager.Instance.PoolInstantiate(bulletPref.GetComponent<Entity>(), casterTransform.position, Quaternion.LookRotation(lookDir)).gameObject;
         collider = bullet.GetComponent<AffectCollider>();
         collider.caster = caster;
         collider.casterPos = casterTransform.position;

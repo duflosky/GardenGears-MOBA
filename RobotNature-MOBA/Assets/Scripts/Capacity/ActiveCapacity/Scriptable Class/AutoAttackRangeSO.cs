@@ -8,6 +8,7 @@ using UnityEngine;
 public class AutoAttackRangeSO : ActiveCapacitySO
 {
     public GameObject bulletPrefab;
+    public GameObject overheatBulletPrefab;
 
     public float bulletSpeed;
     public float percentageDamage; 
