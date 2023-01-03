@@ -1,6 +1,7 @@
 using Entities;
 using GameStates;
 using UnityEngine;
+using UnityEngine.Animations;
 
 namespace UI.InGame
 {
@@ -13,15 +14,16 @@ namespace UI.InGame
         {
             var entity = EntityCollectionManager.GetEntityByIndex(entityIndex);
             if (entity == null) return;
-
             if (entity.GetComponent<IResourceable>() == null) return;
             var canvasResource = Instantiate(resourceBarPrefab, entity.TransformUI.position + entity.OffsetUI, Quaternion.identity, entity.TransformUI);
+            constraintSource.sourceTransform = entity.transform;
+            constraintSource.weight = 1;
+            canvasResource.GetComponent<PositionConstraint>().AddSource(constraintSource);
+            canvasResource.GetComponent<PositionConstraint>().translationOffset += entity.OffsetUI;
+            canvasResource.GetComponent<PositionConstraint>().constraintActive = true;
             entity.elementsToShow.Add(canvasResource);
+            if (entity.team != GameStateMachine.Instance.GetPlayerTeam()) canvasResource.SetActive(false);
             canvasResource.GetComponent<EntityResourceBar>().InitResourceBar(entity);
-            if (entity.team != GameStateMachine.Instance.GetPlayerTeam())
-            {
-                canvasResource.SetActive(false);
-            }
         }
     }
 }
