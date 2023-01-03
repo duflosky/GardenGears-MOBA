@@ -104,3 +104,52 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: 1e1670df0331b0c4cbedc89deb7fafdd, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 63800507cfa6d2240848df571f979869, type: 3}
+--- !u!1 &361433401062928746 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 63800507cfa6d2240848df571f979869,
+    type: 3}
+  m_PrefabInstance: {fileID: 704100937812937787}
+  m_PrefabAsset: {fileID: 0}
+--- !u!65 &7779382118808103835
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 361433401062928746}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 2.112242, y: 1.2483333, z: 1.156558}
+  m_Center: {x: -0.00047004223, y: 0.62083346, z: 0.013496399}
+--- !u!111 &8485081905626628815
+Animation:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 361433401062928746}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Animation: {fileID: 7400000, guid: 610785000b2c06840bafcc2f3cb3d0c8, type: 2}
+  m_Animations:
+  - {fileID: 7400000, guid: 610785000b2c06840bafcc2f3cb3d0c8, type: 2}
+  m_WrapMode: 0
+  m_PlayAutomatically: 0
+  m_AnimatePhysics: 0
+  m_CullingType: 0
+--- !u!114 &1076302329660511080
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 361433401062928746}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e541b50d1778d634cad085518436d232, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  AnBench: {fileID: 8485081905626628815}
+  BenchCollider: {fileID: 7779382118808103835}
