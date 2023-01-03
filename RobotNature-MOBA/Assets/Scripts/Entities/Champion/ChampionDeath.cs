@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using Entities.FogOfWar;
 using GameStates;
 using GameStates.States;
@@ -50,8 +48,8 @@ public partial class Champion
     public event GlobalDelegates.BoolDelegate OnSetCanDieFeedback;
 
     public void RequestDie()
-    {
-            photonView.RPC("DieRPC", RpcTarget.MasterClient);
+    { 
+        photonView.RPC("DieRPC", RpcTarget.MasterClient);
     }
 
     [PunRPC]
@@ -60,7 +58,6 @@ public partial class Champion
         if (photonView.IsMine)
         {
             InputManager.PlayerMap.Movement.Disable();
-            // InputManager.PlayerMap.Attack.Disable();
             InputManager.PlayerMap.Capacity.Disable();
             InputManager.PlayerMap.Inventory.Disable();
         }
@@ -68,7 +65,6 @@ public partial class Champion
         else
         {
             rotateParent.gameObject.SetActive(false);
-            TransformUI.gameObject.SetActive(false);
             FogOfWarManager.Instance.RemoveFOWViewable(this);
             GameStateMachine.Instance.OnTick += Revive;
         }
@@ -78,7 +74,6 @@ public partial class Champion
     [PunRPC]
     public void DieRPC()
     {
-        // TODO : More useful to use that mechanic on decreaseCurrentHp ?
         if (!canDie)
         {
             Debug.LogWarning($"{name} can't die!");
@@ -105,14 +100,12 @@ public partial class Champion
         if (photonView.IsMine)
         {
             InputManager.PlayerMap.Movement.Enable();
-            // InputManager.PlayerMap.Attack.Enable();
             InputManager.PlayerMap.Capacity.Enable();
             InputManager.PlayerMap.Inventory.Enable();
         }
         if (animator) animator.SetTrigger("isDying");
         FogOfWarManager.Instance.AddFOWViewable(this);
         rotateParent.gameObject.SetActive(true);
-        TransformUI.gameObject.SetActive(true);
         OnReviveFeedback?.Invoke();
     }
 
@@ -120,7 +113,6 @@ public partial class Champion
     public void ReviveRPC()
     {
         isAlive = true;
-
         SetCurrentHpRPC(maxHp);
         SetCurrentResourceRPC(maxResource);
         OnRevive?.Invoke();

@@ -735,6 +735,7 @@ namespace Entities.Minion
         [PunRPC]
         public void SyncDieRPC()
         {
+            isAlive = false;
             OnDieFeedback?.Invoke();
             FogOfWarManager.Instance.RemoveFOWViewable(this);
             gameObject.SetActive(false);
@@ -758,6 +759,7 @@ namespace Entities.Minion
         [PunRPC]
         public void SyncReviveRPC()
         {
+            isAlive = true;
             OnReviveFeedback?.Invoke();
         }
 
