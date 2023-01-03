@@ -60,8 +60,8 @@ public class AffectCollider : Entity
         Entity entity = other.GetComponent<Entity>();
         if (entity && entity != caster)
         {
-            capacitySender.CollideFeedbackEffect(entity);
             if (!PhotonNetwork.IsMasterClient) return;
+            capacitySender.CollideFeedbackEffect(entity);
             capacitySender.CollideEntityEffect(entity);
         }
         else if (!entity && !affectEntityOnly)
@@ -72,7 +72,7 @@ public class AffectCollider : Entity
 
     private void OnTriggerExit(Collider other)
     {
-        capacitySender.CollideExitEffect(other.gameObject);
+       if(PhotonNetwork.IsMasterClient)capacitySender.CollideExitEffect(other.gameObject);
     }
 
     public virtual void Disable()
