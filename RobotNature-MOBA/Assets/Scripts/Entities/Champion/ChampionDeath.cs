@@ -57,6 +57,7 @@ public partial class Champion
     {
         if (photonView.IsMine)
         {
+            VolumeManager.Instance.colorAdjustments.active = true;
             InputManager.PlayerMap.Movement.Disable();
             InputManager.PlayerMap.Capacity.Disable();
             InputManager.PlayerMap.Inventory.Disable();
@@ -99,6 +100,7 @@ public partial class Champion
         transform.position = respawnPos;
         if (photonView.IsMine)
         {
+            VolumeManager.Instance.colorAdjustments.active = false;
             InputManager.PlayerMap.Movement.Enable();
             InputManager.PlayerMap.Capacity.Enable();
             InputManager.PlayerMap.Inventory.Enable();
