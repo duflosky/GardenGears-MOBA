@@ -24,7 +24,7 @@ public class MinionSpawner : MonoBehaviourPun
     [Header("Minion Path Settings")]
     public List<Transform> pathfinding = new();
     public List<Building> enemyTowers = new();
-    public string unitTag;
+    public Enums.Team team;
     
     private void Update()
     {
@@ -57,11 +57,9 @@ public class MinionSpawner : MonoBehaviourPun
         minion.RequestRevive();
         minion.myWaypoints = pathfinding;
         minion.towersList = enemyTowers;
-        minion.team = unitTag.Contains(Enums.Team.Team1.ToString()) ? Enums.Team.Team1 : Enums.Team.Team2;
-        minion.tag = unitTag;
+        minion.team = team;
         minion.meshParent.GetComponent<MeshRenderer>().material.color = minionColor;
-        if (GameStateMachine.Instance.GetPlayerTeam() != minion.team) minion.meshParent.gameObject.SetActive(false);
-        else minion.meshParent.gameObject.SetActive(true);
+        minion.meshParent.gameObject.SetActive(GameStateMachine.Instance.GetPlayerTeam() == team);
         if (minion.canView) FogOfWarManager.Instance.AddFOWViewable(minion);
     }
 }

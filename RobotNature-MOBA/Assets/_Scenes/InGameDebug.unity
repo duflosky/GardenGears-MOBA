@@ -557,6 +557,19 @@ PrefabInstance:
       propertyPath: sceneViewId
       value: 997
       objectReference: {fileID: 0}
+    - target: {fileID: 1178005780, guid: 9a3d8686d94b5444c9c8d6bcd8e404ee, type: 3}
+      propertyPath: team
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1178005781, guid: 9a3d8686d94b5444c9c8d6bcd8e404ee, type: 3}
+      propertyPath: team
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1178005781, guid: 9a3d8686d94b5444c9c8d6bcd8e404ee, type: 3}
+      propertyPath: minionPrefab
+      value: 
+      objectReference: {fileID: 4631029676220588112, guid: 6dae29ea442e6e14c9ac081906af2638,
+        type: 3}
     - target: {fileID: 1304789539, guid: 9a3d8686d94b5444c9c8d6bcd8e404ee, type: 3}
       propertyPath: m_LocalPosition.z
       value: 0.1
