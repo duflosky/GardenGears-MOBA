@@ -81,6 +81,7 @@ namespace Entities.Minion
 
         public void IdleState()
         {
+            if (!gameObject.activeSelf) return;
             myAgent.isStopped = true;
             CheckObjectives();
         }
