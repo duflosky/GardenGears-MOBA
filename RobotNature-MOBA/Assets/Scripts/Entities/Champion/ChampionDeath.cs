@@ -75,7 +75,7 @@ public partial class Champion
     [PunRPC]
     public void DieRPC()
     {
-        if (!canDie)
+        if (!canDie || !isAlive)
         {
             Debug.LogWarning($"{name} can't die!");
             return;
