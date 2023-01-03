@@ -81,6 +81,11 @@ public partial class Champion
             return;
         }
         isAlive = false;
+        for (int i = 0; i < passiveCapacitiesList.Count; i++)
+        {
+            if(passiveCapacitiesList[i].isActive) passiveCapacitiesList[i].OnRemoved();
+        }
+        
         ((InGameState)GameStateMachine.Instance.currentState).AddKill(team);
         OnDie?.Invoke();
         photonView.RPC("SyncDieRPC", RpcTarget.All);
