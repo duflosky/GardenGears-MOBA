@@ -14,8 +14,6 @@ namespace Entities.Minion
     {
         #region Minion Variables
 
-        [SerializeField] private Transform rotateParent;
-        
         [SerializeField] private NavMeshAgent myAgent;
         private MinionController myController;
         private Animator animator;
@@ -54,6 +52,7 @@ namespace Entities.Minion
             base.OnStart();
             myAgent = GetComponent<NavMeshAgent>();
             myController = GetComponent<MinionController>();
+            if (GetComponent<Animator>()) animator = GetComponent<Animator>();
             UIManager.Instance.InstantiateHealthBarForEntity(entityIndex);
             UIManager.Instance.InstantiateResourceBarForEntity(entityIndex);
             elementsToShow.Add(meshParent.gameObject);
@@ -90,6 +89,7 @@ namespace Entities.Minion
 
         public void WalkingState()
         {
+            if (animator is not null) animator.SetBool("isMoving", true);
             CheckMyWaypoints();
             CheckObjectives();
             CheckEnemies();
@@ -118,7 +118,7 @@ namespace Entities.Minion
                     if (currentAttackTarget.activeSelf && gameObject.activeSelf)
                     {
                         var q = Quaternion.LookRotation(currentAttackTarget.transform.position - transform.position);
-                        rotateParent.rotation = Quaternion.RotateTowards(transform.rotation, q, 50f * Time.deltaTime);
+                        transform.rotation = Quaternion.RotateTowards(transform.rotation, q, 50f * Time.deltaTime);
                         if (attackCycle == false)
                         {
                             StartCoroutine(AttackLogic());
@@ -140,7 +140,7 @@ namespace Entities.Minion
                     if (currentAttackTarget != null && currentAttackTarget.activeSelf && gameObject.activeSelf)
                     {
                         var q = Quaternion.LookRotation(currentAttackTarget.transform.position - transform.position);
-                        rotateParent.rotation = Quaternion.RotateTowards(transform.rotation, q, 50f * Time.deltaTime);
+                        transform.rotation = Quaternion.RotateTowards(transform.rotation, q, 50f * Time.deltaTime);
                         if (attackCycle == false)
                         {
                             StartCoroutine(AttackLogic());
@@ -745,13 +745,13 @@ namespace Entities.Minion
         [PunRPC]
         public void SyncDieRPC()
         {
+            isAlive = false;
             if (animator is not null)
             {
-                animator.SetBool("isDying", true);
+                animator.SetTrigger("isDying");
             }
             else
             {
-                isAlive = false;
                 FogOfWarManager.Instance.RemoveFOWViewable(this);
                 gameObject.SetActive(false);   
             }
@@ -776,14 +776,7 @@ namespace Entities.Minion
         [PunRPC]
         public void SyncReviveRPC()
         {
-            if (animator is not null)
-            {
-                animator.SetBool("isDying", false);
-            }
-            else
-            {
-                isAlive = true;   
-            }
+            isAlive = true;
             OnReviveFeedback?.Invoke();
         }
 

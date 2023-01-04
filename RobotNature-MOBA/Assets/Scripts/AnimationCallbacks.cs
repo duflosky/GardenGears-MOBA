@@ -1,5 +1,6 @@
 using Entities;
 using Entities.FogOfWar;
+using Entities.Minion;
 using GameStates;
 using Photon.Pun;
 using UnityEngine;
@@ -31,20 +32,34 @@ public class AnimationCallbacks : MonoBehaviourPun
         caster.CastAnimationEnd();
     }
     
-    public void OnDieEnd()
+    public void OnChampionDieEnd()
     {
         Champion champion = GetComponentInParent<Champion>();
         if (champion.isAlive) return;
-        photonView.RPC("OnDieEndRPC", RpcTarget.All, champion.entityIndex);
+        photonView.RPC("OnChampionDieEndRPC", RpcTarget.All, champion.entityIndex);
     }
 
     [PunRPC]
-    public void OnDieEndRPC(int indexChampion)
+    public void OnChampionDieEndRPC(int indexChampion)
     {
         Champion champion = EntityCollectionManager.GetEntityByIndex(indexChampion) as Champion;
         champion.rotateParent.gameObject.SetActive(false);
-        champion.TransformUI.gameObject.SetActive(false);
         FogOfWarManager.Instance.RemoveFOWViewable(champion);
         GameStateMachine.Instance.OnTick += champion.Revive;
+    }
+    
+    public void OnMinionDieEnd()
+    {
+        Minion minion = GetComponent<Minion>();
+        if (minion.isAlive) return;
+        photonView.RPC("OnMinionDieEndRPC", RpcTarget.All, minion.entityIndex);
+    }
+    
+    [PunRPC]
+    public void OnMinionDieEndRPC(int indexMinion)
+    {
+        Minion minion = EntityCollectionManager.GetEntityByIndex(indexMinion) as Minion;
+        FogOfWarManager.Instance.RemoveFOWViewable(minion);
+        gameObject.SetActive(false);
     }
 }

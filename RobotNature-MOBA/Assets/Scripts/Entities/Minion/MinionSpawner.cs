@@ -18,14 +18,13 @@ public class MinionSpawner : MonoBehaviourPun
     public int spawnMinionAmount = 5;
     public float spawnMinionInterval = 1.7f;
     public float spawnCycleTime = 30;
-    public Color minionColor;
     private float spawnSpeed = 30;
 
     [Header("Minion Path Settings")]
     public List<Transform> pathfinding = new();
     public List<Building> enemyTowers = new();
     public Enums.Team team;
-    
+
     private void Update()
     {
         if (!PhotonNetwork.IsMasterClient) return;
@@ -58,7 +57,6 @@ public class MinionSpawner : MonoBehaviourPun
         minion.myWaypoints = pathfinding;
         minion.towersList = enemyTowers;
         minion.team = team;
-        minion.meshParent.GetComponent<MeshRenderer>().material.color = minionColor;
         minion.meshParent.gameObject.SetActive(GameStateMachine.Instance.GetPlayerTeam() == team);
         if (minion.canView) FogOfWarManager.Instance.AddFOWViewable(minion);
     }
