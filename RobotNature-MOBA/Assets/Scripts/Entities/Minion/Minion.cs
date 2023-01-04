@@ -18,6 +18,7 @@ namespace Entities.Minion
         
         [SerializeField] private NavMeshAgent myAgent;
         private MinionController myController;
+        private Animator animator;
 
         [Header("Pathfinding")] 
         public List<Transform> myWaypoints = new();
@@ -82,6 +83,7 @@ namespace Entities.Minion
         public void IdleState()
         {
             if (!gameObject.activeSelf) return;
+            if (animator is not null) animator.SetBool("isMoving", false);
             myAgent.isStopped = true;
             CheckObjectives();
         }
@@ -109,6 +111,7 @@ namespace Entities.Minion
                 currentAggroState = MinionAggroState.None;
                 currentAttackTarget = null;
             }
+            if (animator is not null) animator.SetBool("isMoving", false);
             switch (currentAggroState)
             {
                 case MinionAggroState.Minion:
@@ -173,10 +176,12 @@ namespace Entities.Minion
             if (waypointIndex < myWaypoints.Count - 1)
             {
                 waypointIndex++;
+                if (animator is not null) animator.SetBool("isMoving", true);
                 myAgent.SetDestination(myWaypoints[waypointIndex].position);
             }
             else
             {
+                if (animator is not null) animator.SetBool("isMoving", true);
                 myAgent.SetDestination(towersList[towerIndex].transform.position);
             }
         }
@@ -191,6 +196,7 @@ namespace Entities.Minion
             }
             else
             {
+                if (animator is not null) animator.SetBool("isMoving", true);
                 myAgent.SetDestination(transform.position);
                 myController.currentState = MinionController.MinionState.Attacking;
                 currentAggroState = MinionAggroState.Tower;
@@ -209,14 +215,16 @@ namespace Entities.Minion
                 if (Vector3.Distance(transform.position, entity.transform.position) > attackAbility.maxRange) continue;
                 if (entity is Minion)
                 {
+                    if (animator is not null) animator.SetBool("isMoving", false);
                     myAgent.SetDestination(transform.position);
                     myController.currentState = MinionController.MinionState.Attacking;
                     currentAggroState = MinionAggroState.Minion;
                     currentAttackTarget = entity.gameObject;
                     break;
                 }
-                else if (entity is global::Champion)
+                if (entity is global::Champion)
                 {
+                    if (animator is not null) animator.SetBool("isMoving", false);
                     myAgent.SetDestination(transform.position);
                     myController.currentState = MinionController.MinionState.Attacking;
                     currentAggroState = MinionAggroState.Champion;
@@ -291,6 +299,10 @@ namespace Entities.Minion
         public void SyncAttackRPC(byte capacityIndex, int[] targetedEntities, Vector3[] targetedPositions)
         {
             var attackCapacity = CapacitySOCollectionManager.CreateActiveCapacity(capacityIndex, this);
+            if (animator is not null)
+            {
+                animator.SetTrigger("isAttacking");
+            }
             attackCapacity.PlayFeedback(capacityIndex, targetedEntities, targetedPositions);
             OnAttackFeedback?.Invoke(capacityIndex, targetedEntities, targetedPositions);
         }
@@ -733,10 +745,17 @@ namespace Entities.Minion
         [PunRPC]
         public void SyncDieRPC()
         {
-            isAlive = false;
+            if (animator is not null)
+            {
+                animator.SetBool("isDying", true);
+            }
+            else
+            {
+                isAlive = false;
+                FogOfWarManager.Instance.RemoveFOWViewable(this);
+                gameObject.SetActive(false);   
+            }
             OnDieFeedback?.Invoke();
-            FogOfWarManager.Instance.RemoveFOWViewable(this);
-            gameObject.SetActive(false);
         }
 
         [PunRPC]
@@ -757,7 +776,14 @@ namespace Entities.Minion
         [PunRPC]
         public void SyncReviveRPC()
         {
-            isAlive = true;
+            if (animator is not null)
+            {
+                animator.SetBool("isDying", false);
+            }
+            else
+            {
+                isAlive = true;   
+            }
             OnReviveFeedback?.Invoke();
         }
 
