@@ -160,6 +160,8 @@ MonoBehaviour:
   - AnimationCastRPC
   - SyncPoolInstantiate
   - OnDieEndRPC
+  - OnChampionDieEndRPC
+  - OnMinionDieEndRPC
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1
