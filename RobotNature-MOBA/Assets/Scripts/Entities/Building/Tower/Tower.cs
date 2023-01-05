@@ -7,6 +7,7 @@ using Entities.Minion;
 using GameStates;
 using GameStates.States;
 using Photon.Pun;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Tower : Building, IAttackable
@@ -63,11 +64,14 @@ public class Tower : Building, IAttackable
         if (cooldownCatchMinion <= timerCatchMinion)
         {
             Entity target = enemiesInRange[0];
-            // TODO: Add void effect on the target
-            enemiesInRange.Remove(target);
-            target.GetComponent<IDeadable>().RequestDie();
-            ((InGameState)GameStateMachine.Instance.currentState).AddKill(team);
-            timerCatchMinion = 0;
+            if (target.GetComponent<Minion>())
+            {
+                // TODO: Add void effect on the target
+                enemiesInRange.Remove(target);
+                target.GetComponent<IDeadable>().RequestDie();
+                ((InGameState)GameStateMachine.Instance.currentState).AddKill(team);
+                timerCatchMinion = 0;
+            }
         }
         
         if (enemiesInRange.Count < 1) return;
