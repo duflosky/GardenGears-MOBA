@@ -84,7 +84,6 @@ namespace Entities.Minion
             if (!gameObject.activeSelf) return;
             if (animator is not null) animator.SetBool("isMoving", false);
             myAgent.isStopped = true;
-            CheckObjectives();
         }
 
         public void WalkingState()
@@ -745,6 +744,7 @@ namespace Entities.Minion
         [PunRPC]
         public void SyncDieRPC()
         {
+            myController.currentState = MinionController.MinionState.Idle;
             isAlive = false;
             if (animator is not null)
             {
