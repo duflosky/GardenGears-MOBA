@@ -10,7 +10,7 @@ using UnityEngine.AI;
 
 namespace Entities.Minion
 {
-    public class Minion : Entity, IMovable, IAttackable, IActiveLifeable, IDeadable
+    public class Minion : Entity, IActiveLifeable, IAttackable, ICastable, IDeadable, IMovable 
     {
         #region Minion Variables
 
@@ -57,6 +57,7 @@ namespace Entities.Minion
             UIManager.Instance.InstantiateResourceBarForEntity(entityIndex);
             elementsToShow.Add(meshParent.gameObject);
             attackAbilityIndex = CapacitySOCollectionManager.GetActiveCapacitySOIndex(attackAbility);
+            if (animator) animator.GetComponent<AnimationCallbacks>().caster = this;
         }
 
         private void OnEnable()
@@ -171,7 +172,9 @@ namespace Entities.Minion
         {
             if (!gameObject.activeSelf) return;
             if (myWaypoints is null) return;
-            if (!(Vector3.Distance(transform.position, myWaypoints[waypointIndex].transform.position) <= myAgent.stoppingDistance)) return;
+            var minionPosition = new Vector3(transform.position.x, 0, myWaypoints[waypointIndex].transform.position.z);
+            var waypointPosition = new Vector3(myWaypoints[waypointIndex].transform.position.x, 0, myWaypoints[waypointIndex].transform.position.z);
+            if (!(Vector3.Distance(minionPosition, waypointPosition) <= myAgent.stoppingDistance)) return;
             if (waypointIndex < myWaypoints.Count - 1)
             {
                 waypointIndex++;
@@ -789,6 +792,68 @@ namespace Entities.Minion
 
         public event GlobalDelegates.NoParameterDelegate OnRevive;
         public event GlobalDelegates.NoParameterDelegate OnReviveFeedback;
+        
+        #endregion
+
+        #region Castable
+        
+        public bool CanCast()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void RequestSetCanCast(bool value)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void SetCanCastRPC(bool value)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void SyncSetCanCastRPC(bool value)
+        {
+            throw new NotImplementedException();
+        }
+
+        public event GlobalDelegates.BoolDelegate OnSetCanCast;
+        public event GlobalDelegates.BoolDelegate OnSetCanCastFeedback;
+        
+        public void DecreaseCooldown()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void RequestCast(byte capacityIndex, byte championCapacityIndex, int[] targetedEntities, Vector3[] targetedPositions)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void CastRPC(byte capacityIndex, byte championCapacityIndex, int[] targetedEntities, Vector3[] targetedPositions)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void SyncCastRPC(byte capacityIndex, int[] targetedEntities, Vector3[] targetedPositions)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void CastAnimationCast(Transform transform)
+        {
+            OnCastAnimationCast?.Invoke(transform);
+        }
+
+        public void CastAnimationEnd()
+        {
+            OnCastAnimationEnd?.Invoke();
+        }
+
+        public event GlobalDelegates.ByteIntArrayVector3ArrayDelegate OnCast;
+        public event GlobalDelegates.TransformDelegate OnCastAnimationCast;
+        public event GlobalDelegates.NoParameterDelegate OnCastAnimationEnd;
+        public event GlobalDelegates.ByteIntArrayVector3ArrayCapacityDelegate OnCastFeedback;
         
         #endregion
     }

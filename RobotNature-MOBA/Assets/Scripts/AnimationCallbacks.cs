@@ -12,7 +12,7 @@ public class AnimationCallbacks : MonoBehaviourPun
     
     public void AnimationCast()
     {
-        if(photonView.IsMine)photonView.RPC("AnimationCastRPC", RpcTarget.MasterClient);
+        if (photonView.IsMine) photonView.RPC("AnimationCastRPC", RpcTarget.MasterClient);
     }
 
     [PunRPC]
@@ -23,7 +23,7 @@ public class AnimationCallbacks : MonoBehaviourPun
 
     public void AnimationEnd()
     {
-        if(photonView.IsMine)photonView.RPC("AnimationEndRPC", RpcTarget.MasterClient);
+        if (photonView.IsMine) photonView.RPC("AnimationEndRPC", RpcTarget.MasterClient);
     }
 
     [PunRPC]

@@ -30,14 +30,14 @@ public class AutoMinion : ActiveCapacity
 
     public override void CapacityPress()
     {
-        CapacityEffect(casterTransform);
-        // minion.OnCastAnimationCast += CapacityEffect;
-        // minion.OnCastAnimationEnd += CapacityEndAnimation;
+        minion.OnCastAnimationCast += CapacityEffect;
+        minion.OnCastAnimationEnd += CapacityEndAnimation;
     }
 
-    public override void CapacityEffect(Transform castTransform)
+    public override void CapacityEffect(Transform shootPoint)
     {
-        projectileGO = PoolLocalManager.Instance.PoolInstantiate(SOType.feedbackPrefab, casterTransform.position, casterTransform.rotation);
+        minion.OnCastAnimationCast -= CapacityEffect;
+        projectileGO = PoolLocalManager.Instance.PoolInstantiate(SOType.feedbackPrefab, shootPoint.position, shootPoint.rotation);
         autoMinionCollider = projectileGO.GetComponent<AutoMinionCollider>();
         autoMinionCollider.capacitySender = this;
         autoMinionCollider.caster = caster;
@@ -60,7 +60,7 @@ public class AutoMinion : ActiveCapacity
 
     public override void CapacityEndAnimation()
     {
-        // minion.OnCastAnimationEnd -= CapacityEndAnimation;
+        minion.OnCastAnimationEnd -= CapacityEndAnimation;
     }
 
     public override void PlayFeedback(int casterIndex, int[] targetsEntityIndexes, Vector3[] targetPositions)

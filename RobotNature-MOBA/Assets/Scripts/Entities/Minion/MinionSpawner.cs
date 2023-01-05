@@ -45,14 +45,14 @@ public class MinionSpawner : MonoBehaviourPun
 
     private void SpawnMinion()
     {
-        Entity minionGO = PoolNetworkManager.Instance.PoolInstantiate(minionPrefab, spawnPointForMinion.position, Quaternion.identity, transform.root.root.root.root);
+        var minionGO = PoolNetworkManager.Instance.PoolInstantiate(minionPrefab, spawnPointForMinion.position, Quaternion.identity, transform.root.root.root.root);
         photonView.RPC("SyncMinionRPC", RpcTarget.All, minionGO.photonView.ViewID);
     }
 
     [PunRPC]
     public void SyncMinionRPC(int photonID)
     {
-        Minion minion = PhotonNetwork.GetPhotonView(photonID).GetComponent<Minion>();
+        var minion = PhotonNetwork.GetPhotonView(photonID).GetComponent<Minion>();
         minion.RequestRevive();
         minion.myWaypoints = pathfinding;
         minion.towersList = enemyTowers;

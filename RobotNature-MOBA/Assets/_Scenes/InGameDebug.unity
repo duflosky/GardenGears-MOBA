@@ -573,7 +573,7 @@ PrefabInstance:
     - target: {fileID: 1178005781, guid: 9a3d8686d94b5444c9c8d6bcd8e404ee, type: 3}
       propertyPath: minionPrefab
       value: 
-      objectReference: {fileID: 4631029676220588112, guid: 6dae29ea442e6e14c9ac081906af2638,
+      objectReference: {fileID: 4047828749551299738, guid: f8337b639025e6f458297b3b96e7a6a7,
         type: 3}
     - target: {fileID: 1304789539, guid: 9a3d8686d94b5444c9c8d6bcd8e404ee, type: 3}
       propertyPath: m_LocalPosition.z
