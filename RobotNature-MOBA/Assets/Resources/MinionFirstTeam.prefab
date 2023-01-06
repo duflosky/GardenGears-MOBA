@@ -41,7 +41,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1467655451981716276}
-  - component: {fileID: 3004113416691415987}
+  - component: {fileID: 5204896322559964523}
   - component: {fileID: 7504643611007393522}
   - component: {fileID: 783499094233212663}
   - component: {fileID: 3401215351380047821}
@@ -76,8 +76,8 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!136 &3004113416691415987
-CapsuleCollider:
+--- !u!65 &5204896322559964523
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -86,10 +86,9 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 0.41141257
-  m_Height: 0.9721872
-  m_Direction: 1
-  m_Center: {x: 0.008465609, y: 0.47115335, z: 0}
+  serializedVersion: 2
+  m_Size: {x: 1, y: 0.83675075, z: 1}
+  m_Center: {x: 0, y: 0.21241951, z: 0}
 --- !u!95 &7504643611007393522
 Animator:
   serializedVersion: 4
@@ -129,7 +128,7 @@ NavMeshAgent:
   m_AutoBraking: 1
   m_AutoRepath: 1
   m_Height: 1
-  m_BaseOffset: 1
+  m_BaseOffset: 0.25
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
 --- !u!114 &3401215351380047821
@@ -790,8 +789,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7178332168714260455}
   m_LocalRotation: {x: 1.092795e-25, y: 4.3297747e-17, z: -0.7071059, w: 0.70710766}
-  m_LocalPosition: {x: 0.0003886509, y: 0.21919559, z: 0.000000002682209}
-  m_LocalScale: {x: 0.99999994, y: 1, z: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3609814764565767599}
