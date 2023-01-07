@@ -10,14 +10,13 @@ using UnityEngine.AI;
 
 namespace Entities.Minion
 {
-    public class Minion : Entity, IMovable, IAttackable, IActiveLifeable, IDeadable
+    public class Minion : Entity, IActiveLifeable, IAttackable, ICastable, IDeadable, IMovable 
     {
         #region Minion Variables
 
-        [SerializeField] private Transform rotateParent;
-        
         [SerializeField] private NavMeshAgent myAgent;
         private MinionController myController;
+        private Animator animator;
 
         [Header("Pathfinding")] 
         public List<Transform> myWaypoints = new();
@@ -53,10 +52,12 @@ namespace Entities.Minion
             base.OnStart();
             myAgent = GetComponent<NavMeshAgent>();
             myController = GetComponent<MinionController>();
+            if (GetComponent<Animator>()) animator = GetComponent<Animator>();
             UIManager.Instance.InstantiateHealthBarForEntity(entityIndex);
             UIManager.Instance.InstantiateResourceBarForEntity(entityIndex);
             elementsToShow.Add(meshParent.gameObject);
             attackAbilityIndex = CapacitySOCollectionManager.GetActiveCapacitySOIndex(attackAbility);
+            if (animator) animator.GetComponent<AnimationCallbacks>().caster = this;
         }
 
         private void OnEnable()
@@ -82,12 +83,13 @@ namespace Entities.Minion
         public void IdleState()
         {
             if (!gameObject.activeSelf) return;
+            if (animator is not null) animator.SetBool("isMoving", false);
             myAgent.isStopped = true;
-            CheckObjectives();
         }
 
         public void WalkingState()
         {
+            if (animator is not null) animator.SetBool("isMoving", true);
             CheckMyWaypoints();
             CheckObjectives();
             CheckEnemies();
@@ -97,6 +99,7 @@ namespace Entities.Minion
         {
             if (myWaypoints is null) return;
             if (!gameObject.activeSelf) return;
+            if (animator is not null) animator.SetBool("isMoving", true);
             myAgent.SetDestination(myWaypoints[waypointIndex].position);
             myController.currentState = MinionController.MinionState.Walking;
         }
@@ -109,14 +112,15 @@ namespace Entities.Minion
                 currentAggroState = MinionAggroState.None;
                 currentAttackTarget = null;
             }
+            if (animator is not null) animator.SetBool("isMoving", false);
             switch (currentAggroState)
             {
                 case MinionAggroState.Minion:
                     if (currentAttackTarget.activeSelf && gameObject.activeSelf)
                     {
                         var q = Quaternion.LookRotation(currentAttackTarget.transform.position - transform.position);
-                        rotateParent.rotation = Quaternion.RotateTowards(transform.rotation, q, 50f * Time.deltaTime);
-                        if (attackCycle == false)
+                        transform.rotation = Quaternion.RotateTowards(transform.rotation, q, 50f * Time.deltaTime);
+                        if (!attackCycle)
                         {
                             StartCoroutine(AttackLogic());
                         }
@@ -137,8 +141,8 @@ namespace Entities.Minion
                     if (currentAttackTarget != null && currentAttackTarget.activeSelf && gameObject.activeSelf)
                     {
                         var q = Quaternion.LookRotation(currentAttackTarget.transform.position - transform.position);
-                        rotateParent.rotation = Quaternion.RotateTowards(transform.rotation, q, 50f * Time.deltaTime);
-                        if (attackCycle == false)
+                        transform.rotation = Quaternion.RotateTowards(transform.rotation, q, 50f * Time.deltaTime);
+                        if (!attackCycle)
                         {
                             StartCoroutine(AttackLogic());
                         }
@@ -169,14 +173,18 @@ namespace Entities.Minion
         {
             if (!gameObject.activeSelf) return;
             if (myWaypoints is null) return;
-            if (!(Vector3.Distance(transform.position, myWaypoints[waypointIndex].transform.position) <= myAgent.stoppingDistance)) return;
+            var minionPosition = new Vector3(transform.position.x, 0, myWaypoints[waypointIndex].transform.position.z);
+            var waypointPosition = new Vector3(myWaypoints[waypointIndex].transform.position.x, 0, myWaypoints[waypointIndex].transform.position.z);
+            if (!(Vector3.Distance(minionPosition, waypointPosition) <= myAgent.stoppingDistance)) return;
             if (waypointIndex < myWaypoints.Count - 1)
             {
                 waypointIndex++;
+                if (animator is not null) animator.SetBool("isMoving", true);
                 myAgent.SetDestination(myWaypoints[waypointIndex].position);
             }
             else
             {
+                if (animator is not null) animator.SetBool("isMoving", true);
                 myAgent.SetDestination(towersList[towerIndex].transform.position);
             }
         }
@@ -191,6 +199,7 @@ namespace Entities.Minion
             }
             else
             {
+                if (animator is not null) animator.SetBool("isMoving", true);
                 myAgent.SetDestination(transform.position);
                 myController.currentState = MinionController.MinionState.Attacking;
                 currentAggroState = MinionAggroState.Tower;
@@ -209,14 +218,16 @@ namespace Entities.Minion
                 if (Vector3.Distance(transform.position, entity.transform.position) > attackAbility.maxRange) continue;
                 if (entity is Minion)
                 {
+                    if (animator is not null) animator.SetBool("isMoving", false);
                     myAgent.SetDestination(transform.position);
                     myController.currentState = MinionController.MinionState.Attacking;
                     currentAggroState = MinionAggroState.Minion;
                     currentAttackTarget = entity.gameObject;
                     break;
                 }
-                else if (entity is global::Champion)
+                if (entity is global::Champion)
                 {
+                    if (animator is not null) animator.SetBool("isMoving", false);
                     myAgent.SetDestination(transform.position);
                     myController.currentState = MinionController.MinionState.Attacking;
                     currentAggroState = MinionAggroState.Champion;
@@ -291,6 +302,10 @@ namespace Entities.Minion
         public void SyncAttackRPC(byte capacityIndex, int[] targetedEntities, Vector3[] targetedPositions)
         {
             var attackCapacity = CapacitySOCollectionManager.CreateActiveCapacity(capacityIndex, this);
+            if (animator is not null)
+            {
+                animator.SetTrigger("isAttacking");
+            }
             attackCapacity.PlayFeedback(capacityIndex, targetedEntities, targetedPositions);
             OnAttackFeedback?.Invoke(capacityIndex, targetedEntities, targetedPositions);
         }
@@ -733,10 +748,18 @@ namespace Entities.Minion
         [PunRPC]
         public void SyncDieRPC()
         {
+            myController.currentState = MinionController.MinionState.Idle;
             isAlive = false;
+            if (animator is not null)
+            {
+                animator.SetTrigger("isDying");
+            }
+            else
+            {
+                FogOfWarManager.Instance.RemoveFOWViewable(this);
+                gameObject.SetActive(false);   
+            }
             OnDieFeedback?.Invoke();
-            FogOfWarManager.Instance.RemoveFOWViewable(this);
-            gameObject.SetActive(false);
         }
 
         [PunRPC]
@@ -770,6 +793,68 @@ namespace Entities.Minion
 
         public event GlobalDelegates.NoParameterDelegate OnRevive;
         public event GlobalDelegates.NoParameterDelegate OnReviveFeedback;
+        
+        #endregion
+
+        #region Castable
+        
+        public bool CanCast()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void RequestSetCanCast(bool value)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void SetCanCastRPC(bool value)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void SyncSetCanCastRPC(bool value)
+        {
+            throw new NotImplementedException();
+        }
+
+        public event GlobalDelegates.BoolDelegate OnSetCanCast;
+        public event GlobalDelegates.BoolDelegate OnSetCanCastFeedback;
+        
+        public void DecreaseCooldown()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void RequestCast(byte capacityIndex, byte championCapacityIndex, int[] targetedEntities, Vector3[] targetedPositions)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void CastRPC(byte capacityIndex, byte championCapacityIndex, int[] targetedEntities, Vector3[] targetedPositions)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void SyncCastRPC(byte capacityIndex, int[] targetedEntities, Vector3[] targetedPositions)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void CastAnimationCast(Transform transform)
+        {
+            OnCastAnimationCast?.Invoke(transform);
+        }
+
+        public void CastAnimationEnd()
+        {
+            OnCastAnimationEnd?.Invoke();
+        }
+
+        public event GlobalDelegates.ByteIntArrayVector3ArrayDelegate OnCast;
+        public event GlobalDelegates.TransformDelegate OnCastAnimationCast;
+        public event GlobalDelegates.NoParameterDelegate OnCastAnimationEnd;
+        public event GlobalDelegates.ByteIntArrayVector3ArrayCapacityDelegate OnCastFeedback;
         
         #endregion
     }
