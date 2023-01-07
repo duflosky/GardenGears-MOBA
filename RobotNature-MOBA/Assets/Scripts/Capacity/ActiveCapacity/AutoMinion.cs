@@ -42,6 +42,7 @@ public class AutoMinion : ActiveCapacity
         autoMinionCollider.capacitySender = this;
         autoMinionCollider.caster = caster;
         autoMinionCollider.target = target;
+        projectileGO.transform.LookAt(target.transform);
     }
     
     public override void CollideEntityEffect(Entity entityAffect)

@@ -99,6 +99,7 @@ namespace Entities.Minion
         {
             if (myWaypoints is null) return;
             if (!gameObject.activeSelf) return;
+            if (animator is not null) animator.SetBool("isMoving", true);
             myAgent.SetDestination(myWaypoints[waypointIndex].position);
             myController.currentState = MinionController.MinionState.Walking;
         }
@@ -119,7 +120,7 @@ namespace Entities.Minion
                     {
                         var q = Quaternion.LookRotation(currentAttackTarget.transform.position - transform.position);
                         transform.rotation = Quaternion.RotateTowards(transform.rotation, q, 50f * Time.deltaTime);
-                        if (attackCycle == false)
+                        if (!attackCycle)
                         {
                             StartCoroutine(AttackLogic());
                         }
@@ -141,7 +142,7 @@ namespace Entities.Minion
                     {
                         var q = Quaternion.LookRotation(currentAttackTarget.transform.position - transform.position);
                         transform.rotation = Quaternion.RotateTowards(transform.rotation, q, 50f * Time.deltaTime);
-                        if (attackCycle == false)
+                        if (!attackCycle)
                         {
                             StartCoroutine(AttackLogic());
                         }
