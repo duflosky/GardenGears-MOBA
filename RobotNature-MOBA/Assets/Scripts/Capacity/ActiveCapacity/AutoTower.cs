@@ -38,6 +38,7 @@ public class AutoTower : ActiveCapacity
         autoTowerCollider.capacitySender = this;
         autoTowerCollider.caster = caster;
         autoTowerCollider.target = target;
+        autoTowerGO.transform.LookAt(target.transform);
     }
     
     public override void CollideEntityEffect(Entity entityAffect)
