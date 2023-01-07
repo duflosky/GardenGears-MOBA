@@ -66,6 +66,7 @@ public partial class Champion : Entity, IMovable, IInventoryable, IResourceable,
         animator = championMesh.GetComponent<Animator>();
         if (animator) animator.GetComponent<AnimationCallbacks>().caster = this;
         elementsToShow.Add(championMesh);
+        neverHideElements.Add(championMesh);
 
         abilitiesIndexes = championSo.activeCapacitiesIndexes;
         ultimateAbilityIndex = championSo.ultimateAbilityIndex;
