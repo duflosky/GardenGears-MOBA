@@ -18,6 +18,7 @@ namespace Entities
         public float viewRange;
         [Range(0, 360)] public float viewAngle;
         public bool canView;
+        private List<GameObject> hiderObjects = new List<GameObject>();
         public List<IFOWShowable> seenShowables = new();
         public MeshFilter meshFilterFoV;
         public Transform fogOfWarStartDetection;

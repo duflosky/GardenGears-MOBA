@@ -11,6 +11,8 @@ namespace  Entities
         public bool canShow;
         public bool canHide;
         public List<GameObject> elementsToShow = new();
+        public List<GameObject> neverHideElements = new();
+
         
         public bool CanShow() 
         {
@@ -143,7 +145,8 @@ namespace  Entities
         {
             for (int i = 0; i < elementsToShow.Count; i++)
             {
-                elementsToShow[i].SetActive(false);
+                var element = elementsToShow[i];
+                if (element != null && !neverHideElements.Contains(element))element.SetActive(false);
             }
             OnHideElementFeedback?.Invoke();
         }
