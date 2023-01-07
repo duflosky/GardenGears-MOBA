@@ -48,39 +48,58 @@ public class Tower : Building, IAttackable
         timer += 1 / GameStateMachine.Instance.tickRate;
         timerCatchMinion += 1 / GameStateMachine.Instance.tickRate;
 
-        if (timer <= attackAbility.cooldown || timerCatchMinion <= cooldownCatchMinion) return;
-        enemiesInRange.Clear();
-        foreach (var collider in Physics.OverlapSphere(baseSpot.position, attackAbility.maxRange, canBeHitByTowerMask))
+        if (timer >= attackAbility.cooldown)
         {
-            if (!collider.GetComponent<Entity>()) continue;
-            var entity = collider.GetComponent<Entity>();
-            if (entity.GetComponent<Tower>()) return;
-            if (entity.team == team) continue;
-            if (entity is Minion) enemiesInRange.Add(entity);
-            else if (entity is Champion) enemiesInRange.Add(entity);
+            enemiesInRange.Clear();
+            foreach (var collider in Physics.OverlapSphere(baseSpot.position, attackAbility.maxRange, canBeHitByTowerMask))
+            {
+                if (!collider.GetComponent<Entity>()) continue;
+                var entity = collider.GetComponent<Entity>();
+                if (entity.GetComponent<Tower>()) return;
+                if (entity.team == team) continue;
+                if (entity is Minion) enemiesInRange.Add(entity);
+                else if (entity is Champion) enemiesInRange.Add(entity);
+            }
+            HandleAttack();
         }
 
-        if (enemiesInRange.Count < 1) return;
-        if (cooldownCatchMinion <= timerCatchMinion)
+        if (timerCatchMinion >= cooldownCatchMinion)
         {
-            Entity target = enemiesInRange[0];
-            if (target.GetComponent<Minion>())
+            enemiesInRange.Clear();
+            foreach (var collider in Physics.OverlapSphere(baseSpot.position, attackAbility.maxRange, canBeHitByTowerMask))
             {
-                // TODO: Add void effect on the target
-                enemiesInRange.Remove(target);
-                target.GetComponent<IDeadable>().RequestDie();
-                ((InGameState)GameStateMachine.Instance.currentState).AddKill(team);
-                timerCatchMinion = 0;
+                if (!collider.GetComponent<Entity>()) continue;
+                var entity = collider.GetComponent<Entity>();
+                if (entity.GetComponent<Tower>()) return;
+                if (entity.team == team) continue;
+                if (entity is Minion) enemiesInRange.Add(entity);
+                else if (entity is Champion) enemiesInRange.Add(entity);
             }
+            HandleMinion();
         }
-        
+    }
+
+    private void HandleAttack()
+    {
         if (enemiesInRange.Count < 1) return;
         int[] targetEntity = { enemiesInRange[0].GetComponent<Entity>().entityIndex };
-        timer = 0;
         if (!PhotonNetwork.IsMasterClient) return;
         RequestAttack(attackAbilityIndex, targetEntity, Array.Empty<Vector3>());
+        timer = 0;
     }
-    
+
+    private void HandleMinion()
+    {
+        if (enemiesInRange.Count < 1) return;
+        Entity target = enemiesInRange[0];
+        if (!target.GetComponent<Minion>()) return;
+        // TODO: Add void effect on the target
+        enemiesInRange.Remove(target);
+        target.GetComponent<IDeadable>().RequestDie();
+        ((InGameState)GameStateMachine.Instance.currentState).AddKill(team);
+        timerCatchMinion = 0;
+    }
+
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.red;

@@ -85,6 +85,7 @@ namespace Entities.Minion
             if (!gameObject.activeSelf) return;
             if (animator is not null) animator.SetBool("isMoving", false);
             myAgent.isStopped = true;
+            CheckEnemies();
         }
 
         public void WalkingState()
