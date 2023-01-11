@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 61ba6ac30a5ce5548850d215437d2a35, type: 3}
   m_Name: Champion Range
   m_EditorClassIdentifier: 
-  championMeshPrefab: {fileID: 3048456950910020092, guid: 6edadc2144ba24c43822272492981e8d,
+  championMeshPrefab: {fileID: 595433388169796268, guid: f762ea30c5be1314c82557381a6f088a,
     type: 3}
   canvasIndex: 1
   maxHp: 40
