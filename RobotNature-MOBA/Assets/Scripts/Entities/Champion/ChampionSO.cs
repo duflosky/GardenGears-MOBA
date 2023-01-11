@@ -9,6 +9,7 @@ namespace Entities.Champion
         [Header("Visual")]
         public GameObject championMeshPrefab;
         public int canvasIndex;
+        public Material[] materials;
         
         [Header("Stats")]
         public float maxHp;
