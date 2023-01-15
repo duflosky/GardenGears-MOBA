@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using Entities;
 using Entities.Capacities;
 using GameStates;
@@ -8,8 +7,8 @@ using UnityEngine;
 public class StickyBomb : ActiveCapacity
 {
     private Champion champion;
-    
-    public StickyBombSO SOType;
+
+    private StickyBombSO SOType;
     private GameObject stickyBombGO;
     private double timer;
     private Vector3 lookDir;
