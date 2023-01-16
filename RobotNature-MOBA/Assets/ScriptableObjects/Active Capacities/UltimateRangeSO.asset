@@ -12,20 +12,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de00233433a94205bf85d08b35aaf489, type: 3}
   m_Name: UltimateRangeSO
   m_EditorClassIdentifier: 
-  referenceName: 
+  referenceName: Ultimate
   descriptionName: 
   icon: {fileID: 0}
   description: 
-  cooldown: 0
+  cooldown: 2
   isTargeting: 0
-  maxRange: 0
+  maxRange: 30
   types: 
-  shootType: 0
-  indexInCollection: 0
   feedbackDuration: 0
-  feedbackPrefab: {fileID: 0}
+  shotPrefab: {fileID: 0}
+  feedbackPrefab: {fileID: 8253874659372544753, guid: 73763331f054c6d4b96cccd0182e5600,
+    type: 3}
   feedbackHitPrefab: {fileID: 0}
-  height: 0
-  widthInnerRay: 0
-  widthOuterRay: 0
-  percentageDamage: 0
+  shootType: 0
+  indexInCollection: 6
+  radius: 1
+  speed: 50
+  damagePercentage: 1

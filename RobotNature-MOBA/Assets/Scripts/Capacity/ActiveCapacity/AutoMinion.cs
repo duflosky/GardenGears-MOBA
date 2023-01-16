@@ -45,16 +45,16 @@ public class AutoMinion : ActiveCapacity
         projectileGO.transform.LookAt(target.transform);
     }
     
-    public override void CollideEntityEffect(Entity entityAffect)
+    public override void CollideEntityEffect(Entity entity)
     {
-        var lifeable = entityAffect.GetComponent<IActiveLifeable>();
+        var lifeable = entity.GetComponent<IActiveLifeable>();
         if (lifeable == null) return;
         if (!lifeable.AttackAffected()) return;
         lifeable.RequestDecreaseCurrentHp(minion.attackDamage);
         autoMinionCollider.Disable();
     }
 
-    public override void CollideFeedbackEffect(Entity entityAffect)
+    public override void CollideFeedbackEffect(Entity affectedEntity)
     {
         autoMinionCollider.Disable();
     }

@@ -23,7 +23,7 @@ public class UltimateRangeCollider : Entity
         if (!CanDisable()) return;
         if (Vector3.Distance(caster.transform.position, transform.position) > range)
         {
-            // TODO: Explode & Disable
+            SyncDisableRPC();
         }
     }
 
@@ -40,10 +40,13 @@ public class UltimateRangeCollider : Entity
 
     private void OnTriggerEnter(Collider other)
     {
+        Debug.Log("Trigger");
         var entity = other.GetComponent<Entity>();
         if (entity && entity != caster)
         {
+            capacity.CollideFeedbackEffect(entity);
             if (!PhotonNetwork.IsMasterClient) return;
+            capacity.CollideEntityEffect(entity);
         }
         else if (!entity)
         {

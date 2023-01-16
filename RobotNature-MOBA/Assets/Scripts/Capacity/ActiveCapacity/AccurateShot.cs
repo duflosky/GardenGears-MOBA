@@ -40,29 +40,29 @@ public class AccurateShot : ActiveCapacity
         collider.Launch(lookDir.normalized*SOType.bulletSpeed);
     }
 
-    public override void CollideEntityEffect(Entity entityAffect)
+    public override void CollideEntityEffect(Entity entity)
     {
         if (PhotonNetwork.IsMasterClient)
         {
-            Debug.Log($"touch {entityAffect.gameObject.name}");
-            if (caster.team == entityAffect.team)
+            Debug.Log($"touch {entity.gameObject.name}");
+            if (caster.team == entity.team)
             {
                 collider.maxDistance++;
             }
             else
             {
                 Debug.Log("Hit enemi");
-                var lifeable = entityAffect.GetComponent<IActiveLifeable>();
+                var lifeable = entity.GetComponent<IActiveLifeable>();
                 if (lifeable == null) return;
                 if (!lifeable.AttackAffected()) return;
-                Debug.Log($"Deal damage to {entityAffect.gameObject}");
-                entityAffect.photonView.RPC("DecreaseCurrentHpRPC", RpcTarget.All, caster.GetComponent<Champion>().attackDamage * SOType.percentageDamage/100);
+                Debug.Log($"Deal damage to {entity.gameObject}");
+                entity.photonView.RPC("DecreaseCurrentHpRPC", RpcTarget.All, caster.GetComponent<Champion>().attackDamage * SOType.percentageDamage/100);
                 collider.Disable();
 
-                var moveable = entityAffect.GetComponent<IMovable>();
+                var moveable = entity.GetComponent<IMovable>();
                 if (moveable == null) return;
-                Debug.Log($"Slow {entityAffect.gameObject}");
-                entityAffect.GetPassiveCapacity(SOType.SlowEffectSO).OnAdded();
+                Debug.Log($"Slow {entity.gameObject}");
+                entity.GetPassiveCapacity(SOType.SlowEffectSO).OnAdded();
             }
         }
     }
