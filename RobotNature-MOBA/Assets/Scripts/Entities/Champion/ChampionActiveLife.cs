@@ -1,11 +1,9 @@
-using System.Collections;
-using System.Collections.Generic;
 using Photon.Pun;
 using UnityEngine;
 
 public partial class Champion
-{
-     [SerializeField] private bool attackAffect = true;
+{ 
+    [SerializeField] private bool attackAffect = true;
     [SerializeField] private bool abilitiesAffect = true;
     private float maxHp;
     private float currentHp;

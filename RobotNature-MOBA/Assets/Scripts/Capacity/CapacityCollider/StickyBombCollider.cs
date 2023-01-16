@@ -20,7 +20,15 @@ public class StickyBombCollider : Entity
     {
         base.OnUpdate();
         if (!CanDisable()) return;
-        if (Vector3.Distance(caster.transform.position, transform.position) > distance) rb.isKinematic = true;
+        if (Vector3.Distance(caster.transform.position, transform.position) > distance)
+        {
+            rb.isKinematic = true;
+            GetComponent<ParticleSystem>().Stop();
+            foreach (var componentParticleSystem in GetComponentsInChildren<ParticleSystem>())
+            {
+                componentParticleSystem.Stop();
+            }
+        }
     }
 
     protected virtual bool CanDisable()
@@ -36,11 +44,9 @@ public class StickyBombCollider : Entity
 
     private void OnTriggerEnter(Collider other)
     {
-        var entity = other.GetComponent<Entity>();
-        if (entity && entity != caster)
-        {
-            capacity.CollideFeedbackEffect(entity);
-        }
+        var affectedEntity = other.GetComponent<Entity>();
+        if (affectedEntity) capacity.CollideFeedbackEffect(affectedEntity);
+        if (PhotonNetwork.IsMasterClient) capacity.CollideEntityEffect(affectedEntity);
     }
 
     public virtual void Disable()

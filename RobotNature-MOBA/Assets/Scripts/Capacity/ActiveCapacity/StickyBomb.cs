@@ -57,15 +57,55 @@ public class StickyBomb : ActiveCapacity
     public override void CollideEntityEffect(Entity affectedEntity)
     {
         var liveable = affectedEntity.GetComponent<IActiveLifeable>();
-        if (liveable == null) return;
-        if (affectedEntity.name.Contains("Minion")) return;
-        stickyBombGO.GetComponent<Rigidbody>().isKinematic = true;
-        stickyBombGO.transform.parent = affectedEntity.transform;
-        stickyBombGO.transform.position += new Vector3(0, affectedEntity.transform.localScale.y, 0) + Vector3.up * 2;
-        stickyBombGO.GetComponent<ParticleSystem>().Stop();
-        foreach (var componentParticleSystem in stickyBombGO.GetComponentsInChildren<ParticleSystem>())
+        if (liveable != null)
         {
-            componentParticleSystem.Stop();
+            if (affectedEntity.name.Contains("Minion")) return;
+            stickyBombGO.GetComponent<Rigidbody>().isKinematic = true;
+            stickyBombGO.transform.parent = affectedEntity.transform;
+            stickyBombGO.transform.position += new Vector3(0, affectedEntity.transform.localScale.y, 0) + Vector3.up * 2;
+            stickyBombGO.GetComponent<ParticleSystem>().Stop();
+            foreach (var componentParticleSystem in stickyBombGO.GetComponentsInChildren<ParticleSystem>())
+            {
+                componentParticleSystem.Stop();
+            }
+        }
+        else
+        {
+            if (affectedEntity.GetComponent<AccurateShootCollider>() && affectedEntity.team != caster.team)
+            {
+                GameStateMachine.Instance.OnTick -= TimerBomb;
+                timer = 0;
+                ExplodeBomb(SOType.radiusExplosionEnemy, SOType.percentageDamageEnemy);
+            }
+            else if (affectedEntity.GetComponent<AccurateShootCollider>() && affectedEntity.team == caster.team)
+            {
+                GameStateMachine.Instance.OnTick -= TimerBomb;
+                timer = 0;
+                ExplodeBomb(SOType.radiusExplosionAlly, SOType.percentageDamageAlly);
+            }
+            else
+            {
+                GameStateMachine.Instance.OnTick -= TimerBomb;
+                timer = 0;
+                ExplodeBomb(SOType.radiusExplosion, SOType.percentageDamage);
+            }
+        }
+    }
+    
+    public override void CollideFeedbackEffect(Entity affectedEntity)
+    {
+        var liveable = affectedEntity.GetComponent<IActiveLifeable>();
+        if (liveable != null)
+        {
+            if (affectedEntity.name.Contains("Minion")) return;
+            stickyBombGO.GetComponent<Rigidbody>().isKinematic = true;
+            stickyBombGO.transform.parent = affectedEntity.transform;
+            stickyBombGO.transform.position += new Vector3(0, affectedEntity.transform.localScale.y, 0) + Vector3.up * 2;
+            stickyBombGO.GetComponent<ParticleSystem>().Stop();
+            foreach (var componentParticleSystem in stickyBombGO.GetComponentsInChildren<ParticleSystem>())
+            {
+                componentParticleSystem.Stop();
+            }
         }
     }
 
@@ -92,13 +132,13 @@ public class StickyBomb : ActiveCapacity
         if(timer < SOType.durationBomb * GameStateMachine.Instance.tickRate) return;
         GameStateMachine.Instance.OnTick -= TimerBomb;
         timer = 0;
-        ExplodeBomb();
+        ExplodeBomb(SOType.radiusExplosion, SOType.percentageDamage);
     }
 
-    private void ExplodeBomb()
+    private void ExplodeBomb(float radiusExplosion, float percentageDamage)
     {
         explosionGO = PoolLocalManager.Instance.PoolInstantiate(SOType.explosionGO, stickyBombGO.transform.position, Quaternion.identity);
-        var entities = Physics.OverlapSphere(stickyBombGO.transform.position, SOType.radiusExplosion);
+        var entities = Physics.OverlapSphere(stickyBombGO.transform.position, radiusExplosion);
         foreach (var entity in entities)
         {
             var affectedEntity = entity.GetComponent<Entity>();
@@ -106,7 +146,7 @@ public class StickyBomb : ActiveCapacity
             var liveable = entity.GetComponent<IActiveLifeable>();
             if (liveable == null || !liveable.AttackAffected()) continue;
             PoolLocalManager.Instance.RequestPoolInstantiate(SOType.feedbackHitPrefab, affectedEntity.transform.position, Quaternion.identity);
-            liveable.RequestDecreaseCurrentHp(caster.GetComponent<Champion>().attackDamage * SOType.percentageDamage);
+            liveable.RequestDecreaseCurrentHp(caster.GetComponent<Champion>().attackDamage * percentageDamage);
         }
         stickyBombGO.GetComponent<MeshRenderer>().enabled = false;
         GameStateMachine.Instance.OnTick += DestroyExplosion;
