@@ -71,11 +71,6 @@ public class UltimateRange : ActiveCapacity
     {
         collider.SyncDisableRPC();
     }
-    
-    public override void CollideFeedbackEffect(Entity affectedEntity)
-    {
-        PoolLocalManager.Instance.PoolInstantiate(SOType.feedbackHitPrefab, affectedEntity.transform.position, Quaternion.identity);
-    }
 
     public override void PlayFeedback(int casterIndex, int[] targetsEntityIndexes, Vector3[] targetPositions)
     {

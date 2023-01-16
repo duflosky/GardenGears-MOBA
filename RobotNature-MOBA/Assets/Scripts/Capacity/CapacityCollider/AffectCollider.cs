@@ -23,22 +23,7 @@ public class AffectCollider : Entity
     {
         base.OnUpdate();
         if (!CanDisable()) return;
-        if (Vector3.Distance(casterPos, transform.position) > maxDistance)
-        {
-            switch (capacitySender.SO.shootType)
-            {
-                case Enums.CapacityShootType.skillshot:
-                    Disable();
-                    break;
-
-                case Enums.CapacityShootType.targetEntity:
-                    break;
-
-                case Enums.CapacityShootType.targetPosition:
-                    rb.isKinematic = true;
-                    break;
-            }
-        }
+        if (Vector3.Distance(casterPos, transform.position) > maxDistance) Disable();
     }
 
     protected virtual bool CanDisable()
@@ -58,7 +43,6 @@ public class AffectCollider : Entity
         if (entity && entity != caster)
         {
             if (!PhotonNetwork.IsMasterClient) return;
-            capacitySender.CollideFeedbackEffect(entity);
             capacitySender.CollideEntityEffect(entity);
         }
         else if (!entity && !affectEntityOnly)
