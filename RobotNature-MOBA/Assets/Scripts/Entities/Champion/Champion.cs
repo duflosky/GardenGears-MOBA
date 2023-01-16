@@ -31,6 +31,7 @@ public partial class Champion : Entity, IMovable, IInventoryable, IResourceable,
         base.OnUpdate();
         Move();
         Rotate();
+        CastUpdate?.Invoke();
     }
 
     private void OnEnable()
