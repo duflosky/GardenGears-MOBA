@@ -25,7 +25,7 @@ public class SpeedModifierPassive : PassiveCapacity
         boost = SOType.speedBonus;
         if (SOType.isRatio)
         {
-            boost = champ.GetCurrentMoveSpeed()* (SOType.speedBonus/100);
+            boost = champ.GetReferenceMoveSpeed()* (SOType.speedBonus/100);
         }
 
         if (SOType.isBuff) champ.IncreaseCurrentMoveSpeedRPC(boost);
