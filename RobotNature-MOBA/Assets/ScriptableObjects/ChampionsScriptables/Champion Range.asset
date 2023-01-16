@@ -15,6 +15,7 @@ MonoBehaviour:
   championMeshPrefab: {fileID: 595433388169796268, guid: f762ea30c5be1314c82557381a6f088a,
     type: 3}
   canvasIndex: 1
+  materials: []
   maxHp: 40
   maxRessource: 10
   viewRange: 10
@@ -29,5 +30,5 @@ MonoBehaviour:
   activeCapacities:
   - {fileID: 11400000, guid: 7456d0336fa0a584aa46fb32fcbbd321, type: 2}
   activeCapacitiesIndexes: 05
-  ultimateAbility: {fileID: 0}
+  ultimateAbility: {fileID: 11400000, guid: 33382a67797f33547a6f6f11f680b85d, type: 2}
   ultimateAbilityIndex: 255

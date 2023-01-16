@@ -76,11 +76,11 @@ namespace Entities.Capacities
         
         public virtual void CapacityRelease() { }
 
-        public virtual void CollideEntityEffect(Entity entityAffect) { }
+        public virtual void CollideEntityEffect(Entity entity) { }
 
         public virtual void CollideObjectEffect(GameObject obj) { }
         
-        public virtual void CollideFeedbackEffect(Entity entityAffect) { }
+        public virtual void CollideFeedbackEffect(Entity affectedEntity) { }
 
         public virtual void CollideExitEffect(GameObject obj) { }
 

@@ -51,6 +51,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 6f0ea9b7d4bc7d84f915332a679b1a4d, type: 2}
   - {fileID: 11400000, guid: 375f410e3cf84744cac37b14d9571bce, type: 2}
   - {fileID: 11400000, guid: 7456d0336fa0a584aa46fb32fcbbd321, type: 2}
+  - {fileID: 11400000, guid: 33382a67797f33547a6f6f11f680b85d, type: 2}
   allPassiveCapacitiesSo:
   - {fileID: 11400000, guid: 4e9be0a9aa6ed6c46b641b0466ac75c5, type: 2}
   - {fileID: 11400000, guid: 9421e35ba61e6764ba00e2139a97c00e, type: 2}
