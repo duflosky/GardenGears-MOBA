@@ -60,10 +60,10 @@ namespace GameStates.States
 
         public override void OnAllPlayerReady() { }
 
-        public void AddKill(Enums.Team deathTeam)
+        public void AddPoint(Enums.Team pointTeam)
         {
-            if (deathTeam == Enums.Team.Team1) team2Kill++;
-            else team1Kill++;
+            if (pointTeam == Enums.Team.Team1) team1Kill++;
+            else team2Kill++;
             if(overTime) SetWinner();
             sm.photonView.RPC("SyncTeamKillRPC", RpcTarget.All, team1Kill, team2Kill);
         }

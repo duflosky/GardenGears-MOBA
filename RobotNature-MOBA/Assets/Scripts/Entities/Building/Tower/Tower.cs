@@ -96,7 +96,7 @@ public class Tower : Building, IAttackable
         // TODO: Add void effect on the target
         enemiesInRange.Remove(target);
         target.GetComponent<IDeadable>().RequestDie();
-        ((InGameState)GameStateMachine.Instance.currentState).AddKill(team);
+        ((InGameState)GameStateMachine.Instance.currentState).AddPoint(target.team);
         timerCatchMinion = 0;
     }
 

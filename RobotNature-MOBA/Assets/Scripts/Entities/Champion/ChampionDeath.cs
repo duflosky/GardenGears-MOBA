@@ -85,7 +85,9 @@ public partial class Champion
         {
             if(passiveCapacitiesList[i].isActive) passiveCapacitiesList[i].OnRemoved();
         }
-        ((InGameState)GameStateMachine.Instance.currentState).AddKill(team);
+
+        var AddPointTeam = team == Enums.Team.Team1 ? Enums.Team.Team2 : Enums.Team.Team1;
+        ((InGameState)GameStateMachine.Instance.currentState).AddPoint(AddPointTeam);
         OnDie?.Invoke();
         photonView.RPC("SyncDieRPC", RpcTarget.All);
     }
@@ -109,7 +111,7 @@ public partial class Champion
             InputManager.PlayerMap.Capacity.Enable();
             InputManager.PlayerMap.Inventory.Enable();
         }
-        if (animator) animator.SetTrigger("isDying");
+        //if (animator) animator.SetTrigger("isDying");
         FogOfWarManager.Instance.AddFOWViewable(this);
         rotateParent.gameObject.SetActive(true);
         OnReviveFeedback?.Invoke();
