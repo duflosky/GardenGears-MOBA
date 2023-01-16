@@ -84,6 +84,9 @@ namespace Entities.Capacities
 
         public virtual void CollideExitEffect(GameObject obj) { }
 
+        public virtual void DisplayGizmos(bool state){}
+        public virtual void UpdateGizmos(){}
+
         public virtual bool isInRange(int casterIndex, Vector3 position)
         {
             float distance = Vector3.Distance(EntityCollectionManager.GetEntityByIndex(casterIndex).transform.position, position);

@@ -88,6 +88,7 @@ public partial class Champion
         OnCastFeedback?.Invoke(capacityIndex, targetedEntities, targetedPositions, activeCapacity);
     }
 
+
     public void CastAnimationCast(Transform transform)
     {
         OnCastAnimationCast?.Invoke(transform);
@@ -98,6 +99,7 @@ public partial class Champion
         OnCastAnimationEnd?.Invoke();
     }
     
+    public event GlobalDelegates.NoParameterDelegate CastUpdate;
     public event GlobalDelegates.ByteIntArrayVector3ArrayDelegate OnCast;
     public event GlobalDelegates.TransformDelegate OnCastAnimationCast;
     public event GlobalDelegates.NoParameterDelegate OnCastAnimationEnd;

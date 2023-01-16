@@ -11,6 +11,7 @@ public class AutoAttackRange : ActiveCapacity
     private Vector3 lookDir;
     private GameObject bullet;
     private AffectCollider collider;
+    private GameObject shotGizmo;
 
     public override void OnStart()
     {
@@ -21,20 +22,30 @@ public class AutoAttackRange : ActiveCapacity
 
     public override bool TryCast(int[] targetsEntityIndexes, Vector3[] targetPositions)
     {
-        if(!base.TryCast(targetsEntityIndexes, targetPositions)) return false;
-        return true;
+        if (!onCooldown)
+        {
+            InitiateCooldown();
+            this.targetsEntityIndexes = targetsEntityIndexes;
+
+            this.targetPositions = targetPositions;
+            CapacityPress();
+            return true;
+        }
+        else return false;
     }
 
     public override void CapacityPress()
     {
         champion.GetPassiveCapacity(CapacitySOCollectionManager.GetPassiveCapacitySOIndex(SOType.attackSlowSO)).OnAdded();
+        DisplayGizmos(true);
         champion.OnCastAnimationCast += CapacityEffect;
         champion.OnCastAnimationEnd += CapacityEndAnimation; 
-        champion.canRotate = false;
     }
 
     public override void CapacityEffect(Transform castTransform)
     {
+        champion.canRotate = false;
+        DisplayGizmos(false);
         champion.OnCastAnimationCast -= CapacityEffect;
         champion.GetPassiveCapacity(CapacitySOCollectionManager.GetPassiveCapacitySOIndex(SOType.overheatSO)).OnAdded();
         lookDir = targetPositions[0]-casterTransform.position;
@@ -81,6 +92,27 @@ public class AutoAttackRange : ActiveCapacity
     public override void CollideObjectEffect(GameObject obj)
     { 
         collider.Disable();
+    }
+
+    public override void DisplayGizmos(bool state)
+    {
+
+        if (state)
+        {
+            if (!shotGizmo) shotGizmo = Object.Instantiate(SOType.shotGizmoPrefab, casterTransform.position, Quaternion.identity, casterTransform);
+            else shotGizmo.SetActive(true);
+            champion.CastUpdate += UpdateGizmos;
+        }
+        else
+        {
+            champion.CastUpdate -= UpdateGizmos;
+            shotGizmo.SetActive(false);
+        }
+    }
+
+    public override void UpdateGizmos()
+    {
+        shotGizmo.transform.LookAt(targetPositions[0]);
     }
 
     public override void PlayFeedback(int casterIndex, int[] targetsEntityIndexes, Vector3[] targetPositions) { }
