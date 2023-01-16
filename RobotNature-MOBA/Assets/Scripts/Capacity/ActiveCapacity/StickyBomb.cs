@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using Entities;
 using Entities.Capacities;
 using GameStates;
@@ -8,8 +7,8 @@ using UnityEngine;
 public class StickyBomb : ActiveCapacity
 {
     private Champion champion;
-    
-    public StickyBombSO SOType;
+
+    private StickyBombSO SOType;
     private GameObject stickyBombGO;
     private double timer;
     private Vector3 lookDir;
@@ -58,14 +57,14 @@ public class StickyBomb : ActiveCapacity
         champion.canRotate = true;
     }
 
-    public override void CollideFeedbackEffect(Entity entityAffect)
+    public override void CollideFeedbackEffect(Entity affectedEntity)
     {
-        var lifeable = entityAffect.GetComponent<IActiveLifeable>();
-        if (lifeable == null) return;
-        if (entityAffect.name.Contains("Minion")) return;
+        var liveable = affectedEntity.GetComponent<IActiveLifeable>();
+        if (liveable == null) return;
+        if (affectedEntity.name.Contains("Minion")) return;
         stickyBombGO.GetComponent<Rigidbody>().isKinematic = true;
-        stickyBombGO.transform.parent = entityAffect.transform;
-        stickyBombGO.transform.position += new Vector3(0, entityAffect.transform.localScale.y, 0) + Vector3.up * 2;
+        stickyBombGO.transform.parent = affectedEntity.transform;
+        stickyBombGO.transform.position += new Vector3(0, affectedEntity.transform.localScale.y, 0) + Vector3.up * 2;
     }
 
     public override void PlayFeedback(int casterIndex, int[] targetsEntityIndexes, Vector3[] targetPositions)
@@ -102,10 +101,10 @@ public class StickyBomb : ActiveCapacity
         {
             var entityAffect = entity.GetComponent<Entity>();
             if (entityAffect == null || caster.team == entityAffect.team) continue;
-            var lifeable = entity.GetComponent<IActiveLifeable>();
-            if (lifeable == null || !lifeable.AttackAffected()) continue;
+            var liveable = entity.GetComponent<IActiveLifeable>();
+            if (liveable == null || !liveable.AttackAffected()) continue;
             PoolLocalManager.Instance.RequestPoolInstantiate(SOType.feedbackHitPrefab, entityAffect.transform.position, Quaternion.identity);
-            lifeable.RequestDecreaseCurrentHp(caster.GetComponent<Champion>().attackDamage * SOType.percentageDamage);
+            liveable.RequestDecreaseCurrentHp(caster.GetComponent<Champion>().attackDamage * SOType.percentageDamage);
         }
         stickyBombGO.GetComponent<MeshRenderer>().enabled = false;
         stickyBombGO.GetComponentInChildren<ParticleSystem>().Play();

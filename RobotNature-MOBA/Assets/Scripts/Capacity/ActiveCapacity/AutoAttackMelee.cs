@@ -45,24 +45,24 @@ public class AutoAttackMelee : ActiveCapacity
         GameStateMachine.Instance.OnTick += DisableObject;
     }
 
-    public override void CollideEntityEffect(Entity entityAffect)
+    public override void CollideEntityEffect(Entity entity)
     {
-        if (caster.team == entityAffect.team) return;
-        IActiveLifeable lifeable = entityAffect.GetComponent<IActiveLifeable>();
+        if (caster.team == entity.team) return;
+        IActiveLifeable lifeable = entity.GetComponent<IActiveLifeable>();
         if (lifeable != null)
         {
-            var angle = Vector3.Angle(lookDir.normalized, (entityAffect.transform.position - casterTransform.position).normalized);
+            var angle = Vector3.Angle(lookDir.normalized, (entity.transform.position - casterTransform.position).normalized);
             //Debug.Log($"collide {entityAffect.gameObject.name} at {angle}°");
             if (lifeable.AttackAffected())
             { 
                 if(angle>SOType.normalAmplitude)return;
-                var hitPos = entityAffect.transform.position + (entityAffect.transform.position - casterTransform.position).normalized*.5f;
+                var hitPos = entity.transform.position + (entity.transform.position - casterTransform.position).normalized*.5f;
                 if(angle <= SOType.perfectAmplitude)
                 {
                     //Critic
                     //Debug.Log("Critic");
                     PoolLocalManager.Instance.RequestPoolInstantiate(SOType.criticalHitPrefab, hitPos, Quaternion.identity, null, 1f);
-                    entityAffect.photonView.RPC("DecreaseCurrentHpRPC", RpcTarget.All, caster.GetComponent<Champion>().attackDamage * SOType.percentageDamageCrit);
+                    entity.photonView.RPC("DecreaseCurrentHpRPC", RpcTarget.All, caster.GetComponent<Champion>().attackDamage * SOType.percentageDamageCrit);
                 }
                 else
                 {

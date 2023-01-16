@@ -222,7 +222,6 @@ MonoBehaviour:
   caster: {fileID: 0}
   maxDistance: 0
   casterPos: {x: 0, y: 0, z: 0}
-  effectIndex: 
   affectEntityOnly: 0
 --- !u!1001 &230738959053817231
 PrefabInstance:

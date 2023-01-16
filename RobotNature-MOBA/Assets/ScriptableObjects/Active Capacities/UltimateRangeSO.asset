@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: de00233433a94205bf85d08b35aaf489, type: 3}
+  m_Name: UltimateRangeSO
+  m_EditorClassIdentifier: 
+  referenceName: Ultimate
+  descriptionName: 
+  icon: {fileID: 0}
+  description: 
+  cooldown: 2
+  isTargeting: 0
+  maxRange: 30
+  types: 
+  feedbackDuration: 0
+  shotPrefab: {fileID: 0}
+  feedbackPrefab: {fileID: 8253874659372544753, guid: 73763331f054c6d4b96cccd0182e5600,
+    type: 3}
+  feedbackHitPrefab: {fileID: 0}
+  shootType: 0
+  indexInCollection: 6
+  radius: 1
+  speed: 50
+  damagePercentage: 1

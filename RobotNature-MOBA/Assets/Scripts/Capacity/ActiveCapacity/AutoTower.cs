@@ -41,16 +41,16 @@ public class AutoTower : ActiveCapacity
         autoTowerGO.transform.LookAt(target.transform);
     }
     
-    public override void CollideEntityEffect(Entity entityAffect)
+    public override void CollideEntityEffect(Entity entity)
     {
-        var lifeable = entityAffect.GetComponent<IActiveLifeable>();
+        var lifeable = entity.GetComponent<IActiveLifeable>();
         if (lifeable == null) return;
         if (!lifeable.AttackAffected()) return;
         lifeable.RequestDecreaseCurrentHp(tower.damage);
         autoTowerCollider.Disable();
     }
     
-    public override void CollideFeedbackEffect(Entity entityAffect)
+    public override void CollideFeedbackEffect(Entity affectedEntity)
     {
         autoTowerCollider.Disable();
     }

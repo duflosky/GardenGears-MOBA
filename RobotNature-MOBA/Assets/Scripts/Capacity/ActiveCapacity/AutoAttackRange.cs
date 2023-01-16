@@ -62,20 +62,20 @@ public class AutoAttackRange : ActiveCapacity
         champion.canRotate = true;
     }
 
-    public override void CollideEntityEffect(Entity entityAffect)
+    public override void CollideEntityEffect(Entity entity)
     {
-        if (caster.team == entityAffect.team) return;
-        var lifeable = entityAffect.GetComponent<IActiveLifeable>();
+        if (caster.team == entity.team) return;
+        var lifeable = entity.GetComponent<IActiveLifeable>();
         if (lifeable == null) return;
         if (!lifeable.AttackAffected()) return;
-        entityAffect.photonView.RPC("DecreaseCurrentHpRPC", RpcTarget.All, caster.GetComponent<Champion>().attackDamage * SOType.percentageDamage);
+        entity.photonView.RPC("DecreaseCurrentHpRPC", RpcTarget.All, caster.GetComponent<Champion>().attackDamage * SOType.percentageDamage);
         collider.Disable();
     }
 
-    public override void CollideFeedbackEffect(Entity entityAffect)
+    public override void CollideFeedbackEffect(Entity affectedEntity)
     {
-        if (caster.team == entityAffect.team) return;
-        PoolLocalManager.Instance.RequestPoolInstantiate(SOType.feedbackHitPrefab, entityAffect.transform.position, Quaternion.identity);
+        if (caster.team == affectedEntity.team) return;
+        PoolLocalManager.Instance.RequestPoolInstantiate(SOType.feedbackHitPrefab, affectedEntity.transform.position, Quaternion.identity);
     }
 
     public override void CollideObjectEffect(GameObject obj)

@@ -176,7 +176,7 @@ namespace Controllers.Inputs
             
             inputs.Capacity.Capacity1.performed += OnActivateCapacity1;
             inputs.Capacity.Capacity2.performed += OnActivateCapacity2;
-            // inputs.Capacity.Ultime.performed += OnActivateUltimateAbility;
+            inputs.Capacity.Ultime.performed += OnActivateUltimateAbility;
             
             //inputs.Mouse.MousePos.performed += OnMouseMove;
 
@@ -199,7 +199,7 @@ namespace Controllers.Inputs
             
             inputs.Capacity.Capacity1.performed -= OnActivateCapacity1;
             inputs.Capacity.Capacity2.performed -= OnActivateCapacity2;
-            // inputs.Capacity.Capacity2.performed -= OnActivateUltimateAbility;
+            inputs.Capacity.Ultime.performed -= OnActivateUltimateAbility;
             inputs.Inventory.ShowHideShop.performed -= OnShowHideShop;
 
             inputs.Movement.Move.performed -= OnMoveChange; 
