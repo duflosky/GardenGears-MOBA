@@ -67,7 +67,9 @@ public abstract class ChampionActiveCapacity : ActiveCapacity
     
     public virtual void UpdateGizmos()
     {
-        gizmo.transform.LookAt(targetPositions[0]);
+        var pos = targetPositions[0];
+        pos.y = gizmo.transform.position.y;
+        gizmo.transform.LookAt(pos);
     }
     
     
