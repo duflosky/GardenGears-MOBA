@@ -3,7 +3,7 @@ using Entities.Capacities;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "Capacity/ActiveCapacitySO/Ultimate Range", fileName = "new UltimateRangeSO")]
-public class UltimateRangeSO : ActiveCapacitySO
+public class UltimateRangeSO : ChampionActiveCapacitySO
 {
     [Tooltip("Radius of the collider")] public float colliderRadius;
     [Tooltip("Radius of the explosion")] public float explosionRadius;

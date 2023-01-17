@@ -3,7 +3,7 @@ using Entities.Capacities;
 using Photon.Pun;
 using UnityEngine;
 
-public class AccurateShot : ActiveCapacity
+public class AccurateShot : ChampionActiveCapacity
 {
     private Champion champion;
     public AccurateShotSO SOType;

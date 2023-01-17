@@ -5,7 +5,7 @@ using Entities.Capacities;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "Capacity/ActiveCapacitySO/Auto-Attack Melee", fileName = "new AutoAttackMeleeSO")]
-public class AutoAttackMeleeSO : ActiveCapacitySO
+public class AutoAttackMeleeSO : ChampionActiveCapacitySO
 {
     public GameObject damageZone;
     
