@@ -129,6 +129,8 @@ public partial class Champion
     [PunRPC]
     public void SyncIncreaseAttackSpeedRPC(float value)
     {
+        attackSpeed += value;
+        animator?.SetFloat("attackSpeed", attackSpeed);
         OnIncreaseAttackSpeedFeedback?.Invoke(value);
     }
 
