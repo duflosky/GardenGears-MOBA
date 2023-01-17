@@ -85,13 +85,6 @@ public class AutoAttackRange : ActiveCapacity
         collider.Disable();
     }
 
-    public override void CollideFeedbackEffect(Entity affectedEntity)
-    {
-        if (caster.team == affectedEntity.team) return;
-        if (affectedEntity.GetComponent<IActiveLifeable>() == null) return;
-        PoolLocalManager.Instance.RequestPoolInstantiate(SOType.feedbackHitPrefab, affectedEntity.transform.position, Quaternion.identity);
-    }
-
     public override void CollideObjectEffect(GameObject obj)
     { 
         collider.Disable();

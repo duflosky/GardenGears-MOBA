@@ -141,7 +141,7 @@ public class StickyBomb : ActiveCapacity
         else if (stickyBombGO.transform.parent.GetComponent<Entity>()) position = stickyBombGO.transform.parent.position;
         else position = stickyBombGO.transform.position;
         SOType.explosionGO.transform.localScale = new Vector3(radiusExplosion, radiusExplosion, radiusExplosion);
-        PoolLocalManager.Instance.PoolInstantiate(SOType.explosionGO, position, Quaternion.identity);
+        PoolLocalManager.Instance.RequestPoolInstantiate(SOType.explosionGO, position, Quaternion.identity);
         // var capacityIndex = CapacitySOCollectionManager.GetActiveCapacitySOIndex(SOType);
         var entities = Physics.OverlapSphere(position, radiusExplosion);
         foreach (var entity in entities)
