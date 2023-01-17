@@ -5,7 +5,7 @@ using Entities.Capacities;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "Capacity/ActiveCapacitySO/AccurateShotSO", fileName = "new AccurateShotSO")]
-public class AccurateShotSO : ActiveCapacitySO
+public class AccurateShotSO : ChampionActiveCapacitySO
 {
     public GameObject bulletPrefab;
 

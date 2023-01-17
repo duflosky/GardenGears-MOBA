@@ -28,6 +28,9 @@ MonoBehaviour:
     type: 3}
   shootType: 1
   indexInCollection: 4
+  gizmoPrefab: {fileID: 3476950289744795259, guid: cd5c7f47fdc734c4e837e2233ed5cf85,
+    type: 3}
+  capacitySlow: {fileID: 11400000, guid: 4520a40069532594ebc5b59db1b46511, type: 2}
   percentageDamage: 0.6
   percentageDamageAlly: 1
   percentageDamageEnemy: 0.8

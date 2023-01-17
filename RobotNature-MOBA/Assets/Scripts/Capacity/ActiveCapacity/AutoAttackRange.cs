@@ -6,11 +6,17 @@ using UnityEngine.UI;
 
 public class AutoAttackRange : ChampionActiveCapacity
 {
-    
+    private AutoAttackRangeSO SOType;
     private Vector3 lookDir;
     private GameObject bullet;
     private AffectCollider collider;
     private GameObject shotGizmo;
+
+    public override void OnStart()
+    {
+        base.OnStart();
+        SOType = (AutoAttackRangeSO)SO;
+    }
 
     public override bool TryCast(int[] targetsEntityIndexes, Vector3[] targetPositions)
     {
@@ -24,11 +30,6 @@ public class AutoAttackRange : ChampionActiveCapacity
             return true;
         }
         else return false;
-    }
-
-    public override void CapacityPress()
-    {
-         
     }
 
     public override void CapacityEffect(Transform castTransform)
