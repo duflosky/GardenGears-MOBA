@@ -9,11 +9,10 @@ using Object = UnityEngine.Object;
 public abstract class ChampionActiveCapacity : ActiveCapacity
 {
     protected Champion champion;
-    public AutoAttackRangeSO SOType;
+    public ChampionActiveCapacitySO SO;
     private GameObject gizmo;
     public override void OnStart()
     {
-        SOType = (AutoAttackRangeSO)SO;
         casterTransform = caster.transform;
         champion = (Champion)caster;
     }
