@@ -55,6 +55,7 @@ public partial class Champion : Entity, IMovable, IInventoryable, IResourceable,
         currentResource = 0;
         //viewRange = championSo.viewRange;
         referenceMoveSpeed = championSo.referenceMoveSpeed;
+        attackSpeed = championSo.referenceAttackSpeed;
         currentMoveSpeed = referenceMoveSpeed;
         attackDamage = championSo.attackDamage;
         //attackAbilityIndex = championSo.attackAbilityIndex;
@@ -65,6 +66,7 @@ public partial class Champion : Entity, IMovable, IInventoryable, IResourceable,
         if (gameObject.GetComponent<PhotonView>().Owner != PhotonNetwork.LocalPlayer) championMesh.GetComponent<PhotonView>().TransferOwnership(gameObject.GetComponent<PhotonView>().Owner);
         championMesh.transform.localEulerAngles = Vector3.zero;
         animator = championMesh.GetComponent<Animator>();
+        animator.SetFloat("attackSpeed", championSo.referenceAttackSpeed);
         if (animator) animator.GetComponent<AnimationCallbacks>().caster = this;
         elementsToShow.Add(championMesh);
         neverHideElements.Add(championMesh);
