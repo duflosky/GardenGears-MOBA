@@ -20,10 +20,15 @@ MonoBehaviour:
   isTargeting: 0
   maxRange: 15
   types: 
+  feedbackDuration: 0
+  shotPrefab: {fileID: 0}
+  feedbackPrefab: {fileID: 0}
+  feedbackHitPrefab: {fileID: 0}
   shootType: 0
   indexInCollection: 5
-  feedbackDuration: 0
-  feedbackPrefab: {fileID: 0}
+  gizmoPrefab: {fileID: 3476950289744795259, guid: cd5c7f47fdc734c4e837e2233ed5cf85,
+    type: 3}
+  capacitySlow: {fileID: 11400000, guid: becfcf8ab184b714aa80791842ad4814, type: 2}
   bulletPrefab: {fileID: 9083956369217742468, guid: af00b9ed221dec44c993f8b77bbba481,
     type: 3}
   bulletSpeed: 25

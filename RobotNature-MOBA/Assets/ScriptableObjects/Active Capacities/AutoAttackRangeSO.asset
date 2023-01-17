@@ -22,17 +22,19 @@ MonoBehaviour:
   isTargeting: 0
   maxRange: 25
   types: 
-  shootType: 0
-  indexInCollection: 1
   feedbackDuration: 0
+  shotPrefab: {fileID: 0}
   feedbackPrefab: {fileID: 0}
   feedbackHitPrefab: {fileID: 693690632283133517, guid: f13e6ef504a84e94ea3e1729848bf335,
     type: 3}
+  shootType: 0
+  indexInCollection: 1
+  gizmoPrefab: {fileID: 3476950289744795259, guid: cd5c7f47fdc734c4e837e2233ed5cf85,
+    type: 3}
+  capacitySlow: {fileID: 11400000, guid: 4520a40069532594ebc5b59db1b46511, type: 2}
   bulletPrefab: {fileID: 8739522949654536987, guid: 0bf2acb7ad65c8945a9300e6946c16c4,
     type: 3}
   overheatBulletPrefab: {fileID: 226264253442229062, guid: 08ef0c043e78db243b8652d46b6e34d9,
-    type: 3}
-  shotGizmoPrefab: {fileID: 3476950289744795259, guid: cd5c7f47fdc734c4e837e2233ed5cf85,
     type: 3}
   bulletSpeed: 25
   percentageDamage: 0.8

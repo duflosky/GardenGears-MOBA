@@ -3,7 +3,7 @@ using Entities.Capacities;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "Capacity/ActiveCapacitySO/Sticky Bomb", fileName = "new StickyBombSO")]
-public class StickyBombSO : ActiveCapacitySO
+public class StickyBombSO : ChampionActiveCapacitySO
 {
     public float percentageDamage;
     public float percentageDamageAlly;

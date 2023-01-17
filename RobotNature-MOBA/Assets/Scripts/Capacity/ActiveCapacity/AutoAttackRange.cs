@@ -4,10 +4,8 @@ using Photon.Pun;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class AutoAttackRange : ActiveCapacity
+public class AutoAttackRange : ChampionActiveCapacity
 {
-    private Champion champion;
-    
     private AutoAttackRangeSO SOType;
     private Vector3 lookDir;
     private GameObject bullet;
@@ -16,9 +14,8 @@ public class AutoAttackRange : ActiveCapacity
 
     public override void OnStart()
     {
+        base.OnStart();
         SOType = (AutoAttackRangeSO)SO;
-        casterTransform = caster.transform;
-        champion = (Champion)caster;
     }
 
     public override bool TryCast(int[] targetsEntityIndexes, Vector3[] targetPositions)
@@ -33,14 +30,6 @@ public class AutoAttackRange : ActiveCapacity
             return true;
         }
         else return false;
-    }
-
-    public override void CapacityPress()
-    {
-        champion.GetPassiveCapacity(CapacitySOCollectionManager.GetPassiveCapacitySOIndex(SOType.attackSlowSO)).OnAdded();
-        DisplayGizmos(true);
-        champion.OnCastAnimationCast += CapacityEffect;
-        champion.OnCastAnimationEnd += CapacityEndAnimation; 
     }
 
     public override void CapacityEffect(Transform castTransform)
@@ -98,32 +87,7 @@ public class AutoAttackRange : ActiveCapacity
         collider.Disable();
     }
 
-    public override void DisplayGizmos(bool state)
-    {
-
-        if (state)
-        {
-            if (!shotGizmo)
-            {
-                shotGizmo = Object.Instantiate(SOType.shotGizmoPrefab, casterTransform.position, Quaternion.identity, casterTransform);
-                var rect = shotGizmo.GetComponentInChildren<Image>().GetComponent<RectTransform>(); //Désolé pour les yeux :3
-                rect.localPosition =(new Vector3(0,0,SOType.maxRange/2));
-                rect.sizeDelta = new Vector2(rect.sizeDelta.x, SOType.maxRange);
-            }
-            else shotGizmo.SetActive(true);
-            champion.CastUpdate += UpdateGizmos;
-        }
-        else
-        {
-            champion.CastUpdate -= UpdateGizmos;
-            shotGizmo.SetActive(false);
-        }
-    }
-
-    public override void UpdateGizmos()
-    {
-        shotGizmo.transform.LookAt(targetPositions[0]);
-    }
+   
 
     public override void PlayFeedback(int casterIndex, int[] targetsEntityIndexes, Vector3[] targetPositions) { }
 }

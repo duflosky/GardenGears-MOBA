@@ -3,7 +3,7 @@ using Entities.Capacities;
 using Photon.Pun;
 using UnityEngine;
 
-public class UltimateRange : ActiveCapacity
+public class UltimateRange : ChampionActiveCapacity
 {
     private Champion champion;
     private GameObject ultimateGO;

@@ -20,10 +20,14 @@ MonoBehaviour:
   isTargeting: 0
   maxRange: 7
   types: 
+  feedbackDuration: 0
+  shotPrefab: {fileID: 0}
+  feedbackPrefab: {fileID: 0}
+  feedbackHitPrefab: {fileID: 0}
   shootType: 0
   indexInCollection: 0
-  feedbackDuration: 0
-  feedbackPrefab: {fileID: 0}
+  gizmoPrefab: {fileID: 0}
+  capacitySlow: {fileID: 11400000, guid: 4520a40069532594ebc5b59db1b46511, type: 2}
   damageZone: {fileID: 2337458986253374596, guid: f2dc7cb89fec93b49a88ea5b63e37dbc,
     type: 3}
   fxPrefab: {fileID: 5572468312039609675, guid: 758adf5f7e4eeea41833ab4d2717d443,

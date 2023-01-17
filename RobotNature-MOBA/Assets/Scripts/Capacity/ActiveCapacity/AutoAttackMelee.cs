@@ -7,7 +7,7 @@ using Photon.Pun;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class AutoAttackMelee : ActiveCapacity
+public class AutoAttackMelee : ChampionActiveCapacity
 {
     private GameObject feedbackObject;
     public AutoAttackMeleeSO SOType;
