@@ -92,6 +92,7 @@ public class UltimateRange : ActiveCapacity
     {
         ultimateGO.SetActive(false);
         PoolLocalManager.Instance.PoolInstantiate(SOType.feedbackHitPrefab, position, Quaternion.identity);
+        var capacityIndex = CapacitySOCollectionManager.GetActiveCapacitySOIndex(SOType);
         var entities = Physics.OverlapSphere(position, SOType.explosionRadius);
         foreach (var entity in entities)
         {
@@ -99,7 +100,7 @@ public class UltimateRange : ActiveCapacity
             if (affectedEntity == null || caster.team == affectedEntity.team) continue;
             var liveableEntity = entity.GetComponent<IActiveLifeable>();
             if (liveableEntity == null || !liveableEntity.AttackAffected()) continue;
-            liveableEntity.RequestDecreaseCurrentHp(caster.GetComponent<Champion>().attackDamage * SOType.damagePercentage);
+            liveableEntity.RequestDecreaseCurrentHpByCapacity(caster.GetComponent<Champion>().attackDamage * SOType.damagePercentage, capacityIndex);
         }
     }
 }

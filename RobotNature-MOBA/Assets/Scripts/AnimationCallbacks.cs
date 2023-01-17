@@ -16,7 +16,7 @@ public class AnimationCallbacks : MonoBehaviourPun
     }
 
     [PunRPC]
-    void AnimationCastRPC()
+    private void AnimationCastRPC()
     {
         caster.CastAnimationCast(castTransform);
     }

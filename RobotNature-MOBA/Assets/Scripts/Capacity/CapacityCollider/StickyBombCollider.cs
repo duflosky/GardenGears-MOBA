@@ -23,11 +23,7 @@ public class StickyBombCollider : Entity
         if (Vector3.Distance(caster.transform.position, transform.position) > distance)
         {
             rb.isKinematic = true;
-            GetComponent<ParticleSystem>().Stop();
-            foreach (var componentParticleSystem in GetComponentsInChildren<ParticleSystem>())
-            {
-                componentParticleSystem.Stop();
-            }
+            GetComponent<PhotonView>().RPC("DeactivateParticleSystemRPC", RpcTarget.All);
         }
     }
 
@@ -36,16 +32,16 @@ public class StickyBombCollider : Entity
         return distance != 0;
     }
 
-    public void Launch(Vector3 moveVector)
+    public void Launch(Vector3 direction)
     {
         rb.isKinematic = false;
-        rb.velocity = moveVector;
+        rb.velocity = direction;
     }
 
     private void OnTriggerEnter(Collider other)
     {
         var affectedEntity = other.GetComponent<Entity>();
-        if (affectedEntity) capacity.CollideFeedbackEffect(affectedEntity);
+        if (!affectedEntity || affectedEntity == caster) return;
         if (PhotonNetwork.IsMasterClient) capacity.CollideEntityEffect(affectedEntity);
     }
 
@@ -58,5 +54,14 @@ public class StickyBombCollider : Entity
     public void SyncDisableRPC()
     {
         gameObject.SetActive(false);
+    }
+    
+    [PunRPC]
+    private void DeactivateParticleSystemRPC()
+    {
+        foreach (var componentParticleSystem in GetComponentsInChildren<ParticleSystem>())
+        {
+            componentParticleSystem.Stop();
+        }
     }
 }

@@ -75,7 +75,11 @@ MonoBehaviour:
       type: 3}
     amount: 2
     duration: 0
-  - Element: {fileID: 590173655871428254, guid: 644bcdcc620c5e9498fce81669ee1143,
+  - Element: {fileID: 5261821192487706735, guid: 77cdcd2645a53c34cac45461ff260c83,
+      type: 3}
+    amount: 2
+    duration: 0
+  - Element: {fileID: 5925743315765050801, guid: f3bb3f7ee888dc44182001d99f3b142e,
       type: 3}
     amount: 2
     duration: 0

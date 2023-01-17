@@ -48,12 +48,13 @@ public class AutoAttackMelee : ActiveCapacity
     public override void CollideEntityEffect(Entity entity)
     {
         if (caster.team == entity.team) return;
-        IActiveLifeable lifeable = entity.GetComponent<IActiveLifeable>();
-        if (lifeable != null)
+        var liveable = entity.GetComponent<IActiveLifeable>();
+        var capacityIndex = CapacitySOCollectionManager.GetActiveCapacitySOIndex(SOType);
+        if (liveable != null)
         {
             var angle = Vector3.Angle(lookDir.normalized, (entity.transform.position - casterTransform.position).normalized);
             //Debug.Log($"collide {entityAffect.gameObject.name} at {angle}°");
-            if (lifeable.AttackAffected())
+            if (liveable.AttackAffected())
             { 
                 if(angle>SOType.normalAmplitude)return;
                 var hitPos = entity.transform.position + (entity.transform.position - casterTransform.position).normalized*.5f;
@@ -62,13 +63,13 @@ public class AutoAttackMelee : ActiveCapacity
                     //Critic
                     //Debug.Log("Critic");
                     PoolLocalManager.Instance.RequestPoolInstantiate(SOType.criticalHitPrefab, hitPos, Quaternion.identity, null, 1f);
-                    entity.photonView.RPC("DecreaseCurrentHpRPC", RpcTarget.All, caster.GetComponent<Champion>().attackDamage * SOType.percentageDamageCrit);
+                    entity.photonView.RPC("DecreaseCurrentHpByCapacityRPC", RpcTarget.All, caster.GetComponent<Champion>().attackDamage * SOType.percentageDamageCrit, capacityIndex);
                 }
                 else
                 {
                     //Debug.Log("Normal hit");
                     PoolLocalManager.Instance.RequestPoolInstantiate(SOType.hitPrefab, hitPos, Quaternion.identity, null, 1f);
-                    lifeable.DecreaseCurrentHpRPC(caster.GetComponent<Champion>().attackDamage * SOType.percentageDamage);  
+                    liveable.DecreaseCurrentHpByCapacityRPC(caster.GetComponent<Champion>().attackDamage * SOType.percentageDamage, capacityIndex);  
                 }
 
             }

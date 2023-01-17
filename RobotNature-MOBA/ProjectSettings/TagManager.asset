@@ -8,6 +8,7 @@ TagManager:
   - Team2Unit
   - Obstacle
   - Bush
+  - Projectile
   layers:
   - Default
   - TransparentFX

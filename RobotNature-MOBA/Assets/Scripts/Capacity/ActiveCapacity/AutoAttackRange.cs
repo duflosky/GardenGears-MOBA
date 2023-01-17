@@ -68,7 +68,8 @@ public class AutoAttackRange : ActiveCapacity
         var lifeable = affectedEntity.GetComponent<IActiveLifeable>();
         if (lifeable == null) return;
         if (!lifeable.AttackAffected()) return;
-        affectedEntity.photonView.RPC("DecreaseCurrentHpRPC", RpcTarget.All, caster.GetComponent<Champion>().attackDamage * SOType.percentageDamage);
+        var capacityIndex = CapacitySOCollectionManager.GetActiveCapacitySOIndex(SOType);
+        affectedEntity.photonView.RPC("DecreaseCurrentHpByCapacityRPC", RpcTarget.All, caster.GetComponent<Champion>().attackDamage * SOType.percentageDamage, capacityIndex);
         PoolLocalManager.Instance.RequestPoolInstantiate(SOType.feedbackHitPrefab, affectedEntity.transform.position, Quaternion.identity);
         collider.Disable();
     }

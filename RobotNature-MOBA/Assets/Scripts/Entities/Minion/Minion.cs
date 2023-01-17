@@ -681,7 +681,7 @@ namespace Entities.Minion
         }
 
         [PunRPC]
-        public void SyncDecreaseCurrentHpRPC(float amount)
+        public void SyncDecreaseCurrentHpRPC(float amount) 
         {
             currentHp = amount;
             if (currentHp <= 0)
@@ -699,9 +699,37 @@ namespace Entities.Minion
             OnDecreaseCurrentHp?.Invoke(amount);
             photonView.RPC("SyncDecreaseCurrentHpRPC", RpcTarget.All, currentHp);
         }
-
+        
         public event GlobalDelegates.FloatDelegate OnDecreaseCurrentHp;
         public event GlobalDelegates.FloatDelegate OnDecreaseCurrentHpFeedback;
+        
+        public void RequestDecreaseCurrentHpByCapacity(float amount, byte capacityIndex)
+        {
+            photonView.RPC("DecreaseCurrentHpByCapacityRPC", RpcTarget.MasterClient, amount);
+        }
+        
+        [PunRPC]
+        public void SyncDecreaseCurrentHpByCapacityRPC(float amount, byte capacityIndex)
+        {
+            currentHp = amount;
+            if (currentHp <= 0)
+            {
+                currentHp = 0;
+                RequestDie();
+            }
+            OnDecreaseCurrentHpCapacityFeedback?.Invoke(amount, capacityIndex);
+        }
+
+        [PunRPC]
+        public void DecreaseCurrentHpByCapacityRPC(float amount, byte capacityIndex)
+        {
+            currentHp -= amount;
+            OnDecreaseCurrentHpCapacity?.Invoke(amount, capacityIndex);
+            photonView.RPC("SyncDecreaseCurrentHpByCapacityRPC", RpcTarget.All, currentHp, capacityIndex);
+        }
+
+        public event GlobalDelegates.FloatCapacityDelegate OnDecreaseCurrentHpCapacity;
+        public event GlobalDelegates.FloatCapacityDelegate OnDecreaseCurrentHpCapacityFeedback;
         
         #endregion
         

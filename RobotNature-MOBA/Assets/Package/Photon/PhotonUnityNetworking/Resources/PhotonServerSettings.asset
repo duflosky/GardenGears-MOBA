@@ -163,6 +163,12 @@ MonoBehaviour:
   - OnChampionDieEndRPC
   - OnMinionDieEndRPC
   - BreakBenchRPC
+  - ExplodeBomb
+  - ExplodeBombRPC
+  - DecreaseCurrentHpByCapacityRPC
+  - SyncDecreaseCurrentHpByCapacityRPC
+  - DeactivateParticleSystem
+  - DeactivateParticleSystemRPC
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1
