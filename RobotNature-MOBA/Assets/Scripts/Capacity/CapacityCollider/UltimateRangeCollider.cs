@@ -44,7 +44,6 @@ public class UltimateRangeCollider : Entity
         var entity = other.GetComponent<Entity>();
         if (entity && entity != caster)
         {
-            capacity.CollideFeedbackEffect(entity);
             if (!PhotonNetwork.IsMasterClient) return;
             capacity.CollideEntityEffect(entity);
         }

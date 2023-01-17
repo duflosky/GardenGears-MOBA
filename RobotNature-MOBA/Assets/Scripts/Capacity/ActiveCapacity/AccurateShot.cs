@@ -55,10 +55,10 @@ public class AccurateShot : ActiveCapacity
                 var lifeable = entity.GetComponent<IActiveLifeable>();
                 if (lifeable == null) return;
                 if (!lifeable.AttackAffected()) return;
+                var capacityIndex = CapacitySOCollectionManager.GetActiveCapacitySOIndex(SOType);
                 Debug.Log($"Deal damage to {entity.gameObject}");
-                entity.photonView.RPC("DecreaseCurrentHpRPC", RpcTarget.All, caster.GetComponent<Champion>().attackDamage * SOType.percentageDamage/100);
+                entity.photonView.RPC("DecreaseCurrentHpByCapacityRPC", RpcTarget.All, caster.GetComponent<Champion>().attackDamage * SOType.percentageDamage/100, capacityIndex);
                 collider.Disable();
-
                 var moveable = entity.GetComponent<IMovable>();
                 if (moveable == null) return;
                 Debug.Log($"Slow {entity.gameObject}");

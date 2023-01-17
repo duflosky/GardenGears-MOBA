@@ -146,6 +146,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Overheat Bullet Variant
       objectReference: {fileID: 0}
+    - target: {fileID: 8739522949654536987, guid: 0bf2acb7ad65c8945a9300e6946c16c4,
+        type: 3}
+      propertyPath: m_TagString
+      value: Projectile
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0bf2acb7ad65c8945a9300e6946c16c4, type: 3}
 --- !u!4 &3607119872442921534 stripped

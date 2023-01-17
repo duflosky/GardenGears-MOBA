@@ -19,6 +19,8 @@ public class GlobalDelegates : MonoBehaviour
     
     public delegate void TransformDelegate(Transform t);
 
+    public delegate void FloatCapacityDelegate(float f, byte b);
+
     public delegate void ByteIntArrayVector3ArrayDelegate(byte b, int[] uintArray, Vector3[] vector3s);
     public delegate void ByteIntArrayVector3ArrayCapacityDelegate(byte b, int[] uintArray, Vector3[] vector3s, ActiveCapacity capacity);
     public delegate void ByteIntArrayVector3ArrayBoolArrayDelegate(byte b, int[] uintArray, Vector3[] vector3s, bool[] bools);
