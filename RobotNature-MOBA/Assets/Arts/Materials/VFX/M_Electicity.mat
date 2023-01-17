@@ -48,10 +48,10 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _ElecticityMovementSpeed: 3
+    - _ElecticityMovementSpeed: 5
     - _QueueControl: 0
     - _QueueOffset: 0
-    - _Scale: 3
+    - _Scale: 5
     m_Colors:
-    - _Color: {r: 11.984314, g: 11.984314, b: 11.984314, a: 0}
+    - _Color: {r: 2.9960785, g: 2.9960785, b: 2.9960785, a: 0}
   m_BuildTextureStacks: []
