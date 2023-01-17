@@ -705,7 +705,7 @@ namespace Entities.Minion
         
         public void RequestDecreaseCurrentHpByCapacity(float amount, byte capacityIndex)
         {
-            photonView.RPC("DecreaseCurrentHpByCapacityRPC", RpcTarget.MasterClient, amount);
+            photonView.RPC("DecreaseCurrentHpByCapacityRPC", RpcTarget.MasterClient, amount, capacityIndex);
         }
         
         [PunRPC]

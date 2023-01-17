@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Entities;
 using Entities.Capacities;
 using Photon.Pun;
@@ -8,7 +9,8 @@ public class StickyBombCollider : Entity
     [HideInInspector] public Entity caster;
     [HideInInspector] public ActiveCapacity capacity;
     [HideInInspector] public float distance;
-    
+    [SerializeField] private GameObject[] particles;
+
     private Rigidbody rb;
 
     private void Awake()
@@ -20,11 +22,9 @@ public class StickyBombCollider : Entity
     {
         base.OnUpdate();
         if (!CanDisable()) return;
-        if (Vector3.Distance(caster.transform.position, transform.position) > distance)
-        {
-            rb.isKinematic = true;
-            GetComponent<PhotonView>().RPC("DeactivateParticleSystemRPC", RpcTarget.All);
-        }
+        if (!(Vector3.Distance(caster.transform.position, transform.position) > distance)) return;
+        rb.isKinematic = true;
+        ActivateParticleSystem(false);
     }
 
     protected virtual bool CanDisable()
@@ -56,12 +56,17 @@ public class StickyBombCollider : Entity
         gameObject.SetActive(false);
     }
     
-    [PunRPC]
-    private void DeactivateParticleSystemRPC()
+    public virtual void ActivateParticleSystem(bool value)
     {
-        foreach (var componentParticleSystem in GetComponentsInChildren<ParticleSystem>())
+        photonView.RPC("SyncActivateParticleSystemRPC", RpcTarget.All, value);
+    }
+    
+    [PunRPC]
+    private void SyncActivateParticleSystemRPC(bool value)
+    {
+        foreach (var particle in particles)
         {
-            componentParticleSystem.Stop();
+            particle.SetActive(value);
         }
     }
 }
