@@ -143,7 +143,8 @@ public class StickyBomb : ActiveCapacity
         else if (stickyBombGO.transform.parent.GetComponent<Entity>()) position = stickyBombGO.transform.parent.position;
         else position = stickyBombGO.transform.position;
         SOType.explosionGO.transform.localScale = new Vector3(radiusExplosion, radiusExplosion, radiusExplosion) / 3;
-        PoolLocalManager.Instance.RequestPoolInstantiate(SOType.explosionGO, position, Quaternion.identity);
+        // PoolLocalManager.Instance.RequestPoolInstantiate(SOType.explosionGO, position, Quaternion.identity);
+        stickyBombGO.GetComponent<PhotonView>().RPC("ExplosionInstantiateRPC", RpcTarget.All, position);
         // var capacityIndex = CapacitySOCollectionManager.GetActiveCapacitySOIndex(SOType);
         var entities = Physics.OverlapSphere(position, radiusExplosion);
         foreach (var entity in entities)
@@ -157,5 +158,11 @@ public class StickyBomb : ActiveCapacity
             liveable.RequestDecreaseCurrentHp(caster.GetComponent<Champion>().attackDamage * percentageDamage);
         }
         collider.Disable();
+    }
+
+    [PunRPC]
+    private void ExplosionInstantiateRPC(Vector3 position)
+    {
+        PoolLocalManager.Instance.PoolInstantiate(SOType.explosionGO, position, Quaternion.identity);
     }
 }

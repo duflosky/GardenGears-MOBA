@@ -34,8 +34,8 @@ MonoBehaviour:
   speedBomb: 6
   durationBomb: 5
   radiusStick: 0.02
-  radiusExplosion: 2
-  radiusExplosionAlly: 3
-  radiusExplosionEnemy: 2.5
+  radiusExplosion: 3
+  radiusExplosionAlly: 4
+  radiusExplosionEnemy: 3.5
   explosionGO: {fileID: 5261821192487706735, guid: 77cdcd2645a53c34cac45461ff260c83,
     type: 3}
