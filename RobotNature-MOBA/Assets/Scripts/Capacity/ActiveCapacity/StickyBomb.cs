@@ -40,9 +40,7 @@ public class StickyBomb : ActiveCapacity
         direction = targetPositions[0] - caster.transform.position;
         direction.y = 0;
         stickyBombGO = PoolNetworkManager.Instance.PoolInstantiate(SOType.feedbackPrefab.GetComponent<Entity>(), caster.transform.position, Quaternion.identity);
-        stickyBombGO.transform.LookAt(targetPositions[0]);
         stickyBombGO.transform.parent = null;
-        stickyBombGO.GetComponent<MeshRenderer>().enabled = true;
         stickyBombGO.team = caster.team;
         collider = stickyBombGO.GetComponent<StickyBombCollider>();
         stickyBombGO.GetComponent<SphereCollider>().enabled = true;
@@ -67,10 +65,10 @@ public class StickyBomb : ActiveCapacity
         {
             // if (affectedEntity.name.Contains("Minion")) return;
             stickyBombGO.GetComponent<Rigidbody>().isKinematic = true;
-            stickyBombGO.transform.position += new Vector3(0, 0, 2 * affectedEntity.transform.localScale.y);
-            collider.RequestChangeParent(affectedEntity.entityIndex);
             stickyBombGO.GetComponent<SphereCollider>().enabled = false;
             collider.ActivateParticleSystem(false);
+            collider.RequestChangeParent(affectedEntity.entityIndex);
+            stickyBombGO.transform.position += new Vector3(0, 2 * affectedEntity.transform.localScale.y + 1, 0);
             liveable.OnDecreaseCurrentHpCapacityFeedback += ExplodeBomb;
         }
         else
@@ -117,20 +115,24 @@ public class StickyBomb : ActiveCapacity
         {
             if (stickyBombGO.team == stickyBombGO.transform.parent.GetComponent<Entity>().team)
             {
+                liveable.OnDecreaseCurrentHpCapacityFeedback -= ExplodeBomb;
                 ExplodeBomb(SOType.radiusExplosionAlly, SOType.percentageDamageAlly);
             }
             else
             {
+                liveable.OnDecreaseCurrentHpCapacityFeedback -= ExplodeBomb;
                 ExplodeBomb(SOType.radiusExplosionEnemy, SOType.percentageDamageEnemy);
             }
         }
         else if (capacity.name.Contains("StickyBomb"))
         {
             liveable.OnDecreaseCurrentHpCapacityFeedback -= ExplodeBomb;
-            return;
         }
-        else ExplodeBomb(SOType.radiusExplosion, SOType.percentageDamage);
-        liveable.OnDecreaseCurrentHpCapacityFeedback -= ExplodeBomb;
+        else
+        {
+            liveable.OnDecreaseCurrentHpCapacityFeedback -= ExplodeBomb;
+            ExplodeBomb(SOType.radiusExplosion, SOType.percentageDamage);
+        }
     }
 
     private void ExplodeBomb(float radiusExplosion, float percentageDamage)
@@ -140,7 +142,7 @@ public class StickyBomb : ActiveCapacity
         if (stickyBombGO.transform.parent == null) position = stickyBombGO.transform.position;
         else if (stickyBombGO.transform.parent.GetComponent<Entity>()) position = stickyBombGO.transform.parent.position;
         else position = stickyBombGO.transform.position;
-        SOType.explosionGO.transform.localScale = new Vector3(radiusExplosion, radiusExplosion, radiusExplosion);
+        SOType.explosionGO.transform.localScale = new Vector3(radiusExplosion, radiusExplosion, radiusExplosion) / 3;
         PoolLocalManager.Instance.RequestPoolInstantiate(SOType.explosionGO, position, Quaternion.identity);
         // var capacityIndex = CapacitySOCollectionManager.GetActiveCapacitySOIndex(SOType);
         var entities = Physics.OverlapSphere(position, radiusExplosion);
