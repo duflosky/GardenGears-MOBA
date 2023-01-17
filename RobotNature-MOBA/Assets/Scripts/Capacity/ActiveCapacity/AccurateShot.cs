@@ -5,7 +5,6 @@ using UnityEngine;
 
 public class AccurateShot : ChampionActiveCapacity
 {
-    private Champion champion;
     public AccurateShotSO SOType;
     private Vector3 lookDir;
     private GameObject bullet;
@@ -13,21 +12,21 @@ public class AccurateShot : ChampionActiveCapacity
     
     public override void OnStart()
     {
-        casterTransform = caster.transform;
-        champion = (Champion)caster;
+        base.OnStart();
         SOType = (AccurateShotSO)SO;
     }
 
-    public override void CapacityPress()
+    /*public override void CapacityPress()
     {
         champion.GetPassiveCapacity(SOType.attackAnimationSlowSO).OnAdded();
         champion.OnCastAnimationCast += CapacityEffect;
         champion.OnCastAnimationEnd += CapacityEndAnimation; 
-        champion.canRotate = false;
-    }
+    }*/
 
     public override void CapacityEffect(Transform castTransform)
     {
+        Debug.Log($"Champion : {champion}");
+        champion.canRotate = false;
         champion.OnCastAnimationCast -= CapacityEffect;
         lookDir = targetPositions[0]-casterTransform.position;
         lookDir.y = 0;
@@ -39,6 +38,7 @@ public class AccurateShot : ChampionActiveCapacity
         collider.capacitySender = this;
         collider.Launch(lookDir.normalized*SOType.bulletSpeed);
     }
+    
 
     public override void CollideEntityEffect(Entity entity)
     {
@@ -84,6 +84,7 @@ public class AccurateShot : ChampionActiveCapacity
     {
         champion.OnCastAnimationEnd -= CapacityEndAnimation;
         champion.GetPassiveCapacity(CapacitySOCollectionManager.GetPassiveCapacitySOIndex(SOType.attackAnimationSlowSO)).OnRemoved();
+        DisplayGizmos(false);
         champion.canRotate = true;
     }
 
