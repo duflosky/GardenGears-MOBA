@@ -2,6 +2,7 @@ using Entities;
 using Entities.Capacities;
 using Photon.Pun;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class AutoAttackRange : ActiveCapacity
 {
@@ -102,7 +103,13 @@ public class AutoAttackRange : ActiveCapacity
 
         if (state)
         {
-            if (!shotGizmo) shotGizmo = Object.Instantiate(SOType.shotGizmoPrefab, casterTransform.position, Quaternion.identity, casterTransform);
+            if (!shotGizmo)
+            {
+                shotGizmo = Object.Instantiate(SOType.shotGizmoPrefab, casterTransform.position, Quaternion.identity, casterTransform);
+                var rect = shotGizmo.GetComponentInChildren<Image>().GetComponent<RectTransform>(); //Désolé pour les yeux :3
+                rect.localPosition =(new Vector3(0,0,SOType.maxRange/2));
+                rect.sizeDelta = new Vector2(rect.sizeDelta.x, SOType.maxRange);
+            }
             else shotGizmo.SetActive(true);
             champion.CastUpdate += UpdateGizmos;
         }

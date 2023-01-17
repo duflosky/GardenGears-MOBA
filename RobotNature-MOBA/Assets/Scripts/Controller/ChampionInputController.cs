@@ -212,7 +212,7 @@ namespace Controllers.Inputs
         
         private void OnDrawGizmos()
         {
-             if(cursorWorldPos != null)Gizmos.DrawSphere(cursorWorldPos[0], 0.2f);
+             //if(cursorWorldPos != null)Gizmos.DrawSphere(cursorWorldPos[0], 0.2f);
         }
     }
 }
