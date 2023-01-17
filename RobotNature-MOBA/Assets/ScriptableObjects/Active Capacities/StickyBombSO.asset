@@ -16,7 +16,7 @@ MonoBehaviour:
   descriptionName: 
   icon: {fileID: 21300000, guid: cd22fdbf68a3e0a48984646ddaa13539, type: 3}
   description: 
-  cooldown: 12
+  cooldown: 4
   isTargeting: 0
   maxRange: 6
   types: 
@@ -28,9 +28,9 @@ MonoBehaviour:
     type: 3}
   shootType: 1
   indexInCollection: 4
-  percentageDamage: 0.6
-  percentageDamageAlly: 1
-  percentageDamageEnemy: 0.8
+  percentageDamage: 2
+  percentageDamageAlly: 3
+  percentageDamageEnemy: 2.5
   speedBomb: 6
   durationBomb: 5
   radiusStick: 0.02

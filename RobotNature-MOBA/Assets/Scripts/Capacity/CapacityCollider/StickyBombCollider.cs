@@ -45,7 +45,7 @@ public class StickyBombCollider : Entity
         if (PhotonNetwork.IsMasterClient) capacity.CollideEntityEffect(affectedEntity);
     }
 
-    public virtual void Disable()
+    public void Disable()
     {
         photonView.RPC("SyncDisableRPC", RpcTarget.All);
     }
@@ -55,8 +55,20 @@ public class StickyBombCollider : Entity
     {
         gameObject.SetActive(false);
     }
+
+    public void RequestChangeParent(int entityIndex)
+    {
+        photonView.RPC("SyncChangeParentRPC", RpcTarget.All, entityIndex);
+    }
     
-    public virtual void ActivateParticleSystem(bool value)
+    [PunRPC]
+    private void SyncChangeParentRPC(int entityIndex)
+    {
+        var entity = EntityCollectionManager.GetEntityByIndex(entityIndex);
+        transform.parent = entity.transform;
+    }
+    
+    public void ActivateParticleSystem(bool value)
     {
         photonView.RPC("SyncActivateParticleSystemRPC", RpcTarget.All, value);
     }
