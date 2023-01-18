@@ -946,7 +946,7 @@ PrefabInstance:
     - target: {fileID: 8476984097424502033, guid: 8239c1a9673f991428136c57e027d608,
         type: 3}
       propertyPath: sceneToRenderFog.Array.size
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8476984097424502033, guid: 8239c1a9673f991428136c57e027d608,
         type: 3}

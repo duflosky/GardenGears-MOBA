@@ -182,7 +182,7 @@ MonoBehaviour:
   baseViewRange: 20
   viewRange: 20
   viewAngle: 360
-  canView: 1
+  canView: 0
   meshFilterFoV: {fileID: 6432131757552477808}
   fogOfWarStartDetection: {fileID: 8535989688470613223}
   damage: 6
