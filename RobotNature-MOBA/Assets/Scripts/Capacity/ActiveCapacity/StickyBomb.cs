@@ -68,7 +68,7 @@ public class StickyBomb : ActiveCapacity
             stickyBombGO.GetComponent<SphereCollider>().enabled = false;
             collider.ActivateParticleSystem(false);
             collider.RequestChangeParent(affectedEntity.entityIndex);
-            stickyBombGO.transform.position += new Vector3(0, 2 * affectedEntity.transform.localScale.y + 1, 0);
+            affectedEntity.transform.position += new Vector3(0, 2 * affectedEntity.transform.localScale.y + 1, 0);
             liveable.OnDecreaseCurrentHpCapacityFeedback += ExplodeBomb;
         }
         else
@@ -143,8 +143,8 @@ public class StickyBomb : ActiveCapacity
         else if (stickyBombGO.transform.parent.GetComponent<Entity>()) position = stickyBombGO.transform.parent.position;
         else position = stickyBombGO.transform.position;
         SOType.explosionGO.transform.localScale = new Vector3(radiusExplosion, radiusExplosion, radiusExplosion) / 3;
-        // PoolLocalManager.Instance.RequestPoolInstantiate(SOType.explosionGO, position, Quaternion.identity);
-        stickyBombGO.GetComponent<PhotonView>().RPC("ExplosionInstantiateRPC", RpcTarget.All, position);
+        PoolLocalManager.Instance.RequestPoolInstantiate(SOType.explosionGO, position, Quaternion.identity);
+        // stickyBombGO.GetComponent<PhotonView>().RPC("ExplosionInstantiateRPC", RpcTarget.All, position);
         // var capacityIndex = CapacitySOCollectionManager.GetActiveCapacitySOIndex(SOType);
         var entities = Physics.OverlapSphere(position, radiusExplosion);
         foreach (var entity in entities)
