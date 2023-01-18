@@ -23,7 +23,7 @@ namespace UI.InGame
             canvasHealth.GetComponent<PositionConstraint>().constraintActive = true;
             entity.elementsToShow.Add(canvasHealth);
             entity.neverHideElements.Add(canvasHealth);
-            if (entity.team != GameStateMachine.Instance.GetPlayerTeam()) canvasHealth.SetActive(false);
+            // if (entity.team != GameStateMachine.Instance.GetPlayerTeam()) canvasHealth.SetActive(false);
             canvasHealth.GetComponent<EntityHealthBar>().InitHealthBar(entity);
         }
     }

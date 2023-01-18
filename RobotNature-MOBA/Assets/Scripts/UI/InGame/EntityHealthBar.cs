@@ -43,7 +43,8 @@ namespace UI.InGame
                 if (deadable.IsAlive() && deadable as Minion)
                 {
                     Minion minion = (Minion)deadable;
-                    gameObject.SetActive(GameStateMachine.Instance.GetPlayerTeam() == minion.team);
+                    gameObject.SetActive(true);
+                    // gameObject.SetActive(GameStateMachine.Instance.GetPlayerTeam() == minion.team);
                 }
             }
         }

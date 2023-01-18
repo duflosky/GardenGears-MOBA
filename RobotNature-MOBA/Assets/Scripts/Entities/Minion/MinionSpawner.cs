@@ -57,7 +57,7 @@ public class MinionSpawner : MonoBehaviourPun
         minion.myWaypoints = pathfinding;
         minion.towersList = enemyTowers;
         minion.team = team;
-        minion.meshParent.gameObject.SetActive(GameStateMachine.Instance.GetPlayerTeam() == team);
+        // minion.meshParent.gameObject.SetActive(GameStateMachine.Instance.GetPlayerTeam() == team);
         if (minion.canView) FogOfWarManager.Instance.AddFOWViewable(minion);
     }
 }

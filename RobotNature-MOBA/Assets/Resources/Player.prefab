@@ -388,10 +388,10 @@ MonoBehaviour:
   neverHideElements: []
   canChangeTeam: 0
   team: 0
-  baseViewRange: 20
-  viewRange: 20
-  viewAngle: 360
-  canView: 1
+  baseViewRange: 0
+  viewRange: 0
+  viewAngle: 0
+  canView: 0
   meshFilterFoV: {fileID: 2665167733416484502}
   fogOfWarStartDetection: {fileID: 3250246203560208442}
   championSo: {fileID: 0}

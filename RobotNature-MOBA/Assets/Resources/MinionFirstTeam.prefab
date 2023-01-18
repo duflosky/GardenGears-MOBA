@@ -192,10 +192,10 @@ MonoBehaviour:
   neverHideElements: []
   canChangeTeam: 0
   team: 0
-  baseViewRange: 10
-  viewRange: 10
-  viewAngle: 360
-  canView: 1
+  baseViewRange: 0
+  viewRange: 0
+  viewAngle: 0
+  canView: 0
   meshFilterFoV: {fileID: 8931494836145469071}
   fogOfWarStartDetection: {fileID: 401864009827507682}
   myAgent: {fileID: 783499094233212663}
