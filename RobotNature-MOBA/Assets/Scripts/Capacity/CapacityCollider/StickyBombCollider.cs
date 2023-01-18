@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using Entities;
 using Entities.Capacities;
 using Photon.Pun;
@@ -45,7 +44,7 @@ public class StickyBombCollider : Entity
         if (PhotonNetwork.IsMasterClient) capacity.CollideEntityEffect(affectedEntity);
     }
 
-    public virtual void Disable()
+    public void Disable()
     {
         photonView.RPC("SyncDisableRPC", RpcTarget.All);
     }
@@ -56,7 +55,7 @@ public class StickyBombCollider : Entity
         gameObject.SetActive(false);
     }
     
-    public virtual void ActivateParticleSystem(bool value)
+    public void ActivateParticleSystem(bool value)
     {
         photonView.RPC("SyncActivateParticleSystemRPC", RpcTarget.All, value);
     }

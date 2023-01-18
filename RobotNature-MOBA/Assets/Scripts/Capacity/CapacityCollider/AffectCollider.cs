@@ -42,7 +42,6 @@ public class AffectCollider : Entity
         var entity = other.GetComponent<Entity>();
         if (entity && entity != caster)
         {
-            capacitySender.CollideFeedbackEffect(entity);
             if (!PhotonNetwork.IsMasterClient) return;
             capacitySender.CollideEntityEffect(entity);
         }

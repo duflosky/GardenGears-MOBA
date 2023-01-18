@@ -18,6 +18,7 @@ namespace UI.InGame
             var canvasHealth = Instantiate(healthBarPrefab, entity.TransformUI.position + entity.OffsetUI, Quaternion.identity);
             constraintSource.sourceTransform = entity.transform;
             constraintSource.weight = 1;
+            canvasHealth.transform.parent = entity.transform;
             canvasHealth.GetComponent<PositionConstraint>().AddSource(constraintSource);
             canvasHealth.GetComponent<PositionConstraint>().translationOffset += entity.OffsetUI;
             canvasHealth.GetComponent<PositionConstraint>().constraintActive = true;

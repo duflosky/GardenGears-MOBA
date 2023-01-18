@@ -9,22 +9,23 @@ namespace UI.InGame
     public class EntityHealthBar : MonoBehaviour
     {
         [SerializeField] private Image healthBar;
-        private IActiveLifeable lifeable;
+        private IActiveLifeable liveable;
         private IDeadable deadable;
 
         public void InitHealthBar(Entity entity)
         {
-            lifeable = (IActiveLifeable)entity;
+            liveable = (IActiveLifeable)entity;
             deadable = (IDeadable)entity;
 
             transform.LookAt(transform.position + Camera.main.transform.rotation * Vector3.forward, Camera.main.transform.rotation * Vector3.up);
             if (GameStateMachine.Instance.GetPlayerTeam() != entity.team) healthBar.color = Color.red;
-            healthBar.fillAmount = lifeable.GetCurrentHp() / lifeable.GetMaxHp();
-            lifeable.OnSetCurrentHpFeedback += UpdateFillPercent;
-            lifeable.OnIncreaseCurrentHpFeedback += UpdateFillPercent;
-            lifeable.OnDecreaseCurrentHpFeedback += UpdateFillPercent;
-            lifeable.OnIncreaseMaxHpFeedback += UpdateFillPercent;
-            lifeable.OnDecreaseMaxHpFeedback += UpdateFillPercent;
+            healthBar.fillAmount = liveable.GetCurrentHp() / liveable.GetMaxHp();
+            liveable.OnSetCurrentHpFeedback += UpdateFillPercent;
+            liveable.OnIncreaseCurrentHpFeedback += UpdateFillPercent;
+            liveable.OnDecreaseCurrentHpFeedback += UpdateFillPercent;
+            liveable.OnDecreaseCurrentHpCapacityFeedback += UpdateFillPercent;
+            liveable.OnIncreaseMaxHpFeedback += UpdateFillPercent;
+            liveable.OnDecreaseMaxHpFeedback += UpdateFillPercent;
 
             deadable.OnDieFeedback += ActivateHealthBar;
             deadable.OnReviveFeedback += ActivateHealthBar;
@@ -32,7 +33,12 @@ namespace UI.InGame
 
         private void UpdateFillPercent(float value)
         {
-            healthBar.fillAmount = value / lifeable.GetMaxHp();
+            healthBar.fillAmount = value / liveable.GetMaxHp();
+        }
+        
+        private void UpdateFillPercent(float value, byte capacityIndex)
+        {
+            healthBar.fillAmount = value / liveable.GetMaxHp();
         }
 
         private void ActivateHealthBar()
