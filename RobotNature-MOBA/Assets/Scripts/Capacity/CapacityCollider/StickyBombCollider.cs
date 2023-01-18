@@ -1,4 +1,3 @@
-using System;
 using Entities;
 using Entities.Capacities;
 using Photon.Pun;
@@ -54,18 +53,6 @@ public class StickyBombCollider : Entity
     public void SyncDisableRPC()
     {
         gameObject.SetActive(false);
-    }
-
-    public void RequestChangeParent(int entityIndex)
-    {
-        photonView.RPC("SyncChangeParentRPC", RpcTarget.All, entityIndex);
-    }
-    
-    [PunRPC]
-    private void SyncChangeParentRPC(int entityIndex)
-    {
-        var entity = EntityCollectionManager.GetEntityByIndex(entityIndex);
-        transform.parent = entity.transform;
     }
     
     public void ActivateParticleSystem(bool value)

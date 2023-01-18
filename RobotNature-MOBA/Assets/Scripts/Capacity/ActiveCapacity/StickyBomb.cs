@@ -116,21 +116,23 @@ public class StickyBomb : ActiveCapacity
             if (stickyBombGO.team == stickyBombGO.transform.parent.GetComponent<Entity>().team)
             {
                 liveable.OnDecreaseCurrentHpCapacityFeedback -= ExplodeBomb;
+                GameStateMachine.Instance.OnTick -= TimerBomb;
+                timer = 0;
                 ExplodeBomb(SOType.radiusExplosionAlly, SOType.percentageDamageAlly);
             }
             else
             {
                 liveable.OnDecreaseCurrentHpCapacityFeedback -= ExplodeBomb;
+                GameStateMachine.Instance.OnTick -= TimerBomb;
+                timer = 0;
                 ExplodeBomb(SOType.radiusExplosionEnemy, SOType.percentageDamageEnemy);
             }
-        }
-        else if (capacity.name.Contains("StickyBomb"))
-        {
-            liveable.OnDecreaseCurrentHpCapacityFeedback -= ExplodeBomb;
         }
         else
         {
             liveable.OnDecreaseCurrentHpCapacityFeedback -= ExplodeBomb;
+            GameStateMachine.Instance.OnTick -= TimerBomb;
+            timer = 0;
             ExplodeBomb(SOType.radiusExplosion, SOType.percentageDamage);
         }
     }
