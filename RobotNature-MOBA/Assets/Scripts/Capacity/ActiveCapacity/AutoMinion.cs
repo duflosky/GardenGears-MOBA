@@ -6,12 +6,11 @@ using UnityEngine;
 
 public class AutoMinion : ActiveCapacity
 {
-    [SerializeField] private AutoMinionSO SOType;
-       
-    private Entity target;
-    private Minion minion;
-    private GameObject projectileGO;
     private AutoMinionCollider autoMinionCollider;
+    private AutoMinionSO SOType;
+    private Entity target;
+    private GameObject projectileGO;
+    private Minion minion;
 
     public override void OnStart()
     {
@@ -24,6 +23,7 @@ public class AutoMinion : ActiveCapacity
     {
         minion = caster.GetComponent<Minion>();
         if (minion.currentAttackTarget == null) return false;
+        if (!minion.currentAttackTarget.GetComponent<IDeadable>().IsAlive()) return false;
         target = minion.currentAttackTarget.GetComponent<Entity>();
         return base.TryCast(targetsEntityIndexes, targetPositions);
     }
@@ -39,7 +39,7 @@ public class AutoMinion : ActiveCapacity
         minion.OnCastAnimationCast -= CapacityEffect;
         projectileGO = PoolLocalManager.Instance.PoolInstantiate(SOType.feedbackPrefab, shootPoint.position, shootPoint.rotation);
         autoMinionCollider = projectileGO.GetComponent<AutoMinionCollider>();
-        autoMinionCollider.capacitySender = this;
+        autoMinionCollider.capacity = this;
         autoMinionCollider.caster = caster;
         autoMinionCollider.target = target;
         projectileGO.transform.LookAt(target.transform);
@@ -69,7 +69,7 @@ public class AutoMinion : ActiveCapacity
         if (PhotonNetwork.IsMasterClient) return;
         projectileGO = PoolLocalManager.Instance.PoolInstantiate(SOType.feedbackPrefab, minion.transform.position, minion.transform.rotation);
         autoMinionCollider = projectileGO.GetComponent<AutoMinionCollider>();
-        autoMinionCollider.capacitySender = this;
+        autoMinionCollider.capacity = this;
         autoMinionCollider.caster = caster;
         autoMinionCollider.target = EntityCollectionManager.GetEntityByIndex(targetsEntityIndexes[0]);
     }

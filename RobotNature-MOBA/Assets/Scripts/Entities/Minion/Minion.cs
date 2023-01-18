@@ -114,6 +114,20 @@ namespace Entities.Minion
                 currentAttackTarget = null;
             }
             if (animator is not null) animator.SetBool("isMoving", false);
+            if (currentAttackTarget is null)
+            {
+                myController.currentState = MinionController.MinionState.LookingForPathing;
+                currentAggroState = MinionAggroState.None;
+                currentAttackTarget = null;
+                return;
+            }
+            if (!currentAttackTarget.GetComponent<IDeadable>().IsAlive())
+            {
+                myController.currentState = MinionController.MinionState.LookingForPathing;
+                currentAggroState = MinionAggroState.None;
+                currentAttackTarget = null;
+                return;
+            };
             switch (currentAggroState)
             {
                 case MinionAggroState.Minion:
@@ -215,6 +229,7 @@ namespace Entities.Minion
             {
                 if (!objects.GetComponent<Entity>()) continue;
                 var entity = objects.GetComponent<Entity>();
+                if (!entity.GetComponent<IDeadable>().IsAlive()) continue;
                 if (entity.team == team) continue;
                 if (Vector3.Distance(transform.position, entity.transform.position) > attackAbility.maxRange) continue;
                 if (entity is Minion)

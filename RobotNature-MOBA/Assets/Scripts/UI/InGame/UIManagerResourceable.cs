@@ -23,7 +23,7 @@ namespace UI.InGame
             canvasResource.GetComponent<PositionConstraint>().constraintActive = true;
             entity.elementsToShow.Add(canvasResource);
             entity.neverHideElements.Add(canvasResource);
-            if (entity.team != GameStateMachine.Instance.GetPlayerTeam()) canvasResource.SetActive(false);
+            // if (entity.team != GameStateMachine.Instance.GetPlayerTeam()) canvasResource.SetActive(false);
             canvasResource.GetComponent<EntityResourceBar>().InitResourceBar(entity);
         }
     }

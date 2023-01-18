@@ -9,7 +9,7 @@ public class AutoMinionCollider : Entity
 {
     [HideInInspector] public Entity caster;
     [HideInInspector] public Entity target;
-    [HideInInspector] public ActiveCapacity capacitySender;
+    [HideInInspector] public ActiveCapacity capacity;
 
     [SerializeField] private double desiredDuration = 1f;
     private double elapsedTime;
@@ -38,22 +38,21 @@ public class AutoMinionCollider : Entity
 
     protected virtual bool CanDisable()
     {
-        if (!target) return false;
-        return true;
+        return target;
     }
 
     private void OnTriggerEnter(Collider other)
     {
         var entity = other.GetComponent<Entity>();
         if (!entity || entity == caster || entity != target) return;
-        capacitySender.CollideFeedbackEffect(entity);
+        capacity.CollideFeedbackEffect(entity);
         if (!PhotonNetwork.IsMasterClient) return;
-        capacitySender.CollideEntityEffect(entity);
+        capacity.CollideEntityEffect(entity);
     }
 
     private void OnTriggerExit(Collider other)
     {
-        capacitySender.CollideExitEffect(other.gameObject);
+        capacity.CollideExitEffect(other.gameObject);
     }
     
     public void Disable()
