@@ -43,14 +43,13 @@ public class StickyBomb : ChampionActiveCapacity
         stickyBombGO.transform.parent = null;
         stickyBombGO.team = caster.team;
         collider = stickyBombGO.GetComponent<StickyBombCollider>();
-        stickyBombGO.GetComponent<SphereCollider>().enabled = true;
+        stickyBombGO.GetComponent<SphereCollider>().enabled = false;
         collider.ActivateParticleSystem(true);
         collider.GetComponent<SphereCollider>().radius = SOType.radiusStick;
         collider.distance = SOType.maxRange;
         collider.capacity = this;
         collider.caster = caster;
         collider.Launch(direction.normalized * SOType.speedBomb);
-        GameStateMachine.Instance.OnTick += TimerBomb;
     }
 
     public override void CapacityEndAnimation()
@@ -97,7 +96,7 @@ public class StickyBomb : ChampionActiveCapacity
 
     public override void PlayFeedback(int casterIndex, int[] targetsEntityIndexes, Vector3[] targetPositions) { }
 
-    private void TimerBomb()
+    public void TimerBomb()
     {
         timer += 1;
         if (timer < SOType.durationBomb * GameStateMachine.Instance.tickRate) return;
@@ -109,6 +108,8 @@ public class StickyBomb : ChampionActiveCapacity
     private void ExplodeBomb(float amount, byte capacityIndex)
     {
         if (!PhotonNetwork.IsMasterClient) return;
+        GameStateMachine.Instance.OnTick -= TimerBomb;
+        timer = 0;
         var capacity = CapacitySOCollectionManager.GetActiveCapacitySOByIndex(capacityIndex);
         
         if (capacity.name.Contains("AccurateShot"))

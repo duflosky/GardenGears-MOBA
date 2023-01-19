@@ -1,12 +1,13 @@
 using Entities;
 using Entities.Capacities;
+using GameStates;
 using Photon.Pun;
 using UnityEngine;
 
 public class StickyBombCollider : Entity
 {
     [HideInInspector] public Entity caster;
-    [HideInInspector] public ActiveCapacity capacity;
+    [HideInInspector] public StickyBomb capacity;
     [HideInInspector] public float distance;
     [SerializeField] private GameObject[] particles;
 
@@ -24,6 +25,8 @@ public class StickyBombCollider : Entity
         if (!(Vector3.Distance(caster.transform.position, transform.position) > distance)) return;
         rb.isKinematic = true;
         ActivateParticleSystem(false);
+        GameStateMachine.Instance.OnTick += capacity.TimerBomb;
+        GetComponent<SphereCollider>().enabled = true;
     }
 
     protected virtual bool CanDisable()
