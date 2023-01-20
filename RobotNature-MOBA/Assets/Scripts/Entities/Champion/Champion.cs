@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Entities;
 using Entities.Capacities;
@@ -81,16 +82,23 @@ public partial class Champion : Entity, IMovable, IInventoryable, IResourceable,
         }
 
         CheckSpawnPos(newTeam);
-
-        // TODO: Need update
-        if (GameStateMachine.Instance.GetPlayerTeam() == team)
+        
+        if (GameStateMachine.Instance.GetPlayerTeam() == Enums.Team.Team1)
         {
-            if (championMesh.GetComponentInChildren<MeshRenderer>()) championMesh.GetComponentInChildren<MeshRenderer>().material = so.materials[0];
+            if (!championMesh.GetComponentInChildren<SkinnedMeshRenderer>()) return;
+            foreach (var skinnedMeshRenderer in championMesh.GetComponentsInChildren<SkinnedMeshRenderer>())
+            {
+                skinnedMeshRenderer.material = so.materials[0];   
+            }
         }
         else
         {
-            if (championMesh.GetComponentInChildren<MeshRenderer>()) championMesh.GetComponentInChildren<MeshRenderer>().material = so.materials[1];
-            championMesh.SetActive(false);
+            if (!championMesh.GetComponentInChildren<MeshRenderer>()) return;
+            foreach (var skinnedMeshRenderer in championMesh.GetComponentsInChildren<SkinnedMeshRenderer>())
+            {
+                skinnedMeshRenderer.material = so.materials[1];   
+            }
+            // championMesh.SetActive(false);
         }
         
         if (uiManager == null) return;
