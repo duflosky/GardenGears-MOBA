@@ -17,6 +17,7 @@ public class StickyBombCollider : Entity
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
+        isIgnite = false;
     }
 
     protected override void OnUpdate()
