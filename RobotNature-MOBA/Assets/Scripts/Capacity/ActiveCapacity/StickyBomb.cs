@@ -174,7 +174,7 @@ public class StickyBomb : ChampionActiveCapacity
 
     private void ExplodeBomb(float radiusExplosion, float percentageDamage)
     {
-        liveable.OnDecreaseCurrentHpCapacityFeedback -= ExplodeBomb;
+        if (liveable is not null) liveable.OnDecreaseCurrentHpCapacityFeedback -= ExplodeBomb;
         OnAllyHit -= ExplodeBomb;
         GameStateMachine.Instance.OnTick -= TimerBomb;
         timer = 0;

@@ -41,6 +41,7 @@ public class StickyBombCollider : Entity
         rb.isKinematic = false;
         rb.velocity = direction;
         lastPositionCaster = caster.transform.position;
+        transform.rotation = Quaternion.LookRotation(direction) * Quaternion.Euler(0, 180, 0);
     }
 
     private void OnTriggerEnter(Collider other)
