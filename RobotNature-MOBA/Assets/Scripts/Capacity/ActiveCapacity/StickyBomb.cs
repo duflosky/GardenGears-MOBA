@@ -4,7 +4,7 @@ using GameStates;
 using Photon.Pun;
 using UnityEngine;
 
-public class StickyBomb : ChampionActiveCapacity
+public class StickyBomb : ActiveCapacity
 {
     private Champion champion;
 
@@ -43,7 +43,6 @@ public class StickyBomb : ChampionActiveCapacity
         stickyBombGO.transform.parent = null;
         stickyBombGO.team = caster.team;
         collider = stickyBombGO.GetComponent<StickyBombCollider>();
-        stickyBombGO.GetComponent<SphereCollider>().enabled = false;
         collider.ActivateParticleSystem(true);
         collider.GetComponent<SphereCollider>().radius = SOType.radiusStick;
         collider.distance = SOType.maxRange;
@@ -63,9 +62,9 @@ public class StickyBomb : ChampionActiveCapacity
         if (liveable != null)
         {
             // if (affectedEntity.name.Contains("Minion")) return;
+            if (affectedEntity.team == caster.team) timer = 0;
             stickyBombGO.GetComponent<Rigidbody>().isKinematic = true;
             stickyBombGO.GetComponent<SphereCollider>().enabled = false;
-            collider.ActivateParticleSystem(false);
             collider.transform.parent = affectedEntity.transform;
             stickyBombGO.transform.position = affectedEntity.transform.position + new Vector3(0, 2 * affectedEntity.transform.localScale.y + 1, 0);
             liveable.OnDecreaseCurrentHpCapacityFeedback += ExplodeBomb;

@@ -31,6 +31,37 @@ Transform:
   m_Father: {fileID: 4396916045520688424}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &3520140377413927678
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8981608329607514603}
+  m_Layer: 0
+  m_Name: MinionSpot
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8981608329607514603
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3520140377413927678}
+  m_LocalRotation: {x: 0.7071068, y: 8.659561e-17, z: 8.659561e-17, w: 0.7071068}
+  m_LocalPosition: {x: 0, y: -3.5, z: -0.2}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4396916045520688424}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3913394380081827730
 GameObject:
   m_ObjectHideFlags: 0
@@ -68,6 +99,7 @@ Transform:
   - {fileID: 8535989688470613223}
   - {fileID: 5331580133482973486}
   - {fileID: 6813248100944389834}
+  - {fileID: 8981608329607514603}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -186,14 +218,14 @@ MonoBehaviour:
   meshFilterFoV: {fileID: 6432131757552477808}
   fogOfWarStartDetection: {fileID: 8535989688470613223}
   damage: 6
-  shootSpot: {fileID: 5331580133482973486}
+  shotSpot: {fileID: 5331580133482973486}
   attackAbility: {fileID: 11400000, guid: 6f0ea9b7d4bc7d84f915332a679b1a4d, type: 2}
   enemiesInRange: []
   canBeHitByTowerMask:
     serializedVersion: 2
     m_Bits: 536871936
   baseSpot: {fileID: 6813248100944389834}
-  cooldownCatchMinion: 22
+  minionSpot: {fileID: 8981608329607514603}
 --- !u!1 &4170604353210186516
 GameObject:
   m_ObjectHideFlags: 0

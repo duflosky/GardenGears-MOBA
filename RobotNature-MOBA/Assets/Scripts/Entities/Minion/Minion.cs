@@ -86,7 +86,6 @@ namespace Entities.Minion
             if (!gameObject.activeSelf) return;
             if (animator is not null) animator.SetBool("isMoving", false);
             myAgent.isStopped = true;
-            CheckObjectives();
             CheckEnemies();
         }
 
@@ -207,8 +206,8 @@ namespace Entities.Minion
             if (towersList is null) return;
 
             if (!(Vector3.Distance(transform.position, towersList[towerIndex].GetComponent<Tower>().minionSpot.position) < 1)) return;
-            gameObject.SetActive(false);
             ((InGameState)GameStateMachine.Instance.currentState).AddPoint(team);
+            RequestDie();
         }
 
         private void CheckEnemies()
