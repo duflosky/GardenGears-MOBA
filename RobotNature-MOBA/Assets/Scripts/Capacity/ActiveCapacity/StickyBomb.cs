@@ -43,14 +43,13 @@ public class StickyBomb : ChampionActiveCapacity
         stickyBombGO.transform.parent = null;
         stickyBombGO.team = caster.team;
         collider = stickyBombGO.GetComponent<StickyBombCollider>();
-        stickyBombGO.GetComponent<SphereCollider>().enabled = true;
+        collider.isIgnite = false;
         collider.ActivateParticleSystem(true);
         collider.GetComponent<SphereCollider>().radius = SOType.radiusStick;
         collider.distance = SOType.maxRange;
         collider.capacity = this;
         collider.caster = caster;
         collider.Launch(direction.normalized * SOType.speedBomb);
-        GameStateMachine.Instance.OnTick += TimerBomb;
     }
 
     public override void CapacityEndAnimation()
@@ -64,12 +63,13 @@ public class StickyBomb : ChampionActiveCapacity
         if (liveable != null)
         {
             // if (affectedEntity.name.Contains("Minion")) return;
+            if (affectedEntity.team == caster.team) timer = 0;
             stickyBombGO.GetComponent<Rigidbody>().isKinematic = true;
             stickyBombGO.GetComponent<SphereCollider>().enabled = false;
-            collider.ActivateParticleSystem(false);
             collider.transform.parent = affectedEntity.transform;
             stickyBombGO.transform.position = affectedEntity.transform.position + new Vector3(0, 2 * affectedEntity.transform.localScale.y + 1, 0);
             liveable.OnDecreaseCurrentHpCapacityFeedback += ExplodeBomb;
+            OnAllyHit += ExplodeBomb;
         }
         else
         {
@@ -97,7 +97,7 @@ public class StickyBomb : ChampionActiveCapacity
 
     public override void PlayFeedback(int casterIndex, int[] targetsEntityIndexes, Vector3[] targetPositions) { }
 
-    private void TimerBomb()
+    public void TimerBomb()
     {
         timer += 1;
         if (timer < SOType.durationBomb * GameStateMachine.Instance.tickRate) return;
@@ -105,10 +105,45 @@ public class StickyBomb : ChampionActiveCapacity
         timer = 0;
         ExplodeBomb(SOType.radiusExplosion, SOType.percentageDamage);
     }
+    
+    private void ExplodeBomb(byte capacityIndex)
+    {
+        if (!PhotonNetwork.IsMasterClient) return;
+        GameStateMachine.Instance.OnTick -= TimerBomb;
+        timer = 0;
+        var capacity = CapacitySOCollectionManager.GetActiveCapacitySOByIndex(capacityIndex);
+        
+        if (capacity.name.Contains("AccurateShot"))
+        {
+            if (stickyBombGO.team == stickyBombGO.transform.parent.GetComponent<Entity>().team)
+            {
+                OnAllyHit -= ExplodeBomb;
+                GameStateMachine.Instance.OnTick -= TimerBomb;
+                timer = 0;
+                ExplodeBomb(SOType.radiusExplosionAlly, SOType.percentageDamageAlly);
+            }
+            else
+            {
+                OnAllyHit -= ExplodeBomb;
+                GameStateMachine.Instance.OnTick -= TimerBomb;
+                timer = 0;
+                ExplodeBomb(SOType.radiusExplosionEnemy, SOType.percentageDamageEnemy);
+            }
+        }
+        else
+        {
+            OnAllyHit -= ExplodeBomb;
+            GameStateMachine.Instance.OnTick -= TimerBomb;
+            timer = 0;
+            ExplodeBomb(SOType.radiusExplosion, SOType.percentageDamage);
+        }
+    }
 
     private void ExplodeBomb(float amount, byte capacityIndex)
     {
         if (!PhotonNetwork.IsMasterClient) return;
+        GameStateMachine.Instance.OnTick -= TimerBomb;
+        timer = 0;
         var capacity = CapacitySOCollectionManager.GetActiveCapacitySOByIndex(capacityIndex);
         
         if (capacity.name.Contains("AccurateShot"))
@@ -139,6 +174,10 @@ public class StickyBomb : ChampionActiveCapacity
 
     private void ExplodeBomb(float radiusExplosion, float percentageDamage)
     {
+        liveable.OnDecreaseCurrentHpCapacityFeedback -= ExplodeBomb;
+        OnAllyHit -= ExplodeBomb;
+        GameStateMachine.Instance.OnTick -= TimerBomb;
+        timer = 0;
         Vector3 position;
         if (stickyBombGO.transform.parent == null) position = stickyBombGO.transform.position;
         else if (stickyBombGO.transform.parent.GetComponent<Entity>()) position = stickyBombGO.transform.parent.position;

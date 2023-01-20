@@ -3,6 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using Entities.Capacities;
 using Entities.FogOfWar;
+using GameStates;
+using GameStates.States;
 using Photon.Pun;
 using UI.InGame;
 using UnityEngine;
@@ -27,7 +29,6 @@ namespace Entities.Minion
         private enum MinionAggroState
         {
             None,
-            Tower,
             Minion,
             Champion
         };
@@ -114,6 +115,20 @@ namespace Entities.Minion
                 currentAttackTarget = null;
             }
             if (animator is not null) animator.SetBool("isMoving", false);
+            if (currentAttackTarget is null)
+            {
+                myController.currentState = MinionController.MinionState.LookingForPathing;
+                currentAggroState = MinionAggroState.None;
+                currentAttackTarget = null;
+                return;
+            }
+            if (!currentAttackTarget.GetComponent<IDeadable>().IsAlive())
+            {
+                myController.currentState = MinionController.MinionState.LookingForPathing;
+                currentAggroState = MinionAggroState.None;
+                currentAttackTarget = null;
+                return;
+            };
             switch (currentAggroState)
             {
                 case MinionAggroState.Minion:
@@ -132,10 +147,6 @@ namespace Entities.Minion
                         currentAggroState = MinionAggroState.None;
                         currentAttackTarget = null;
                     }
-                    break;
-                
-                case MinionAggroState.Tower:
-                    if (towersList is not null && gameObject.activeSelf) myController.currentState = MinionController.MinionState.Idle;
                     break;
                 
                 case MinionAggroState.Champion:
@@ -186,7 +197,7 @@ namespace Entities.Minion
             else
             {
                 if (animator is not null) animator.SetBool("isMoving", true);
-                myAgent.SetDestination(towersList[towerIndex].transform.position);
+                myAgent.SetDestination(towersList[towerIndex].GetComponent<Tower>().minionSpot.position);
             }
         }
 
@@ -194,18 +205,9 @@ namespace Entities.Minion
         {
             if (towersList is null) return;
 
-            if (Vector3.Distance(transform.position, towersList[towerIndex].transform.position) > attackAbility.maxRange)
-            {
-                myController.currentState = MinionController.MinionState.Walking;
-            }
-            else
-            {
-                if (animator is not null) animator.SetBool("isMoving", true);
-                myAgent.SetDestination(transform.position);
-                myController.currentState = MinionController.MinionState.Attacking;
-                currentAggroState = MinionAggroState.Tower;
-                currentAttackTarget = towersList[towerIndex].gameObject;
-            }
+            if (!(Vector3.Distance(transform.position, towersList[towerIndex].GetComponent<Tower>().minionSpot.position) < 1)) return;
+            ((InGameState)GameStateMachine.Instance.currentState).AddPoint(team);
+            RequestDie();
         }
 
         private void CheckEnemies()
@@ -215,6 +217,7 @@ namespace Entities.Minion
             {
                 if (!objects.GetComponent<Entity>()) continue;
                 var entity = objects.GetComponent<Entity>();
+                if (!entity.GetComponent<IDeadable>().IsAlive()) continue;
                 if (entity.team == team) continue;
                 if (Vector3.Distance(transform.position, entity.transform.position) > attackAbility.maxRange) continue;
                 if (entity is Minion)
