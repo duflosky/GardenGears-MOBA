@@ -12,6 +12,7 @@ public class StickyBombCollider : Entity
 
     private bool isIgnite;
     private Rigidbody rb;
+    private Vector3 lastPositionCaster;
 
     private void Awake()
     {
@@ -22,7 +23,7 @@ public class StickyBombCollider : Entity
     {
         base.OnUpdate();
         if (!CanDisable()) return;
-        if (!(Vector3.Distance(caster.transform.position, transform.position) > distance) || isIgnite) return;
+        if (!(Vector3.Distance(lastPositionCaster, transform.position) > distance) || isIgnite) return;
         ActivateParticleSystem(false);
         rb.isKinematic = true;
         GetComponent<SphereCollider>().enabled = true;
@@ -39,6 +40,7 @@ public class StickyBombCollider : Entity
     {
         rb.isKinematic = false;
         rb.velocity = direction;
+        lastPositionCaster = caster.transform.position;
     }
 
     private void OnTriggerEnter(Collider other)
