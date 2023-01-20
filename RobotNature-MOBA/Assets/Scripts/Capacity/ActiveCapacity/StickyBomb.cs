@@ -43,9 +43,8 @@ public class StickyBomb : ActiveCapacity
         stickyBombGO.transform.parent = null;
         stickyBombGO.team = caster.team;
         collider = stickyBombGO.GetComponent<StickyBombCollider>();
+        collider.isIgnite = false;
         collider.ActivateParticleSystem(true);
-        collider.GetComponent<SphereCollider>().radius = SOType.radiusStick;
-        collider.distance = SOType.maxRange;
         collider.capacity = this;
         collider.caster = caster;
         collider.Launch(direction.normalized * SOType.speedBomb);

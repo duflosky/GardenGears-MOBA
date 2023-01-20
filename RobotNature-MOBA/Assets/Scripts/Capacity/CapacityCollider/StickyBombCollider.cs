@@ -5,26 +5,42 @@ using UnityEngine;
 
 public class StickyBombCollider : Entity
 {
+    [HideInInspector] public bool isIgnite;
     [HideInInspector] public Entity caster;
     [HideInInspector] public StickyBomb capacity;
-    [HideInInspector] public float distance;
     [SerializeField] private GameObject[] particles;
 
-    private bool isIgnite;
+    private float distance;
     private Rigidbody rb;
     private Vector3 lastPositionCaster;
 
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
-        isIgnite = false;
+    }
+
+    protected override void OnStart()
+    {
+        base.OnStart();
+        var stickyBombSO = capacity.SO as StickyBombSO;
+        GetComponent<SphereCollider>().radius = stickyBombSO.radiusStick;
+        distance = stickyBombSO.maxRange;
     }
 
     protected override void OnUpdate()
     {
         base.OnUpdate();
-        if (!CanDisable()) return;
-        if (!(Vector3.Distance(lastPositionCaster, transform.position) > distance) || isIgnite) return;
+        if (!CanDisable())
+        {
+            Debug.Log("CanDisable");
+            return;
+        }
+        if (!(Vector3.Distance(lastPositionCaster, transform.position) > distance) || isIgnite)
+        {
+            Debug.Log("distance");
+            Debug.Log($"isIgnite: {isIgnite}");
+            return;
+        }
         ActivateParticleSystem(false);
         rb.isKinematic = true;
         GetComponent<SphereCollider>().enabled = true;
