@@ -4,7 +4,7 @@ using GameStates;
 using Photon.Pun;
 using UnityEngine;
 
-public class StickyBomb : ActiveCapacity
+public class StickyBomb : ChampionActiveCapacity
 {
     private Champion champion;
 

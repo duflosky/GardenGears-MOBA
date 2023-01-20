@@ -83,6 +83,8 @@ namespace Entities.Capacities
         public virtual void CollideFeedbackEffect(Entity affectedEntity) { }
 
         public virtual void CollideExitEffect(GameObject obj) { }
+        
+        public GlobalDelegates.ByteDelegate OnAllyHit;
 
         public virtual bool isInRange(int casterIndex, Vector3 position)
         {
@@ -92,10 +94,6 @@ namespace Entities.Capacities
 
             return true;
         }
-
-        #endregion
-
-        #region MyRegion
 
         public abstract void PlayFeedback(int casterIndex, int[] targetsEntityIndexes, Vector3[] targetPositions);
 
