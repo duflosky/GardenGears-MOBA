@@ -70,6 +70,7 @@ MonoBehaviour:
   canShow: 0
   canHide: 0
   elementsToShow: []
+  neverHideElements: []
   canChangeTeam: 0
   team: 0
   baseViewRange: 0
@@ -81,7 +82,6 @@ MonoBehaviour:
   caster: {fileID: 0}
   maxDistance: 0
   casterPos: {x: 0, y: 0, z: 0}
-  effectIndex: 
   affectEntityOnly: 1
 --- !u!54 &896420243452124288
 Rigidbody:

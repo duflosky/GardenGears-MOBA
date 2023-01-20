@@ -47,7 +47,12 @@ public abstract class ChampionActiveCapacity : ActiveCapacity
     {
         if (state)
         {
-            if (ChampSO.gizmoPrefab == null) throw new NullReferenceException($"Missing Gizmo Prefab To {ChampSO.name}");
+            if (ChampSO.gizmoPrefab == null) 
+            {
+                //throw new NullReferenceException($"Missing Gizmo Prefab To {ChampSO.name}");
+                Debug.LogError($"Missing Gizmo Prefab To {ChampSO.name}");
+                return;
+            }
             if (!gizmo)
             {
                 gizmo = Object.Instantiate(ChampSO.gizmoPrefab, casterTransform.position, Quaternion.identity, casterTransform);

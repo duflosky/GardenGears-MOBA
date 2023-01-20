@@ -98,6 +98,7 @@ namespace Entities.Capacities
         #region MyRegion
 
         public abstract void PlayFeedback(int casterIndex, int[] targetsEntityIndexes, Vector3[] targetPositions);
+        public virtual void AnimationFeedback(){}
 
         #endregion
     }

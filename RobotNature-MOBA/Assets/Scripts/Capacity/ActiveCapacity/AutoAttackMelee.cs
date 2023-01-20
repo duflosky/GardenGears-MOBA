@@ -13,22 +13,18 @@ public class AutoAttackMelee : ChampionActiveCapacity
     public AutoAttackMeleeSO SOType;
     private double timer;
     private Vector3 lookDir;
-    private Champion champion;
 
 
     public override void OnStart()
     {
+        base.OnStart();
         SOType = (AutoAttackMeleeSO)SO;
-        champion = (Champion)caster;
-        casterTransform = caster.transform;
     }
     
     public override void CapacityPress()
     {
-        champion.GetPassiveCapacity(SOType.attackSlowSO).OnAdded();
-        champion.OnCastAnimationCast += CapacityEffect;
-        champion.OnCastAnimationEnd += CapacityEndAnimation; 
-
+        base.CapacityPress();
+        champion.OnCastAnimationFeedback += AnimationFeedback;
     }
 
     public override void CapacityEffect(Transform castTransform)
@@ -84,16 +80,22 @@ public class AutoAttackMelee : ChampionActiveCapacity
     }
 
     public override void PlayFeedback(int casterIndex, int[] targetsEntityIndexes, Vector3[] targetPositions)
-    { 
+    {
+        
+    }
+
+    public override void AnimationFeedback()
+    {
         lookDir = targetPositions[0]-casterTransform.position;
         lookDir.y = 0;
         feedbackObject = PoolLocalManager.Instance.PoolInstantiate(SOType.fxPrefab, casterTransform.position, Quaternion.LookRotation(-lookDir), casterTransform); 
         var col = feedbackObject.GetComponent<Collider>(); 
         if (col) col.enabled = false; 
         GameStateMachine.Instance.OnTick += DisableObject;
+        champion.OnCastAnimationFeedback -= AnimationFeedback;
     }
-    
-    
+
+
     private void DisableObject()
     {
         timer += 1;

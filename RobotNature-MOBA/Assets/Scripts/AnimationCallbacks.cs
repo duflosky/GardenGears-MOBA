@@ -32,6 +32,17 @@ public class AnimationCallbacks : MonoBehaviourPun
         caster.CastAnimationEnd();
     }
     
+    public void AnimationFeedback()
+    {
+        if(photonView.IsMine) photonView.RPC("AnimationFeedbackRPC", RpcTarget.MasterClient);
+    }
+    
+    [PunRPC]
+    public void AnimationFeedbackRPC()
+    {
+        caster.CastAnimationFeedback();
+    }
+    
     public void OnChampionDieEnd()
     {
         Champion champion = GetComponentInParent<Champion>();

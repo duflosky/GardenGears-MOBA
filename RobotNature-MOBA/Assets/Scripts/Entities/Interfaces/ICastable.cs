@@ -46,6 +46,7 @@ public interface ICastable
 
         public void CastAnimationCast(Transform transform);
         public void CastAnimationEnd();
+        public void CastAnimationFeedback();
         
         
         public void SyncCastRPC(byte capacityIndex, int[] targetedEntities, Vector3[] targetedPositions);

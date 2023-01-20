@@ -39,6 +39,21 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8965094066127888279}
     m_Modifications:
+    - target: {fileID: 2851806504367054332, guid: 0501d7b80283d1347917ae565e593837,
+        type: 3}
+      propertyPath: looping
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2851806504367054332, guid: 0501d7b80283d1347917ae565e593837,
+        type: 3}
+      propertyPath: stopAction
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2851806504367054332, guid: 0501d7b80283d1347917ae565e593837,
+        type: 3}
+      propertyPath: lengthInSec
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 5614902743091288480, guid: 0501d7b80283d1347917ae565e593837,
         type: 3}
       propertyPath: m_Name
@@ -118,6 +133,21 @@ PrefabInstance:
         type: 3}
       propertyPath: m_ConstrainProportionsScale
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7320942630557216205, guid: 0501d7b80283d1347917ae565e593837,
+        type: 3}
+      propertyPath: looping
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7320942630557216205, guid: 0501d7b80283d1347917ae565e593837,
+        type: 3}
+      propertyPath: stopAction
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7320942630557216205, guid: 0501d7b80283d1347917ae565e593837,
+        type: 3}
+      propertyPath: lengthInSec
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0501d7b80283d1347917ae565e593837, type: 3}

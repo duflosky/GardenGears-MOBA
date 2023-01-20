@@ -865,6 +865,11 @@ namespace Entities.Minion
             throw new NotImplementedException();
         }
 
+        public void CastAnimationFeedback()
+        {
+            throw new NotImplementedException();
+        }
+
         public void SyncCastRPC(byte capacityIndex, int[] targetedEntities, Vector3[] targetedPositions)
         {
             throw new NotImplementedException();
