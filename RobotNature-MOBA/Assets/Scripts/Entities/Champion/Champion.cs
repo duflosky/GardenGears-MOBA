@@ -83,20 +83,20 @@ public partial class Champion : Entity, IMovable, IInventoryable, IResourceable,
 
         CheckSpawnPos(newTeam);
         
-        if (GameStateMachine.Instance.GetPlayerTeam() == Enums.Team.Team1)
+        if (team == Enums.Team.Team1)
         {
             if (!championMesh.GetComponentInChildren<SkinnedMeshRenderer>()) return;
             foreach (var skinnedMeshRenderer in championMesh.GetComponentsInChildren<SkinnedMeshRenderer>())
             {
-                skinnedMeshRenderer.material = so.materials[0];   
+                skinnedMeshRenderer.material = so.materials[0];
             }
         }
         else
         {
-            if (!championMesh.GetComponentInChildren<MeshRenderer>()) return;
+            if (!championMesh.GetComponentInChildren<SkinnedMeshRenderer>()) return;
             foreach (var skinnedMeshRenderer in championMesh.GetComponentsInChildren<SkinnedMeshRenderer>())
             {
-                skinnedMeshRenderer.material = so.materials[1];   
+                skinnedMeshRenderer.material = so.materials[1];
             }
             // championMesh.SetActive(false);
         }
