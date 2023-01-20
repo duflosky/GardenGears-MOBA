@@ -65,7 +65,11 @@ public class AutoAttackRange : ChampionActiveCapacity
 
     public override void CollideEntityEffect(Entity affectedEntity)
     {
-        if (caster.team == affectedEntity.team) return;
+        if (caster.team == affectedEntity.team)
+        {
+            AllyHit(indexOfSOInCollection);
+            return;
+        }
         var lifeable = affectedEntity.GetComponent<IActiveLifeable>();
         if (lifeable == null) return;
         if (!lifeable.AttackAffected()) return;
@@ -79,8 +83,6 @@ public class AutoAttackRange : ChampionActiveCapacity
     { 
         collider.Disable();
     }
-
-   
 
     public override void PlayFeedback(int casterIndex, int[] targetsEntityIndexes, Vector3[] targetPositions) { }
 }

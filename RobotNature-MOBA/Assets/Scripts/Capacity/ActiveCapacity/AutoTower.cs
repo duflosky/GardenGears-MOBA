@@ -33,7 +33,7 @@ public class AutoTower : ActiveCapacity
 
     public override void CapacityEffect(Transform castTransform)
     {
-        autoTowerGO = PoolLocalManager.Instance.PoolInstantiate(SOType.feedbackPrefab, tower.shootSpot.position, castTransform.rotation);
+        autoTowerGO = PoolLocalManager.Instance.PoolInstantiate(SOType.feedbackPrefab, tower.shotSpot.position, castTransform.rotation);
         autoTowerCollider = autoTowerGO.GetComponent<AutoTowerCollider>();
         autoTowerCollider.capacitySender = this;
         autoTowerCollider.caster = caster;
@@ -59,7 +59,7 @@ public class AutoTower : ActiveCapacity
     {
         if (PhotonNetwork.IsMasterClient) return;
         Tower towerFeedback = caster.GetComponent<Tower>();
-        autoTowerGO = PoolLocalManager.Instance.PoolInstantiate(SOType.feedbackPrefab, towerFeedback.shootSpot.position, towerFeedback.shootSpot.rotation);
+        autoTowerGO = PoolLocalManager.Instance.PoolInstantiate(SOType.feedbackPrefab, towerFeedback.shotSpot.position, towerFeedback.shotSpot.rotation);
         autoTowerCollider = autoTowerGO.GetComponent<AutoTowerCollider>();
         autoTowerCollider.capacitySender = this;
         autoTowerCollider.caster = caster;

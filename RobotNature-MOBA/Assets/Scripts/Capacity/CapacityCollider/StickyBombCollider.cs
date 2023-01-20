@@ -1,16 +1,18 @@
 using Entities;
-using Entities.Capacities;
+using GameStates;
 using Photon.Pun;
 using UnityEngine;
 
 public class StickyBombCollider : Entity
 {
+    [HideInInspector] public bool isIgnite;
     [HideInInspector] public Entity caster;
-    [HideInInspector] public ActiveCapacity capacity;
     [HideInInspector] public float distance;
+    [HideInInspector] public StickyBomb capacity;
     [SerializeField] private GameObject[] particles;
 
     private Rigidbody rb;
+    private Vector3 lastPositionCaster;
 
     private void Awake()
     {
@@ -21,9 +23,12 @@ public class StickyBombCollider : Entity
     {
         base.OnUpdate();
         if (!CanDisable()) return;
-        if (!(Vector3.Distance(caster.transform.position, transform.position) > distance)) return;
-        rb.isKinematic = true;
+        if (!(Vector3.Distance(lastPositionCaster, transform.position) > distance) || isIgnite) return;
         ActivateParticleSystem(false);
+        rb.isKinematic = true;
+        GameStateMachine.Instance.OnTick += capacity.TimerBomb;
+        GetComponent<SphereCollider>().enabled = true;
+        isIgnite = true;
     }
 
     protected virtual bool CanDisable()
@@ -35,17 +40,20 @@ public class StickyBombCollider : Entity
     {
         rb.isKinematic = false;
         rb.velocity = direction;
+        lastPositionCaster = caster.transform.position;
     }
 
     private void OnTriggerEnter(Collider other)
     {
         var affectedEntity = other.GetComponent<Entity>();
-        if (!affectedEntity || affectedEntity == caster) return;
-        if (PhotonNetwork.IsMasterClient) capacity.CollideEntityEffect(affectedEntity);
+        if (!affectedEntity) return;
+        if (!PhotonNetwork.IsMasterClient) return; 
+        capacity.CollideEntityEffect(affectedEntity);
     }
 
     public void Disable()
     {
+        GetComponent<SphereCollider>().enabled = false;
         photonView.RPC("SyncDisableRPC", RpcTarget.All);
     }
     

@@ -43,7 +43,11 @@ public class AutoAttackMelee : ChampionActiveCapacity
 
     public override void CollideEntityEffect(Entity entity)
     {
-        if (caster.team == entity.team) return;
+        if (caster.team == entity.team)
+        {
+            AllyHit(indexOfSOInCollection);
+            return;
+        }
         var liveable = entity.GetComponent<IActiveLifeable>();
         var capacityIndex = CapacitySOCollectionManager.GetActiveCapacitySOIndex(SOType);
         if (liveable != null)
