@@ -7,10 +7,10 @@ public class StickyBombCollider : Entity
 {
     [HideInInspector] public bool isIgnite;
     [HideInInspector] public Entity caster;
+    [HideInInspector] public float distance;
     [HideInInspector] public StickyBomb capacity;
     [SerializeField] private GameObject[] particles;
 
-    private float distance;
     private Rigidbody rb;
     private Vector3 lastPositionCaster;
 
@@ -19,32 +19,15 @@ public class StickyBombCollider : Entity
         rb = GetComponent<Rigidbody>();
     }
 
-    protected override void OnStart()
-    {
-        base.OnStart();
-        var stickyBombSO = capacity.SO as StickyBombSO;
-        GetComponent<SphereCollider>().radius = stickyBombSO.radiusStick;
-        distance = stickyBombSO.maxRange;
-    }
-
     protected override void OnUpdate()
     {
         base.OnUpdate();
-        if (!CanDisable())
-        {
-            Debug.Log("CanDisable");
-            return;
-        }
-        if (!(Vector3.Distance(lastPositionCaster, transform.position) > distance) || isIgnite)
-        {
-            Debug.Log("distance");
-            Debug.Log($"isIgnite: {isIgnite}");
-            return;
-        }
+        if (!CanDisable()) return;
+        if (!(Vector3.Distance(lastPositionCaster, transform.position) > distance) || isIgnite) return;
         ActivateParticleSystem(false);
         rb.isKinematic = true;
-        GetComponent<SphereCollider>().enabled = true;
         GameStateMachine.Instance.OnTick += capacity.TimerBomb;
+        GetComponent<SphereCollider>().enabled = true;
         isIgnite = true;
     }
 

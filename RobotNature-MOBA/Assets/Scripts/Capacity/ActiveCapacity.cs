@@ -84,8 +84,13 @@ namespace Entities.Capacities
 
         public virtual void CollideExitEffect(GameObject obj) { }
         
-        public GlobalDelegates.ByteDelegate OnAllyHit;
+        public static event GlobalDelegates.ByteDelegate OnAllyHit;
 
+        protected static void AllyHit(byte capacityIndex)
+        {
+            OnAllyHit?.Invoke(capacityIndex);
+        }
+        
         public virtual bool isInRange(int casterIndex, Vector3 position)
         {
             float distance = Vector3.Distance(EntityCollectionManager.GetEntityByIndex(casterIndex).transform.position, position);

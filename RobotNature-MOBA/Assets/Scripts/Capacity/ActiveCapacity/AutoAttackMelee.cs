@@ -49,7 +49,7 @@ public class AutoAttackMelee : ChampionActiveCapacity
     {
         if (caster.team == entity.team)
         {
-            OnAllyHit?.Invoke(indexOfSOInCollection);
+            AllyHit(indexOfSOInCollection);
             return;
         }
         var liveable = entity.GetComponent<IActiveLifeable>();

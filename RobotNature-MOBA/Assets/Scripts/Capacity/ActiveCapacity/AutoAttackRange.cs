@@ -67,6 +67,7 @@ public class AutoAttackRange : ChampionActiveCapacity
     {
         if (caster.team == affectedEntity.team)
         {
+            AllyHit(indexOfSOInCollection);
             return;
         }
         var lifeable = affectedEntity.GetComponent<IActiveLifeable>();

@@ -48,7 +48,7 @@ public class AccurateShot : ChampionActiveCapacity
             if (caster.team == entity.team)
             {
                 collider.maxDistance++;
-                OnAllyHit?.Invoke(indexOfSOInCollection);
+                AllyHit(indexOfSOInCollection);
             }
             else
             {

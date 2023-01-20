@@ -63,7 +63,7 @@ public class UltimateRange : ChampionActiveCapacity
         }
         else if (caster.team == entity.team)
         {
-            OnAllyHit?.Invoke(indexOfSOInCollection);
+            AllyHit(indexOfSOInCollection);
             Explode(entity.transform.position);
         }
     }
