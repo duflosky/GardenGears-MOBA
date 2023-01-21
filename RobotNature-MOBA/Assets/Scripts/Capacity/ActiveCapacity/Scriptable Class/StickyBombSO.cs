@@ -15,6 +15,8 @@ public class StickyBombSO : ChampionActiveCapacitySO
     public float radiusExplosionAlly;
     public float radiusExplosionEnemy;
     public GameObject explosionGO;
+    public GameObject explosionAllyGO;
+    public GameObject explosionEnemyGO;
 
     public override Type AssociatedType()
     {

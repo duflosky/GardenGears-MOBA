@@ -182,8 +182,18 @@ public class StickyBomb : ChampionActiveCapacity
         if (stickyBombGO.transform.parent == null) position = stickyBombGO.transform.position;
         else if (stickyBombGO.transform.parent.GetComponent<Entity>()) position = stickyBombGO.transform.parent.position;
         else position = stickyBombGO.transform.position;
-        SOType.explosionGO.transform.localScale = new Vector3(radiusExplosion, radiusExplosion, radiusExplosion) / 3;
-        PoolLocalManager.Instance.RequestPoolInstantiate(SOType.explosionGO, position, Quaternion.identity);
+        if (radiusExplosion == SOType.radiusExplosion)
+        {
+            PoolLocalManager.Instance.RequestPoolInstantiate(SOType.explosionGO, position, Quaternion.identity);   
+        }
+        else if (radiusExplosion == SOType.radiusExplosionAlly)
+        {
+            PoolLocalManager.Instance.RequestPoolInstantiate(SOType.explosionAllyGO, position, Quaternion.identity);
+        }
+        else if (radiusExplosion == SOType.radiusExplosionEnemy)
+        {
+            PoolLocalManager.Instance.RequestPoolInstantiate(SOType.explosionEnemyGO, position, Quaternion.identity);
+        }
         // var capacityIndex = CapacitySOCollectionManager.GetActiveCapacitySOIndex(SOType);
         var entities = Physics.OverlapSphere(position, radiusExplosion);
         foreach (var entity in entities)

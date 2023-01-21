@@ -28,6 +28,8 @@ MonoBehaviour:
     type: 3}
   shootType: 1
   indexInCollection: 4
+  gizmoPrefab: {fileID: 0}
+  capacitySlow: {fileID: 0}
   percentageDamage: 2
   percentageDamageAlly: 3
   percentageDamageEnemy: 2.5
@@ -38,4 +40,8 @@ MonoBehaviour:
   radiusExplosionAlly: 4
   radiusExplosionEnemy: 3.5
   explosionGO: {fileID: 5261821192487706735, guid: 77cdcd2645a53c34cac45461ff260c83,
+    type: 3}
+  explosionAllyGO: {fileID: 5261821192487706735, guid: f8773b0ffe82fc848ada867109221d4a,
+    type: 3}
+  explosionEnemyGO: {fileID: 5261821192487706735, guid: 4c51c0b6fe8bb84498918bf6d0e06ae7,
     type: 3}
