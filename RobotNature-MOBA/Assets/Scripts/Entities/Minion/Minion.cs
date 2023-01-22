@@ -9,6 +9,7 @@ using Photon.Pun;
 using UI.InGame;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Serialization;
 
 namespace Entities.Minion
 {
@@ -16,7 +17,8 @@ namespace Entities.Minion
     {
         #region Minion Variables
 
-        [SerializeField] private NavMeshAgent myAgent;
+        [SerializeField] private NavMeshAgent myNavMeshAgent;
+        [SerializeField] private NavMeshObstacle myNavMeshObstacle;
         private MinionController myController;
         private Animator animator;
 
@@ -51,7 +53,7 @@ namespace Entities.Minion
         protected override void OnStart()
         {
             base.OnStart();
-            myAgent = GetComponent<NavMeshAgent>();
+            myNavMeshAgent = GetComponent<NavMeshAgent>();
             myController = GetComponent<MinionController>();
             if (GetComponent<Animator>()) animator = GetComponent<Animator>();
             UIManager.Instance.InstantiateHealthBarForEntity(entityIndex);
@@ -66,6 +68,8 @@ namespace Entities.Minion
             attackCycle = false;
             RequestSetCurrentHp(maxHp);
             waypointIndex = 0;
+            myNavMeshAgent.enabled = true;
+            myNavMeshObstacle.enabled = false;
         }
 
         private IEnumerator AttackLogic()
@@ -85,13 +89,16 @@ namespace Entities.Minion
         {
             if (!gameObject.activeSelf) return;
             if (animator is not null) animator.SetBool("isMoving", false);
-            myAgent.isStopped = true;
+            myNavMeshAgent.enabled = false;
+            myNavMeshObstacle.enabled = true;
             CheckEnemies();
         }
 
         public void WalkingState()
         {
             if (animator is not null) animator.SetBool("isMoving", true);
+            myNavMeshAgent.enabled = true;
+            myNavMeshObstacle.enabled = false;
             CheckMyWaypoints();
             CheckObjectives();
             CheckEnemies();
@@ -102,7 +109,9 @@ namespace Entities.Minion
             if (myWaypoints is null) return;
             if (!gameObject.activeSelf) return;
             if (animator is not null) animator.SetBool("isMoving", true);
-            myAgent.SetDestination(myWaypoints[waypointIndex].position);
+            myNavMeshAgent.enabled = true;
+            myNavMeshObstacle.enabled = false;
+            myNavMeshAgent.SetDestination(myWaypoints[waypointIndex].position);
             myController.currentState = MinionController.MinionState.Walking;
         }
 
@@ -128,7 +137,9 @@ namespace Entities.Minion
                 currentAggroState = MinionAggroState.None;
                 currentAttackTarget = null;
                 return;
-            };
+            }
+            myNavMeshAgent.enabled = false;
+            myNavMeshObstacle.enabled = true;
             switch (currentAggroState)
             {
                 case MinionAggroState.Minion:
@@ -187,17 +198,17 @@ namespace Entities.Minion
             if (myWaypoints is null) return;
             var minionPosition = new Vector3(transform.position.x, 0, myWaypoints[waypointIndex].transform.position.z);
             var waypointPosition = new Vector3(myWaypoints[waypointIndex].transform.position.x, 0, myWaypoints[waypointIndex].transform.position.z);
-            if (!(Vector3.Distance(minionPosition, waypointPosition) <= myAgent.stoppingDistance)) return;
+            if (!(Vector3.Distance(minionPosition, waypointPosition) <= myNavMeshAgent.stoppingDistance)) return;
             if (waypointIndex < myWaypoints.Count - 1)
             {
                 waypointIndex++;
                 if (animator is not null) animator.SetBool("isMoving", true);
-                myAgent.SetDestination(myWaypoints[waypointIndex].position);
+                myNavMeshAgent.SetDestination(myWaypoints[waypointIndex].position);
             }
             else
             {
                 if (animator is not null) animator.SetBool("isMoving", true);
-                myAgent.SetDestination(towersList[towerIndex].GetComponent<Tower>().minionSpot.position);
+                myNavMeshAgent.SetDestination(towersList[towerIndex].GetComponent<Tower>().minionSpot.position);
             }
         }
 
@@ -223,7 +234,7 @@ namespace Entities.Minion
                 if (entity is Minion)
                 {
                     if (animator is not null) animator.SetBool("isMoving", false);
-                    myAgent.SetDestination(transform.position);
+                    // myNavMeshAgent.SetDestination(transform.position);
                     myController.currentState = MinionController.MinionState.Attacking;
                     currentAggroState = MinionAggroState.Minion;
                     currentAttackTarget = entity.gameObject;
@@ -232,7 +243,7 @@ namespace Entities.Minion
                 if (entity is global::Champion)
                 {
                     if (animator is not null) animator.SetBool("isMoving", false);
-                    myAgent.SetDestination(transform.position);
+                    // myNavMeshAgent.SetDestination(transform.position);
                     myController.currentState = MinionController.MinionState.Attacking;
                     currentAggroState = MinionAggroState.Champion;
                     currentAttackTarget = entity.gameObject;
