@@ -44,6 +44,7 @@ GameObject:
   - component: {fileID: 5204896322559964523}
   - component: {fileID: 7504643611007393522}
   - component: {fileID: 783499094233212663}
+  - component: {fileID: 4077513840374523440}
   - component: {fileID: 3401215351380047821}
   - component: {fileID: 132848234928709079}
   - component: {fileID: 4047828749551299738}
@@ -130,6 +131,22 @@ NavMeshAgent:
   m_BaseOffset: 0.25
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!208 &4077513840374523440
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2239969580052726158}
+  m_Enabled: 0
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.5, y: 0.5, z: 0.5}
+  m_MoveThreshold: 0.1
+  m_Carve: 0
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0, z: 0}
+  m_TimeToStationary: 0.5
 --- !u!114 &3401215351380047821
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -198,7 +215,8 @@ MonoBehaviour:
   canView: 0
   meshFilterFoV: {fileID: 8931494836145469071}
   fogOfWarStartDetection: {fileID: 401864009827507682}
-  myAgent: {fileID: 783499094233212663}
+  myNavMeshAgent: {fileID: 783499094233212663}
+  myNavMeshObstacle: {fileID: 4077513840374523440}
   myWaypoints: []
   towersList: []
   waypointIndex: 0
