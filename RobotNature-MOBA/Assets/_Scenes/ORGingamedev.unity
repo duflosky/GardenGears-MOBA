@@ -184,7 +184,7 @@ Light:
   serializedVersion: 10
   m_Type: 1
   m_Shape: 0
-  m_Color: {r: 1, g: 0.8073277, b: 0.5330188, a: 1}
+  m_Color: {r: 0.75155044, g: 0.7830189, b: 0.5133945, a: 1}
   m_Intensity: 1.2
   m_Range: 10
   m_SpotAngle: 30
@@ -577,19 +577,6 @@ PrefabInstance:
       propertyPath: enemyTowers.Array.data[0]
       value: 
       objectReference: {fileID: 0}
-    - target: {fileID: 1178005781, guid: 9a3d8686d94b5444c9c8d6bcd8e404ee, type: 3}
-      propertyPath: team
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 1178005781, guid: 9a3d8686d94b5444c9c8d6bcd8e404ee, type: 3}
-      propertyPath: minionPrefab
-      value: 
-      objectReference: {fileID: 4047828749551299738, guid: ff97559ab1831d5489602c775f37a412,
-        type: 3}
-    - target: {fileID: 1178005781, guid: 9a3d8686d94b5444c9c8d6bcd8e404ee, type: 3}
-      propertyPath: enemyTowers.Array.data[0]
-      value: 
-      objectReference: {fileID: 1576678134}
     - target: {fileID: 1304789539, guid: 9a3d8686d94b5444c9c8d6bcd8e404ee, type: 3}
       propertyPath: m_LocalPosition.z
       value: 0.1
@@ -613,10 +600,35 @@ PrefabInstance:
       propertyPath: sceneViewId
       value: 998
       objectReference: {fileID: 0}
+    - target: {fileID: 1293975524055240802, guid: 9a3d8686d94b5444c9c8d6bcd8e404ee,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 2.58
+      objectReference: {fileID: 0}
+    - target: {fileID: 1293975524055240802, guid: 9a3d8686d94b5444c9c8d6bcd8e404ee,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -25.82
+      objectReference: {fileID: 0}
     - target: {fileID: 1306408754722077539, guid: 9a3d8686d94b5444c9c8d6bcd8e404ee,
         type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2463430146064235060, guid: 9a3d8686d94b5444c9c8d6bcd8e404ee,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 11.09
+      objectReference: {fileID: 0}
+    - target: {fileID: 2463430146064235060, guid: 9a3d8686d94b5444c9c8d6bcd8e404ee,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.39
+      objectReference: {fileID: 0}
+    - target: {fileID: 2463430146064235060, guid: 9a3d8686d94b5444c9c8d6bcd8e404ee,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -24.51
       objectReference: {fileID: 0}
     - target: {fileID: 2584379910981245886, guid: 9a3d8686d94b5444c9c8d6bcd8e404ee,
         type: 3}
@@ -638,6 +650,36 @@ PrefabInstance:
       propertyPath: m_PlayAutomatically
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3314050973949725421, guid: 9a3d8686d94b5444c9c8d6bcd8e404ee,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 5.75
+      objectReference: {fileID: 0}
+    - target: {fileID: 3314050973949725421, guid: 9a3d8686d94b5444c9c8d6bcd8e404ee,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -29.27
+      objectReference: {fileID: 0}
+    - target: {fileID: 3396240088594642960, guid: 9a3d8686d94b5444c9c8d6bcd8e404ee,
+        type: 3}
+      propertyPath: m_ApplyRootMotion
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3794385812671649423, guid: 9a3d8686d94b5444c9c8d6bcd8e404ee,
+        type: 3}
+      propertyPath: m_Lightmapping
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3794385812671649423, guid: 9a3d8686d94b5444c9c8d6bcd8e404ee,
+        type: 3}
+      propertyPath: m_BoundingSphereOverride.w
+      value: 2.1087646
+      objectReference: {fileID: 0}
+    - target: {fileID: 3794385812671649423, guid: 9a3d8686d94b5444c9c8d6bcd8e404ee,
+        type: 3}
+      propertyPath: m_BoundingSphereOverride.y
+      value: 1e-45
+      objectReference: {fileID: 0}
     - target: {fileID: 3861545290360936375, guid: 9a3d8686d94b5444c9c8d6bcd8e404ee,
         type: 3}
       propertyPath: m_StaticEditorFlags
@@ -658,16 +700,6 @@ PrefabInstance:
       propertyPath: sceneViewId
       value: 998
       objectReference: {fileID: 0}
-    - target: {fileID: 4529818959313865997, guid: 9a3d8686d94b5444c9c8d6bcd8e404ee,
-        type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 50
-      objectReference: {fileID: 0}
-    - target: {fileID: 4529818959313865997, guid: 9a3d8686d94b5444c9c8d6bcd8e404ee,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 10.67
-      objectReference: {fileID: 0}
     - target: {fileID: 4944857167969572839, guid: 9a3d8686d94b5444c9c8d6bcd8e404ee,
         type: 3}
       propertyPath: sceneViewId
@@ -678,6 +710,11 @@ PrefabInstance:
       propertyPath: sceneViewId
       value: 999
       objectReference: {fileID: 0}
+    - target: {fileID: 5002324124901109588, guid: 9a3d8686d94b5444c9c8d6bcd8e404ee,
+        type: 3}
+      propertyPath: m_Intensity
+      value: 200
+      objectReference: {fileID: 0}
     - target: {fileID: 5127486029803196819, guid: 9a3d8686d94b5444c9c8d6bcd8e404ee,
         type: 3}
       propertyPath: an_bench
@@ -687,6 +724,26 @@ PrefabInstance:
         type: 3}
       propertyPath: benchCollider
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 5129290630188280124, guid: 9a3d8686d94b5444c9c8d6bcd8e404ee,
+        type: 3}
+      propertyPath: m_Lightmapping
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5129290630188280124, guid: 9a3d8686d94b5444c9c8d6bcd8e404ee,
+        type: 3}
+      propertyPath: m_BoundingSphereOverride.w
+      value: 4.9354e-41
+      objectReference: {fileID: 0}
+    - target: {fileID: 5129290630188280124, guid: 9a3d8686d94b5444c9c8d6bcd8e404ee,
+        type: 3}
+      propertyPath: m_BoundingSphereOverride.x
+      value: 6.56e-43
+      objectReference: {fileID: 0}
+    - target: {fileID: 5129290630188280124, guid: 9a3d8686d94b5444c9c8d6bcd8e404ee,
+        type: 3}
+      propertyPath: m_BoundingSphereOverride.y
+      value: -0.24033487
       objectReference: {fileID: 0}
     - target: {fileID: 5990029555207610702, guid: 9a3d8686d94b5444c9c8d6bcd8e404ee,
         type: 3}
@@ -748,15 +805,60 @@ PrefabInstance:
       propertyPath: m_Name
       value: Environment
       objectReference: {fileID: 0}
+    - target: {fileID: 6248786380893137704, guid: 9a3d8686d94b5444c9c8d6bcd8e404ee,
+        type: 3}
+      propertyPath: m_Intensity
+      value: 300
+      objectReference: {fileID: 0}
     - target: {fileID: 6391725129199641952, guid: 9a3d8686d94b5444c9c8d6bcd8e404ee,
         type: 3}
       propertyPath: m_PlayAutomatically
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6595212995513198393, guid: 9a3d8686d94b5444c9c8d6bcd8e404ee,
+        type: 3}
+      propertyPath: m_Intensity
+      value: 300
+      objectReference: {fileID: 0}
+    - target: {fileID: 6848027397917206944, guid: 9a3d8686d94b5444c9c8d6bcd8e404ee,
+        type: 3}
+      propertyPath: m_Intensity
+      value: 300
+      objectReference: {fileID: 0}
+    - target: {fileID: 6848027397917206944, guid: 9a3d8686d94b5444c9c8d6bcd8e404ee,
+        type: 3}
+      propertyPath: m_Lightmapping
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6848027397917206944, guid: 9a3d8686d94b5444c9c8d6bcd8e404ee,
+        type: 3}
+      propertyPath: m_BoundingSphereOverride.w
+      value: 2.8487225e-37
+      objectReference: {fileID: 0}
+    - target: {fileID: 6848027397917206944, guid: 9a3d8686d94b5444c9c8d6bcd8e404ee,
+        type: 3}
+      propertyPath: m_BoundingSphereOverride.y
+      value: 4.575604e+30
+      objectReference: {fileID: 0}
     - target: {fileID: 7007489393734502834, guid: 9a3d8686d94b5444c9c8d6bcd8e404ee,
         type: 3}
       propertyPath: sceneViewId
       value: 996
+      objectReference: {fileID: 0}
+    - target: {fileID: 7386011539040641314, guid: 9a3d8686d94b5444c9c8d6bcd8e404ee,
+        type: 3}
+      propertyPath: m_Intensity
+      value: 300
+      objectReference: {fileID: 0}
+    - target: {fileID: 7780441843260447970, guid: 9a3d8686d94b5444c9c8d6bcd8e404ee,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.24
+      objectReference: {fileID: 0}
+    - target: {fileID: 7780441843260447970, guid: 9a3d8686d94b5444c9c8d6bcd8e404ee,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -22.76
       objectReference: {fileID: 0}
     - target: {fileID: 7793344454024815010, guid: 9a3d8686d94b5444c9c8d6bcd8e404ee,
         type: 3}
@@ -777,6 +879,31 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalPosition.x
       value: 131
+      objectReference: {fileID: 0}
+    - target: {fileID: 8740741062701555831, guid: 9a3d8686d94b5444c9c8d6bcd8e404ee,
+        type: 3}
+      propertyPath: m_Lightmapping
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8740741062701555831, guid: 9a3d8686d94b5444c9c8d6bcd8e404ee,
+        type: 3}
+      propertyPath: m_BoundingSphereOverride.w
+      value: -1.4417369e-18
+      objectReference: {fileID: 0}
+    - target: {fileID: 8740741062701555831, guid: 9a3d8686d94b5444c9c8d6bcd8e404ee,
+        type: 3}
+      propertyPath: m_BoundingSphereOverride.x
+      value: 1.02e-43
+      objectReference: {fileID: 0}
+    - target: {fileID: 8740741062701555831, guid: 9a3d8686d94b5444c9c8d6bcd8e404ee,
+        type: 3}
+      propertyPath: m_BoundingSphereOverride.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8740741062701555831, guid: 9a3d8686d94b5444c9c8d6bcd8e404ee,
+        type: 3}
+      propertyPath: m_BoundingSphereOverride.z
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8755515198681832900, guid: 9a3d8686d94b5444c9c8d6bcd8e404ee,
         type: 3}
@@ -895,18 +1022,6 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: 269845f80d310d74db13180ca168d3e1, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8239c1a9673f991428136c57e027d608, type: 3}
---- !u!114 &1576678134 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 4432209054615162742, guid: 9a3d8686d94b5444c9c8d6bcd8e404ee,
-    type: 3}
-  m_PrefabInstance: {fileID: 1178005767}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f114977ffe0e4a945a964e57436bc717, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1585026094
 GameObject:
   m_ObjectHideFlags: 0
