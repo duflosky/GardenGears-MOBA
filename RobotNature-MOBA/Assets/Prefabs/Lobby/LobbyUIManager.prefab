@@ -3242,12 +3242,12 @@ MonoBehaviour:
   goTextObject: {fileID: 772014406373758675}
   readyButton: {fileID: 772014406745972002}
   readyButtonText: {fileID: 772014406209236543}
-  selectedChampionColor: {r: 1, g: 0.19607843, b: 1, a: 1}
-  unselectedChampionColor: {r: 0.07450981, g: 0.07450981, b: 0.07450981, a: 1}
+  selectedChampionColor: {r: 1, g: 1, b: 1, a: 1}
+  unselectedChampionColor: {r: 0.5849056, g: 0.5849056, b: 0.5849056, a: 1}
   firstChampionColorImage: {fileID: 2735498542391598807}
   secondChampionColorImage: {fileID: 4407844131912980380}
-  firstTeamColor: {r: 0, g: 0.39215687, b: 1, a: 1}
-  secondTeamColor: {r: 1, g: 0, b: 0.39215687, a: 1}
+  firstTeamColor: {r: 1, g: 0.71237, b: 0, a: 1}
+  secondTeamColor: {r: 0.7225152, g: 0.22694907, b: 0.9433962, a: 1}
   teamColorImage: {fileID: 772014406710721050}
   teamColorText: {fileID: 772014406424729692}
   allClientsInformation:
@@ -4603,7 +4603,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 92daa280b6d99704f9f3120e66deda7b, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 1bddc717f325108488b41eb79e7a46e8, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1

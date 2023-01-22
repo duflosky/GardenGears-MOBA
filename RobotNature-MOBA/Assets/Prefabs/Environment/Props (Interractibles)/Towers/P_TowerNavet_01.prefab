@@ -210,7 +210,7 @@ MonoBehaviour:
   elementsToShow: []
   neverHideElements: []
   canChangeTeam: 0
-  team: 1
+  team: 2
   baseViewRange: 20
   viewRange: 20
   viewAngle: 360

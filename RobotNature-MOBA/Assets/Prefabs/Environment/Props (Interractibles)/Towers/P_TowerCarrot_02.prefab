@@ -324,7 +324,7 @@ MonoBehaviour:
   elementsToShow: []
   neverHideElements: []
   canChangeTeam: 0
-  team: 2
+  team: 1
   baseViewRange: 20
   viewRange: 20
   viewAngle: 360
