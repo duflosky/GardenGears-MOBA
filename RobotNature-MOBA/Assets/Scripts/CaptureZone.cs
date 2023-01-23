@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using Entities;
@@ -21,10 +20,10 @@ public class CaptureZone : MonoBehaviourPun
     private Enums.Team dominatingTeam;
     [SerializeField] private List<Entity> firstTeamEntities = new();
     [SerializeField] private List<Entity> secondTeamEntities = new();
+    [SerializeField] private Color[] colorsTeam;
 
     private void Start()
     {
-        if (!PhotonNetwork.IsMasterClient) return;
         GameStateMachine.Instance.OnTick += CheckControl;
         GameStateMachine.Instance.OnTick += CheckEntities;
         GameStateMachine.Instance.OnTick += UpdateState;
@@ -63,7 +62,6 @@ public class CaptureZone : MonoBehaviourPun
 
     private void OnDisable()
     {
-        if(!PhotonNetwork.IsMasterClient) return;
         GameStateMachine.Instance.OnTick -= UpdateState;
         GameStateMachine.Instance.OnTick -= CheckControl;
         GameStateMachine.Instance.OnTick -= CheckEntities;
@@ -71,7 +69,6 @@ public class CaptureZone : MonoBehaviourPun
 
     private void OnTriggerEnter(Collider other)
     {
-        if (!PhotonNetwork.IsMasterClient) return;
         var entity = other.GetComponent<Champion>();
         if (!entity) return;
         if(entity.GetTeam() == Enums.Team.Team1) firstTeamEntities.Add(entity);
@@ -80,7 +77,6 @@ public class CaptureZone : MonoBehaviourPun
 
     private void OnTriggerStay(Collider other)
     {
-        if (!PhotonNetwork.IsMasterClient) return;
         var entity = other.GetComponent<Champion>();
         if (!entity) return;
         if (firstTeamEntities.Contains(entity) || secondTeamEntities.Contains(entity)) return;
@@ -90,7 +86,6 @@ public class CaptureZone : MonoBehaviourPun
 
     private void OnTriggerExit(Collider other)
     {
-        if (!PhotonNetwork.IsMasterClient) return;
         var entity = other.GetComponent<Champion>();
         if (!entity) return;
         if(entity.GetTeam() == Enums.Team.Team1) firstTeamEntities.Remove(entity);
@@ -156,20 +151,15 @@ public class CaptureZone : MonoBehaviourPun
     private void TryAddPoint(Enums.Team pointTeam)
     {
         pointCooldown = 0;
+        if (!PhotonNetwork.IsMasterClient) return;
         ((InGameState)GameStateMachine.Instance.currentState).AddPoint(pointTeam);
     }
 
     private void ChangeOwner()
     {
-        if (!PhotonNetwork.IsMasterClient) return;
-        photonView.RPC("ChangeOwnerRPC", RpcTarget.All, firstTeamControl, secondTeamControl);
-    }
-    
-    [PunRPC]
-    private void ChangeOwnerRPC(int firstTeam, int secondTeam)
-    {
-        if (firstTeam == 0 && secondTeam == 0) meshRenderer.material.color = Color.grey;
-        else meshRenderer.material.color = Color.Lerp(Color.red, Color.blue, firstTeam / 100);
-        dominationPoints.text = $"{firstTeam} / {secondTeam}";
+        if (firstTeamControl == 0 && secondTeamControl == 0) meshRenderer.material.color = Color.grey;
+        if (firstTeamControl > secondTeamControl) meshRenderer.material.color = Color.Lerp(colorsTeam[0], colorsTeam[1], secondTeamControl / 50);
+        if (firstTeamControl < secondTeamControl) meshRenderer.material.color = Color.Lerp(colorsTeam[1], colorsTeam[0], firstTeamControl / 50);
+        dominationPoints.text = $"{firstTeamControl} / {secondTeamControl}";
     }
 }
