@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Entities;
@@ -10,49 +11,54 @@ using UnityEngine;
 [RequireComponent(typeof(PhotonView))]
 public class CaptureZone : MonoBehaviourPun
 {
-    [SerializeField] private float incrementRate = .1f;
+    [SerializeField] private int incrementRate = 1;
     [SerializeField] private MeshRenderer meshRenderer;
     [SerializeField] private TextMeshProUGUI dominationPoints;
-    private float firstTeamControl;
-    private float secondTeamControl;
-    private float pointCD;
-    private float CDTimer = 3f;
+    [SerializeField] private int firstTeamControl;
+    [SerializeField] private int secondTeamControl;
+    private float pointCooldown;
+    private float cooldownTimer = 12f;
     private Enums.Team dominatingTeam;
-    private List<Entity> firstTeamEntities;
-    private List<Entity> secondTeamEntities;
+    [SerializeField] private List<Entity> firstTeamEntities = new();
+    [SerializeField] private List<Entity> secondTeamEntities = new();
 
     private void Start()
     {
         if (!PhotonNetwork.IsMasterClient) return;
-        GameStateMachine.Instance.OnTick += UpdateState;
         GameStateMachine.Instance.OnTick += CheckControl;
         GameStateMachine.Instance.OnTick += CheckEntities;
+        GameStateMachine.Instance.OnTick += UpdateState;
+        pointCooldown = 0;
     }
 
     private void UpdateState()
     {
+        ChangeOwner();
         switch (dominatingTeam)
         {
             case Enums.Team.Neutral:
-                if (firstTeamControl<50 && firstTeamControl>0) DecreaseControl(Enums.Team.Team1);
-                if (secondTeamControl<50 && secondTeamControl>0) DecreaseControl(Enums.Team.Team2);
+                if (firstTeamControl == 0 && secondTeamControl == 0) break;
+                if (firstTeamControl is <= 50 and > 0) DecreaseControl(Enums.Team.Team1);
+                if (secondTeamControl is <= 50 and > 0) DecreaseControl(Enums.Team.Team2);
                 break;
             case Enums.Team.Team1:
-                if (secondTeamControl>0) DecreaseControl(Enums.Team.Team2);
+                if (firstTeamControl == 50) break;
+                if (secondTeamControl > 0) DecreaseControl(Enums.Team.Team2);
                 else IncreaseControl(Enums.Team.Team1);
                 break;
             case Enums.Team.Team2:
-                if (firstTeamControl>0) DecreaseControl(Enums.Team.Team1);
+                if (secondTeamControl == 50) break;
+                if (firstTeamControl > 0) DecreaseControl(Enums.Team.Team1);
                 else IncreaseControl(Enums.Team.Team2);
+                break;
+            default:
                 break;
         }
 
-        if (pointCD > 0) pointCD -= (float)GameStateMachine.Instance.tickRate;
-        else
-        {
-            if (firstTeamControl == 50) TryAddPoint(Enums.Team.Team1);
-            else if (secondTeamControl == 50) TryAddPoint(Enums.Team.Team2);
-        }
+        pointCooldown += 1 / (float)GameStateMachine.Instance.tickRate;
+        if (pointCooldown < cooldownTimer) return;
+        if (firstTeamControl == 50) TryAddPoint(Enums.Team.Team1);
+        else if (secondTeamControl == 50) TryAddPoint(Enums.Team.Team2);
     }
 
     private void OnDisable()
@@ -97,6 +103,7 @@ public class CaptureZone : MonoBehaviourPun
         var secondTeamAmount = secondTeamEntities.Count;
         if (firstTeamAmount > secondTeamAmount) dominatingTeam = Enums.Team.Team1;
         else if (firstTeamAmount < secondTeamAmount) dominatingTeam = Enums.Team.Team2;
+        else if (firstTeamAmount == secondTeamAmount) dominatingTeam = default;
         else dominatingTeam = Enums.Team.Neutral;
     }
 
@@ -116,19 +123,21 @@ public class CaptureZone : MonoBehaviourPun
                 secondTeamEntities.Remove(secondTeamEntity);
             }
         }
+        else if (firstTeamEntities.Count == 0 && secondTeamEntities.Count == 0)
+        {
+            dominatingTeam = Enums.Team.Neutral;
+        }
     }
 
     private void IncreaseControl(Enums.Team increaseTeam)
     {
         if (increaseTeam == Enums.Team.Team1)
         {
-            if (50-firstTeamControl <= incrementRate) firstTeamControl = 50;
-            else secondTeamControl += incrementRate;
+            firstTeamControl += incrementRate;
         }
         else
         {
-            if (50-secondTeamControl <= incrementRate)secondTeamControl = 50;
-            else secondTeamControl += incrementRate;
+            secondTeamControl += incrementRate;
         }
     }
 
@@ -136,21 +145,18 @@ public class CaptureZone : MonoBehaviourPun
     {
         if (decreaseTeam == Enums.Team.Team1)
         {
-            if (firstTeamControl <= incrementRate) firstTeamControl = 0;
-            else secondTeamControl -= incrementRate;
+            firstTeamControl -= incrementRate;
         }
         else
         {
-            if (secondTeamControl <= incrementRate) secondTeamControl = 0;
-            else secondTeamControl -= incrementRate;
+            secondTeamControl -= incrementRate;
         }
     }
 
     private void TryAddPoint(Enums.Team pointTeam)
     {
-        if (pointCD > 0) return;
+        pointCooldown = 0;
         ((InGameState)GameStateMachine.Instance.currentState).AddPoint(pointTeam);
-        pointCD = CDTimer;
     }
 
     private void ChangeOwner()
@@ -160,7 +166,7 @@ public class CaptureZone : MonoBehaviourPun
     }
     
     [PunRPC]
-    private void ChangeOwnerRPC(float firstTeam, float secondTeam)
+    private void ChangeOwnerRPC(int firstTeam, int secondTeam)
     {
         if (firstTeam == 0 && secondTeam == 0) meshRenderer.material.color = Color.grey;
         else meshRenderer.material.color = Color.Lerp(Color.red, Color.blue, firstTeam / 100);
