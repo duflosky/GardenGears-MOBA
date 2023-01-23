@@ -93,7 +93,7 @@ GameObject:
   m_Component:
   - component: {fileID: 788991418}
   m_Layer: 0
-  m_Name: SpawnPoint1Blue
+  m_Name: SpawnPoint1Orange
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -124,7 +124,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1148559520}
   m_Layer: 0
-  m_Name: SpawnPoint2Blue
+  m_Name: SpawnPoint2Orange
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -487,7 +487,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1304789539}
   m_Layer: 0
-  m_Name: SpawnPoint1Red
+  m_Name: SpawnPoint1Purple
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -518,7 +518,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1935889730}
   m_Layer: 0
-  m_Name: SpawnPoint2Red
+  m_Name: SpawnPoint2Purple
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -41083,7 +41083,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2694164652024378065}
   m_Layer: 0
-  m_Name: SpawnBlue
+  m_Name: SpawnOrange
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -47348,7 +47348,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5990029554199364956}
   m_Layer: 0
-  m_Name: BlueTeam
+  m_Name: OrangeTeam
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -51813,7 +51813,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5990029555861612094}
   m_Layer: 0
-  m_Name: RedTeam
+  m_Name: PurpleTeam
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -90625,6 +90625,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5990029554199364956}
     m_Modifications:
+    - target: {fileID: 4944857169026489504, guid: 2c5e538de290e0147b868d647a43f5aa,
+        type: 3}
+      propertyPath: sceneViewId
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5953732928224698169, guid: 2c5e538de290e0147b868d647a43f5aa,
         type: 3}
       propertyPath: m_Name
