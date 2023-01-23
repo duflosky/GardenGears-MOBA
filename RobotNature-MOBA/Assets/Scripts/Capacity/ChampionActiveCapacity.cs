@@ -50,7 +50,7 @@ public abstract class ChampionActiveCapacity : ActiveCapacity
             if (ChampSO.gizmoPrefab == null) 
             {
                 //throw new NullReferenceException($"Missing Gizmo Prefab To {ChampSO.name}");
-                Debug.LogError($"Missing Gizmo Prefab To {ChampSO.name}");
+                Debug.LogWarning($"Missing Gizmo Prefab To {ChampSO.name}");
                 return;
             }
             if (!gizmo)
