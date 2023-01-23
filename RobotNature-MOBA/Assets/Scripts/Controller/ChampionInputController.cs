@@ -116,7 +116,7 @@ namespace Controllers.Inputs
             if(ent != null)
             { 
                 selectedEntity[0] = ent.entityIndex;
-                cursorWorldPos[0] = ent.transform.position;
+                //cursorWorldPos[0] = ent.transform.position;
             }
 
             /*if(isActiveButtonPress)
