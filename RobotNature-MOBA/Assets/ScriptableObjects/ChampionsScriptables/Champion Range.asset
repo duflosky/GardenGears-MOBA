@@ -21,7 +21,7 @@ MonoBehaviour:
   maxHp: 40
   maxRessource: 10
   viewRange: 10
-  referenceMoveSpeed: 16
+  referenceMoveSpeed: 14.5
   referenceAttackSpeed: 0
   isRessourceRegen: 0
   attackAbility: {fileID: 11400000, guid: 6380c6b585792cd478baa9dbd9ae15da, type: 2}

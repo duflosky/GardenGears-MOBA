@@ -221,7 +221,7 @@ MonoBehaviour:
   towersList: []
   waypointIndex: 0
   towerIndex: 0
-  attackDamage: 2
+  attackDamage: 1
   currentAttackTarget: {fileID: 0}
   currentAggroState: 0
   enemyMinionMask:

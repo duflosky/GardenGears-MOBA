@@ -18,9 +18,9 @@ MonoBehaviour:
   description: 'c''est le R de Yasuo (pas du tout)
 
 '
-  cooldown: 1.2
+  cooldown: 1
   isTargeting: 0
-  maxRange: 18
+  maxRange: 16
   types: 
   feedbackDuration: 0
   shotPrefab: {fileID: 0}
@@ -39,5 +39,5 @@ MonoBehaviour:
   bulletSpeed: 25
   percentageDamage: 0.8
   overheatSO: {fileID: 11400000, guid: 4e9be0a9aa6ed6c46b641b0466ac75c5, type: 2}
-  sprayAngle: 90
+  sprayAngle: 60
   attackSlowSO: {fileID: 11400000, guid: 4520a40069532594ebc5b59db1b46511, type: 2}

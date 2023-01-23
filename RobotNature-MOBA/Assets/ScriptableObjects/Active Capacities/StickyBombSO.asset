@@ -18,7 +18,7 @@ MonoBehaviour:
   description: 
   cooldown: 7
   isTargeting: 0
-  maxRange: 16
+  maxRange: 12
   types: 
   feedbackDuration: 0
   shotPrefab: {fileID: 0}
