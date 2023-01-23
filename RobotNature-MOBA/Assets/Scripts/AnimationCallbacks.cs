@@ -13,43 +13,20 @@ public class AnimationCallbacks : MonoBehaviourPun
 
     public void AnimationShotEffect()
     {
-        if (photonView.IsMine) photonView.RPC("AnimationShotEffectRPC", RpcTarget.MasterClient);
-    }
-    [PunRPC]
-    private void AnimationShotEffectRPC()
-    {
         caster.CastAnimationShotEffect();
     }
     
     public void AnimationCast()
-    {
-        if (photonView.IsMine) photonView.RPC("AnimationCastRPC", RpcTarget.MasterClient);
-    }
-
-    [PunRPC]
-    private void AnimationCastRPC()
     {
         caster.CastAnimationCast(castTransform);
     }
 
     public void AnimationEnd()
     {
-        if (photonView.IsMine) photonView.RPC("AnimationEndRPC", RpcTarget.MasterClient);
-    }
-
-    [PunRPC]
-    public void AnimationEndRPC()
-    {
-        caster.CastAnimationEnd();
+      caster.CastAnimationEnd();
     }
     
     public void AnimationFeedback()
-    {
-        if(photonView.IsMine) photonView.RPC("AnimationFeedbackRPC", RpcTarget.MasterClient);
-    }
-    
-    [PunRPC]
-    public void AnimationFeedbackRPC()
     {
         caster.CastAnimationFeedback();
     }

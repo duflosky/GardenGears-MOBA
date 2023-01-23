@@ -35,11 +35,9 @@ public class AutoAttackRange : ChampionActiveCapacity
     public override void CapacityEffect(Transform castTransform)
     {
         champion.canRotate = false;
-        DisplayGizmos(false);
         champion.OnCastAnimationCast -= CapacityEffect;
         champion.GetPassiveCapacity(CapacitySOCollectionManager.GetPassiveCapacitySOIndex(SOType.overheatSO)).OnAdded();
-        lookDir = targetPositions[0]-casterTransform.position;
-        lookDir.y = 0;
+        lookDir = casterTransform.GetChild(0).forward;
         if (champion.isOverheat)
         {
             var rdm = Random.Range(-(SOType.sprayAngle / 2), (SOType.sprayAngle / 2));
@@ -47,7 +45,7 @@ public class AutoAttackRange : ChampionActiveCapacity
         }
 
         var bulletPref = champion.isOverheat ? SOType.overheatBulletPrefab : SOType.bulletPrefab;
-        bullet = PoolNetworkManager.Instance.PoolInstantiate(bulletPref.GetComponent<Entity>(), casterTransform.position, Quaternion.LookRotation(lookDir)).gameObject;
+        bullet = PoolNetworkManager.Instance.PoolInstantiate(bulletPref.GetComponent<Entity>(), casterTransform.position, casterTransform.GetChild(0).rotation).gameObject;
         collider = bullet.GetComponent<AffectCollider>();
         collider.caster = caster;
         collider.casterPos = casterTransform.position;
@@ -84,5 +82,4 @@ public class AutoAttackRange : ChampionActiveCapacity
         collider.Disable();
     }
 
-    public override void PlayFeedback(int casterIndex, int[] targetsEntityIndexes, Vector3[] targetPositions) { }
 }
