@@ -18,7 +18,7 @@ MonoBehaviour:
   description: 
   cooldown: 5
   isTargeting: 0
-  maxRange: 15
+  maxRange: 25
   types: 
   feedbackDuration: 0
   shotPrefab: {fileID: 0}
@@ -32,7 +32,7 @@ MonoBehaviour:
   bulletPrefab: {fileID: 9083956369217742468, guid: af00b9ed221dec44c993f8b77bbba481,
     type: 3}
   bulletSpeed: 25
-  percentageDamage: 100
+  percentageDamage: 125
   SlowEffectSO: {fileID: 11400000, guid: 0a43f13c289692b4a87dc0a9a5a23f76, type: 2}
   attackAnimationSlowSO: {fileID: 11400000, guid: becfcf8ab184b714aa80791842ad4814,
     type: 2}
