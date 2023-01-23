@@ -68,8 +68,8 @@ namespace Entities.Minion
             attackCycle = false;
             RequestSetCurrentHp(maxHp);
             waypointIndex = 0;
-            myNavMeshAgent.enabled = true;
             myNavMeshObstacle.enabled = false;
+            myNavMeshAgent.enabled = true;
         }
 
         private IEnumerator AttackLogic()
@@ -97,8 +97,8 @@ namespace Entities.Minion
         public void WalkingState()
         {
             if (animator is not null) animator.SetBool("isMoving", true);
-            myNavMeshAgent.enabled = true;
             myNavMeshObstacle.enabled = false;
+            myNavMeshAgent.enabled = true;
             CheckMyWaypoints();
             CheckObjectives();
             CheckEnemies();
@@ -109,8 +109,8 @@ namespace Entities.Minion
             if (myWaypoints is null) return;
             if (!gameObject.activeSelf) return;
             if (animator is not null) animator.SetBool("isMoving", true);
-            myNavMeshAgent.enabled = true;
             myNavMeshObstacle.enabled = false;
+            myNavMeshAgent.enabled = true;
             myNavMeshAgent.SetDestination(myWaypoints[waypointIndex].position);
             myController.currentState = MinionController.MinionState.Walking;
         }

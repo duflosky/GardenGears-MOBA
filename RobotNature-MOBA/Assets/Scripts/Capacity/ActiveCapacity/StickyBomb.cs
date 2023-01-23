@@ -68,7 +68,6 @@ public class StickyBomb : ChampionActiveCapacity
             stickyBombGO.GetComponent<Rigidbody>().isKinematic = true;
             stickyBombGO.GetComponent<SphereCollider>().enabled = false;
             collider.transform.parent = affectedEntity.transform;
-            Debug.Log(affectedEntity.GetComponent<Champion>().rotateParent.localToWorldMatrix.GetPosition());
             collider.timerImage.GetComponentInParent<Canvas>().transform.position = affectedEntity.transform.position + new Vector3(0, -2 * affectedEntity.transform.localScale.y - 1, 0);
             stickyBombGO.transform.position = affectedEntity.transform.position + new Vector3(0, 2 * affectedEntity.transform.localScale.y + 1, 0);
             liveable.OnDecreaseCurrentHpCapacityFeedback += ExplodeBomb;
