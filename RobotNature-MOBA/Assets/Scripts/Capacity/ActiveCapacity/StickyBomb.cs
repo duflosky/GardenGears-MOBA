@@ -64,7 +64,6 @@ public class StickyBomb : ChampionActiveCapacity
         if (liveable != null)
         {
             // if (affectedEntity.name.Contains("Minion")) return;
-            if (affectedEntity.team == caster.team) timer = 0;
             stickyBombGO.GetComponent<Rigidbody>().isKinematic = true;
             stickyBombGO.GetComponent<SphereCollider>().enabled = false;
             collider.transform.parent = affectedEntity.transform;
