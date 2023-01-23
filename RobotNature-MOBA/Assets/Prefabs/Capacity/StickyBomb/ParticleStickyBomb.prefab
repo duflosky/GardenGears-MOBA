@@ -10,7 +10,7 @@ PrefabInstance:
     - target: {fileID: 3556561364532927242, guid: 7c1c2d7fd759e424881d07279c31ece9,
         type: 3}
       propertyPath: m_Name
-      value: LOL
+      value: ParticleStickyBomb
       objectReference: {fileID: 0}
     - target: {fileID: 5555791067955751635, guid: 7c1c2d7fd759e424881d07279c31ece9,
         type: 3}
