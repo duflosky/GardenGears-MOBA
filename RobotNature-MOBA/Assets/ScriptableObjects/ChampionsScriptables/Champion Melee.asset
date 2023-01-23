@@ -19,7 +19,7 @@ MonoBehaviour:
   - {fileID: 2100000, guid: 96c452aa47da963449e124fcd9dfe01a, type: 2}
   - {fileID: 2100000, guid: a2b726a6ba63a8646a2ec1f463f20fc4, type: 2}
   maxHp: 50
-  maxRessource: 10
+  maxRessource: 0
   viewRange: 10
   referenceMoveSpeed: 13
   referenceAttackSpeed: 0
