@@ -187,7 +187,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Loading...
+  m_text: Chargement...
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 779bc6466c7268b438b22486daa90ca8, type: 2}
   m_sharedMaterial: {fileID: 5539941203671505372, guid: 779bc6466c7268b438b22486daa90ca8,
@@ -866,6 +866,21 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1280914861}
+    - target: {fileID: 8860451773161428599, guid: a37a30f858da3b048ae5369c9e20680a,
+        type: 3}
+      propertyPath: m_text
+      value: "Cr\xE9er un salon"
+      objectReference: {fileID: 0}
+    - target: {fileID: 8860451773326180615, guid: a37a30f858da3b048ae5369c9e20680a,
+        type: 3}
+      propertyPath: m_text
+      value: "\xC9crire un nom de salon..."
+      objectReference: {fileID: 0}
+    - target: {fileID: 8860451773326180615, guid: a37a30f858da3b048ae5369c9e20680a,
+        type: 3}
+      propertyPath: m_fontSize
+      value: 40.25
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a37a30f858da3b048ae5369c9e20680a, type: 3}
 --- !u!224 &1256840351 stripped
