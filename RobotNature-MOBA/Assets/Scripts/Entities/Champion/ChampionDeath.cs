@@ -103,6 +103,7 @@ public partial class Champion
     [PunRPC]
     public void SyncReviveRPC()
     {
+        isAlive = true;
         transform.position = respawnPos;
         if (photonView.IsMine)
         {
@@ -111,7 +112,7 @@ public partial class Champion
             InputManager.PlayerMap.Capacity.Enable();
             InputManager.PlayerMap.Inventory.Enable();
         }
-        //if (animator) animator.SetTrigger("isDying");
+        // if (animator) animator.SetTrigger("isDying");
         FogOfWarManager.Instance.AddFOWViewable(this);
         rotateParent.gameObject.SetActive(true);
         OnReviveFeedback?.Invoke();
@@ -122,7 +123,6 @@ public partial class Champion
     {
         isAlive = true;
         SetCurrentHpRPC(maxHp);
-        SetCurrentResourceRPC(maxResource);
         OnRevive?.Invoke();
         photonView.RPC("SyncReviveRPC", RpcTarget.All);
     }

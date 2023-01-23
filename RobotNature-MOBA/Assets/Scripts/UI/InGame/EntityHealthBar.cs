@@ -1,5 +1,4 @@
 using Entities;
-using Entities.Minion;
 using GameStates;
 using UnityEngine;
 using UnityEngine.UI;
@@ -43,16 +42,8 @@ namespace UI.InGame
 
         private void ActivateHealthBar()
         {
-            if (deadable != null)
-            {
-                gameObject.SetActive(deadable.IsAlive());
-                if (deadable.IsAlive() && deadable as Minion)
-                {
-                    Minion minion = (Minion)deadable;
-                    gameObject.SetActive(true);
-                    // gameObject.SetActive(GameStateMachine.Instance.GetPlayerTeam() == minion.team);
-                }
-            }
+            if (deadable == null) return;
+            gameObject.SetActive(deadable.IsAlive());
         }
     }
 }
