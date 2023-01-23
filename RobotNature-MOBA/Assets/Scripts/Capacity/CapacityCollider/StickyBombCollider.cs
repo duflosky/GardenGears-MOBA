@@ -1,7 +1,9 @@
+using System;
 using Entities;
 using GameStates;
 using Photon.Pun;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class StickyBombCollider : Entity
 {
@@ -10,6 +12,7 @@ public class StickyBombCollider : Entity
     [HideInInspector] public float distance;
     [HideInInspector] public StickyBomb capacity;
     [SerializeField] private GameObject[] particles;
+    public Image timerImage;
 
     private Rigidbody rb;
     private Vector3 lastPositionCaster;
@@ -17,6 +20,21 @@ public class StickyBombCollider : Entity
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
+        timerImage.enabled = false;
+    }
+
+    private void OnEnable()
+    {
+        isIgnite = false;
+        timerImage.fillAmount = 0;
+        timerImage.enabled = false;
+    }
+
+    private void OnDisable()
+    {
+        isIgnite = false;
+        timerImage.fillAmount = 0;
+        timerImage.enabled = false;
     }
 
     protected override void OnUpdate()
@@ -26,6 +44,7 @@ public class StickyBombCollider : Entity
         if (!(Vector3.Distance(lastPositionCaster, transform.position) > distance) || isIgnite) return;
         ActivateParticleSystem(false);
         rb.isKinematic = true;
+        timerImage.enabled = true;
         GameStateMachine.Instance.OnTick += capacity.TimerBomb;
         GetComponent<SphereCollider>().enabled = true;
         isIgnite = true;

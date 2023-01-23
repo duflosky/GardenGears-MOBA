@@ -1,5 +1,6 @@
 using Entities;
 using Entities.Capacities;
+using Entities.Minion;
 using GameStates;
 using Photon.Pun;
 using UnityEngine;
@@ -67,6 +68,8 @@ public class StickyBomb : ChampionActiveCapacity
             stickyBombGO.GetComponent<Rigidbody>().isKinematic = true;
             stickyBombGO.GetComponent<SphereCollider>().enabled = false;
             collider.transform.parent = affectedEntity.transform;
+            Debug.Log(affectedEntity.GetComponent<Champion>().rotateParent.localToWorldMatrix.GetPosition());
+            collider.timerImage.GetComponentInParent<Canvas>().transform.position = affectedEntity.transform.position + new Vector3(0, -2 * affectedEntity.transform.localScale.y - 1, 0);
             stickyBombGO.transform.position = affectedEntity.transform.position + new Vector3(0, 2 * affectedEntity.transform.localScale.y + 1, 0);
             liveable.OnDecreaseCurrentHpCapacityFeedback += ExplodeBomb;
             OnAllyHit += ExplodeBomb;
@@ -100,6 +103,7 @@ public class StickyBomb : ChampionActiveCapacity
     public void TimerBomb()
     {
         timer += 1;
+        collider.timerImage.fillAmount = (float)((float)timer / (SOType.durationBomb * GameStateMachine.Instance.tickRate));
         if (timer < SOType.durationBomb * GameStateMachine.Instance.tickRate) return;
         GameStateMachine.Instance.OnTick -= TimerBomb;
         timer = 0;
