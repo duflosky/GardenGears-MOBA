@@ -5,7 +5,6 @@ using UnityEngine;
 
 public class UltimateRange : ChampionActiveCapacity
 {
-    private Champion champion;
     private GameObject ultimateGO;
     private UltimateRangeCollider collider;
     private UltimateRangeSO SOType;
@@ -13,8 +12,8 @@ public class UltimateRange : ChampionActiveCapacity
 
     public override void OnStart()
     {
+        base.OnStart();
         SOType = (UltimateRangeSO)SO;
-        champion = (Champion)caster;
     }
 
     public override bool TryCast(int[] targetsEntityIndexes, Vector3[] targetPositions)
@@ -23,12 +22,12 @@ public class UltimateRange : ChampionActiveCapacity
         return true;
     }
 
-    public override void CapacityPress()
+    /*public override void CapacityPress()
     {
         champion.OnCastAnimationCast += CapacityEffect;
         champion.OnCastAnimationEnd += CapacityEndAnimation;
         champion.canRotate = false;
-    }
+    }*/
 
     public override void CapacityEffect(Transform transform)
     {
@@ -38,6 +37,7 @@ public class UltimateRange : ChampionActiveCapacity
         PoolLocalManager.Instance.PoolInstantiate(SOType.shotPrefab, transform.position, Quaternion.LookRotation(direction));
         ultimateGO = PoolLocalManager.Instance.PoolInstantiate(SOType.feedbackPrefab, transform.position, Quaternion.identity);
         collider = ultimateGO.GetComponent<UltimateRangeCollider>();
+        //Collider.ActiveDelay(1.2f);
         collider.GetComponent<SphereCollider>().radius = SOType.colliderRadius;
         collider.caster = caster;
         collider.range = SOType.maxRange;
@@ -48,6 +48,7 @@ public class UltimateRange : ChampionActiveCapacity
     public override void CapacityEndAnimation()
     {
         champion.OnCastAnimationEnd -= CapacityEndAnimation;
+        champion.GetPassiveCapacity(CapacitySOCollectionManager.GetPassiveCapacitySOIndex(ChampSO.capacitySlow)).OnRemoved();
         champion.canRotate = true;
     }
     
