@@ -29,13 +29,21 @@ public class UltimateRange : ChampionActiveCapacity
         champion.canRotate = false;
     }*/
 
+    public override void CapacityShotEffect()
+    {
+        champion.OnCastAnimationShotEffect -= CapacityShotEffect;
+        direction = targetPositions[0] - casterTransform.position;
+        direction.y = 0;
+        PoolLocalManager.Instance.PoolInstantiate(SOType.shotPrefab, casterTransform.position, Quaternion.LookRotation(-direction));
+    }
+
     public override void CapacityEffect(Transform transform)
     {
         champion.OnCastAnimationCast -= CapacityEffect;
-        direction = targetPositions[0] - transform.position;
+        direction = targetPositions[0] - casterTransform.position;
         direction.y = 0;
-        PoolLocalManager.Instance.PoolInstantiate(SOType.shotPrefab, transform.position, Quaternion.LookRotation(direction));
-        ultimateGO = PoolLocalManager.Instance.PoolInstantiate(SOType.feedbackPrefab, transform.position, Quaternion.identity);
+        PoolLocalManager.Instance.PoolInstantiate(SOType.shotPrefab, casterTransform.position, Quaternion.LookRotation(-direction));
+        ultimateGO = PoolLocalManager.Instance.PoolInstantiate(SOType.feedbackPrefab, casterTransform.position, Quaternion.LookRotation(-direction));
         collider = ultimateGO.GetComponent<UltimateRangeCollider>();
         //Collider.ActiveDelay(1.2f);
         collider.GetComponent<SphereCollider>().radius = SOType.colliderRadius;

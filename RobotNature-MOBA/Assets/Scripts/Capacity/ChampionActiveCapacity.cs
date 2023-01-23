@@ -27,6 +27,7 @@ public abstract class ChampionActiveCapacity : ActiveCapacity
         DisplayGizmos(true);
         champion.OnCastAnimationCast += CapacityEffect;
         champion.OnCastAnimationEnd += CapacityEndAnimation;
+        champion.OnCastAnimationShotEffect += CapacityShotEffect;
     }
     
     public override bool TryCast(int[] targetsEntityIndexes, Vector3[] targetPositions)

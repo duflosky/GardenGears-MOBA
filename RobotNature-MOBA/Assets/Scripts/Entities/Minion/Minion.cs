@@ -884,6 +884,11 @@ namespace Entities.Minion
             throw new NotImplementedException();
         }
 
+        public void CastAnimationShotEffect()
+        {
+            throw new NotImplementedException();
+        }
+
         public void SyncCastRPC(byte capacityIndex, int[] targetedEntities, Vector3[] targetedPositions)
         {
             throw new NotImplementedException();
@@ -902,6 +907,7 @@ namespace Entities.Minion
         public event GlobalDelegates.ByteIntArrayVector3ArrayDelegate OnCast;
         public event GlobalDelegates.TransformDelegate OnCastAnimationCast;
         public event GlobalDelegates.NoParameterDelegate OnCastAnimationEnd;
+        public event GlobalDelegates.NoParameterDelegate OnCastAnimationShotEffect;
         public event GlobalDelegates.ByteIntArrayVector3ArrayCapacityDelegate OnCastFeedback;
         
         #endregion
