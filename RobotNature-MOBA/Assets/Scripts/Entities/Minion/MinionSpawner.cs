@@ -5,6 +5,7 @@ using Entities.Building;
 using Entities.FogOfWar;
 using Entities.Minion;
 using GameStates;
+using GameStates.States;
 using Photon.Pun;
 using UnityEngine;
 
@@ -30,6 +31,7 @@ public class MinionSpawner : MonoBehaviourPun
         if (!PhotonNetwork.IsMasterClient) return;
         spawnCycleTime += Time.deltaTime;
         if (spawnCycleTime < spawnSpeed) return;
+        if (GameStateMachine.Instance.currentState is not InGameState) return;
         StartCoroutine(SpawnMinionCo());
         spawnCycleTime = 0;
     }
