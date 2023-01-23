@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using Entities;
 using GameStates;
 using Photon.Pun;
@@ -12,6 +13,9 @@ public class StickyBombCollider : Entity
     [HideInInspector] public float distance;
     [HideInInspector] public StickyBomb capacity;
     [SerializeField] private GameObject[] particles;
+    [SerializeField] private Material[] outlineMaterials;
+    [SerializeField] private MeshRenderer outlineMeshRenderer;
+    [SerializeField] private Color[] teamColors;
     public Image timerImage;
 
     private Rigidbody rb;
@@ -61,6 +65,17 @@ public class StickyBombCollider : Entity
         rb.velocity = direction;
         lastPositionCaster = caster.transform.position;
         transform.rotation = Quaternion.LookRotation(direction) * Quaternion.Euler(0, 180, 0);
+        switch (caster.team)
+        {
+            case Enums.Team.Team1:
+                outlineMeshRenderer.materials = outlineMeshRenderer.materials.Append(outlineMaterials[0]).ToArray();
+                timerImage.color = teamColors[0];
+                break;
+            case Enums.Team.Team2:
+                outlineMeshRenderer.materials = outlineMeshRenderer.materials.Append(outlineMaterials[1]).ToArray();
+                timerImage.color = teamColors[1];
+                break;
+        }
     }
 
     private void OnTriggerEnter(Collider other)
