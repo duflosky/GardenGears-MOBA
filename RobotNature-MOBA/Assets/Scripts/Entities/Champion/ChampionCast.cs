@@ -104,10 +104,16 @@ public partial class Champion
         OnCastAnimationFeedback?.Invoke();
     }
     
+    public void CastAnimationShotEffect()
+    {
+        OnCastAnimationShotEffect?.Invoke();
+    }
+    
     public event GlobalDelegates.NoParameterDelegate CastUpdate;
     public event GlobalDelegates.ByteIntArrayVector3ArrayDelegate OnCast;
     public event GlobalDelegates.TransformDelegate OnCastAnimationCast;
     public event GlobalDelegates.NoParameterDelegate OnCastAnimationEnd;
     public event GlobalDelegates.NoParameterDelegate OnCastAnimationFeedback;
+    public event GlobalDelegates.NoParameterDelegate OnCastAnimationShotEffect;
     public event GlobalDelegates.ByteIntArrayVector3ArrayCapacityDelegate OnCastFeedback;
 }

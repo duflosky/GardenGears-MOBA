@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Entities.Capacities
 {
-    public abstract class ActiveCapacity : MonoBehaviour
+    public abstract class ActiveCapacity
     {
         public byte indexOfSOInCollection;
         public ActiveCapacitySO SO;
@@ -69,6 +69,8 @@ namespace Entities.Capacities
         }
 
         public abstract void CapacityPress();
+        
+        public virtual void CapacityShotEffect() { }
         
         public abstract void CapacityEffect(Transform transform);
         

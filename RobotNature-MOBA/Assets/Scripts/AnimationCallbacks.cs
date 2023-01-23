@@ -9,6 +9,17 @@ public class AnimationCallbacks : MonoBehaviourPun
 {
     [SerializeField] private Transform castTransform;
     public ICastable caster;
+
+
+    public void AnimationShotEffect()
+    {
+        if (photonView.IsMine) photonView.RPC("AnimationShotEffectRPC", RpcTarget.MasterClient);
+    }
+    [PunRPC]
+    private void AnimationShotEffectRPC()
+    {
+        caster.CastAnimationShotEffect();
+    }
     
     public void AnimationCast()
     {
