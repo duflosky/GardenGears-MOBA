@@ -490,6 +490,7 @@ MonoBehaviour:
   isIgnite: 0
   caster: {fileID: 0}
   distance: 0
+  capacity: {fileID: 0}
   particles:
   - {fileID: 4487998441952902367}
   - {fileID: 4423040446801120154}
