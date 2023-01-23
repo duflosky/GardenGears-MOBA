@@ -232,7 +232,7 @@ MonoBehaviour:
   meshParent: {fileID: 2737900493567823612}
   attackAffected: 1
   abilitiesAffected: 1
-  maxHp: 10
+  maxHp: 12
   isAlive: 1
   canDie: 1
 --- !u!114 &1635264704359604145

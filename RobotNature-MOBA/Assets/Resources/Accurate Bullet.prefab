@@ -220,6 +220,7 @@ MonoBehaviour:
   meshFilterFoV: {fileID: 0}
   fogOfWarStartDetection: {fileID: 0}
   caster: {fileID: 0}
+  capacitySender: {fileID: 0}
   maxDistance: 0
   casterPos: {x: 0, y: 0, z: 0}
   affectEntityOnly: 0
