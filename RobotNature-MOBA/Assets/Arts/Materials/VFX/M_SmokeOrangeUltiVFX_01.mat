@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: M_SmokeOrangeUltiVFX
+  m_Name: M_SmokeOrangeUltiVFX_01
   m_Shader: {fileID: -6465566751694194690, guid: e46a71dceda9beb44931c62efc0c68d7,
     type: 3}
   m_ValidKeywords: []
@@ -128,15 +128,15 @@ Material:
     - _SpecularHighlights: 1
     - _SrcBlend: 1
     - _Surface: 0
-    - _Trail_Intensity: 1
+    - _Trail_Intensity: 0.91
     - _Trail_Length: 0
     - _Trail_Scroll_Speed: -1.5
     - _WorkflowMode: 1
     - _ZWrite: 1
     m_Colors:
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
-    - _Color: {r: 0.7490196, g: 0.09803922, b: 0, a: 1}
-    - _Color2: {r: 2, g: 0.66779757, b: 0, a: 1}
+    - _Color: {r: 5.3403134, g: 4.7812505, b: 1.3854588, a: 1}
+    - _Color2: {r: 2.9960785, g: 0.3846662, b: 0, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
     - _TrailTiling: {r: 10.17, g: 0, b: 0, a: 0}
