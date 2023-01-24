@@ -31,7 +31,7 @@ public class AutoAttackMelee : ChampionActiveCapacity
     {
         champion.OnCastAnimationCast -= CapacityEffect;
         //champion.GetPassiveCapacity(SOType.attackSlowSO).OnRemoved();
-        lookDir = targetPositions[0] - casterTransform.position;
+        lookDir = casterTransform.GetChild(0).forward;
         lookDir.y = 0;
         feedbackObject = PoolLocalManager.Instance.PoolInstantiate(SOType.damageZone, casterTransform.position, Quaternion.LookRotation(lookDir));
         AffectCollider collider = feedbackObject.GetComponent<AffectCollider>();
@@ -90,7 +90,7 @@ public class AutoAttackMelee : ChampionActiveCapacity
 
     public override void AnimationFeedback()
     {
-        lookDir = targetPositions[0]-casterTransform.position;
+        lookDir = casterTransform.GetChild(0).forward;
         lookDir.y = 0;
         feedbackObject = PoolLocalManager.Instance.PoolInstantiate(SOType.fxPrefab, casterTransform.position, Quaternion.LookRotation(-lookDir), casterTransform); 
         var col = feedbackObject.GetComponent<Collider>(); 
