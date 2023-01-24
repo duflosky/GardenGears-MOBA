@@ -57,11 +57,11 @@ namespace Entities.Capacities
                 InitiateCooldown();
                 this.targetsEntityIndexes = targetsEntityIndexes;
 
-                this.targetPositions = new Vector3[targetPositions.Length];
+                /*this.targetPositions = new Vector3[targetPositions.Length];
                 for (int i = 0; i < targetPositions.Length; i++)
                 {
                     this.targetPositions[i] = targetPositions[i];
-                }
+                }*/
                 CapacityPress();
                 return true;
             }

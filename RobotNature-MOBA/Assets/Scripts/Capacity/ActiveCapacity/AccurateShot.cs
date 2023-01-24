@@ -28,7 +28,7 @@ public class AccurateShot : ChampionActiveCapacity
         Debug.Log($"Champion : {champion}");
         champion.canRotate = false;
         champion.OnCastAnimationCast -= CapacityEffect;
-        lookDir = targetPositions[0]-casterTransform.position;
+        lookDir = casterTransform.GetChild(0).forward;
         lookDir.y = 0;
         bullet = PoolNetworkManager.Instance.PoolInstantiate(SOType.bulletPrefab.GetComponent<Entity>(), casterTransform.position, Quaternion.LookRotation(lookDir)).gameObject;
         collider = bullet.GetComponent<AccurateShootCollider>();
@@ -63,7 +63,7 @@ public class AccurateShot : ChampionActiveCapacity
                 var moveable = entity.GetComponent<IMovable>();
                 if (moveable == null) return;
                 Debug.Log($"Slow {entity.gameObject}");
-                entity.GetPassiveCapacity(SOType.SlowEffectSO).OnAdded();
+                if(entity is Champion)entity.GetPassiveCapacity(SOType.SlowEffectSO).OnAdded();
             }
         }
     }
@@ -85,9 +85,7 @@ public class AccurateShot : ChampionActiveCapacity
     {
         champion.OnCastAnimationEnd -= CapacityEndAnimation;
         champion.GetPassiveCapacity(CapacitySOCollectionManager.GetPassiveCapacitySOIndex(SOType.attackAnimationSlowSO)).OnRemoved();
-        DisplayGizmos(false);
         champion.canRotate = true;
     }
 
-    public override void PlayFeedback(int casterIndex, int[] targetsEntityIndexes, Vector3[] targetPositions) { }
 }

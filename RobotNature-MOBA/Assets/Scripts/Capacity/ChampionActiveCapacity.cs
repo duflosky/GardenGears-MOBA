@@ -24,7 +24,6 @@ public abstract class ChampionActiveCapacity : ActiveCapacity
     {
         if (ChampSO.capacitySlow == null) throw new NullReferenceException($"Missing capacitySlow to {ChampSO.name}");
         champion.GetPassiveCapacity(CapacitySOCollectionManager.GetPassiveCapacitySOIndex(ChampSO.capacitySlow)).OnAdded();
-        DisplayGizmos(true);
         champion.OnCastAnimationCast += CapacityEffect;
         champion.OnCastAnimationEnd += CapacityEndAnimation;
         champion.OnCastAnimationShotEffect += CapacityShotEffect;
@@ -35,13 +34,17 @@ public abstract class ChampionActiveCapacity : ActiveCapacity
         if (!onCooldown)
         {
             InitiateCooldown();
-            this.targetsEntityIndexes = targetsEntityIndexes;
 
-            this.targetPositions = targetPositions;
             CapacityPress();
             return true;
         }
         else return false;
+    }
+
+    public override void PlayFeedback(int casterIndex, int[] targetsEntityIndexes, Vector3[] targetPositions)
+    {
+        Debug.Log("Play FeedBack");
+        if(champion.photonView.IsMine)DisplayGizmos(true);
     }
 
     public virtual void DisplayGizmos(bool state)
@@ -57,25 +60,35 @@ public abstract class ChampionActiveCapacity : ActiveCapacity
             if (!gizmo)
             {
                 gizmo = Object.Instantiate(ChampSO.gizmoPrefab, casterTransform.position, Quaternion.identity, casterTransform);
+                Debug.Log($"Create Gizmo: {gizmo}");
                 var rect = gizmo.GetComponentInChildren<Image>().GetComponent<RectTransform>(); //Désolé pour les yeux :3
                 rect.localPosition =(new Vector3(0,0,ChampSO.maxRange/2));
                 rect.sizeDelta = new Vector2(rect.sizeDelta.x, ChampSO.maxRange);
             }
             else gizmo.SetActive(true);
             champion.CastUpdate += UpdateGizmos;
+            champion.OnCastAnimationCast += DisableGizmo;
         }
         else
         {
+            if (!gizmo)
+            {
+                Debug.LogError($"Gizmo Not Assign");
+                return;
+            }
             champion.CastUpdate -= UpdateGizmos;
             gizmo.SetActive(false);
         }
     }
-    
+
+    private void DisableGizmo(Transform t)
+    {
+        DisplayGizmos(false);
+    }
+
     public virtual void UpdateGizmos()
     {
-        var pos = targetPositions[0];
-        pos.y = gizmo.transform.position.y;
-        gizmo.transform.LookAt(pos);
+        gizmo.transform.rotation = casterTransform.GetChild(0).rotation;
     }
     
     
