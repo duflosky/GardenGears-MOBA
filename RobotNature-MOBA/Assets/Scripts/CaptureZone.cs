@@ -10,17 +10,20 @@ using UnityEngine;
 [RequireComponent(typeof(PhotonView))]
 public class CaptureZone : MonoBehaviourPun
 {
+    [SerializeField] private Color[] colorsTeam;
     [SerializeField] private int incrementRate = 1;
     [SerializeField] private MeshRenderer meshRenderer;
     [SerializeField] private TextMeshProUGUI dominationPoints;
-    [SerializeField] private int firstTeamControl;
-    [SerializeField] private int secondTeamControl;
+    [SerializeField] private GameObject[] orangeZoneGOs;
+    [SerializeField] private GameObject[] purpleZoneGOs;
+    [SerializeField] private GameObject neutralZone;
+    private Enums.Team dominatingTeam;
     private float pointCooldown;
     private float cooldownTimer = 12f;
-    private Enums.Team dominatingTeam;
-    [SerializeField] private List<Entity> firstTeamEntities = new();
-    [SerializeField] private List<Entity> secondTeamEntities = new();
-    [SerializeField] private Color[] colorsTeam;
+    private int firstTeamControl;
+    private int secondTeamControl;
+    private List<Entity> firstTeamEntities = new();
+    private List<Entity> secondTeamEntities = new();
 
     private void Start()
     {
@@ -158,8 +161,42 @@ public class CaptureZone : MonoBehaviourPun
     private void ChangeOwner()
     {
         if (firstTeamControl == 0 && secondTeamControl == 0) meshRenderer.material.color = Color.grey;
-        if (firstTeamControl > secondTeamControl) meshRenderer.material.color = Color.Lerp(colorsTeam[0], colorsTeam[1], secondTeamControl / 50);
-        if (firstTeamControl < secondTeamControl) meshRenderer.material.color = Color.Lerp(colorsTeam[1], colorsTeam[0], firstTeamControl / 50);
+        if (firstTeamControl > secondTeamControl)
+        {
+            foreach (var purpleZone in purpleZoneGOs)
+            {
+                purpleZone.SetActive(false);
+            }
+            neutralZone.SetActive(false);
+            foreach (var orangeZone in orangeZoneGOs)
+            {
+                orangeZone.SetActive(true);
+            }
+        }
+        else if (firstTeamControl < secondTeamControl)
+        {
+            foreach (var orangeZone in orangeZoneGOs)
+            {
+                orangeZone.SetActive(false);
+            }
+            neutralZone.SetActive(false);
+            foreach (var purpleZone in purpleZoneGOs)
+            {
+                purpleZone.SetActive(true);
+            }
+        }
+        else
+        {
+            foreach (var orangeZone in orangeZoneGOs)
+            {
+                orangeZone.SetActive(false);
+            }
+            foreach (var purpleZone in purpleZoneGOs)
+            {
+                purpleZone.SetActive(false);
+            }
+            neutralZone.SetActive(true);
+        }
         dominationPoints.text = $"{firstTeamControl} / {secondTeamControl}";
     }
 }
