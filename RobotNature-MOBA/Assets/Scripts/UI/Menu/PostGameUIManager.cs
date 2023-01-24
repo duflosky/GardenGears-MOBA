@@ -9,9 +9,12 @@ namespace UI.Menu
     {
         public static PostGameUIManager Instance;
 
-        [SerializeField] private GameObject postGameCanvas;
+        [SerializeField] private GameObject postGameCanvasWinner;
+        [SerializeField] private GameObject postGameCanvasLoser;
         [SerializeField] private TextMeshProUGUI winningTeamText;
-        [SerializeField] private TextMeshProUGUI resultText;
+        [SerializeField] private TextMeshProUGUI winningText;
+        [SerializeField] private TextMeshProUGUI loserTeamText;
+        [SerializeField] private TextMeshProUGUI loserText;
 
         [SerializeField] private Button rematchButton;
     
@@ -28,17 +31,27 @@ namespace UI.Menu
 
         public void DisplayPostGame(Enums.Team winner)
         {
-            postGameCanvas.SetActive(true);
-            winningTeamText.text = $"{winner} has won!";
-
-            var playerTeam = GameStateMachine.Instance.GetPlayerTeam();
-            resultText.text = playerTeam == winner ? "You won!" : "You lost!";
+            if (GameStateMachine.Instance.GetPlayerTeam() == winner)
+            {
+                postGameCanvasLoser.SetActive(false);
+                postGameCanvasWinner.SetActive(true);
+                winningTeamText.text = $"{winner} a gagné!";
+                winningText.text = "Vous avez gagné!";
+            }
+            else
+            {
+                postGameCanvasWinner.SetActive(false);
+                postGameCanvasLoser.SetActive(true);
+                loserTeamText.text = $"{GameStateMachine.Instance.GetPlayerTeam()} a perdu!";
+                loserText.text = "Vous avez perdu!";
+            }
         }
 
         public void OnRematchClick()
         {
-            rematchButton.interactable = false;
-            GameStateMachine.Instance.SendSetToggleReady(true);
+            // rematchButton.interactable = false;
+            // GameStateMachine.Instance.SendSetToggleReady(true);
+            Application.Quit();
         }
     }
 }
