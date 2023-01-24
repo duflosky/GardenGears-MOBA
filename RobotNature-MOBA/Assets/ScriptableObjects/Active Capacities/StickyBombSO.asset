@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   referenceName: CapacityOne
   descriptionName: 
-  icon: {fileID: 21300000, guid: cd22fdbf68a3e0a48984646ddaa13539, type: 3}
+  icon: {fileID: 21300000, guid: d90c2feec354e814b9dbed14c507ef84, type: 3}
   description: 
   cooldown: 7
   isTargeting: 0
