@@ -28,7 +28,7 @@ public class AccurateShot : ChampionActiveCapacity
         Debug.Log($"Champion : {champion}");
         champion.canRotate = false;
         champion.OnCastAnimationCast -= CapacityEffect;
-        lookDir = targetPositions[0]-casterTransform.position;
+        lookDir = casterTransform.GetChild(0).forward;
         lookDir.y = 0;
         bullet = PoolNetworkManager.Instance.PoolInstantiate(SOType.bulletPrefab.GetComponent<Entity>(), casterTransform.position, Quaternion.LookRotation(lookDir)).gameObject;
         collider = bullet.GetComponent<AccurateShootCollider>();
