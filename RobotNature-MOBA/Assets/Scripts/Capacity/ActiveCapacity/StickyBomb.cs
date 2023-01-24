@@ -26,6 +26,7 @@ public class StickyBomb : ChampionActiveCapacity
     public override bool TryCast(int[] targetsEntityIndexes, Vector3[] targetPositions)
     {
         if (!base.TryCast(targetsEntityIndexes, targetPositions)) return false;
+        this.targetPositions = targetPositions;
         return true;
     }
 
