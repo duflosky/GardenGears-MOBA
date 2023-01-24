@@ -2096,6 +2096,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: PostGameUIManager
       objectReference: {fileID: 0}
+    - target: {fileID: 8839753705900759724, guid: d34d4b659dd993e4d8e5ec07f8590847,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d34d4b659dd993e4d8e5ec07f8590847, type: 3}
 --- !u!1001 &3239248363504227355
