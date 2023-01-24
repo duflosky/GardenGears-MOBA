@@ -65,7 +65,7 @@ PrefabInstance:
     - target: {fileID: 835514067193850690, guid: 74e472d24ad7b4148901f2bdc086ca2f,
         type: 3}
       propertyPath: m_Name
-      value: ME_Tree+Rock
+      value: ME_Tree+RockPartiellementDegarni
       objectReference: {fileID: 0}
     - target: {fileID: 1195894740785154711, guid: 74e472d24ad7b4148901f2bdc086ca2f,
         type: 3}
@@ -74,3 +74,22 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: 58530c3ea5f2e7e4c9efa7e6f596a8ae, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 74e472d24ad7b4148901f2bdc086ca2f, type: 3}
+--- !u!1 &1111706640415812067 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 835514067193850690, guid: 74e472d24ad7b4148901f2bdc086ca2f,
+    type: 3}
+  m_PrefabInstance: {fileID: 357408154612597409}
+  m_PrefabAsset: {fileID: 0}
+--- !u!65 &7267051213959978013
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1111706640415812067}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 2.7974067, y: 2.1380408, z: 3.0914195}
+  m_Center: {x: -0.3010937, y: -0.0026415642, z: 1.5439944}
