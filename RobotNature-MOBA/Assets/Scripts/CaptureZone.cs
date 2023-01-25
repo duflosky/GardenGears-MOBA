@@ -42,7 +42,7 @@ public class CaptureZone : MonoBehaviourPun
             case Enums.Team.Neutral:
                 if (firstTeamControl == 0 && secondTeamControl == 0) break;
                 if (firstTeamControl  <= amountToStack && firstTeamControl > 0) DecreaseControl(Enums.Team.Team1);
-                if (secondTeamControl <= amountToStack && firstTeamControl > 0) DecreaseControl(Enums.Team.Team2);
+                if (secondTeamControl <= amountToStack && secondTeamControl > 0) DecreaseControl(Enums.Team.Team2);
                 break;
             case Enums.Team.Team1:
                 if (firstTeamControl == amountToStack) break;
