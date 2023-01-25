@@ -19,7 +19,8 @@ public class CaptureZone : MonoBehaviourPun
     [SerializeField] private GameObject neutralZone;
     private Enums.Team dominatingTeam;
     private float pointCooldown;
-    private float cooldownTimer = 12f;
+    [SerializeField] private float cooldownTimer = 12f;
+    [SerializeField] private int amountToStack = 50;
     private int firstTeamControl;
     private int secondTeamControl;
     private List<Entity> firstTeamEntities = new();
@@ -40,16 +41,16 @@ public class CaptureZone : MonoBehaviourPun
         {
             case Enums.Team.Neutral:
                 if (firstTeamControl == 0 && secondTeamControl == 0) break;
-                if (firstTeamControl is <= 50 and > 0) DecreaseControl(Enums.Team.Team1);
-                if (secondTeamControl is <= 50 and > 0) DecreaseControl(Enums.Team.Team2);
+                if (firstTeamControl  <= amountToStack && firstTeamControl > 0) DecreaseControl(Enums.Team.Team1);
+                if (secondTeamControl <= amountToStack && firstTeamControl > 0) DecreaseControl(Enums.Team.Team2);
                 break;
             case Enums.Team.Team1:
-                if (firstTeamControl == 50) break;
+                if (firstTeamControl == amountToStack) break;
                 if (secondTeamControl > 0) DecreaseControl(Enums.Team.Team2);
                 else IncreaseControl(Enums.Team.Team1);
                 break;
             case Enums.Team.Team2:
-                if (secondTeamControl == 50) break;
+                if (secondTeamControl == amountToStack) break;
                 if (firstTeamControl > 0) DecreaseControl(Enums.Team.Team1);
                 else IncreaseControl(Enums.Team.Team2);
                 break;
@@ -59,8 +60,8 @@ public class CaptureZone : MonoBehaviourPun
 
         pointCooldown += 1 / (float)GameStateMachine.Instance.tickRate;
         if (pointCooldown < cooldownTimer) return;
-        if (firstTeamControl == 50) TryAddPoint(Enums.Team.Team1);
-        else if (secondTeamControl == 50) TryAddPoint(Enums.Team.Team2);
+        if (firstTeamControl == amountToStack) TryAddPoint(Enums.Team.Team1);
+        else if (secondTeamControl == amountToStack) TryAddPoint(Enums.Team.Team2);
     }
 
     private void OnDisable()
