@@ -2042,6 +2042,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1282215718493092642, guid: d34d4b659dd993e4d8e5ec07f8590847,
+        type: 3}
+      propertyPath: m_PreserveAspect
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1282215718555264810, guid: d34d4b659dd993e4d8e5ec07f8590847,
         type: 3}
       propertyPath: m_RootOrder
@@ -2101,6 +2106,32 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: PostGameUIManager
+      objectReference: {fileID: 0}
+    - target: {fileID: 1282215720035291075, guid: d34d4b659dd993e4d8e5ec07f8590847,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5194449236517370204, guid: d34d4b659dd993e4d8e5ec07f8590847,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5194449236517370204, guid: d34d4b659dd993e4d8e5ec07f8590847,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5755285001259122833, guid: d34d4b659dd993e4d8e5ec07f8590847,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: cb0cf9fcb57d36249979dafa98f8a940,
+        type: 3}
+    - target: {fileID: 5755285001259122833, guid: d34d4b659dd993e4d8e5ec07f8590847,
+        type: 3}
+      propertyPath: m_PreserveAspect
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8839753705900759724, guid: d34d4b659dd993e4d8e5ec07f8590847,
         type: 3}
