@@ -13,6 +13,7 @@ public partial class Champion
     private double[] abilityCooldowns = new double[4];
 
     public bool canCast;
+    public bool isCasting;
     
     public bool CanCast()
     {
@@ -62,7 +63,7 @@ public partial class Champion
     [PunRPC]
     public void CastRPC(byte capacityIndex, byte championCapacityIndex, int[] targetedEntities, Vector3[] targetedPositions)
     {
-        if (abilityCooldowns[championCapacityIndex] > 0) return;
+        if (abilityCooldowns[championCapacityIndex] > 0 || isCasting) return;
         var activeCapacity = CapacitySOCollectionManager.CreateActiveCapacity(capacityIndex,this);
         if (!activeCapacity.TryCast(targetedEntities, targetedPositions)) return;
         abilityCooldowns[championCapacityIndex] = CapacitySOCollectionManager.GetActiveCapacitySOByIndex(capacityIndex).cooldown*GameStateMachine.Instance.tickRate;
