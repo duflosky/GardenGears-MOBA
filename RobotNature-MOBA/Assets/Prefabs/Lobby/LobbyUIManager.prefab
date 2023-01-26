@@ -5701,7 +5701,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_text: "Passif : Surchauffe\r\nApr\xE8s un certain nombre de tirs, le Bunny passe
-    en surchauffe, il tire\r plus vite, mais la dispersion de son tir est augment\xE9e
+    en surchauffe, il tire\r       plus vite, mais la dispersion de son tir est augment\xE9e
     temporairement\r\n"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 779bc6466c7268b438b22486daa90ca8, type: 2}
@@ -7380,10 +7380,10 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "Comp\xE9tence : Tir Pr\xE9cis\r\nBunny charge un tir puissant \xE0 longue
-    port\xE9e qui traverse les murs\r et            ralentit les champions adverses
-    touch\xE9s\r\nD\xE9clenche une explosion puissante de la Bombe collante de son
-    alli\xE9\r                     et affaiblit celle de l\u2019ennemi\r"
+  m_text: "Comp\xE9tence (A) : Tir Pr\xE9cis\r\nBunny charge un tir puissant \xE0
+    longue port\xE9e qui traverse les murs\r                 et ralentit les champions
+    adverses touch\xE9s\r\nD\xE9clenche une explosion puissante de la Bombe collante
+    de son alli\xE9\r                     et affaiblit celle de l\u2019ennemi\r"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 779bc6466c7268b438b22486daa90ca8, type: 2}
   m_sharedMaterial: {fileID: 5539941203671505372, guid: 779bc6466c7268b438b22486daa90ca8,
