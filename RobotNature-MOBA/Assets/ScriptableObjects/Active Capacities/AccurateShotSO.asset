@@ -21,9 +21,11 @@ MonoBehaviour:
   maxRange: 25
   types: 
   feedbackDuration: 0
-  shotPrefab: {fileID: 0}
+  shotPrefab: {fileID: 626993110437693475, guid: f751cccc96195404e9549fdbffb380b5,
+    type: 3}
   feedbackPrefab: {fileID: 0}
-  feedbackHitPrefab: {fileID: 0}
+  feedbackHitPrefab: {fileID: 1390825688981274022, guid: 1fa3bc57a0a21b44588ec73b5d5b9816,
+    type: 3}
   shootType: 0
   indexInCollection: 5
   gizmoPrefab: {fileID: 3476950289744795259, guid: cd5c7f47fdc734c4e837e2233ed5cf85,

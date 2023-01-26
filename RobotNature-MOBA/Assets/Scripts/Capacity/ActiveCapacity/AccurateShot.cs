@@ -22,6 +22,13 @@ public class AccurateShot : ChampionActiveCapacity
         champion.OnCastAnimationCast += CapacityEffect;
         champion.OnCastAnimationEnd += CapacityEndAnimation; 
     }*/
+    
+    public override void CapacityShotEffect(Transform transform)
+    {
+        champion.OnCastAnimationShotEffect -= CapacityShotEffect;
+        var direction = casterTransform.GetChild(0).forward;
+        PoolLocalManager.Instance.RequestPoolInstantiate(SOType.shotPrefab, transform.position, Quaternion.LookRotation(-direction));
+    }
 
     public override void CapacityEffect(Transform castTransform)
     {
@@ -59,6 +66,7 @@ public class AccurateShot : ChampionActiveCapacity
                 var capacityIndex = CapacitySOCollectionManager.GetActiveCapacitySOIndex(SOType);
                 Debug.Log($"Deal damage to {entity.gameObject}");
                 entity.photonView.RPC("DecreaseCurrentHpByCapacityRPC", RpcTarget.All, caster.GetComponent<Champion>().attackDamage * SOType.percentageDamage/100, capacityIndex);
+                PoolLocalManager.Instance.RequestPoolInstantiate(SOType.feedbackHitPrefab, entity.transform.position, Quaternion.identity);
                 collider.Disable();
                 var moveable = entity.GetComponent<IMovable>();
                 if (moveable == null) return;

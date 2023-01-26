@@ -31,6 +31,13 @@ public class AutoAttackRange : ChampionActiveCapacity
         }
         else return false;
     }
+    
+    public override void CapacityShotEffect(Transform transform)
+    {
+        champion.OnCastAnimationShotEffect -= CapacityShotEffect;
+        var direction = casterTransform.GetChild(0).forward;
+        PoolLocalManager.Instance.RequestPoolInstantiate(SOType.shotPrefab, transform.position, Quaternion.LookRotation(-direction));
+    }
 
     public override void CapacityEffect(Transform castTransform)
     {
@@ -72,7 +79,7 @@ public class AutoAttackRange : ChampionActiveCapacity
         if (!lifeable.AttackAffected()) return;
         var capacityIndex = CapacitySOCollectionManager.GetActiveCapacitySOIndex(SOType);
         affectedEntity.photonView.RPC("DecreaseCurrentHpByCapacityRPC", RpcTarget.All, caster.GetComponent<Champion>().attackDamage * SOType.percentageDamage, capacityIndex);
-        PoolLocalManager.Instance.RequestPoolInstantiate(SOType.feedbackHitPrefab, affectedEntity.transform.position, Quaternion.identity);
+        PoolLocalManager.Instance.RequestPoolInstantiate(champion.isOverheat ? SOType.hitOverheatPrefab : SOType.feedbackHitPrefab, affectedEntity.transform.position, Quaternion.identity);
         collider.Disable();
     }
 

@@ -9,6 +9,7 @@ public class AutoAttackRangeSO : ChampionActiveCapacitySO
 {
     public GameObject bulletPrefab;
     public GameObject overheatBulletPrefab;
+    public GameObject hitOverheatPrefab;
 
     public float bulletSpeed;
     public float percentageDamage; 

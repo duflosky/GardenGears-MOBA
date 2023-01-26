@@ -70,7 +70,7 @@ namespace Entities.Capacities
 
         public abstract void CapacityPress();
         
-        public virtual void CapacityShotEffect() { }
+        public virtual void CapacityShotEffect(Transform transform) { }
         
         public abstract void CapacityEffect(Transform transform);
         

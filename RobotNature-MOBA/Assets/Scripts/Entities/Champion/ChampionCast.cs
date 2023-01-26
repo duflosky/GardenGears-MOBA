@@ -69,7 +69,6 @@ public partial class Champion
         OnCast?.Invoke(capacityIndex, targetedEntities, targetedPositions);
         photonView.RPC("SyncCastRPC", RpcTarget.All, capacityIndex, targetedEntities, targetedPositions);
     }
-    
 
     [PunRPC]
     public void SyncCastRPC(byte capacityIndex, int[] targetedEntities, Vector3[] targetedPositions)
@@ -104,9 +103,9 @@ public partial class Champion
         OnCastAnimationFeedback?.Invoke();
     }
     
-    public void CastAnimationShotEffect()
+    public void CastAnimationShotEffect(Transform transform)
     {
-        OnCastAnimationShotEffect?.Invoke();
+        OnCastAnimationShotEffect?.Invoke(transform);
     }
     
     public event GlobalDelegates.NoParameterDelegate CastUpdate;
@@ -114,6 +113,6 @@ public partial class Champion
     public event GlobalDelegates.TransformDelegate OnCastAnimationCast;
     public event GlobalDelegates.NoParameterDelegate OnCastAnimationEnd;
     public event GlobalDelegates.NoParameterDelegate OnCastAnimationFeedback;
-    public event GlobalDelegates.NoParameterDelegate OnCastAnimationShotEffect;
+    public event GlobalDelegates.TransformDelegate OnCastAnimationShotEffect;
     public event GlobalDelegates.ByteIntArrayVector3ArrayCapacityDelegate OnCastFeedback;
 }
