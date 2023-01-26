@@ -65,7 +65,7 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 6fad4647a9af0734797a8974c2172ee5,
         type: 3}
       propertyPath: m_Name
-      value: BunnyChampion
+      value: NewBunnyChampion
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6fad4647a9af0734797a8974c2172ee5, type: 3}
