@@ -216,7 +216,7 @@ namespace Entities.Minion
         {
             if (towersList is null) return;
 
-            if (!(Vector3.Distance(transform.position, towersList[towerIndex].GetComponent<Tower>().minionSpot.position) < 1)) return;
+            if (!(Vector3.Distance(transform.position, towersList[towerIndex].GetComponent<Tower>().minionSpot.position) < 2)) return;
             ((InGameState)GameStateMachine.Instance.currentState).AddPoint(team);
             RequestDie();
         }

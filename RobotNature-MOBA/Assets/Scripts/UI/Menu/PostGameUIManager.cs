@@ -1,6 +1,7 @@
 using GameStates;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 namespace UI.Menu
@@ -9,12 +10,12 @@ namespace UI.Menu
     {
         public static PostGameUIManager Instance;
 
-        [SerializeField] private GameObject postGameCanvasWinner;
-        [SerializeField] private GameObject postGameCanvasLoser;
-        [SerializeField] private TextMeshProUGUI winningTeamText;
-        [SerializeField] private TextMeshProUGUI winningText;
-        [SerializeField] private TextMeshProUGUI loserTeamText;
-        [SerializeField] private TextMeshProUGUI loserText;
+        [SerializeField] private GameObject postGameCanvasOrange;
+        [SerializeField] private GameObject postGameCanvasPurple;
+        [SerializeField] private TextMeshProUGUI orangeTeamText;
+        [SerializeField] private TextMeshProUGUI orangeText;
+        [SerializeField] private TextMeshProUGUI purpleTeamText;
+        [SerializeField] private TextMeshProUGUI purpleText;
 
         [SerializeField] private Button rematchButton;
     
@@ -31,19 +32,39 @@ namespace UI.Menu
 
         public void DisplayPostGame(Enums.Team winner)
         {
-            if (GameStateMachine.Instance.GetPlayerTeam() == winner)
+            if (GameStateMachine.Instance.GetPlayerTeam() == Enums.Team.Team1)
             {
-                postGameCanvasLoser.SetActive(false);
-                postGameCanvasWinner.SetActive(true);
-                winningTeamText.text = $"{winner} a gagné!";
-                winningText.text = "Vous avez gagné!";
+                if (GameStateMachine.Instance.GetPlayerTeam() == winner)
+                {
+                    postGameCanvasPurple.SetActive(false);
+                    postGameCanvasOrange.SetActive(true);
+                    orangeTeamText.text = $"{winner} a gagné!";
+                    orangeText.text = "Vous avez gagné!";
+                }
+                else
+                {
+                    postGameCanvasPurple.SetActive(false);
+                    postGameCanvasOrange.SetActive(true);
+                    orangeTeamText.text = $"{GameStateMachine.Instance.GetPlayerTeam()} a perdu!";
+                    orangeText.text = "Vous avez perdu!";
+                }
             }
-            else
+            else if (GameStateMachine.Instance.GetPlayerTeam() == Enums.Team.Team2)
             {
-                postGameCanvasWinner.SetActive(false);
-                postGameCanvasLoser.SetActive(true);
-                loserTeamText.text = $"{GameStateMachine.Instance.GetPlayerTeam()} a perdu!";
-                loserText.text = "Vous avez perdu!";
+                if (GameStateMachine.Instance.GetPlayerTeam() == winner)
+                {
+                    postGameCanvasOrange.SetActive(false);
+                    postGameCanvasPurple.SetActive(true);
+                    purpleTeamText.text = $"{GameStateMachine.Instance.GetPlayerTeam()} a gagné!";
+                    purpleText.text = "Vous avez gagné!";
+                }
+                else
+                {
+                    postGameCanvasOrange.SetActive(false);
+                    postGameCanvasPurple.SetActive(true);
+                    orangeTeamText.text = $"{GameStateMachine.Instance.GetPlayerTeam()} a perdu!";
+                    orangeText.text = "Vous avez perdu!";
+                }
             }
         }
 
