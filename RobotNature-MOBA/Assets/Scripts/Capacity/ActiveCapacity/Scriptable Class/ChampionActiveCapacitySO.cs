@@ -7,6 +7,4 @@ public abstract class ChampionActiveCapacitySO : ActiveCapacitySO
 {
     public GameObject gizmoPrefab;
     public SpeedModifierPassiveSO capacitySlow;
-
-
 }

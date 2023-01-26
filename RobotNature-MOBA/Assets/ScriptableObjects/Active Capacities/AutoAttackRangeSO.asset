@@ -23,9 +23,10 @@ MonoBehaviour:
   maxRange: 16
   types: 
   feedbackDuration: 0
-  shotPrefab: {fileID: 0}
+  shotPrefab: {fileID: 626993110437693475, guid: f751cccc96195404e9549fdbffb380b5,
+    type: 3}
   feedbackPrefab: {fileID: 0}
-  feedbackHitPrefab: {fileID: 693690632283133517, guid: f13e6ef504a84e94ea3e1729848bf335,
+  feedbackHitPrefab: {fileID: 1390825688981274022, guid: bf66ecda8e154274cb5c434096617c5d,
     type: 3}
   shootType: 0
   indexInCollection: 1

@@ -29,12 +29,12 @@ public class UltimateRange : ChampionActiveCapacity
         champion.canRotate = false;
     }*/
 
-    public override void CapacityShotEffect()
+    public override void CapacityShotEffect(Transform transform)
     {
         champion.OnCastAnimationShotEffect -= CapacityShotEffect;
         direction = targetPositions[0] - casterTransform.position;
         direction.y = 0;
-        PoolLocalManager.Instance.PoolInstantiate(SOType.shotPrefab, casterTransform.position, Quaternion.LookRotation(-direction));
+        PoolLocalManager.Instance.RequestPoolInstantiate(SOType.shotPrefab, transform.position, Quaternion.LookRotation(-direction));
     }
 
     public override void CapacityEffect(Transform transform)

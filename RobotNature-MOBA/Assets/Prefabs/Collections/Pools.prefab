@@ -71,7 +71,7 @@ MonoBehaviour:
       type: 3}
     amount: 2
     duration: 0
-  - Element: {fileID: 693690632283133517, guid: f13e6ef504a84e94ea3e1729848bf335,
+  - Element: {fileID: 1390825688981274022, guid: bf66ecda8e154274cb5c434096617c5d,
       type: 3}
     amount: 2
     duration: 0
@@ -88,6 +88,14 @@ MonoBehaviour:
     amount: 2
     duration: 0
   - Element: {fileID: 5261821192487706735, guid: 4c51c0b6fe8bb84498918bf6d0e06ae7,
+      type: 3}
+    amount: 2
+    duration: 0
+  - Element: {fileID: 626993110437693475, guid: f751cccc96195404e9549fdbffb380b5,
+      type: 3}
+    amount: 2
+    duration: 0
+  - Element: {fileID: 1390825688981274022, guid: 1fa3bc57a0a21b44588ec73b5d5b9816,
       type: 3}
     amount: 2
     duration: 0
