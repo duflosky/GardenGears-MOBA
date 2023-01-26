@@ -884,7 +884,7 @@ namespace Entities.Minion
             throw new NotImplementedException();
         }
 
-        public void CastAnimationShotEffect()
+        public void CastAnimationShotEffect(Transform transform)
         {
             throw new NotImplementedException();
         }
@@ -907,7 +907,7 @@ namespace Entities.Minion
         public event GlobalDelegates.ByteIntArrayVector3ArrayDelegate OnCast;
         public event GlobalDelegates.TransformDelegate OnCastAnimationCast;
         public event GlobalDelegates.NoParameterDelegate OnCastAnimationEnd;
-        public event GlobalDelegates.NoParameterDelegate OnCastAnimationShotEffect;
+        public event GlobalDelegates.TransformDelegate OnCastAnimationShotEffect;
         public event GlobalDelegates.ByteIntArrayVector3ArrayCapacityDelegate OnCastFeedback;
         
         #endregion

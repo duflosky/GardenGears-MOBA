@@ -13,7 +13,7 @@ public class AnimationCallbacks : MonoBehaviourPun
 
     public void AnimationShotEffect()
     {
-        caster.CastAnimationShotEffect();
+        caster.CastAnimationShotEffect(castTransform);
     }
     
     public void AnimationCast()

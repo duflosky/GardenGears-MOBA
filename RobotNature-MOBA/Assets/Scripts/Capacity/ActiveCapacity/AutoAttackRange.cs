@@ -31,6 +31,13 @@ public class AutoAttackRange : ChampionActiveCapacity
         }
         else return false;
     }
+    
+    public override void CapacityShotEffect(Transform transform)
+    {
+        champion.OnCastAnimationShotEffect -= CapacityShotEffect;
+        var direction = casterTransform.GetChild(0).forward;
+        PoolLocalManager.Instance.RequestPoolInstantiate(SOType.shotPrefab, transform.position, Quaternion.LookRotation(-direction));
+    }
 
     public override void CapacityEffect(Transform castTransform)
     {
