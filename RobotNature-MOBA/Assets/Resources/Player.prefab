@@ -405,6 +405,7 @@ MonoBehaviour:
   abilitiesIndexes: 0000
   ultimateAbilityIndex: 0
   canCast: 0
+  isCasting: 0
   isAlive: 1
   canDie: 1
   respawnDuration: 3

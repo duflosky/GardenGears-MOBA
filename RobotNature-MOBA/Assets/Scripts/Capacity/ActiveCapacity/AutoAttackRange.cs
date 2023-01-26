@@ -26,6 +26,7 @@ public class AutoAttackRange : ChampionActiveCapacity
             this.targetsEntityIndexes = targetsEntityIndexes;
 
             this.targetPositions = targetPositions;
+            champion.isCasting = true;
             CapacityPress();
             return true;
         }
@@ -64,6 +65,7 @@ public class AutoAttackRange : ChampionActiveCapacity
     {
         champion.OnCastAnimationEnd -= CapacityEndAnimation;
         champion.GetPassiveCapacity(CapacitySOCollectionManager.GetPassiveCapacitySOIndex(SOType.attackSlowSO)).OnRemoved();
+        champion.isCasting = false;
         champion.canRotate = true;
     }
 
