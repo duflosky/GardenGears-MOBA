@@ -38,20 +38,19 @@ public class AutoAttackRange : ChampionActiveCapacity
         champion.OnCastAnimationCast -= CapacityEffect;
         champion.GetPassiveCapacity(CapacitySOCollectionManager.GetPassiveCapacitySOIndex(SOType.overheatSO)).OnAdded();
         lookDir = casterTransform.GetChild(0).forward;
-        if (champion.isOverheat)
-        {
-            var rdm = Random.Range(-(SOType.sprayAngle / 2), (SOType.sprayAngle / 2));
-            lookDir += new Vector3(Mathf.Cos(rdm), 0, Mathf.Sin(rdm)).normalized;
-        }
+        float rotateAngle = champion.isOverheat ? Random.Range(-(SOType.sprayAngle / 2), (SOType.sprayAngle / 2)) : 0f;
+        Debug.Log($"RotateAngle: {rotateAngle}");
 
         var bulletPref = champion.isOverheat ? SOType.overheatBulletPrefab : SOType.bulletPrefab;
         bullet = PoolNetworkManager.Instance.PoolInstantiate(bulletPref.GetComponent<Entity>(), casterTransform.position, casterTransform.GetChild(0).rotation).gameObject;
         collider = bullet.GetComponent<AffectCollider>();
         collider.caster = caster;
         collider.casterPos = casterTransform.position;
+        if(champion.isOverheat)collider.transform.Rotate(new Vector3(0,rotateAngle,0));
         collider.maxDistance = SOType.maxRange;
         collider.capacitySender = this;
-        collider.Launch(lookDir.normalized*SOType.bulletSpeed);
+        //collider.Launch(lookDir.normalized*SOType.bulletSpeed);
+        collider.Launch(collider.transform.forward*SOType.bulletSpeed);
     }
 
     public override void CapacityEndAnimation()

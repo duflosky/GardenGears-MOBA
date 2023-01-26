@@ -43,7 +43,6 @@ public abstract class ChampionActiveCapacity : ActiveCapacity
 
     public override void PlayFeedback(int casterIndex, int[] targetsEntityIndexes, Vector3[] targetPositions)
     {
-        Debug.Log("Play FeedBack");
         if(champion.photonView.IsMine)DisplayGizmos(true);
     }
 
@@ -60,7 +59,6 @@ public abstract class ChampionActiveCapacity : ActiveCapacity
             if (!gizmo)
             {
                 gizmo = Object.Instantiate(ChampSO.gizmoPrefab, casterTransform.position, Quaternion.identity, casterTransform);
-                Debug.Log($"Create Gizmo: {gizmo}");
                 var rect = gizmo.GetComponentInChildren<Image>().GetComponent<RectTransform>(); //Désolé pour les yeux :3
                 rect.localPosition =(new Vector3(0,0,ChampSO.maxRange/2));
                 rect.sizeDelta = new Vector2(rect.sizeDelta.x, ChampSO.maxRange);

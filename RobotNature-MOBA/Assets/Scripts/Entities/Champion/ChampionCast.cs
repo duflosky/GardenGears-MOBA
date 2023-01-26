@@ -75,7 +75,6 @@ public partial class Champion
     public void SyncCastRPC(byte capacityIndex, int[] targetedEntities, Vector3[] targetedPositions)
     {
         var activeCapacity = CapacitySOCollectionManager.CreateActiveCapacity(capacityIndex, this);
-        Debug.Log("Sync Play Feedback of " + activeCapacity.SO.name);
         activeCapacity.PlayFeedback(capacityIndex, targetedEntities, targetedPositions);
         if (animator)
         {
