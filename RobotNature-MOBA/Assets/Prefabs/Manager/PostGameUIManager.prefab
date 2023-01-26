@@ -68,7 +68,7 @@ MonoBehaviour:
       m_Calls: []
   m_Sprite: {fileID: 21300000, guid: b25a3de98b9b06c4486349a288bfbeb1, type: 3}
   m_Type: 0
-  m_PreserveAspect: 0
+  m_PreserveAspect: 1
   m_FillCenter: 1
   m_FillMethod: 4
   m_FillAmount: 1
@@ -122,12 +122,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 73d0f66bacff90343a31b88015838d77, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  postGameCanvasWinner: {fileID: 1282215720035291075}
-  postGameCanvasLoser: {fileID: 8839753705900759724}
-  winningTeamText: {fileID: 1282215718950765159}
-  winningText: {fileID: 1282215719568499391}
-  loserTeamText: {fileID: 8430296159023232106}
-  loserText: {fileID: 1137728979283832887}
+  postGameCanvasOrange: {fileID: 1282215720035291075}
+  postGameCanvasPurple: {fileID: 8839753705900759724}
+  orangeTeamText: {fileID: 1282215718950765159}
+  orangeText: {fileID: 1282215719568499391}
+  purpleTeamText: {fileID: 8430296159023232106}
+  purpleText: {fileID: 1137728979283832887}
   rematchButton: {fileID: 1282215718852140452}
 --- !u!1 &1282215718852140454
 GameObject:
@@ -684,7 +684,7 @@ GameObject:
   - component: {fileID: 1282215720035291072}
   - component: {fileID: 1282215720035291073}
   m_Layer: 0
-  m_Name: PostGameCanvasWinner
+  m_Name: PostGameCanvasOrange
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -841,9 +841,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: b25a3de98b9b06c4486349a288bfbeb1, type: 3}
+  m_Sprite: {fileID: 21300000, guid: cb0cf9fcb57d36249979dafa98f8a940, type: 3}
   m_Type: 0
-  m_PreserveAspect: 0
+  m_PreserveAspect: 1
   m_FillCenter: 1
   m_FillMethod: 4
   m_FillAmount: 1
@@ -1406,12 +1406,12 @@ GameObject:
   - component: {fileID: 6116624775944995339}
   - component: {fileID: 8562602075250916562}
   m_Layer: 0
-  m_Name: PostGameCanvasLoser
+  m_Name: PostGameCanvasPurple
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &5139610604978431867
 RectTransform:
   m_ObjectHideFlags: 0
