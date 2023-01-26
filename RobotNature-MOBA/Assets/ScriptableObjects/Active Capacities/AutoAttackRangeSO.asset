@@ -42,5 +42,5 @@ MonoBehaviour:
   bulletSpeed: 25
   percentageDamage: 0.8
   overheatSO: {fileID: 11400000, guid: 4e9be0a9aa6ed6c46b641b0466ac75c5, type: 2}
-  sprayAngle: 60
+  sprayAngle: 0.5
   attackSlowSO: {fileID: 11400000, guid: 4520a40069532594ebc5b59db1b46511, type: 2}
