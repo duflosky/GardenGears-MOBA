@@ -80,7 +80,7 @@ public class AutoAttackRange : ChampionActiveCapacity
         if (!lifeable.AttackAffected()) return;
         var capacityIndex = CapacitySOCollectionManager.GetActiveCapacitySOIndex(SOType);
         affectedEntity.photonView.RPC("DecreaseCurrentHpByCapacityRPC", RpcTarget.All, caster.GetComponent<Champion>().attackDamage * SOType.percentageDamage, capacityIndex);
-        PoolLocalManager.Instance.RequestPoolInstantiate(SOType.feedbackHitPrefab, affectedEntity.transform.position, Quaternion.identity);
+        PoolLocalManager.Instance.RequestPoolInstantiate(champion.isOverheat ? SOType.hitOverheatPrefab : SOType.feedbackHitPrefab, affectedEntity.transform.position, Quaternion.identity);
         collider.Disable();
     }
 
