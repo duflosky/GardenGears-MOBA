@@ -85,7 +85,9 @@ public class AutoAttackMelee : ChampionActiveCapacity
 
     public override void PlayFeedback(int casterIndex, int[] targetsEntityIndexes, Vector3[] targetPositions)
     {
-        
+        lookDir = -casterTransform.GetChild(0).forward;
+        lookDir.y = 0;
+        PoolLocalManager.Instance.PoolInstantiate(SOType.fxPrefab, casterTransform.position, Quaternion.LookRotation(lookDir));
     }
 
     public override void AnimationFeedback()
