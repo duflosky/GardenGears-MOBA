@@ -2,78 +2,87 @@ using Entities;
 using Entities.Capacities;
 using Photon.Pun;
 using UnityEngine;
+using UnityEngine.UI;
 
-public class AutoAttackRange : ActiveCapacity
+public class AutoAttackRange : ChampionActiveCapacity
 {
-    private Champion champion;
-    
     private AutoAttackRangeSO SOType;
     private Vector3 lookDir;
     private GameObject bullet;
     private AffectCollider collider;
+    private GameObject shotGizmo;
 
     public override void OnStart()
     {
+        base.OnStart();
         SOType = (AutoAttackRangeSO)SO;
-        casterTransform = caster.transform;
-        champion = (Champion)caster;
     }
 
     public override bool TryCast(int[] targetsEntityIndexes, Vector3[] targetPositions)
     {
-        if(!base.TryCast(targetsEntityIndexes, targetPositions)) return false;
-        return true;
-    }
+        if (!onCooldown)
+        {
+            InitiateCooldown();
+            this.targetsEntityIndexes = targetsEntityIndexes;
 
-    public override void CapacityPress()
+            this.targetPositions = targetPositions;
+            champion.isCasting = true;
+            CapacityPress();
+            return true;
+        }
+        else return false;
+    }
+    
+    public override void CapacityShotEffect(Transform transform)
     {
-        champion.GetPassiveCapacity(CapacitySOCollectionManager.GetPassiveCapacitySOIndex(SOType.attackSlowSO)).OnAdded();
-        champion.OnCastAnimationCast += CapacityEffect;
-        champion.OnCastAnimationEnd += CapacityEndAnimation; 
-        champion.canRotate = false;
+        champion.OnCastAnimationShotEffect -= CapacityShotEffect;
+        var direction = casterTransform.GetChild(0).forward;
+        PoolLocalManager.Instance.RequestPoolInstantiate(SOType.shotPrefab, transform.position, Quaternion.LookRotation(-direction));
     }
 
     public override void CapacityEffect(Transform castTransform)
     {
+        champion.canRotate = false;
         champion.OnCastAnimationCast -= CapacityEffect;
         champion.GetPassiveCapacity(CapacitySOCollectionManager.GetPassiveCapacitySOIndex(SOType.overheatSO)).OnAdded();
-        lookDir = targetPositions[0]-casterTransform.position;
-        lookDir.y = 0;
-        if (champion.isOverheat)
-        {
-            var rdm = Random.Range(-(SOType.sprayAngle / 2), (SOType.sprayAngle / 2));
-            lookDir += new Vector3(Mathf.Cos(rdm), 0, Mathf.Sin(rdm)).normalized;
-        }
-        bullet = PoolNetworkManager.Instance.PoolInstantiate(SOType.bulletPrefab.GetComponent<Entity>(), casterTransform.position, Quaternion.LookRotation(lookDir)).gameObject;
+        lookDir = casterTransform.GetChild(0).forward;
+        float rotateAngle = champion.isOverheat ? Random.Range(-(SOType.sprayAngle / 2), (SOType.sprayAngle / 2)) : 0f;
+        Debug.Log($"RotateAngle: {rotateAngle}");
+
+        var bulletPref = champion.isOverheat ? SOType.overheatBulletPrefab : SOType.bulletPrefab;
+        bullet = PoolNetworkManager.Instance.PoolInstantiate(bulletPref.GetComponent<Entity>(), casterTransform.position, casterTransform.GetChild(0).rotation).gameObject;
         collider = bullet.GetComponent<AffectCollider>();
         collider.caster = caster;
         collider.casterPos = casterTransform.position;
+        if(champion.isOverheat)collider.transform.Rotate(new Vector3(0,rotateAngle,0));
         collider.maxDistance = SOType.maxRange;
         collider.capacitySender = this;
-        collider.Launch(lookDir.normalized*SOType.bulletSpeed);
+        //collider.Launch(lookDir.normalized*SOType.bulletSpeed);
+        collider.Launch(collider.transform.forward*SOType.bulletSpeed);
     }
 
     public override void CapacityEndAnimation()
     {
         champion.OnCastAnimationEnd -= CapacityEndAnimation;
         champion.GetPassiveCapacity(CapacitySOCollectionManager.GetPassiveCapacitySOIndex(SOType.attackSlowSO)).OnRemoved();
+        champion.isCasting = false;
         champion.canRotate = true;
     }
 
-    public override void CollideEntityEffect(Entity entityAffect)
+    public override void CollideEntityEffect(Entity affectedEntity)
     {
-        if (caster.team == entityAffect.team) return;
-        var lifeable = entityAffect.GetComponent<IActiveLifeable>();
+        if (caster.team == affectedEntity.team)
+        {
+            AllyHit(indexOfSOInCollection);
+            return;
+        }
+        var lifeable = affectedEntity.GetComponent<IActiveLifeable>();
         if (lifeable == null) return;
         if (!lifeable.AttackAffected()) return;
-        entityAffect.photonView.RPC("DecreaseCurrentHpRPC", RpcTarget.All, caster.GetComponent<Champion>().attackDamage * SOType.percentageDamage);
+        var capacityIndex = CapacitySOCollectionManager.GetActiveCapacitySOIndex(SOType);
+        affectedEntity.photonView.RPC("DecreaseCurrentHpByCapacityRPC", RpcTarget.All, caster.GetComponent<Champion>().attackDamage * SOType.percentageDamage, capacityIndex);
+        PoolLocalManager.Instance.RequestPoolInstantiate(champion.isOverheat ? SOType.hitOverheatPrefab : SOType.feedbackHitPrefab, affectedEntity.transform.position, Quaternion.identity);
         collider.Disable();
-    }
-
-    public override void CollideFeedbackEffect(Entity entityAffect)
-    {
-        if (caster.team == entityAffect.team) return;
-        PoolLocalManager.Instance.RequestPoolInstantiate(SOType.feedbackHitPrefab, entityAffect.transform.position, Quaternion.identity);
     }
 
     public override void CollideObjectEffect(GameObject obj)
@@ -81,5 +90,4 @@ public class AutoAttackRange : ActiveCapacity
         collider.Disable();
     }
 
-    public override void PlayFeedback(int casterIndex, int[] targetsEntityIndexes, Vector3[] targetPositions) { }
 }

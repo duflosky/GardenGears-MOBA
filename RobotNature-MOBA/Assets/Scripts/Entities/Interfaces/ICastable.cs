@@ -46,11 +46,14 @@ public interface ICastable
 
         public void CastAnimationCast(Transform transform);
         public void CastAnimationEnd();
+        public void CastAnimationFeedback();
+        public void CastAnimationShotEffect(Transform transform);
         
         
         public void SyncCastRPC(byte capacityIndex, int[] targetedEntities, Vector3[] targetedPositions);
         public event GlobalDelegates.ByteIntArrayVector3ArrayDelegate OnCast;
         public event GlobalDelegates.TransformDelegate OnCastAnimationCast;
         public event GlobalDelegates.NoParameterDelegate OnCastAnimationEnd;
+        public event GlobalDelegates.TransformDelegate OnCastAnimationShotEffect;
         public event GlobalDelegates.ByteIntArrayVector3ArrayCapacityDelegate OnCastFeedback;
 }

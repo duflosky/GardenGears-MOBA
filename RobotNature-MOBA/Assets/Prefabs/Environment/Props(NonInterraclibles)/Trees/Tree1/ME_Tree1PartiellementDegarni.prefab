@@ -77,5 +77,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: ME_Tree1PartiellementDegarni
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 8664853197286266466, guid: e77fca55052c16f4d91ae8a266b52db5, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: e77fca55052c16f4d91ae8a266b52db5, type: 3}

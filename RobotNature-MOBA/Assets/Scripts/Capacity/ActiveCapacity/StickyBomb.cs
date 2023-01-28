@@ -1,30 +1,32 @@
-using System.Collections.Generic;
 using Entities;
 using Entities.Capacities;
+using Entities.Minion;
 using GameStates;
 using Photon.Pun;
 using UnityEngine;
 
-public class StickyBomb : ActiveCapacity
+public class StickyBomb : ChampionActiveCapacity
 {
     private Champion champion;
-    
-    public StickyBombSO SOType;
-    private GameObject stickyBombGO;
+
     private double timer;
-    private Vector3 lookDir;
-    private PhotonView photonView;
+    private Entity stickyBombGO;
+    private GameObject explosionGO;
+    private IActiveLifeable liveable;
+    private StickyBombSO SOType;
+    private StickyBombCollider collider;
+    private Vector3 direction;
 
     public override void OnStart()
     {
         SOType = (StickyBombSO)SO;
-        casterTransform = caster.transform;
         champion = (Champion)caster;
     }
-    
+
     public override bool TryCast(int[] targetsEntityIndexes, Vector3[] targetPositions)
     {
-        if(!base.TryCast(targetsEntityIndexes, targetPositions)) return false;
+        if (!base.TryCast(targetsEntityIndexes, targetPositions)) return false;
+        this.targetPositions = targetPositions;
         return true;
     }
 
@@ -32,90 +34,180 @@ public class StickyBomb : ActiveCapacity
     {
         champion.OnCastAnimationCast += CapacityEffect;
         champion.OnCastAnimationEnd += CapacityEndAnimation;
-        champion.canRotate = false;
     }
 
     public override void CapacityEffect(Transform castTransform)
     {
         champion.OnCastAnimationCast -= CapacityEffect;
-        lookDir = targetPositions[0]-casterTransform.position;
-        lookDir.y = 0;
-        stickyBombGO = PoolLocalManager.Instance.PoolInstantiate(SOType.feedbackPrefab, casterTransform.position, Quaternion.LookRotation(lookDir));
-        stickyBombGO.GetComponent<MeshRenderer>().enabled = true;
-        var collider = stickyBombGO.GetComponent<AffectCollider>(); 
+        direction = targetPositions[0] - caster.transform.position;
+        direction.y = 0;
+        stickyBombGO = PoolNetworkManager.Instance.PoolInstantiate(SOType.feedbackPrefab.GetComponent<Entity>(), caster.transform.position, Quaternion.identity);
+        stickyBombGO.transform.parent = null;
+        stickyBombGO.team = caster.team;
+        collider = stickyBombGO.GetComponent<StickyBombCollider>();
+        collider.isIgnite = false;
+        collider.ActivateParticleSystem(true);
         collider.GetComponent<SphereCollider>().radius = SOType.radiusStick;
-        collider.maxDistance = SOType.maxRange;
-        collider.casterPos = caster.transform.position;
-        collider.capacitySender = this;
+        collider.distance = SOType.maxRange;
+        collider.capacity = this;
         collider.caster = caster;
-        collider.Launch(lookDir.normalized * SOType.speedBomb);
-        GameStateMachine.Instance.OnTick += TimerBomb;
+        collider.Launch(direction.normalized * SOType.speedBomb);
     }
-    
+
     public override void CapacityEndAnimation()
     {
         champion.OnCastAnimationEnd -= CapacityEndAnimation;
-        champion.canRotate = true;
     }
 
-    public override void CollideFeedbackEffect(Entity entityAffect)
+    public override void CollideEntityEffect(Entity affectedEntity)
     {
-        var lifeable = entityAffect.GetComponent<IActiveLifeable>();
-        if (lifeable == null) return;
-        if (entityAffect.name.Contains("Minion")) return;
-        stickyBombGO.GetComponent<Rigidbody>().isKinematic = true;
-        stickyBombGO.transform.parent = entityAffect.transform;
-        stickyBombGO.transform.position += new Vector3(0, entityAffect.transform.localScale.y, 0) + Vector3.up * 2;
+        liveable = affectedEntity.GetComponent<IActiveLifeable>();
+        if (liveable != null)
+        {
+            // if (affectedEntity.name.Contains("Minion")) return;
+            stickyBombGO.GetComponent<Rigidbody>().isKinematic = true;
+            stickyBombGO.GetComponent<SphereCollider>().enabled = false;
+            collider.transform.parent = affectedEntity.transform;
+            stickyBombGO.transform.position = affectedEntity.transform.position + new Vector3(0, 2 * affectedEntity.transform.localScale.y + 1, 0);
+            liveable.OnDecreaseCurrentHpCapacityFeedback += ExplodeBomb;
+            OnAllyHit += ExplodeBomb;
+        }
+        else
+        {
+            if (!affectedEntity.tag.Contains("Projectile")) return;
+            if (affectedEntity.GetComponent<AccurateShootCollider>() && affectedEntity.team != caster.team)
+            {
+                GameStateMachine.Instance.OnTick -= TimerBomb;
+                timer = 0;
+                ExplodeBomb(SOType.radiusExplosionEnemy, SOType.percentageDamageEnemy);
+            }
+            else if (affectedEntity.GetComponent<AccurateShootCollider>() && affectedEntity.team == caster.team)
+            {
+                GameStateMachine.Instance.OnTick -= TimerBomb;
+                timer = 0;
+                ExplodeBomb(SOType.radiusExplosionAlly, SOType.percentageDamageAlly);
+            }
+            else
+            {
+                GameStateMachine.Instance.OnTick -= TimerBomb;
+                timer = 0;
+                ExplodeBomb(SOType.radiusExplosion, SOType.percentageDamage);
+            }
+        }
     }
 
-    public override void PlayFeedback(int casterIndex, int[] targetsEntityIndexes, Vector3[] targetPositions)
-    {
-        if (PhotonNetwork.IsMasterClient) return;
-        lookDir = targetPositions[0] - casterTransform.position;
-        lookDir.y = 0;
-        stickyBombGO = PoolLocalManager.Instance.PoolInstantiate(SOType.feedbackPrefab, casterTransform.position, Quaternion.LookRotation(lookDir));
-        
-        stickyBombGO.GetComponent<MeshRenderer>().enabled = true;
-        var collider = stickyBombGO.GetComponent<AffectCollider>();
-        collider.GetComponent<SphereCollider>().radius = SOType.radiusStick;
-        collider.maxDistance = SOType.maxRange;
-        collider.casterPos = caster.transform.position;
-        collider.capacitySender = this;
-        collider.caster = caster;
-        collider.Launch(lookDir.normalized * SOType.speedBomb);
-        GameStateMachine.Instance.OnTick += TimerBomb;
-    }
+    public override void PlayFeedback(int casterIndex, int[] targetsEntityIndexes, Vector3[] targetPositions) { }
 
-    private void TimerBomb()
+    public void TimerBomb()
     {
         timer += 1;
-        if(timer < SOType.durationBomb * GameStateMachine.Instance.tickRate) return;
+        collider.timerImage.fillAmount = (float)((float)timer / (SOType.durationBomb * GameStateMachine.Instance.tickRate));
+        if (timer < SOType.durationBomb * GameStateMachine.Instance.tickRate) return;
         GameStateMachine.Instance.OnTick -= TimerBomb;
         timer = 0;
-        ExplodeBomb();
+        ExplodeBomb(SOType.radiusExplosion, SOType.percentageDamage);
     }
-
-    private void ExplodeBomb()
+    
+    private void ExplodeBomb(byte capacityIndex)
     {
-        var entities = Physics.OverlapSphere(stickyBombGO.transform.position, SOType.radiusExplosion);
-        foreach (Collider entity in entities)
+        if (!PhotonNetwork.IsMasterClient) return;
+        GameStateMachine.Instance.OnTick -= TimerBomb;
+        timer = 0;
+        var capacity = CapacitySOCollectionManager.GetActiveCapacitySOByIndex(capacityIndex);
+        
+        if (capacity.name.Contains("AccurateShot"))
         {
-            var entityAffect = entity.GetComponent<Entity>();
-            if (entityAffect == null || caster.team == entityAffect.team) continue;
-            var lifeable = entity.GetComponent<IActiveLifeable>();
-            if (lifeable == null || !lifeable.AttackAffected()) continue;
-            PoolLocalManager.Instance.RequestPoolInstantiate(SOType.feedbackHitPrefab, entityAffect.transform.position, Quaternion.identity);
-            lifeable.RequestDecreaseCurrentHp(caster.GetComponent<Champion>().attackDamage * SOType.percentageDamage);
+            if (stickyBombGO.team == stickyBombGO.transform.parent.GetComponent<Entity>().team)
+            {
+                OnAllyHit -= ExplodeBomb;
+                GameStateMachine.Instance.OnTick -= TimerBomb;
+                timer = 0;
+                ExplodeBomb(SOType.radiusExplosionAlly, SOType.percentageDamageAlly);
+            }
+            else
+            {
+                OnAllyHit -= ExplodeBomb;
+                GameStateMachine.Instance.OnTick -= TimerBomb;
+                timer = 0;
+                ExplodeBomb(SOType.radiusExplosionEnemy, SOType.percentageDamageEnemy);
+            }
         }
-        stickyBombGO.GetComponent<MeshRenderer>().enabled = false;
-        stickyBombGO.GetComponentInChildren<ParticleSystem>().Play();
-        GameStateMachine.Instance.OnTick += DestroyExplosion;
+        else
+        {
+            OnAllyHit -= ExplodeBomb;
+            GameStateMachine.Instance.OnTick -= TimerBomb;
+            timer = 0;
+            ExplodeBomb(SOType.radiusExplosion, SOType.percentageDamage);
+        }
     }
 
-    private void DestroyExplosion()
+    private void ExplodeBomb(float amount, byte capacityIndex)
     {
-        if(!stickyBombGO.GetComponentInChildren<ParticleSystem>().isStopped) return;
-        if(stickyBombGO) stickyBombGO.gameObject.SetActive(false);
-        GameStateMachine.Instance.OnTick -= DestroyExplosion;
+        if (!PhotonNetwork.IsMasterClient) return;
+        GameStateMachine.Instance.OnTick -= TimerBomb;
+        timer = 0;
+        var capacity = CapacitySOCollectionManager.GetActiveCapacitySOByIndex(capacityIndex);
+        
+        if (capacity.name.Contains("AccurateShot"))
+        {
+            if (stickyBombGO.team == stickyBombGO.transform.parent.GetComponent<Entity>().team)
+            {
+                liveable.OnDecreaseCurrentHpCapacityFeedback -= ExplodeBomb;
+                GameStateMachine.Instance.OnTick -= TimerBomb;
+                timer = 0;
+                ExplodeBomb(SOType.radiusExplosionAlly, SOType.percentageDamageAlly);
+            }
+            else
+            {
+                liveable.OnDecreaseCurrentHpCapacityFeedback -= ExplodeBomb;
+                GameStateMachine.Instance.OnTick -= TimerBomb;
+                timer = 0;
+                ExplodeBomb(SOType.radiusExplosionEnemy, SOType.percentageDamageEnemy);
+            }
+        }
+        else
+        {
+            liveable.OnDecreaseCurrentHpCapacityFeedback -= ExplodeBomb;
+            GameStateMachine.Instance.OnTick -= TimerBomb;
+            timer = 0;
+            ExplodeBomb(SOType.radiusExplosion, SOType.percentageDamage);
+        }
+    }
+
+    private void ExplodeBomb(float radiusExplosion, float percentageDamage)
+    {
+        if (liveable is not null) liveable.OnDecreaseCurrentHpCapacityFeedback -= ExplodeBomb;
+        OnAllyHit -= ExplodeBomb;
+        GameStateMachine.Instance.OnTick -= TimerBomb;
+        timer = 0;
+        Vector3 position;
+        if (stickyBombGO.transform.parent == null) position = stickyBombGO.transform.position;
+        else if (stickyBombGO.transform.parent.GetComponent<Entity>()) position = stickyBombGO.transform.parent.position;
+        else position = stickyBombGO.transform.position;
+        if (radiusExplosion == SOType.radiusExplosion)
+        {
+            PoolLocalManager.Instance.RequestPoolInstantiate(SOType.explosionGO, position, Quaternion.identity);   
+        }
+        else if (radiusExplosion == SOType.radiusExplosionAlly)
+        {
+            PoolLocalManager.Instance.RequestPoolInstantiate(SOType.explosionAllyGO, position, Quaternion.identity);
+        }
+        else if (radiusExplosion == SOType.radiusExplosionEnemy)
+        {
+            PoolLocalManager.Instance.RequestPoolInstantiate(SOType.explosionEnemyGO, position, Quaternion.identity);
+        }
+        // var capacityIndex = CapacitySOCollectionManager.GetActiveCapacitySOIndex(SOType);
+        var entities = Physics.OverlapSphere(position, radiusExplosion);
+        foreach (var entity in entities)
+        {
+            var affectedEntity = entity.GetComponent<Entity>();
+            if (affectedEntity == null || caster.team == affectedEntity.team) continue;
+            var liveable = entity.GetComponent<IActiveLifeable>();
+            if (liveable == null || !liveable.AttackAffected()) continue;
+            PoolLocalManager.Instance.RequestPoolInstantiate(SOType.feedbackHitPrefab, affectedEntity.transform.position, Quaternion.identity);
+            // liveable.RequestDecreaseCurrentHpByCapacity(caster.GetComponent<Champion>().attackDamage * percentageDamage, capacityIndex);
+            liveable.RequestDecreaseCurrentHp(caster.GetComponent<Champion>().attackDamage * percentageDamage);
+        }
+        collider.Disable();
     }
 }

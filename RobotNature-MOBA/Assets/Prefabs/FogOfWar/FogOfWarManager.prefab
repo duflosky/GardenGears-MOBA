@@ -93,7 +93,7 @@ MonoBehaviour:
   m_RequiresOpaqueTextureOption: 2
   m_CameraType: 0
   m_Cameras: []
-  m_RendererIndex: -1
+  m_RendererIndex: 1
   m_VolumeLayerMask:
     serializedVersion: 2
     m_Bits: 2147483648
@@ -174,9 +174,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cameraFog: {fileID: 1126480335}
-  sceneToRenderFog:
-  - InGameDebug
-  - InGameScene
+  sceneToRenderFog: []
   fogColor: {r: 0.254717, g: 0.254717, b: 0.254717, a: 1}
   layerTargetFogOfWar:
     serializedVersion: 2

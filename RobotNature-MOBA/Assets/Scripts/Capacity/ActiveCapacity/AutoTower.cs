@@ -33,23 +33,24 @@ public class AutoTower : ActiveCapacity
 
     public override void CapacityEffect(Transform castTransform)
     {
-        autoTowerGO = PoolLocalManager.Instance.PoolInstantiate(SOType.feedbackPrefab, tower.shootSpot.position, castTransform.rotation);
+        autoTowerGO = PoolLocalManager.Instance.PoolInstantiate(SOType.feedbackPrefab, tower.shotSpot.position, castTransform.rotation);
         autoTowerCollider = autoTowerGO.GetComponent<AutoTowerCollider>();
         autoTowerCollider.capacitySender = this;
         autoTowerCollider.caster = caster;
         autoTowerCollider.target = target;
+        autoTowerGO.transform.LookAt(target.transform);
     }
     
-    public override void CollideEntityEffect(Entity entityAffect)
+    public override void CollideEntityEffect(Entity entity)
     {
-        var lifeable = entityAffect.GetComponent<IActiveLifeable>();
+        var lifeable = entity.GetComponent<IActiveLifeable>();
         if (lifeable == null) return;
         if (!lifeable.AttackAffected()) return;
         lifeable.RequestDecreaseCurrentHp(tower.damage);
         autoTowerCollider.Disable();
     }
     
-    public override void CollideFeedbackEffect(Entity entityAffect)
+    public override void CollideFeedbackEffect(Entity affectedEntity)
     {
         autoTowerCollider.Disable();
     }
@@ -58,7 +59,7 @@ public class AutoTower : ActiveCapacity
     {
         if (PhotonNetwork.IsMasterClient) return;
         Tower towerFeedback = caster.GetComponent<Tower>();
-        autoTowerGO = PoolLocalManager.Instance.PoolInstantiate(SOType.feedbackPrefab, towerFeedback.shootSpot.position, towerFeedback.shootSpot.rotation);
+        autoTowerGO = PoolLocalManager.Instance.PoolInstantiate(SOType.feedbackPrefab, towerFeedback.shotSpot.position, towerFeedback.shotSpot.rotation);
         autoTowerCollider = autoTowerGO.GetComponent<AutoTowerCollider>();
         autoTowerCollider.capacitySender = this;
         autoTowerCollider.caster = caster;

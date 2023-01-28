@@ -47,8 +47,8 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _DistortionScale: 1
-    - _FoamCutOff: 0
+    - _DistortionScale: 0.09
+    - _FoamCutOff: 0.225
     - _FoamCutoffSoftness: 0
     - _FoamWidth: 1
     - _MovementDesity: 0
@@ -62,12 +62,13 @@ Material:
     - _Top_Foam_Contrast: 1
     - _Top_Foam_Intesity: 1
     - _WaterDepth: 1
-    - _WaterTransparency: 0.15
+    - _WaterTransparency: 0.21
     m_Colors:
     - _DeepWaterColor: {r: 0.22027406, g: 0.27041036, b: 0.62264144, a: 1}
-    - _FoamColor: {r: 1, g: 1, b: 1, a: 1}
+    - _FoamColor: {r: 0.509434, g: 0.509434, b: 0.509434, a: 1}
     - _MovementAmount: {r: 0, g: 0, b: 0, a: 0}
     - _ShallowWaterColor: {r: 0.6273585, g: 0.8765372, b: 1, a: 1}
+    - _TextureSize: {r: 1, g: 1, b: 0, a: 0}
     - _Top_Foam_Color: {r: 3.56487, g: 3.56487, b: 3.56487, a: 1}
   m_BuildTextureStacks: []
 --- !u!114 &1932749493161839544

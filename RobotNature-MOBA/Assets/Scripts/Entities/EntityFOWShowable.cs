@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Entities.FogOfWar;
+using GameStates;
 using Photon.Pun;
 using UnityEngine;
 
@@ -11,6 +12,8 @@ namespace  Entities
         public bool canShow;
         public bool canHide;
         public List<GameObject> elementsToShow = new();
+        public List<GameObject> neverHideElements = new();
+
         
         public bool CanShow() 
         {
@@ -143,7 +146,18 @@ namespace  Entities
         {
             for (int i = 0; i < elementsToShow.Count; i++)
             {
-                elementsToShow[i].SetActive(false);
+                var element = elementsToShow[i];
+                if (element != null)
+                {
+                    if(GameStateMachine.Instance.GetPlayerTeam() != team) element.SetActive(false);
+                    else
+                    {
+                        if (!neverHideElements.Contains(element))
+                        {
+                            element.SetActive(false);
+                        }
+                    }
+                }
             }
             OnHideElementFeedback?.Invoke();
         }

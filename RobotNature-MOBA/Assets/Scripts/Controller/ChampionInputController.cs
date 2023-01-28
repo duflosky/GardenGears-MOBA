@@ -116,7 +116,7 @@ namespace Controllers.Inputs
             if(ent != null)
             { 
                 selectedEntity[0] = ent.entityIndex;
-                cursorWorldPos[0] = ent.transform.position;
+                //cursorWorldPos[0] = ent.transform.position;
             }
 
             /*if(isActiveButtonPress)
@@ -176,7 +176,7 @@ namespace Controllers.Inputs
             
             inputs.Capacity.Capacity1.performed += OnActivateCapacity1;
             inputs.Capacity.Capacity2.performed += OnActivateCapacity2;
-            // inputs.Capacity.Ultime.performed += OnActivateUltimateAbility;
+            inputs.Capacity.Ultime.performed += OnActivateUltimateAbility;
             
             //inputs.Mouse.MousePos.performed += OnMouseMove;
 
@@ -199,7 +199,7 @@ namespace Controllers.Inputs
             
             inputs.Capacity.Capacity1.performed -= OnActivateCapacity1;
             inputs.Capacity.Capacity2.performed -= OnActivateCapacity2;
-            // inputs.Capacity.Capacity2.performed -= OnActivateUltimateAbility;
+            inputs.Capacity.Ultime.performed -= OnActivateUltimateAbility;
             inputs.Inventory.ShowHideShop.performed -= OnShowHideShop;
 
             inputs.Movement.Move.performed -= OnMoveChange; 
@@ -212,7 +212,7 @@ namespace Controllers.Inputs
         
         private void OnDrawGizmos()
         {
-             if(cursorWorldPos != null)Gizmos.DrawSphere(cursorWorldPos[0], 0.2f);
+             //if(cursorWorldPos != null)Gizmos.DrawSphere(cursorWorldPos[0], 0.2f);
         }
     }
 }

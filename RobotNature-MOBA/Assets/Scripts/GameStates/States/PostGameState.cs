@@ -8,6 +8,7 @@ namespace GameStates.States
 
         public override void StartState()
         {
+            InputManager.EnablePlayerMap(false);
             PostGameUIManager.Instance.DisplayPostGame(sm.winner);
         }
 

@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 2168150885505366416}
   - component: {fileID: 3006445407991625269}
   - component: {fileID: 1035262089295364863}
+  - component: {fileID: 188980586772695998}
   m_Layer: 0
   m_Name: P_Mushroom02
   m_TagString: Untagged
@@ -83,3 +84,16 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &188980586772695998
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1539387827392783146}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 3.5046067, y: 3.509776, z: 7.4241724}
+  m_Center: {x: 0.000021755697, y: 0.000003874302, z: -2.0521512}

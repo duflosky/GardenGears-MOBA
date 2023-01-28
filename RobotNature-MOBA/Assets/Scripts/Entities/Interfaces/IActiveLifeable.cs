@@ -1,3 +1,5 @@
+using Entities.Capacities;
+
 public interface IActiveLifeable
 {
     bool AttackAffected();
@@ -118,6 +120,7 @@ public interface IActiveLifeable
     /// Sends an RPC to the master to decrease the entity's currentHp.
     /// </summary>
     /// <param name="amount">the decrease amount</param>
+    /// <param name="capacity">the capacity receive</param>
     public void RequestDecreaseCurrentHp(float amount);
 
     /// <summary>
@@ -131,7 +134,31 @@ public interface IActiveLifeable
     /// </summary>
     /// <param name="amount">the decrease amount</param>
     public void DecreaseCurrentHpRPC(float amount);
-
+    
     public event GlobalDelegates.FloatDelegate OnDecreaseCurrentHp;
     public event GlobalDelegates.FloatDelegate OnDecreaseCurrentHpFeedback;
+    
+    /// <summary>
+    /// Sends an RPC to the master to decrease the entity's currentHp.
+    /// </summary>
+    /// <param name="amount">the decrease amount</param>
+    /// <param name="capacity">the capacity receive</param>
+    public void RequestDecreaseCurrentHpByCapacity(float amount, byte capacityIndex);
+
+    /// <summary>
+    /// Sends an RPC to all clients to decrease the entity's currentHp.
+    /// </summary>
+    /// <param name="amount">the decrease amount</param>
+    /// <param name="capacity">the capacity receive</param>
+    public void SyncDecreaseCurrentHpByCapacityRPC(float amount, byte capacityIndex);
+
+    /// <summary>
+    /// Decreases the entity's currentHp.
+    /// </summary>
+    /// <param name="amount">the decrease amount</param>
+    /// <param name="capacity">the capacity receive</param>
+    public void DecreaseCurrentHpByCapacityRPC(float amount, byte capacityIndex);
+    
+    public event GlobalDelegates.FloatCapacityDelegate OnDecreaseCurrentHpCapacity;
+    public event GlobalDelegates.FloatCapacityDelegate OnDecreaseCurrentHpCapacityFeedback;
 }

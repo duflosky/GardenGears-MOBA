@@ -7,18 +7,20 @@ using Entities.Minion;
 using GameStates;
 using Photon.Pun;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class Tower : Building, IAttackable
 {
     [Space]
     [Header("Tower settings")]
     public float damage;
-    public Transform shootSpot;
+    public Transform shotSpot;
 
     [SerializeField] private ActiveCapacitySO attackAbility;
     [SerializeField] private List<Entity> enemiesInRange = new();
     [SerializeField] private LayerMask canBeHitByTowerMask;
     [SerializeField] private Transform baseSpot;
+    public Transform minionSpot;
     
     private double timer;
     private byte attackAbilityIndex;
@@ -43,7 +45,7 @@ public class Tower : Building, IAttackable
     {
         timer += 1 / GameStateMachine.Instance.tickRate;
 
-        if (timer <= attackAbility.cooldown) return;
+        if (!(timer >= attackAbility.cooldown)) return;
         enemiesInRange.Clear();
         foreach (var collider in Physics.OverlapSphere(baseSpot.position, attackAbility.maxRange, canBeHitByTowerMask))
         {
@@ -54,14 +56,18 @@ public class Tower : Building, IAttackable
             if (entity is Minion) enemiesInRange.Add(entity);
             else if (entity is Champion) enemiesInRange.Add(entity);
         }
+        HandleAttack();
+    }
 
+    private void HandleAttack()
+    {
         if (enemiesInRange.Count < 1) return;
         int[] targetEntity = { enemiesInRange[0].GetComponent<Entity>().entityIndex };
-        timer = 0;
         if (!PhotonNetwork.IsMasterClient) return;
         RequestAttack(attackAbilityIndex, targetEntity, Array.Empty<Vector3>());
+        timer = 0;
     }
-    
+
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.red;

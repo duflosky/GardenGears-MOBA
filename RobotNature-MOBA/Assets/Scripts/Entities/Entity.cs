@@ -103,5 +103,29 @@ namespace Entities
             return passiveCapacitiesList.FirstOrDefault(item => item.SO == type);
         }
 
+        private void OnTriggerEnter(Collider other)
+        {
+            if (other.CompareTag("Bush"))
+            {
+                if (hiderObjects.Count == 0)
+                {
+                    HideElements();
+                }
+                hiderObjects.Add(other.gameObject);
+                
+            }
+        }
+
+        private void OnTriggerExit(Collider other)
+        {
+            if (other.CompareTag("Bush"))
+            {
+                hiderObjects.Remove(other.gameObject);
+                if (hiderObjects.Count == 0)
+                {
+                    ShowElements();
+                }
+            }
+        }
     }
 }

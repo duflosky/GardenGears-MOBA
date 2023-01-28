@@ -42,12 +42,6 @@ public class RangePassif : PassiveCapacity
                 GameStateMachine.Instance.OnTick += DecreaseStack;
                 haveStack = true;
             }
-
-            if (count >= SOType.overheatStack && !champ.isOverheat)
-            {
-                champ.isOverheat = true;
-                GameStateMachine.Instance.OnTick += BurnFeedback;
-            }
         }
     }
 

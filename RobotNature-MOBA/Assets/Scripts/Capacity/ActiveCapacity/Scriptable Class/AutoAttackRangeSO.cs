@@ -5,9 +5,11 @@ using Entities.Capacities;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "Capacity/ActiveCapacitySO/Auto-Attack Range", fileName = "new AutoAttackRangeSO")]
-public class AutoAttackRangeSO : ActiveCapacitySO
+public class AutoAttackRangeSO : ChampionActiveCapacitySO
 {
     public GameObject bulletPrefab;
+    public GameObject overheatBulletPrefab;
+    public GameObject hitOverheatPrefab;
 
     public float bulletSpeed;
     public float percentageDamage; 

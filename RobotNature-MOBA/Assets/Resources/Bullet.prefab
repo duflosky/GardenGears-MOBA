@@ -99,7 +99,7 @@ GameObject:
   - component: {fileID: 3450819169442172253}
   m_Layer: 0
   m_Name: Bullet
-  m_TagString: Untagged
+  m_TagString: Projectile
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -141,6 +141,7 @@ MonoBehaviour:
   canShow: 0
   canHide: 0
   elementsToShow: []
+  neverHideElements: []
   canChangeTeam: 0
   team: 0
   baseViewRange: 0
@@ -152,7 +153,6 @@ MonoBehaviour:
   caster: {fileID: 0}
   maxDistance: 0
   casterPos: {x: 0, y: 0, z: 0}
-  effectIndex: 
   affectEntityOnly: 0
 --- !u!54 &2118353905633772010
 Rigidbody:

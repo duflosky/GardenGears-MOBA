@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 31cb26bfb220ab046972c3ad54ba5e06, type: 3}
+  m_Name: AAmeleeSlow
+  m_EditorClassIdentifier: 
+  referenceName: 
+  descriptionName: 
+  icon: {fileID: 0}
+  description: 
+  stackable: 0
+  types: 
+  indexInCollection: 5
+  isBuff: 0
+  isRatio: 1
+  speedBonus: 20
+  duration: 0

@@ -13,6 +13,7 @@ public partial class Champion
     private double[] abilityCooldowns = new double[4];
 
     public bool canCast;
+    public bool isCasting;
     
     public bool CanCast()
     {
@@ -62,14 +63,13 @@ public partial class Champion
     [PunRPC]
     public void CastRPC(byte capacityIndex, byte championCapacityIndex, int[] targetedEntities, Vector3[] targetedPositions)
     {
-        if (abilityCooldowns[championCapacityIndex] > 0) return;
+        if (abilityCooldowns[championCapacityIndex] > 0 || isCasting) return;
         var activeCapacity = CapacitySOCollectionManager.CreateActiveCapacity(capacityIndex,this);
         if (!activeCapacity.TryCast(targetedEntities, targetedPositions)) return;
         abilityCooldowns[championCapacityIndex] = CapacitySOCollectionManager.GetActiveCapacitySOByIndex(capacityIndex).cooldown*GameStateMachine.Instance.tickRate;
         OnCast?.Invoke(capacityIndex, targetedEntities, targetedPositions);
         photonView.RPC("SyncCastRPC", RpcTarget.All, capacityIndex, targetedEntities, targetedPositions);
     }
-    
 
     [PunRPC]
     public void SyncCastRPC(byte capacityIndex, int[] targetedEntities, Vector3[] targetedPositions)
@@ -88,6 +88,7 @@ public partial class Champion
         OnCastFeedback?.Invoke(capacityIndex, targetedEntities, targetedPositions, activeCapacity);
     }
 
+
     public void CastAnimationCast(Transform transform)
     {
         OnCastAnimationCast?.Invoke(transform);
@@ -97,9 +98,22 @@ public partial class Champion
     {
         OnCastAnimationEnd?.Invoke();
     }
+
+    public void CastAnimationFeedback()
+    {
+        OnCastAnimationFeedback?.Invoke();
+    }
     
+    public void CastAnimationShotEffect(Transform transform)
+    {
+        OnCastAnimationShotEffect?.Invoke(transform);
+    }
+    
+    public event GlobalDelegates.NoParameterDelegate CastUpdate;
     public event GlobalDelegates.ByteIntArrayVector3ArrayDelegate OnCast;
     public event GlobalDelegates.TransformDelegate OnCastAnimationCast;
     public event GlobalDelegates.NoParameterDelegate OnCastAnimationEnd;
+    public event GlobalDelegates.NoParameterDelegate OnCastAnimationFeedback;
+    public event GlobalDelegates.TransformDelegate OnCastAnimationShotEffect;
     public event GlobalDelegates.ByteIntArrayVector3ArrayCapacityDelegate OnCastFeedback;
 }

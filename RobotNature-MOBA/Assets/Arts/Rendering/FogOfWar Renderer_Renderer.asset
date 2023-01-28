@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Active: 1
   settings:
-    renderPassEvent: 300
+    renderPassEvent: 500
     blitMaterial: {fileID: 2100000, guid: 269845f80d310d74db13180ca168d3e1, type: 2}
     blitMaterialPassIndex: -1
     sceneToRenderFog:

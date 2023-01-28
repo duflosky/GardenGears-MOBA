@@ -14,20 +14,27 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   referenceName: CapacityOne
   descriptionName: 
-  icon: {fileID: 21300000, guid: cd22fdbf68a3e0a48984646ddaa13539, type: 3}
+  icon: {fileID: 21300000, guid: 0dcfca60cd5e7f744ad928ec0ca9842c, type: 3}
   description: 
   cooldown: 5
   isTargeting: 0
-  maxRange: 15
+  maxRange: 25
   types: 
+  feedbackDuration: 0
+  shotPrefab: {fileID: 626993110437693475, guid: f751cccc96195404e9549fdbffb380b5,
+    type: 3}
+  feedbackPrefab: {fileID: 0}
+  feedbackHitPrefab: {fileID: 1390825688981274022, guid: 1fa3bc57a0a21b44588ec73b5d5b9816,
+    type: 3}
   shootType: 0
   indexInCollection: 5
-  feedbackDuration: 0
-  feedbackPrefab: {fileID: 0}
+  gizmoPrefab: {fileID: 3476950289744795259, guid: cd5c7f47fdc734c4e837e2233ed5cf85,
+    type: 3}
+  capacitySlow: {fileID: 11400000, guid: becfcf8ab184b714aa80791842ad4814, type: 2}
   bulletPrefab: {fileID: 9083956369217742468, guid: af00b9ed221dec44c993f8b77bbba481,
     type: 3}
   bulletSpeed: 25
-  percentageDamage: 100
+  percentageDamage: 125
   SlowEffectSO: {fileID: 11400000, guid: 0a43f13c289692b4a87dc0a9a5a23f76, type: 2}
   attackAnimationSlowSO: {fileID: 11400000, guid: becfcf8ab184b714aa80791842ad4814,
     type: 2}

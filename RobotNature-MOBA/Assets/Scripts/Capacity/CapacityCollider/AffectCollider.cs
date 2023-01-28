@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using Entities;
 using Entities.Capacities;
 using Photon.Pun;
@@ -12,7 +11,6 @@ public class AffectCollider : Entity
     [HideInInspector] public float maxDistance;
     [HideInInspector] public Vector3 casterPos;
     [Header("=== AFFECT COLLIDER")]
-    [SerializeField] private List<byte> effectIndex = new();
     [SerializeField] private bool affectEntityOnly;
     private Rigidbody rb;
 
@@ -25,28 +23,12 @@ public class AffectCollider : Entity
     {
         base.OnUpdate();
         if (!CanDisable()) return;
-        if (Vector3.Distance(casterPos, transform.position) > maxDistance)
-        {
-            switch (capacitySender.SO.shootType)
-            {
-                case Enums.CapacityShootType.skillshot:
-                    Disable();
-                    break;
-
-                case Enums.CapacityShootType.targetEntity:
-                    break;
-
-                case Enums.CapacityShootType.targetPosition:
-                    rb.isKinematic = true;
-                    break;
-            }
-        }
+        if (Vector3.Distance(casterPos, transform.position) > maxDistance) Disable();
     }
 
     protected virtual bool CanDisable()
     {
-        if (maxDistance == 0) return false;
-        return true;
+        return maxDistance != 0;
     }
 
     public void Launch(Vector3 moveVector)
@@ -57,11 +39,10 @@ public class AffectCollider : Entity
 
     private void OnTriggerEnter(Collider other)
     {
-        Entity entity = other.GetComponent<Entity>();
+        var entity = other.GetComponent<Entity>();
         if (entity && entity != caster)
         {
             if (!PhotonNetwork.IsMasterClient) return;
-            capacitySender.CollideFeedbackEffect(entity);
             capacitySender.CollideEntityEffect(entity);
         }
         else if (!entity && !affectEntityOnly)

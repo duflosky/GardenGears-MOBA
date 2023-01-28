@@ -14,21 +14,34 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   referenceName: CapacityOne
   descriptionName: 
-  icon: {fileID: 21300000, guid: cd22fdbf68a3e0a48984646ddaa13539, type: 3}
+  icon: {fileID: 21300000, guid: d90c2feec354e814b9dbed14c507ef84, type: 3}
   description: 
-  cooldown: 12
+  cooldown: 7
   isTargeting: 0
-  maxRange: 6
+  maxRange: 12
   types: 
+  feedbackDuration: 0
+  shotPrefab: {fileID: 0}
+  feedbackPrefab: {fileID: 3816969210909108526, guid: ffa91c5687ffbfb48a7320f042bb9af6,
+    type: 3}
+  feedbackHitPrefab: {fileID: 5925743315765050801, guid: f3bb3f7ee888dc44182001d99f3b142e,
+    type: 3}
   shootType: 1
   indexInCollection: 4
-  feedbackDuration: 0
-  feedbackPrefab: {fileID: 8904802200473973118, guid: 971fce73ab22f8c45b257826bf1d4750,
+  gizmoPrefab: {fileID: 0}
+  capacitySlow: {fileID: 0}
+  percentageDamage: 1.5
+  percentageDamageAlly: 2
+  percentageDamageEnemy: 0.75
+  speedBomb: 12
+  durationBomb: 4
+  radiusStick: 0.02
+  radiusExplosion: 3
+  radiusExplosionAlly: 4
+  radiusExplosionEnemy: 2
+  explosionGO: {fileID: 5261821192487706735, guid: 77cdcd2645a53c34cac45461ff260c83,
     type: 3}
-  feedbackHitPrefab: {fileID: 590173655871428254, guid: 644bcdcc620c5e9498fce81669ee1143,
+  explosionAllyGO: {fileID: 5261821192487706735, guid: f8773b0ffe82fc848ada867109221d4a,
     type: 3}
-  percentageDamage: 0.6
-  speedBomb: 6
-  durationBomb: 5
-  radiusStick: 0.2
-  radiusExplosion: 2.5
+  explosionEnemyGO: {fileID: 5261821192487706735, guid: 4c51c0b6fe8bb84498918bf6d0e06ae7,
+    type: 3}

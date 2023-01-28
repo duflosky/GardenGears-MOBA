@@ -1,11 +1,9 @@
-using System.Collections;
-using System.Collections.Generic;
 using Photon.Pun;
 using UnityEngine;
 
 public partial class Champion
-{
-     [SerializeField] private bool attackAffect = true;
+{ 
+    [SerializeField] private bool attackAffect = true;
     [SerializeField] private bool abilitiesAffect = true;
     private float maxHp;
     private float currentHp;
@@ -175,16 +173,38 @@ public partial class Champion
     public void SyncDecreaseCurrentHpRPC(float amount)
     {
         currentHp = amount;
-        /*if (currentHp <= 0)
-        {
-            currentHp = 0;
-            RequestDie();
-        }*/
         OnDecreaseCurrentHpFeedback?.Invoke(amount);
     }
 
-
     public event GlobalDelegates.FloatDelegate OnDecreaseCurrentHp;
     public event GlobalDelegates.FloatDelegate OnDecreaseCurrentHpFeedback;
+    
+    public void RequestDecreaseCurrentHpByCapacity(float amount, byte capacityIndex)
+    {
+        photonView.RPC("DecreaseCurrentHpByCapacityRPC", RpcTarget.MasterClient, amount, capacityIndex);
+    }
+
+    [PunRPC]
+    public void SyncDecreaseCurrentHpByCapacityRPC(float amount, byte capacityIndex)
+    {
+        currentHp = amount;
+        OnDecreaseCurrentHpCapacityFeedback?.Invoke(amount, capacityIndex);
+    }
+
+    [PunRPC]
+    public void DecreaseCurrentHpByCapacityRPC(float amount, byte capacityIndex)
+    {
+        currentHp -= amount;
+        if (currentHp <= 0)
+        {
+            currentHp = 0;
+            DieRPC();
+        }
+        OnDecreaseCurrentHpCapacity?.Invoke(amount, capacityIndex);
+        photonView.RPC("SyncDecreaseCurrentHpByCapacityRPC", RpcTarget.All, currentHp, capacityIndex);
+    }
+
+    public event GlobalDelegates.FloatCapacityDelegate OnDecreaseCurrentHpCapacity;
+    public event GlobalDelegates.FloatCapacityDelegate OnDecreaseCurrentHpCapacityFeedback;
 
 }

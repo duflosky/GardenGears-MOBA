@@ -3,9 +3,8 @@ using Entities.Capacities;
 using Photon.Pun;
 using UnityEngine;
 
-public class AccurateShot : ActiveCapacity
+public class AccurateShot : ChampionActiveCapacity
 {
-    private Champion champion;
     public AccurateShotSO SOType;
     private Vector3 lookDir;
     private GameObject bullet;
@@ -13,23 +12,30 @@ public class AccurateShot : ActiveCapacity
     
     public override void OnStart()
     {
-        casterTransform = caster.transform;
-        champion = (Champion)caster;
+        base.OnStart();
         SOType = (AccurateShotSO)SO;
     }
 
-    public override void CapacityPress()
+    /*public override void CapacityPress()
     {
         champion.GetPassiveCapacity(SOType.attackAnimationSlowSO).OnAdded();
         champion.OnCastAnimationCast += CapacityEffect;
         champion.OnCastAnimationEnd += CapacityEndAnimation; 
-        champion.canRotate = false;
+    }*/
+    
+    public override void CapacityShotEffect(Transform transform)
+    {
+        champion.OnCastAnimationShotEffect -= CapacityShotEffect;
+        var direction = casterTransform.GetChild(0).forward;
+        PoolLocalManager.Instance.RequestPoolInstantiate(SOType.shotPrefab, transform.position, Quaternion.LookRotation(-direction));
     }
 
     public override void CapacityEffect(Transform castTransform)
     {
+        Debug.Log($"Champion : {champion}");
+        champion.canRotate = false;
         champion.OnCastAnimationCast -= CapacityEffect;
-        lookDir = targetPositions[0]-casterTransform.position;
+        lookDir = casterTransform.GetChild(0).forward;
         lookDir.y = 0;
         bullet = PoolNetworkManager.Instance.PoolInstantiate(SOType.bulletPrefab.GetComponent<Entity>(), casterTransform.position, Quaternion.LookRotation(lookDir)).gameObject;
         collider = bullet.GetComponent<AccurateShootCollider>();
@@ -39,30 +45,33 @@ public class AccurateShot : ActiveCapacity
         collider.capacitySender = this;
         collider.Launch(lookDir.normalized*SOType.bulletSpeed);
     }
+    
 
-    public override void CollideEntityEffect(Entity entityAffect)
+    public override void CollideEntityEffect(Entity entity)
     {
         if (PhotonNetwork.IsMasterClient)
         {
-            Debug.Log($"touch {entityAffect.gameObject.name}");
-            if (caster.team == entityAffect.team)
+            Debug.Log($"touch {entity.gameObject.name}");
+            if (caster.team == entity.team)
             {
                 collider.maxDistance++;
+                AllyHit(indexOfSOInCollection);
             }
             else
             {
                 Debug.Log("Hit enemi");
-                var lifeable = entityAffect.GetComponent<IActiveLifeable>();
+                var lifeable = entity.GetComponent<IActiveLifeable>();
                 if (lifeable == null) return;
                 if (!lifeable.AttackAffected()) return;
-                Debug.Log($"Deal damage to {entityAffect.gameObject}");
-                entityAffect.photonView.RPC("DecreaseCurrentHpRPC", RpcTarget.All, caster.GetComponent<Champion>().attackDamage * SOType.percentageDamage/100);
+                var capacityIndex = CapacitySOCollectionManager.GetActiveCapacitySOIndex(SOType);
+                Debug.Log($"Deal damage to {entity.gameObject}");
+                entity.photonView.RPC("DecreaseCurrentHpByCapacityRPC", RpcTarget.All, caster.GetComponent<Champion>().attackDamage * SOType.percentageDamage/100, capacityIndex);
+                PoolLocalManager.Instance.RequestPoolInstantiate(SOType.feedbackHitPrefab, entity.transform.position, Quaternion.identity);
                 collider.Disable();
-
-                var moveable = entityAffect.GetComponent<IMovable>();
+                var moveable = entity.GetComponent<IMovable>();
                 if (moveable == null) return;
-                Debug.Log($"Slow {entityAffect.gameObject}");
-                entityAffect.GetPassiveCapacity(SOType.SlowEffectSO).OnAdded();
+                Debug.Log($"Slow {entity.gameObject}");
+                if(entity is Champion)entity.GetPassiveCapacity(SOType.SlowEffectSO).OnAdded();
             }
         }
     }
@@ -87,5 +96,4 @@ public class AccurateShot : ActiveCapacity
         champion.canRotate = true;
     }
 
-    public override void PlayFeedback(int casterIndex, int[] targetsEntityIndexes, Vector3[] targetPositions) { }
 }

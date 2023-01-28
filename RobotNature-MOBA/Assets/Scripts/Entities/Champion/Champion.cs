@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Entities;
 using Entities.Capacities;
@@ -31,6 +32,7 @@ public partial class Champion : Entity, IMovable, IInventoryable, IResourceable,
         base.OnUpdate();
         Move();
         Rotate();
+        CastUpdate?.Invoke();
     }
 
     private void OnEnable()
@@ -54,6 +56,7 @@ public partial class Champion : Entity, IMovable, IInventoryable, IResourceable,
         currentResource = 0;
         //viewRange = championSo.viewRange;
         referenceMoveSpeed = championSo.referenceMoveSpeed;
+        attackSpeed = championSo.referenceAttackSpeed;
         currentMoveSpeed = referenceMoveSpeed;
         attackDamage = championSo.attackDamage;
         //attackAbilityIndex = championSo.attackAbilityIndex;
@@ -64,8 +67,10 @@ public partial class Champion : Entity, IMovable, IInventoryable, IResourceable,
         if (gameObject.GetComponent<PhotonView>().Owner != PhotonNetwork.LocalPlayer) championMesh.GetComponent<PhotonView>().TransferOwnership(gameObject.GetComponent<PhotonView>().Owner);
         championMesh.transform.localEulerAngles = Vector3.zero;
         animator = championMesh.GetComponent<Animator>();
+        animator.SetFloat("attackSpeed", championSo.referenceAttackSpeed);
         if (animator) animator.GetComponent<AnimationCallbacks>().caster = this;
         elementsToShow.Add(championMesh);
+        neverHideElements.Add(championMesh);
 
         abilitiesIndexes = championSo.activeCapacitiesIndexes;
         ultimateAbilityIndex = championSo.ultimateAbilityIndex;
@@ -77,8 +82,24 @@ public partial class Champion : Entity, IMovable, IInventoryable, IResourceable,
         }
 
         CheckSpawnPos(newTeam);
-
-        if (GameStateMachine.Instance.GetPlayerTeam() != team) championMesh.SetActive(false);
+        
+        if (team == Enums.Team.Team1)
+        {
+            if (!championMesh.GetComponentInChildren<SkinnedMeshRenderer>()) return;
+            foreach (var skinnedMeshRenderer in championMesh.GetComponentsInChildren<SkinnedMeshRenderer>())
+            {
+                skinnedMeshRenderer.material = so.materials[0];
+            }
+        }
+        else
+        {
+            if (!championMesh.GetComponentInChildren<SkinnedMeshRenderer>()) return;
+            foreach (var skinnedMeshRenderer in championMesh.GetComponentsInChildren<SkinnedMeshRenderer>())
+            {
+                skinnedMeshRenderer.material = so.materials[1];
+            }
+            // championMesh.SetActive(false);
+        }
         
         if (uiManager == null) return;
         EntityCollectionManager.AddEntity(this);

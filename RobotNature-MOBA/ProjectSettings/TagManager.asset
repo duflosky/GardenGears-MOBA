@@ -6,6 +6,9 @@ TagManager:
   tags:
   - Team1Unit
   - Team2Unit
+  - Obstacle
+  - Bush
+  - Projectile
   layers:
   - Default
   - TransparentFX

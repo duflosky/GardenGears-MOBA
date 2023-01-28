@@ -95,7 +95,7 @@ namespace UI.Menu
 
             // We change GUI
             connectionPart.SetActive(isReady);
-            readyButtonText.text = isReady ? "Cancel" : "Validate";
+            readyButtonText.text = isReady ? "Annuler" : "Valider";
 
             // We send request to Master
             sm.SendSetToggleReady(isReady);
@@ -148,7 +148,7 @@ namespace UI.Menu
             // We change GUI
             teamColorImage.color = isFirstTeam ? firstTeamColor : secondTeamColor;
             teamColorText.color = isFirstTeam ? firstTeamColor : secondTeamColor;
-            teamColorText.text = isFirstTeam ? "Team 1" : "Team 2";
+            teamColorText.text = isFirstTeam ? "Équipe 1" : "Équipe 2";
 
             // We send request to Master
             sm.RequestSetTeam((byte)currentTeam);
@@ -196,8 +196,8 @@ namespace UI.Menu
             {
                 0 => "Champion 1",
                 1 => "Champion 2",
-                2 => "Waiting...",
-                _ => "No valid!"
+                2 => "En attente...",
+                _ => "Pas valide!"
             };
 
             allClientsInformation[photonID - 1].clientTeamColorfulImage.color = team switch

@@ -12,13 +12,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 61ba6ac30a5ce5548850d215437d2a35, type: 3}
   m_Name: Champion Range
   m_EditorClassIdentifier: 
-  championMeshPrefab: {fileID: 3048456950910020092, guid: 6edadc2144ba24c43822272492981e8d,
+  championMeshPrefab: {fileID: 8104741249390554154, guid: 943ba0742bdccc045a71002d5bcb6cbc,
     type: 3}
   canvasIndex: 1
+  materials:
+  - {fileID: 2100000, guid: 439a0059879a8ad4bbc97cf757dbc772, type: 2}
+  - {fileID: 2100000, guid: 284881d794924a14caa44bc430eb9451, type: 2}
   maxHp: 40
   maxRessource: 10
   viewRange: 10
-  referenceMoveSpeed: 16
+  referenceMoveSpeed: 14.5
+  referenceAttackSpeed: 0
   isRessourceRegen: 0
   attackAbility: {fileID: 11400000, guid: 6380c6b585792cd478baa9dbd9ae15da, type: 2}
   attackAbilityIndex: 1
@@ -29,5 +33,5 @@ MonoBehaviour:
   activeCapacities:
   - {fileID: 11400000, guid: 7456d0336fa0a584aa46fb32fcbbd321, type: 2}
   activeCapacitiesIndexes: 05
-  ultimateAbility: {fileID: 0}
-  ultimateAbilityIndex: 255
+  ultimateAbility: {fileID: 11400000, guid: 33382a67797f33547a6f6f11f680b85d, type: 2}
+  ultimateAbilityIndex: 6

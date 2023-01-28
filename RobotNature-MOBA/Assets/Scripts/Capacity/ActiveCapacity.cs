@@ -57,11 +57,11 @@ namespace Entities.Capacities
                 InitiateCooldown();
                 this.targetsEntityIndexes = targetsEntityIndexes;
 
-                this.targetPositions = new Vector3[targetPositions.Length];
+                /*this.targetPositions = new Vector3[targetPositions.Length];
                 for (int i = 0; i < targetPositions.Length; i++)
                 {
                     this.targetPositions[i] = targetPositions[i];
-                }
+                }*/
                 CapacityPress();
                 return true;
             }
@@ -70,20 +70,29 @@ namespace Entities.Capacities
 
         public abstract void CapacityPress();
         
+        public virtual void CapacityShotEffect(Transform transform) { }
+        
         public abstract void CapacityEffect(Transform transform);
         
         public virtual void CapacityEndAnimation() { }
         
         public virtual void CapacityRelease() { }
 
-        public virtual void CollideEntityEffect(Entity entityAffect) { }
+        public virtual void CollideEntityEffect(Entity entity) { }
 
         public virtual void CollideObjectEffect(GameObject obj) { }
         
-        public virtual void CollideFeedbackEffect(Entity entityAffect) { }
+        public virtual void CollideFeedbackEffect(Entity affectedEntity) { }
 
         public virtual void CollideExitEffect(GameObject obj) { }
+        
+        public static event GlobalDelegates.ByteDelegate OnAllyHit;
 
+        protected static void AllyHit(byte capacityIndex)
+        {
+            OnAllyHit?.Invoke(capacityIndex);
+        }
+        
         public virtual bool isInRange(int casterIndex, Vector3 position)
         {
             float distance = Vector3.Distance(EntityCollectionManager.GetEntityByIndex(casterIndex).transform.position, position);
@@ -93,11 +102,8 @@ namespace Entities.Capacities
             return true;
         }
 
-        #endregion
-
-        #region MyRegion
-
         public abstract void PlayFeedback(int casterIndex, int[] targetsEntityIndexes, Vector3[] targetPositions);
+        public virtual void AnimationFeedback(){}
 
         #endregion
     }

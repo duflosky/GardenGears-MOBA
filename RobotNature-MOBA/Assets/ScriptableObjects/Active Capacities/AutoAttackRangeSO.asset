@@ -18,20 +18,29 @@ MonoBehaviour:
   description: 'c''est le R de Yasuo (pas du tout)
 
 '
-  cooldown: 1.2
+  cooldown: 1
   isTargeting: 0
-  maxRange: 25
+  maxRange: 16
   types: 
+  feedbackDuration: 0
+  shotPrefab: {fileID: 626993110437693475, guid: f751cccc96195404e9549fdbffb380b5,
+    type: 3}
+  feedbackPrefab: {fileID: 0}
+  feedbackHitPrefab: {fileID: 1390825688981274022, guid: bf66ecda8e154274cb5c434096617c5d,
+    type: 3}
   shootType: 0
   indexInCollection: 1
-  feedbackDuration: 0
-  feedbackPrefab: {fileID: 0}
-  feedbackHitPrefab: {fileID: 693690632283133517, guid: f13e6ef504a84e94ea3e1729848bf335,
+  gizmoPrefab: {fileID: 3476950289744795259, guid: cd5c7f47fdc734c4e837e2233ed5cf85,
     type: 3}
+  capacitySlow: {fileID: 11400000, guid: 4520a40069532594ebc5b59db1b46511, type: 2}
   bulletPrefab: {fileID: 8739522949654536987, guid: 0bf2acb7ad65c8945a9300e6946c16c4,
+    type: 3}
+  overheatBulletPrefab: {fileID: 226264253442229062, guid: 08ef0c043e78db243b8652d46b6e34d9,
+    type: 3}
+  hitOverheatPrefab: {fileID: 1390825688981274022, guid: bbc7921ee11aa1d488c83c3684fc331b,
     type: 3}
   bulletSpeed: 25
   percentageDamage: 0.8
   overheatSO: {fileID: 11400000, guid: 4e9be0a9aa6ed6c46b641b0466ac75c5, type: 2}
-  sprayAngle: 90
+  sprayAngle: 60
   attackSlowSO: {fileID: 11400000, guid: 4520a40069532594ebc5b59db1b46511, type: 2}

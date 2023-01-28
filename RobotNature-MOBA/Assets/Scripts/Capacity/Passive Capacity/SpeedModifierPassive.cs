@@ -25,19 +25,15 @@ public class SpeedModifierPassive : PassiveCapacity
         boost = SOType.speedBonus;
         if (SOType.isRatio)
         {
-            boost = champ.GetCurrentMoveSpeed()* (SOType.speedBonus/100);
+            boost = champ.GetReferenceMoveSpeed()* (SOType.speedBonus/100);
         }
 
         if (SOType.isBuff) champ.IncreaseCurrentMoveSpeedRPC(boost);
-        else
-        {
-            champ.DecreaseCurrentMoveSpeedRPC(boost);
-            Debug.Log($"Slow {champ.gameObject.name} with {SOType.name}");
-        }
+        else champ.DecreaseCurrentMoveSpeedRPC(boost);
+        
         if (SOType.duration != 0)
         {
             GameStateMachine.Instance.OnTick += DecreaseTimer;
-            Debug.Log($"Add {SOType.name} to OnTick");
         } 
     }
 
@@ -52,7 +48,6 @@ public class SpeedModifierPassive : PassiveCapacity
        if(SOType.isBuff)champ.DecreaseCurrentMoveSpeedRPC(boost);
        else
        {
-           Debug.Log($"Unslow {champ.gameObject.name} with {SOType.name}");
            champ.IncreaseCurrentMoveSpeedRPC(boost);
        }
     }
