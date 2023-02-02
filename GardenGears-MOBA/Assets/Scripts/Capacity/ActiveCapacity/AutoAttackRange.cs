@@ -86,7 +86,8 @@ public class AutoAttackRange : ChampionActiveCapacity
     }
 
     public override void CollideObjectEffect(GameObject obj)
-    { 
+    {
+        if (obj.GetComponent<CaptureZone>()) return; 
         collider.Disable();
     }
 
