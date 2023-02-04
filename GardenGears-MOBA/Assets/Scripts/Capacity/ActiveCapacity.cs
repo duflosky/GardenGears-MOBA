@@ -56,16 +56,11 @@ namespace Entities.Capacities
             {
                 InitiateCooldown();
                 this.targetsEntityIndexes = targetsEntityIndexes;
-
-                /*this.targetPositions = new Vector3[targetPositions.Length];
-                for (int i = 0; i < targetPositions.Length; i++)
-                {
-                    this.targetPositions[i] = targetPositions[i];
-                }*/
+                this.targetPositions = targetPositions;
                 CapacityPress();
                 return true;
             }
-            else return false;
+            return false;
         }
 
         public abstract void CapacityPress();

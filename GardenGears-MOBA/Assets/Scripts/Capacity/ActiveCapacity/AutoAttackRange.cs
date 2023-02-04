@@ -2,12 +2,10 @@ using Entities;
 using Entities.Capacities;
 using Photon.Pun;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class AutoAttackRange : ChampionActiveCapacity
 {
     private AutoAttackRangeSO SOType;
-    private Vector3 lookDir;
     private GameObject bullet;
     private AffectCollider collider;
     private GameObject shotGizmo;
@@ -20,17 +18,9 @@ public class AutoAttackRange : ChampionActiveCapacity
 
     public override bool TryCast(int[] targetsEntityIndexes, Vector3[] targetPositions)
     {
-        if (!onCooldown)
-        {
-            InitiateCooldown();
-            this.targetsEntityIndexes = targetsEntityIndexes;
-
-            this.targetPositions = targetPositions;
-            champion.isCasting = true;
-            CapacityPress();
-            return true;
-        }
-        else return false;
+        if (!base.TryCast(targetsEntityIndexes, targetPositions)) return false;
+        champion.isCasting = true;
+        return true;
     }
     
     public override void CapacityShotEffect(Transform transform)
@@ -45,10 +35,7 @@ public class AutoAttackRange : ChampionActiveCapacity
         champion.canRotate = false;
         champion.OnCastAnimationCast -= CapacityEffect;
         champion.GetPassiveCapacity(CapacitySOCollectionManager.GetPassiveCapacitySOIndex(SOType.overheatSO)).OnAdded();
-        lookDir = casterTransform.GetChild(0).forward;
         float rotateAngle = champion.isOverheat ? Random.Range(-(SOType.sprayAngle / 2), (SOType.sprayAngle / 2)) : 0f;
-        Debug.Log($"RotateAngle: {rotateAngle}");
-
         var bulletPref = champion.isOverheat ? SOType.overheatBulletPrefab : SOType.bulletPrefab;
         bullet = PoolNetworkManager.Instance.PoolInstantiate(bulletPref.GetComponent<Entity>(), casterTransform.position, casterTransform.GetChild(0).rotation).gameObject;
         collider = bullet.GetComponent<AffectCollider>();
@@ -76,9 +63,9 @@ public class AutoAttackRange : ChampionActiveCapacity
             AllyHit(indexOfSOInCollection);
             return;
         }
-        var lifeable = affectedEntity.GetComponent<IActiveLifeable>();
-        if (lifeable == null) return;
-        if (!lifeable.AttackAffected()) return;
+        var liveable = affectedEntity.GetComponent<IActiveLifeable>();
+        if (liveable == null) return;
+        if (!liveable.AttackAffected()) return;
         var capacityIndex = CapacitySOCollectionManager.GetActiveCapacitySOIndex(SOType);
         affectedEntity.photonView.RPC("DecreaseCurrentHpByCapacityRPC", RpcTarget.All, caster.GetComponent<Champion>().attackDamage * SOType.percentageDamage, capacityIndex);
         PoolLocalManager.Instance.RequestPoolInstantiate(champion.isOverheat ? SOType.hitOverheatPrefab : SOType.feedbackHitPrefab, affectedEntity.transform.position, Quaternion.identity);
@@ -90,5 +77,4 @@ public class AutoAttackRange : ChampionActiveCapacity
         if (obj.GetComponent<CaptureZone>()) return; 
         collider.Disable();
     }
-
 }
