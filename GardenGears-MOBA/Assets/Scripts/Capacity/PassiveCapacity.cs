@@ -17,7 +17,7 @@ namespace Entities.Capacities
 
         public Entity entity;
 
-        public virtual void OnCreate(){}
+        public virtual void OnCreate() { }
         
         public void OnAdded( int amount = 1)
         {

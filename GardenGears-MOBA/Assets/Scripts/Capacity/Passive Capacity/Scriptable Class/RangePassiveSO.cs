@@ -1,11 +1,9 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using Entities.Capacities;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "Capacity/PassiveCapacitySO/Range Passif", fileName = "new RangePassifSO")]
-public class RangePassifSO : PassiveCapacitySO
+public class RangePassiveSO : PassiveCapacitySO
 {
     public int maxHeatStack = 10; 
     public int overheatStack = 8;
@@ -20,6 +18,6 @@ public class RangePassifSO : PassiveCapacitySO
     
     public override Type AssociatedType()
     {
-        return typeof(RangePassif);
+        return typeof(RangePassive);
     }
 }

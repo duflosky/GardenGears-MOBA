@@ -1,27 +1,22 @@
-using System.Collections;
-using System.Collections.Generic;
 using Entities;
 using Entities.Capacities;
 using GameStates;
-using UnityEngine;
 
-
-public class RangePassif : PassiveCapacity
+public class RangePassive : PassiveCapacity
 {
-    private RangePassifSO SOType;
+    private RangePassiveSO SOType;
     private Champion champ;
     private SpeedModifierPassive speedBoost;
-
     private int burnTimer;
     private int actifTimer;
-    
     private int stackTimer;
-    
     private bool haveStack;
 
+    #region PassiveCapacity Methods
+    
     public override void OnCreate()
     {
-        SOType = (RangePassifSO)SO;
+        SOType = (RangePassiveSO)SO;
         champ = (Champion)entity;
         champ.SetMaxResourceRPC(SOType.maxHeatStack);
         speedBoost = (SpeedModifierPassive)champ.GetPassiveCapacity(CapacitySOCollectionManager.GetPassiveCapacitySOIndex(SOType.actifSpeedBoost));
@@ -63,10 +58,10 @@ public class RangePassif : PassiveCapacity
     {
         throw new System.NotImplementedException();
     }
+    
+    #endregion
 
-    //===================================================================================
-
-    void FullStackProc()
+    private void FullStackProc()
     {
         speedBoost.OnAdded();
         count = 0;
@@ -79,17 +74,16 @@ public class RangePassif : PassiveCapacity
     }
     
     
-    void BurnFeedback()
+    private void BurnFeedback()
     {
         burnTimer++;
         if (burnTimer >= SOType.BurnDelay * GameStateMachine.Instance.tickRate)
         {
             burnTimer = 0;
-            //Burn
         }
     }
 
-    void DecreaseStack()
+    private void DecreaseStack()
     {
         stackTimer++;
         if (stackTimer >= SOType.stackDuration * GameStateMachine.Instance.tickRate)
@@ -106,7 +100,7 @@ public class RangePassif : PassiveCapacity
         }
     }
 
-    void ActifTimer()
+    private void ActifTimer()
     {
         actifTimer++;
         if (actifTimer >= SOType.actifDuration*GameStateMachine.Instance.tickRate)
