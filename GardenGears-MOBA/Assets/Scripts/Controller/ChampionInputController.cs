@@ -1,13 +1,7 @@
-using System;
 using Entities;
-using Entities.Capacities;
 using UI.InGame;
 using UnityEngine;
 using UnityEngine.InputSystem;
-/*using Entities;
-using Entities.Capacities;
-using Entities.Champion;*/
-using UnityEngine.AI;
 
 namespace Controllers.Inputs
 {
@@ -23,8 +17,7 @@ namespace Controllers.Inputs
         private Vector3 moveVector;
         private Camera cam;
         private bool isActivebuttonPress;
-
-
+        
         private void Update()
         {
             OnMouseMove();
@@ -116,22 +109,16 @@ namespace Controllers.Inputs
             if(ent != null)
             { 
                 selectedEntity[0] = ent.entityIndex;
-                //cursorWorldPos[0] = ent.transform.position;
             }
-
-            /*if(isActiveButtonPress)
-            {
-                champion.MoveToPosition(GetMouseOverWorldPos());
-            }*/
         }
         
         void OnMouseClick(InputAction.CallbackContext ctx)
         {
-            /*champion.MoveToPosition(cursorWorldPos[0]);
-            if (selectedEntity[0] != -1)
-            {
-                champion.RequestAttack(champion.attackAbilityIndex, selectedEntity, cursorWorldPos);
-            }*/
+            // champion.MoveToPosition(cursorWorldPos[0]);
+            // if (selectedEntity[0] != -1)
+            // {
+            //     champion.RequestAttack(champion.attackAbilityIndex, selectedEntity, cursorWorldPos);
+            // }
         }
 
         /// <summary>
@@ -141,14 +128,11 @@ namespace Controllers.Inputs
         /// <returns></returns>
         public Vector3 GetMouseOverWorldPos()
         {
-            /*Ray mouseRay = cam.ScreenPointToRay(Input.mousePosition);
-
-            if (Physics.Raycast(mouseRay, out RaycastHit hit))
-            {
-                return hit.point;
-            }
-
-            */
+            // Ray mouseRay = cam.ScreenPointToRay(Input.mousePosition);
+            // if (Physics.Raycast(mouseRay, out RaycastHit hit))
+            // {
+            //     return hit.point;
+            // }
             return Vector3.zero;
         }
 
@@ -178,7 +162,7 @@ namespace Controllers.Inputs
             inputs.Capacity.Capacity2.performed += OnActivateCapacity2;
             inputs.Capacity.Ultime.performed += OnActivateUltimateAbility;
             
-            //inputs.Mouse.MousePos.performed += OnMouseMove;
+            // inputs.Mouse.MousePos.performed += OnMouseMove;
 
             inputs.Capacity.Attack.performed += OnAttack;
 
@@ -212,7 +196,7 @@ namespace Controllers.Inputs
         
         private void OnDrawGizmos()
         {
-             //if(cursorWorldPos != null)Gizmos.DrawSphere(cursorWorldPos[0], 0.2f);
+             // if(cursorWorldPos != null)Gizmos.DrawSphere(cursorWorldPos[0], 0.2f);
         }
     }
 }

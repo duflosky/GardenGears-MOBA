@@ -27,6 +27,11 @@ MonoBehaviour:
   feedbackHitPrefab: {fileID: 0}
   shootType: 0
   indexInCollection: 6
-  radius: 1
+  gizmoPrefab: {fileID: 0}
+  capacitySlow: {fileID: 11400000, guid: 4520a40069532594ebc5b59db1b46511, type: 2}
+  colliderRadius: 0
+  explosionRadius: 0
   speed: 50
   damagePercentage: 1
+  PassiveAfterHit: {fileID: 11400000, guid: 1466ed719c5ee954f9fedc4ca0d45a0c, type: 2}
+  StunTimer: 4

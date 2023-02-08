@@ -29,7 +29,7 @@ public class UltimateRange : ChampionActiveCapacity
     public override void CapacityEndAnimation()
     {
         champion.OnCastAnimationEnd -= CapacityEndAnimation;
-        champion.GetPassiveCapacity(CapacitySOCollectionManager.GetPassiveCapacitySOIndex(ChampSO.capacitySlow)).OnRemoved();
+        // champion.GetPassiveCapacity(CapacitySOCollectionManager.GetPassiveCapacitySOIndex()).OnRemoved();
         champion.canRotate = true;
     }
     
@@ -41,6 +41,13 @@ public class UltimateRange : ChampionActiveCapacity
             if (liveable == null) return;
             if (!liveable.AttackAffected()) return;
             if (PhotonNetwork.IsMasterClient) entity.photonView.RPC("DecreaseCurrentHpRPC", RpcTarget.All, champion.attackDamage * SOType.damagePercentage);
+            if (entity.GetComponent<Champion>())
+            {
+                var passive = entity.GetComponent<Champion>().GetPassiveCapacity(CapacitySOCollectionManager.GetPassiveCapacitySOIndex(SOType.PassiveAfterHit));
+                var stunPassive = (StunPassive)passive;
+                stunPassive.TimeStun = SOType.StunTimer;
+                entity.GetComponent<Champion>().GetPassiveCapacity(CapacitySOCollectionManager.GetPassiveCapacitySOIndex(SOType.PassiveAfterHit)).OnAdded();
+            }
             collider.SyncDisableRPC();
         }
         else if (caster.team == entity.team)

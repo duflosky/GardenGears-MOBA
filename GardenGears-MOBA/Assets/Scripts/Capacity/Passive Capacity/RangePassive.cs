@@ -73,7 +73,6 @@ public class RangePassive : PassiveCapacity
         GameStateMachine.Instance.OnTick += BurnFeedback;
     }
     
-    
     private void BurnFeedback()
     {
         burnTimer++;
@@ -85,7 +84,7 @@ public class RangePassive : PassiveCapacity
 
     private void DecreaseStack()
     {
-        stackTimer++;
+        stackTimer--;
         if (stackTimer >= SOType.stackDuration * GameStateMachine.Instance.tickRate)
         {
             count--;
@@ -110,8 +109,6 @@ public class RangePassive : PassiveCapacity
             speedBoost.OnRemoved();
             GameStateMachine.Instance.OnTick -= ActifTimer;
             GameStateMachine.Instance.OnTick -= BurnFeedback;
-
-
         }
     }
 }

@@ -5,6 +5,9 @@ using GameStates;
 public class StunPassive : PassiveCapacity
 {
     private StunPassiveSO _SOType;
+    private float _timer;
+    private Champion _champion;
+    public float TimeStun;
     
     public override void OnCreate()
     {
@@ -13,7 +16,14 @@ public class StunPassive : PassiveCapacity
     
     protected override void OnAddedEffects(Entity target)
     {
+        _champion = target.GetComponent<Champion>();
+        if (!_champion) return;
         GameStateMachine.Instance.OnTick += DecreaseTimerStun;
+        if (_champion)
+        {
+            _champion.RequestSetCanCast(false);
+            _champion.RequestSetCurrentMoveSpeed(0);
+        }
     }
 
     protected override void OnAddedFeedbackEffects(Entity target)
@@ -23,7 +33,8 @@ public class StunPassive : PassiveCapacity
 
     protected override void OnRemovedEffects(Entity target)
     {
-        throw new System.NotImplementedException();
+        _champion.RequestSetCanCast(true);
+        _champion.RequestSetCurrentMoveSpeed(_champion.GetReferenceMoveSpeed());
     }
 
     protected override void OnRemovedFeedbackEffects(Entity target)
@@ -33,6 +44,11 @@ public class StunPassive : PassiveCapacity
 
     private void DecreaseTimerStun()
     {
-        
+        _timer++;
+        if (_timer >= TimeStun * GameStateMachine.Instance.tickRate)
+        {
+            OnRemoved();
+            GameStateMachine.Instance.OnTick -= DecreaseTimerStun;
+        }
     }
 }
