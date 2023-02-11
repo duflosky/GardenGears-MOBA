@@ -75,10 +75,9 @@ public partial class Champion : Entity, IMovable, IInventoryable, IResourceable,
         abilitiesIndexes = championSo.activeCapacitiesIndexes;
         ultimateAbilityIndex = championSo.ultimateAbilityIndex;
 
-        foreach (var passif in so.passiveCapacities)
+        foreach (var passiveCapacity in so.passiveCapacities)
         {
-           PassiveCapacity capa = CapacitySOCollectionManager.Instance.CreatePassiveCapacity(passif, this);
-           passiveCapacitiesList.Add(capa);
+           passiveCapacitiesList.Add(CapacitySOCollectionManager.Instance.CreatePassiveCapacity(passiveCapacity, this));
         }
 
         CheckSpawnPos(newTeam);

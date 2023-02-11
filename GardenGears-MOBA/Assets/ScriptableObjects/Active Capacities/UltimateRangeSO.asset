@@ -21,12 +21,20 @@ MonoBehaviour:
   maxRange: 30
   types: 
   feedbackDuration: 0
-  shotPrefab: {fileID: 0}
+  shotPrefab: {fileID: 2813814392555008237, guid: bbfd7d754e760f640a5b3528e7e34a22,
+    type: 3}
   feedbackPrefab: {fileID: 8253874659372544753, guid: 73763331f054c6d4b96cccd0182e5600,
     type: 3}
-  feedbackHitPrefab: {fileID: 0}
+  feedbackHitPrefab: {fileID: 8423433912417764863, guid: 5451ea59f9dec9244b3e763824de8e23,
+    type: 3}
   shootType: 0
   indexInCollection: 6
-  radius: 1
+  gizmoPrefab: {fileID: 3476950289744795259, guid: cd5c7f47fdc734c4e837e2233ed5cf85,
+    type: 3}
+  capacitySlow: {fileID: 11400000, guid: 4520a40069532594ebc5b59db1b46511, type: 2}
+  colliderRadius: 0
+  explosionRadius: 3
   speed: 50
   damagePercentage: 1
+  PassiveAfterHit: {fileID: 11400000, guid: 1466ed719c5ee954f9fedc4ca0d45a0c, type: 2}
+  StunTimer: 4

@@ -5,7 +5,7 @@ public class AccurateShootCollider : AffectCollider
 {
     private bool canRangeDestroy = true;
 
-    private Dictionary<GameObject, Vector3> gameObjectDistances = new Dictionary<GameObject, Vector3>();
+    private Dictionary<GameObject, Vector3> gameObjectDistances = new();
 
     protected override bool CanDisable()
     {
@@ -26,10 +26,5 @@ public class AccurateShootCollider : AffectCollider
         maxDistance += Vector3.Distance(lastCountPos, transform.position);
         gameObjectDistances.Remove(go);
         canRangeDestroy = true;
-    }
-
-    public override void Disable()
-    {
-        base.Disable();
     }
 }
