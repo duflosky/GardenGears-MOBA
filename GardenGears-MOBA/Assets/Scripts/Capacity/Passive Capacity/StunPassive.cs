@@ -7,7 +7,7 @@ public class StunPassive : PassiveCapacity
     private StunPassiveSO _SOType;
     private float _timer;
     private Champion _champion;
-    public float TimeStun;
+    private float _timeStun;
     
     public override void OnCreate()
     {
@@ -18,6 +18,7 @@ public class StunPassive : PassiveCapacity
     {
         _champion = target.GetComponent<Champion>();
         if (!_champion) return;
+        _timeStun = _SOType.Timer;
         GameStateMachine.Instance.OnTick += DecreaseTimerStun;
         if (_champion)
         {
@@ -45,7 +46,7 @@ public class StunPassive : PassiveCapacity
     private void DecreaseTimerStun()
     {
         _timer++;
-        if (_timer >= TimeStun * GameStateMachine.Instance.tickRate)
+        if (_timer >= _timeStun * GameStateMachine.Instance.tickRate)
         {
             OnRemoved();
             GameStateMachine.Instance.OnTick -= DecreaseTimerStun;

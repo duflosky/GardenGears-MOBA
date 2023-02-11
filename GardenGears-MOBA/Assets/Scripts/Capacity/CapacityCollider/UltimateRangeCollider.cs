@@ -23,7 +23,7 @@ public class UltimateRangeCollider : Entity
         if (!CanDisable()) return;
         if (Vector3.Distance(caster.transform.position, transform.position) > range)
         {
-            SyncDisableRPC();
+            Disable();
         }
     }
 
@@ -40,7 +40,6 @@ public class UltimateRangeCollider : Entity
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("Trigger");
         var entity = other.GetComponent<Entity>();
         if (entity && entity != caster)
         {
@@ -52,14 +51,8 @@ public class UltimateRangeCollider : Entity
             capacity.CollideObjectEffect(other.gameObject);
         }
     }
-    
-    public virtual void Disable()
-    {
-        photonView.RPC("SyncDisableRPC", RpcTarget.All);
-    }
-    
-    [PunRPC]
-    public void SyncDisableRPC()
+
+    public void Disable()
     {
         gameObject.SetActive(false);
     }

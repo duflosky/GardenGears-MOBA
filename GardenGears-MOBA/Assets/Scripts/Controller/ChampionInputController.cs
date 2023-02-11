@@ -1,4 +1,5 @@
 using Entities;
+using Photon.Pun;
 using UI.InGame;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -48,7 +49,7 @@ namespace Controllers.Inputs
         private void OnActivateCapacity1(InputAction.CallbackContext ctx)
         {
             if (champion.abilitiesIndexes.Length == 0) return;
-            champion.RequestCast(champion.abilitiesIndexes[0], 1,selectedEntity,cursorWorldPos);
+            champion.RequestCast(champion.abilitiesIndexes[0], 1, selectedEntity, cursorWorldPos);
         }
         
         /// <summary>
@@ -58,7 +59,7 @@ namespace Controllers.Inputs
         private void OnActivateCapacity2(InputAction.CallbackContext ctx)
         {
             if (champion.abilitiesIndexes.Length == 1) return;
-            champion.RequestCast(champion.abilitiesIndexes[1], 2,selectedEntity,cursorWorldPos);
+            champion.RequestCast(champion.abilitiesIndexes[1], 2, selectedEntity, cursorWorldPos);
         }
         
         /// <summary>
@@ -67,7 +68,7 @@ namespace Controllers.Inputs
         /// <param name="ctx"></param>
         private void OnActivateUltimateAbility(InputAction.CallbackContext ctx)
         {
-            champion.RequestCast(champion.ultimateAbilityIndex, 3,selectedEntity,cursorWorldPos);
+            champion.RequestCast(champion.ultimateAbilityIndex, 3, selectedEntity, cursorWorldPos);
         }
 
         /// <summary>

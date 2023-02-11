@@ -1,4 +1,3 @@
-using System.Linq;
 using Entities.Capacities;
 using GameStates;
 using Photon.Pun;
@@ -22,7 +21,7 @@ public partial class Champion
 
     public void RequestSetCanCast(bool value)
     {
-        photonView.RPC("SetCanCastRPC", RpcTarget.MasterClient);
+        photonView.RPC("SetCanCastRPC", RpcTarget.All, value);
     }
 
     [PunRPC]
@@ -30,18 +29,9 @@ public partial class Champion
     {
         canCast = value;
         OnSetCanCast?.Invoke(value);
-        photonView.RPC("SyncCastRPC", RpcTarget.All, canCast);
-    }
-
-    [PunRPC]
-    public void SyncSetCanCastRPC(bool value)
-    {
-        canCast = value;
-        OnSetCanCastFeedback?.Invoke(value);
     }
 
     public event GlobalDelegates.BoolDelegate OnSetCanCast;
-    public event GlobalDelegates.BoolDelegate OnSetCanCastFeedback;
 
     public void DecreaseCooldown()
     {
@@ -56,8 +46,7 @@ public partial class Champion
     
     public void RequestCast(byte capacityIndex, byte championCapacityIndex, int[] targetedEntities, Vector3[] targetedPositions)
     {
-        if (abilityCooldowns[championCapacityIndex] > 0) return;
-        photonView.RPC("CastRPC",RpcTarget.MasterClient,capacityIndex, championCapacityIndex,targetedEntities,targetedPositions);
+        photonView.RPC("CastRPC", RpcTarget.All, capacityIndex, championCapacityIndex, targetedEntities, targetedPositions);
     }
 
     [PunRPC]
@@ -66,16 +55,7 @@ public partial class Champion
         if (abilityCooldowns[championCapacityIndex] > 0 || isCasting) return;
         var activeCapacity = CapacitySOCollectionManager.CreateActiveCapacity(capacityIndex,this);
         if (!activeCapacity.TryCast(targetedEntities, targetedPositions)) return;
-        abilityCooldowns[championCapacityIndex] = CapacitySOCollectionManager.GetActiveCapacitySOByIndex(capacityIndex).cooldown*GameStateMachine.Instance.tickRate;
-        OnCast?.Invoke(capacityIndex, targetedEntities, targetedPositions);
-        photonView.RPC("SyncCastRPC", RpcTarget.All, capacityIndex, targetedEntities, targetedPositions);
-    }
-
-    [PunRPC]
-    public void SyncCastRPC(byte capacityIndex, int[] targetedEntities, Vector3[] targetedPositions)
-    {
-        var activeCapacity = CapacitySOCollectionManager.CreateActiveCapacity(capacityIndex, this);
-        activeCapacity.PlayFeedback(capacityIndex, targetedEntities, targetedPositions);
+        abilityCooldowns[championCapacityIndex] = CapacitySOCollectionManager.GetActiveCapacitySOByIndex(capacityIndex).cooldown * GameStateMachine.Instance.tickRate;
         if (animator)
         {
             foreach (var animatorControllerParameter in animator.parameters)
@@ -87,11 +67,13 @@ public partial class Champion
         else OnCastAnimationCast.Invoke(transform);
         OnCastFeedback?.Invoke(capacityIndex, targetedEntities, targetedPositions, activeCapacity);
     }
-
-
+    
     public void CastAnimationCast(Transform transform)
     {
         OnCastAnimationCast?.Invoke(transform);
+        int[] emptyIntArray = null;
+        Vector3[] emptyVector3Array = null;
+        OnCastAnimationCastFeedback?.Invoke(entityIndex, emptyIntArray, emptyVector3Array);
     }
 
     public void CastAnimationEnd()
@@ -115,5 +97,6 @@ public partial class Champion
     public event GlobalDelegates.NoParameterDelegate OnCastAnimationEnd;
     public event GlobalDelegates.NoParameterDelegate OnCastAnimationFeedback;
     public event GlobalDelegates.TransformDelegate OnCastAnimationShotEffect;
+    public event GlobalDelegates.IntIntArrayVector3ArrayDelegate OnCastAnimationCastFeedback;
     public event GlobalDelegates.ByteIntArrayVector3ArrayCapacityDelegate OnCastFeedback;
 }

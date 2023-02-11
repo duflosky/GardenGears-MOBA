@@ -10,7 +10,7 @@ public class StickyBomb : ChampionActiveCapacity
     private Champion champion;
 
     private double timer;
-    private Entity stickyBombGO;
+    private GameObject stickyBombGO;
     private GameObject explosionGO;
     private IActiveLifeable liveable;
     private StickyBombSO SOType;
@@ -36,23 +36,7 @@ public class StickyBomb : ChampionActiveCapacity
         champion.OnCastAnimationEnd += CapacityEndAnimation;
     }
 
-    public override void CapacityEffect(Transform castTransform)
-    {
-        champion.OnCastAnimationCast -= CapacityEffect;
-        direction = targetPositions[0] - caster.transform.position;
-        direction.y = 0;
-        stickyBombGO = PoolNetworkManager.Instance.PoolInstantiate(SOType.feedbackPrefab.GetComponent<Entity>(), caster.transform.position, Quaternion.identity);
-        stickyBombGO.transform.parent = null;
-        stickyBombGO.team = caster.team;
-        collider = stickyBombGO.GetComponent<StickyBombCollider>();
-        collider.isIgnite = false;
-        collider.ActivateParticleSystem(true);
-        collider.GetComponent<SphereCollider>().radius = SOType.radiusStick;
-        collider.distance = SOType.maxRange;
-        collider.capacity = this;
-        collider.caster = caster;
-        collider.Launch(direction.normalized * SOType.speedBomb);
-    }
+    public override void CapacityEffect(Transform castTransform) { }
 
     public override void CapacityEndAnimation()
     {
@@ -96,7 +80,24 @@ public class StickyBomb : ChampionActiveCapacity
         }
     }
 
-    public override void PlayFeedback(int casterIndex, int[] targetsEntityIndexes, Vector3[] targetPositions) { }
+    public override void PlayFeedback(int casterIndex, int[] targetsEntityIndexes, Vector3[] targetPositions)
+    {
+        champion.OnCastAnimationCastFeedback -= PlayFeedback;
+        champion.OnCastAnimationCast -= CapacityEffect;
+        direction = targetPositions[0] - caster.transform.position;
+        direction.y = 0;
+        stickyBombGO = PoolLocalManager.Instance.PoolInstantiate(SOType.feedbackPrefab, caster.transform.position, Quaternion.identity);
+        stickyBombGO.transform.parent = null;
+        stickyBombGO.GetComponent<Entity>().team = caster.team;
+        collider = stickyBombGO.GetComponent<StickyBombCollider>();
+        collider.isIgnite = false;
+        collider.ActivateParticleSystem(true);
+        collider.GetComponent<SphereCollider>().radius = SOType.radiusStick;
+        collider.distance = SOType.maxRange;
+        collider.capacity = this;
+        collider.caster = caster;
+        collider.Launch(direction.normalized * SOType.speedBomb);
+    }
 
     public void TimerBomb()
     {
@@ -117,7 +118,7 @@ public class StickyBomb : ChampionActiveCapacity
         
         if (capacity.name.Contains("AccurateShot"))
         {
-            if (stickyBombGO.team == stickyBombGO.transform.parent.GetComponent<Entity>().team)
+            if (stickyBombGO.GetComponent<Entity>().team == stickyBombGO.transform.parent.GetComponent<Entity>().team)
             {
                 OnAllyHit -= ExplodeBomb;
                 GameStateMachine.Instance.OnTick -= TimerBomb;
@@ -150,7 +151,7 @@ public class StickyBomb : ChampionActiveCapacity
         
         if (capacity.name.Contains("AccurateShot"))
         {
-            if (stickyBombGO.team == stickyBombGO.transform.parent.GetComponent<Entity>().team)
+            if (stickyBombGO.GetComponent<Entity>().team == stickyBombGO.transform.parent.GetComponent<Entity>().team)
             {
                 liveable.OnDecreaseCurrentHpCapacityFeedback -= ExplodeBomb;
                 GameStateMachine.Instance.OnTick -= TimerBomb;

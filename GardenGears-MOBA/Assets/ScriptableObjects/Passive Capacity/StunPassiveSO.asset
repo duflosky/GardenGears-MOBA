@@ -19,4 +19,5 @@ MonoBehaviour:
   stackable: 0
   types: 
   indexInCollection: 0
+  Timer: 6
   _stunGameObject: {fileID: 0}

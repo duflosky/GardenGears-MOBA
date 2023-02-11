@@ -5,17 +5,17 @@ namespace Entities.Capacities
 {
     public abstract class ActiveCapacity
     {
-        public byte indexOfSOInCollection;
         public ActiveCapacitySO SO;
+        public bool onCooldown;
+        public byte indexOfSOInCollection;
         public Entity caster;
         public Transform casterTransform;
 
         protected int[] targetsEntityIndexes;
         protected Vector3[] targetPositions;
-        
+
         private double cooldownTimer;
-        public bool onCooldown;
-        
+
         protected ActiveCapacitySO AssociatedActiveCapacitySO()
         {
             return CapacitySOCollectionManager.GetActiveCapacitySOByIndex(indexOfSOInCollection);
@@ -39,28 +39,19 @@ namespace Entities.Capacities
         protected virtual void CooldownTimer()
         {
             cooldownTimer -= 1.0 / GameStateMachine.Instance.tickRate;
-
-            if (cooldownTimer <= 0)
-            {
-                onCooldown = false;
-                GameStateMachine.Instance.OnTick -= CooldownTimer;
-            }
+            if (!(cooldownTimer <= 0)) return;
+            onCooldown = false;
+            GameStateMachine.Instance.OnTick -= CooldownTimer;
         }
 
-        public virtual bool TryCast( int[] targetsEntityIndexes, Vector3[] targetPositions)
+        public virtual bool TryCast(int[] targetsEntityIndexes, Vector3[] targetPositions)
         {
-            // if (Vector3.Distance(EntityCollectionManager.GetEntityByIndex(casterIndex).transform.position, EntityCollectionManager.GetEntityByIndex(targetsEntityIndexes[0]).transform.position)> 
-            //     AssociatedActiveCapacitySO().maxRange) return false;
-
-            if (!onCooldown)
-            {
-                InitiateCooldown();
-                this.targetsEntityIndexes = targetsEntityIndexes;
-                this.targetPositions = targetPositions;
-                CapacityPress();
-                return true;
-            }
-            return false;
+            if (onCooldown) return false;
+            InitiateCooldown();
+            this.targetsEntityIndexes = targetsEntityIndexes;
+            this.targetPositions = targetPositions;
+            CapacityPress();
+            return true;
         }
 
         public abstract void CapacityPress();
@@ -91,10 +82,7 @@ namespace Entities.Capacities
         public virtual bool isInRange(int casterIndex, Vector3 position)
         {
             float distance = Vector3.Distance(EntityCollectionManager.GetEntityByIndex(casterIndex).transform.position, position);
-            //Debug.Log($"distance:{distance}  >  range:{ AssociatedActiveCapacitySO().maxRange}");
-            if (distance > SO.maxRange) return false;
-
-            return true;
+            return !(distance > SO.maxRange);
         }
 
         public abstract void PlayFeedback(int casterIndex, int[] targetsEntityIndexes, Vector3[] targetPositions);

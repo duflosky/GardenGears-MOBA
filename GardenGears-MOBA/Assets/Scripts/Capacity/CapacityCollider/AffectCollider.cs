@@ -10,8 +10,9 @@ public class AffectCollider : Entity
     [HideInInspector] public ActiveCapacity capacitySender;
     [HideInInspector] public float maxDistance;
     [HideInInspector] public Vector3 casterPos;
-    [Header("=== AFFECT COLLIDER")]
+    
     [SerializeField] private bool affectEntityOnly;
+    
     private Rigidbody rb;
 
     private void Awake()
@@ -42,7 +43,6 @@ public class AffectCollider : Entity
         var entity = other.GetComponent<Entity>();
         if (entity && entity != caster)
         {
-            if (!PhotonNetwork.IsMasterClient) return;
             capacitySender.CollideEntityEffect(entity);
         }
         else if (!entity && !affectEntityOnly)
@@ -53,16 +53,10 @@ public class AffectCollider : Entity
 
     private void OnTriggerExit(Collider other)
     {
-       if(PhotonNetwork.IsMasterClient)capacitySender.CollideExitEffect(other.gameObject);
-    }
-
-    public virtual void Disable()
-    {
-        photonView.RPC("SyncDisableRPC", RpcTarget.All);
+       if (PhotonNetwork.IsMasterClient) capacitySender.CollideExitEffect(other.gameObject);
     }
     
-    [PunRPC]
-    public void SyncDisableRPC()
+    public void Disable()
     {
         gameObject.SetActive(false);
     }
