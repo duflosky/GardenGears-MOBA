@@ -43,7 +43,7 @@ namespace Entities.Capacities
             }
         }
 
-        //=========================ACTIVE=====================================
+        #region Active
 
         public static byte GetActiveCapacitySOIndex(ActiveCapacitySO so)
         {
@@ -72,8 +72,10 @@ namespace Entities.Capacities
         {
             return Instance.allActiveCapacities[index];
         }
+        
+        #endregion
 
-        //=========================PASSIF=====================================
+        #region Passive
 
         public static byte GetPassiveCapacitySOIndex(PassiveCapacitySO so)
         {
@@ -87,7 +89,6 @@ namespace Entities.Capacities
         
         public PassiveCapacity CreatePassiveCapacity(byte soIndex,Entity entity)
         {
-            Debug.Log($"Trying to create passive capacity of so at {soIndex}");
             if(soIndex>= allPassiveCapacitiesSo.Count) return null;
             var so = allPassiveCapacitiesSo[soIndex];
             PassiveCapacity capacity;
@@ -119,5 +120,7 @@ namespace Entities.Capacities
         {
             return allPassiveCapacitiesSo[index];
         }
+        
+        #endregion
     }
 }

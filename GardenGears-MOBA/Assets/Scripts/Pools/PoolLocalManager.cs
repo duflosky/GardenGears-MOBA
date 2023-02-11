@@ -4,9 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Photon.Pun;
 using UnityEngine;
-using UnityEngine.Experimental.GlobalIllumination;
 
-//[RequireComponent(typeof(PhotonView))]
 public class PoolLocalManager : MonoBehaviourPun
 {
     [Serializable]
@@ -65,16 +63,15 @@ public class PoolLocalManager : MonoBehaviourPun
         var item = poolElements.FirstOrDefault(item => item.Element == GORef);
         if (item == default)
         {
-            Debug.LogError($"GameObject Element {GORef.name} not Found in Pool");
+            Debug.LogError($"GameObject: {GORef.name} not found in Pools;");
             return;
         }
         var index = poolElements.IndexOf(item);
         photonView.RPC("SyncPoolInstantiate", RpcTarget.All, index, position, rotation, parent, timer);
-        // PoolInstantiate(index, position, rotation, parent);
     }
     
     [PunRPC]
-     void SyncPoolInstantiate(int GOIndex, Vector3 position, Quaternion rotation, Transform parent = null, float timer = 0)
+    private void SyncPoolInstantiate(int GOIndex, Vector3 position, Quaternion rotation, Transform parent = null, float timer = 0)
     {
         PoolInstantiate(GOIndex, position, rotation, parent, timer);
     }
@@ -83,7 +80,6 @@ public class PoolLocalManager : MonoBehaviourPun
     {
         PoolInstantiate(poolElements[GOindex].Element , position, rotation, parent, timer);
     }
-    
     
     public GameObject PoolInstantiate(GameObject GORef, Vector3 position, Quaternion rotation, Transform parent = null, float timer = 0)
     {

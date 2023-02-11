@@ -2,6 +2,7 @@ using Entities;
 using Photon.Pun;
 using UnityEngine;
 
+[RequireComponent(typeof(PhotonView))]
 public class BenchBehavior : MonoBehaviourPun
 {
     public Collider benchCollider;

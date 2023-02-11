@@ -9,6 +9,8 @@ public class UltimateRangeSO : ChampionActiveCapacitySO
     [Tooltip("Radius of the explosion")] public float explosionRadius;
     [Tooltip("Speed of the projectile")] public float speed;
     public float damagePercentage;
+    public StunPassiveSO PassiveAfterHit;
+    public float StunTimer;
     
     public override Type AssociatedType()
     {

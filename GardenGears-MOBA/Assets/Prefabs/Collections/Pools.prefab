@@ -103,6 +103,14 @@ MonoBehaviour:
       type: 3}
     amount: 2
     duration: 0
+  - Element: {fileID: 2813814392555008237, guid: bbfd7d754e760f640a5b3528e7e34a22,
+      type: 3}
+    amount: 2
+    duration: 0
+  - Element: {fileID: 8423433912417764863, guid: 5451ea59f9dec9244b3e763824de8e23,
+      type: 3}
+    amount: 2
+    duration: 0
 --- !u!114 &1976357601591734503
 MonoBehaviour:
   m_ObjectHideFlags: 0

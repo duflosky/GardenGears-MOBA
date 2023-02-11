@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using Photon.Pun;
 using UnityEngine;
 
@@ -34,6 +32,7 @@ public partial class Champion
 
     public event GlobalDelegates.BoolDelegate OnSetCanAttack;
     public event GlobalDelegates.BoolDelegate OnSetCanAttackFeedback;
+    
     public float GetAttackDamage()
     {
         throw new System.NotImplementedException();
@@ -59,6 +58,7 @@ public partial class Champion
 
     public event GlobalDelegates.FloatDelegate OnSetAttackDamage;
     public event GlobalDelegates.FloatDelegate OnSetAttackDamageFeedback;
+    
     public void RequestAttack(byte capacityIndex, int[] targetedEntities, Vector3[] targetedPositions)
     {
         photonView.RPC("AttackRPC", RpcTarget.MasterClient, capacityIndex, targetedEntities, targetedPositions);
@@ -80,6 +80,7 @@ public partial class Champion
 
     public event GlobalDelegates.ByteIntArrayVector3ArrayDelegate OnAttack;
     public event GlobalDelegates.ByteIntArrayVector3ArrayDelegate OnAttackFeedback;
+    
     public void RequestIncreaseAttackDamage(float value)
     {
         photonView.RPC("IncreaseAttackDamageRPC", RpcTarget.MasterClient, value);
@@ -100,6 +101,7 @@ public partial class Champion
 
     public event GlobalDelegates.FloatDelegate OnIncreaseAttackDamage;
     public event GlobalDelegates.FloatDelegate OnIncreaseAttackDamageFeedback;
+    
     public void RequestDecreaseAttackDamage(float value)
     {
         photonView.RPC("DecreaseAttackDamageRPC", RpcTarget.MasterClient, value);
@@ -143,6 +145,7 @@ public partial class Champion
 
     public event GlobalDelegates.FloatDelegate OnIncreaseAttackSpeed;
     public event GlobalDelegates.FloatDelegate OnIncreaseAttackSpeedFeedback;
+    
     public void RequestDecreaseAttackSpeed(float value)
     {
         photonView.RPC("DecreaseAttackSpeedRPC", RpcTarget.MasterClient, value);
@@ -163,7 +166,5 @@ public partial class Champion
 
     public event GlobalDelegates.FloatDelegate OnDecreaseAttackSpeed;
     public event GlobalDelegates.FloatDelegate OnDecreaseAttackSpeedFeedback;
-    
     public  GlobalDelegates.EntityDelegate OnDealDamage;
-
 }

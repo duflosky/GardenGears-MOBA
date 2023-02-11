@@ -1,18 +1,15 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using Entities.Capacities;
 using UnityEngine;
 using UnityEngine.UI;
 using Object = UnityEngine.Object;
 
-public abstract class ChampionActiveCapacity : ActiveCapacity
+public abstract class  ChampionActiveCapacity : ActiveCapacity
 {
-    protected Champion champion;
     public ChampionActiveCapacitySO ChampSO;
+    protected Champion champion;
     private GameObject gizmo;
-    
-    
+
     public override void OnStart()
     {
         ChampSO = (ChampionActiveCapacitySO)SO;
@@ -22,44 +19,39 @@ public abstract class ChampionActiveCapacity : ActiveCapacity
     
     public override void CapacityPress()
     {
-        if (ChampSO.capacitySlow == null) throw new NullReferenceException($"Missing capacitySlow to {ChampSO.name}");
-        champion.GetPassiveCapacity(CapacitySOCollectionManager.GetPassiveCapacitySOIndex(ChampSO.capacitySlow)).OnAdded();
-        champion.OnCastAnimationCast += CapacityEffect;
-        champion.OnCastAnimationEnd += CapacityEndAnimation;
+        if (ChampSO.capacitySlow == null) throw new NullReferenceException($"Missing capacitySlow on {ChampSO.name}");
+        champion.GetPassiveCapacity(ChampSO.capacitySlow).OnAdded();
         champion.OnCastAnimationShotEffect += CapacityShotEffect;
+        champion.OnCastAnimationCastFeedback += PlayFeedback;
+        champion.OnCastAnimationEnd += CapacityEndAnimation;
     }
     
     public override bool TryCast(int[] targetsEntityIndexes, Vector3[] targetPositions)
     {
-        if (!onCooldown)
-        {
-            InitiateCooldown();
-
-            CapacityPress();
-            return true;
-        }
-        else return false;
+        if (onCooldown) return false;
+        InitiateCooldown();
+        CapacityPress();
+        return true;
     }
 
     public override void PlayFeedback(int casterIndex, int[] targetsEntityIndexes, Vector3[] targetPositions)
     {
-        if(champion.photonView.IsMine)DisplayGizmos(true);
+        if (champion.photonView.IsMine) DisplayGizmos(true);
     }
 
-    public virtual void DisplayGizmos(bool state)
+    private void DisplayGizmos(bool state)
     {
         if (state)
         {
             if (ChampSO.gizmoPrefab == null) 
             {
-                //throw new NullReferenceException($"Missing Gizmo Prefab To {ChampSO.name}");
-                Debug.LogWarning($"Missing Gizmo Prefab To {ChampSO.name}");
+                Debug.LogWarning($"Missing Gizmo Prefab on {ChampSO.name}");
                 return;
             }
             if (!gizmo)
             {
                 gizmo = Object.Instantiate(ChampSO.gizmoPrefab, casterTransform.position, Quaternion.identity, casterTransform);
-                var rect = gizmo.GetComponentInChildren<Image>().GetComponent<RectTransform>(); //Désolé pour les yeux :3
+                var rect = gizmo.GetComponentInChildren<Image>().GetComponent<RectTransform>();
                 rect.localPosition =(new Vector3(0,0,ChampSO.maxRange/2));
                 rect.sizeDelta = new Vector2(rect.sizeDelta.x, ChampSO.maxRange);
             }
@@ -71,7 +63,7 @@ public abstract class ChampionActiveCapacity : ActiveCapacity
         {
             if (!gizmo)
             {
-                Debug.LogError($"Gizmo Not Assign");
+                Debug.LogError($"Gizmo is not assign;");
                 return;
             }
             champion.CastUpdate -= UpdateGizmos;
@@ -84,10 +76,8 @@ public abstract class ChampionActiveCapacity : ActiveCapacity
         DisplayGizmos(false);
     }
 
-    public virtual void UpdateGizmos()
+    private void UpdateGizmos()
     {
         gizmo.transform.rotation = casterTransform.GetChild(0).rotation;
     }
-    
-    
 }

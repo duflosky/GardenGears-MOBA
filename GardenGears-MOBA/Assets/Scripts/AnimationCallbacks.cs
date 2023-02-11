@@ -9,8 +9,7 @@ public class AnimationCallbacks : MonoBehaviourPun
 {
     [SerializeField] private Transform castTransform;
     public ICastable caster;
-
-
+    
     public void AnimationShotEffect()
     {
         caster.CastAnimationShotEffect(castTransform);
