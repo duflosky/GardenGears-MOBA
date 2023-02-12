@@ -74,7 +74,7 @@ public partial class Champion
     public void AttackRPC(byte capacityIndex, int[] targetedEntities, Vector3[] targetedPositions)
     {
         OnAttack?.Invoke(capacityIndex, targetedEntities, targetedPositions);
-        CastRPC(capacityIndex, 0, targetedEntities, targetedPositions);
+        RequestCast(capacityIndex, 0, targetedEntities, targetedPositions);
         photonView.RPC("SyncAttackRPC", RpcTarget.All, capacityIndex, targetedEntities, targetedPositions);
     }
 

@@ -60,7 +60,7 @@ public partial class Champion
         {
             foreach (var animatorControllerParameter in animator.parameters)
             {
-                if (!animatorControllerParameter.name.Contains(activeCapacity.SO.referenceName)) continue;
+                if (!animatorControllerParameter.name.Contains(activeCapacity.ActiveCapacitySO.referenceName)) continue;
                 animator.SetTrigger(animatorControllerParameter.name);
             }
         }

@@ -14,21 +14,21 @@ public class AutoTower : ActiveCapacity
     
     public override void OnStart()
     {
-        SOType = (AutoTowerSO)SO;
-        casterTransform = caster.transform;
+        SOType = (AutoTowerSO)ActiveCapacitySO;
+        CasterTransform = Caster.transform;
     }
 
-    public override bool TryCast(int[] targetsEntityIndexes, Vector3[] targetPositions)
+    public override bool TryCast(int[] targetsEntityIndexes, Vector3[] targetsPositions)
     {
         if (targetsEntityIndexes.Length == 0) return false;
         target = EntityCollectionManager.GetEntityByIndex(targetsEntityIndexes[0]);
-        tower = caster.GetComponent<Tower>();
-        return base.TryCast(targetsEntityIndexes, targetPositions);
+        tower = Caster.GetComponent<Tower>();
+        return base.TryCast(targetsEntityIndexes, targetsPositions);
     }
 
     public override void CapacityPress()
     {
-        CapacityEffect(casterTransform);
+        CapacityEffect(CasterTransform);
     }
 
     public override void CapacityEffect(Transform castTransform)
@@ -36,7 +36,7 @@ public class AutoTower : ActiveCapacity
         autoTowerGO = PoolLocalManager.Instance.PoolInstantiate(SOType.feedbackPrefab, tower.shotSpot.position, castTransform.rotation);
         autoTowerCollider = autoTowerGO.GetComponent<AutoTowerCollider>();
         autoTowerCollider.capacitySender = this;
-        autoTowerCollider.caster = caster;
+        autoTowerCollider.caster = Caster;
         autoTowerCollider.target = target;
         autoTowerGO.transform.LookAt(target.transform);
     }
@@ -58,11 +58,11 @@ public class AutoTower : ActiveCapacity
     public override void PlayFeedback(int casterIndex, int[] targetsEntityIndexes, Vector3[] targetPositions)
     {
         if (PhotonNetwork.IsMasterClient) return;
-        Tower towerFeedback = caster.GetComponent<Tower>();
+        Tower towerFeedback = Caster.GetComponent<Tower>();
         autoTowerGO = PoolLocalManager.Instance.PoolInstantiate(SOType.feedbackPrefab, towerFeedback.shotSpot.position, towerFeedback.shotSpot.rotation);
         autoTowerCollider = autoTowerGO.GetComponent<AutoTowerCollider>();
         autoTowerCollider.capacitySender = this;
-        autoTowerCollider.caster = caster;
+        autoTowerCollider.caster = Caster;
         autoTowerCollider.target = EntityCollectionManager.GetEntityByIndex(targetsEntityIndexes[0]);
     }
 }

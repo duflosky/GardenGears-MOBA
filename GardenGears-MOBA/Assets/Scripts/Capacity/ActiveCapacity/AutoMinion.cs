@@ -14,18 +14,18 @@ public class AutoMinion : ActiveCapacity
 
     public override void OnStart()
     {
-        SOType = (AutoMinionSO)SO;
-        casterTransform = caster.transform;
-        minion = (Minion)caster;
+        SOType = (AutoMinionSO)ActiveCapacitySO;
+        CasterTransform = Caster.transform;
+        minion = (Minion)Caster;
     }
 
-    public override bool TryCast(int[] targetsEntityIndexes, Vector3[] targetPositions)
+    public override bool TryCast(int[] targetsEntityIndexes, Vector3[] targetsPositions)
     {
-        minion = caster.GetComponent<Minion>();
+        minion = Caster.GetComponent<Minion>();
         if (minion.currentAttackTarget == null) return false;
         if (!minion.currentAttackTarget.GetComponent<IDeadable>().IsAlive()) return false;
         target = minion.currentAttackTarget.GetComponent<Entity>();
-        return base.TryCast(targetsEntityIndexes, targetPositions);
+        return base.TryCast(targetsEntityIndexes, targetsPositions);
     }
 
     public override void CapacityPress()
@@ -40,7 +40,7 @@ public class AutoMinion : ActiveCapacity
         projectileGO = PoolLocalManager.Instance.PoolInstantiate(SOType.feedbackPrefab, shootPoint.position, shootPoint.rotation);
         autoMinionCollider = projectileGO.GetComponent<AutoMinionCollider>();
         autoMinionCollider.capacity = this;
-        autoMinionCollider.caster = caster;
+        autoMinionCollider.caster = Caster;
         autoMinionCollider.target = target;
         projectileGO.transform.LookAt(target.transform);
     }
@@ -70,7 +70,7 @@ public class AutoMinion : ActiveCapacity
         projectileGO = PoolLocalManager.Instance.PoolInstantiate(SOType.feedbackPrefab, minion.transform.position, minion.transform.rotation);
         autoMinionCollider = projectileGO.GetComponent<AutoMinionCollider>();
         autoMinionCollider.capacity = this;
-        autoMinionCollider.caster = caster;
+        autoMinionCollider.caster = Caster;
         autoMinionCollider.target = EntityCollectionManager.GetEntityByIndex(targetsEntityIndexes[0]);
     }
 }

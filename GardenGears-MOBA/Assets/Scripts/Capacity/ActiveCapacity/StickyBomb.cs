@@ -19,14 +19,14 @@ public class StickyBomb : ChampionActiveCapacity
 
     public override void OnStart()
     {
-        SOType = (StickyBombSO)SO;
-        champion = (Champion)caster;
+        SOType = (StickyBombSO)ActiveCapacitySO;
+        champion = (Champion)Caster;
     }
 
-    public override bool TryCast(int[] targetsEntityIndexes, Vector3[] targetPositions)
+    public override bool TryCast(int[] targetsEntityIndexes, Vector3[] targetsPositions)
     {
-        if (!base.TryCast(targetsEntityIndexes, targetPositions)) return false;
-        this.targetPositions = targetPositions;
+        if (!base.TryCast(targetsEntityIndexes, targetsPositions)) return false;
+        this.TargetPositions = targetsPositions;
         return true;
     }
 
@@ -59,13 +59,13 @@ public class StickyBomb : ChampionActiveCapacity
         else
         {
             if (!affectedEntity.tag.Contains("Projectile")) return;
-            if (affectedEntity.GetComponent<AccurateShootCollider>() && affectedEntity.team != caster.team)
+            if (affectedEntity.GetComponent<AccurateShootCollider>() && affectedEntity.team != Caster.team)
             {
                 GameStateMachine.Instance.OnTick -= TimerBomb;
                 timer = 0;
                 ExplodeBomb(SOType.radiusExplosionEnemy, SOType.percentageDamageEnemy);
             }
-            else if (affectedEntity.GetComponent<AccurateShootCollider>() && affectedEntity.team == caster.team)
+            else if (affectedEntity.GetComponent<AccurateShootCollider>() && affectedEntity.team == Caster.team)
             {
                 GameStateMachine.Instance.OnTick -= TimerBomb;
                 timer = 0;
@@ -84,18 +84,18 @@ public class StickyBomb : ChampionActiveCapacity
     {
         champion.OnCastAnimationCastFeedback -= PlayFeedback;
         champion.OnCastAnimationCast -= CapacityEffect;
-        direction = targetPositions[0] - caster.transform.position;
+        direction = targetPositions[0] - Caster.transform.position;
         direction.y = 0;
-        stickyBombGO = PoolLocalManager.Instance.PoolInstantiate(SOType.feedbackPrefab, caster.transform.position, Quaternion.identity);
+        stickyBombGO = PoolLocalManager.Instance.PoolInstantiate(SOType.feedbackPrefab, Caster.transform.position, Quaternion.identity);
         stickyBombGO.transform.parent = null;
-        stickyBombGO.GetComponent<Entity>().team = caster.team;
+        stickyBombGO.GetComponent<Entity>().team = Caster.team;
         collider = stickyBombGO.GetComponent<StickyBombCollider>();
         collider.isIgnite = false;
         collider.ActivateParticleSystem(true);
         collider.GetComponent<SphereCollider>().radius = SOType.radiusStick;
         collider.distance = SOType.maxRange;
         collider.capacity = this;
-        collider.caster = caster;
+        collider.caster = Caster;
         collider.Launch(direction.normalized * SOType.speedBomb);
     }
 
@@ -202,12 +202,12 @@ public class StickyBomb : ChampionActiveCapacity
         foreach (var entity in entities)
         {
             var affectedEntity = entity.GetComponent<Entity>();
-            if (affectedEntity == null || caster.team == affectedEntity.team) continue;
+            if (affectedEntity == null || Caster.team == affectedEntity.team) continue;
             var liveable = entity.GetComponent<IActiveLifeable>();
             if (liveable == null || !liveable.AttackAffected()) continue;
             PoolLocalManager.Instance.RequestPoolInstantiate(SOType.feedbackHitPrefab, affectedEntity.transform.position, Quaternion.identity);
             // liveable.RequestDecreaseCurrentHpByCapacity(caster.GetComponent<Champion>().attackDamage * percentageDamage, capacityIndex);
-            liveable.RequestDecreaseCurrentHp(caster.GetComponent<Champion>().attackDamage * percentageDamage);
+            liveable.RequestDecreaseCurrentHp(Caster.GetComponent<Champion>().attackDamage * percentageDamage);
         }
         collider.Disable();
     }

@@ -13,20 +13,20 @@ public class UltimateRange : ChampionActiveCapacity
     public override void OnStart()
     {
         base.OnStart();
-        SOType = (UltimateRangeSO)SO;
+        SOType = (UltimateRangeSO)ActiveCapacitySO;
     }
     
-    public override bool TryCast(int[] targetsEntityIndexes, Vector3[] targetPositions)
+    public override bool TryCast(int[] targetsEntityIndexes, Vector3[] targetsPositions)
     {
-        if (!base.TryCast(targetsEntityIndexes, targetPositions)) return false;
-        champion.isCasting = true;
+        if (!base.TryCast(targetsEntityIndexes, targetsPositions)) return false;
+        Champion.isCasting = true;
         return true;
     }
 
     public override void CapacityShotEffect(Transform transform)
     {
-        champion.OnCastAnimationShotEffect -= CapacityShotEffect;
-        direction = caster.transform.GetChild(0).forward;
+        Champion.OnCastAnimationShotEffect -= CapacityShotEffect;
+        direction = Caster.transform.GetChild(0).forward;
         direction.y = 0;
         PoolLocalManager.Instance.PoolInstantiate(SOType.shotPrefab, transform.position, Quaternion.LookRotation(-direction));
     }
@@ -35,20 +35,20 @@ public class UltimateRange : ChampionActiveCapacity
     
     public override void CapacityEndAnimation()
     {
-        champion.OnCastAnimationEnd -= CapacityEndAnimation;
-        champion.GetPassiveCapacity(SOType.capacitySlow).OnRemoved();
-        champion.isCasting = false;
-        champion.canRotate = true;
+        Champion.OnCastAnimationEnd -= CapacityEndAnimation;
+        Champion.GetPassiveCapacity(SOType.CapacitySlowSO).OnRemoved();
+        Champion.isCasting = false;
+        Champion.canRotate = true;
     }
     
     public override void CollideEntityEffect(Entity entity)
     {
-        if (caster.team != entity.team)
+        if (Caster.team != entity.team)
         {
             var liveable = entity.GetComponent<IActiveLifeable>();
             if (liveable == null) return;
             if (!liveable.AttackAffected()) return;
-            if (PhotonNetwork.IsMasterClient) entity.photonView.RPC("DecreaseCurrentHpRPC", RpcTarget.All, champion.attackDamage * SOType.damagePercentage);
+            if (PhotonNetwork.IsMasterClient) entity.photonView.RPC("DecreaseCurrentHpRPC", RpcTarget.All, Champion.attackDamage * SOType.damagePercentage);
             if (entity.GetComponent<Champion>())
             {
                 entity.GetPassiveCapacity(SOType.PassiveAfterHit).OnAdded();
@@ -56,9 +56,9 @@ public class UltimateRange : ChampionActiveCapacity
             Explode(entity.transform.position);
             collider.Disable();
         }
-        else if (caster.team == entity.team)
+        else if (Caster.team == entity.team)
         {
-            AllyHit(indexOfSOInCollection);
+            AllyHit(IndexOfSOInCollection);
             Explode(entity.transform.position);
             collider.Disable();
         }
@@ -72,14 +72,14 @@ public class UltimateRange : ChampionActiveCapacity
 
     public override void PlayFeedback(int casterIndex, int[] targetsEntityIndexes, Vector3[] targetPositions)
     {
-        champion.OnCastAnimationCast -= CapacityEffect;
-        champion.OnCastAnimationCastFeedback -= PlayFeedback;
-        direction = caster.transform.GetChild(0).forward;
+        Champion.OnCastAnimationCast -= CapacityEffect;
+        Champion.OnCastAnimationCastFeedback -= PlayFeedback;
+        direction = Caster.transform.GetChild(0).forward;
         direction.y = 0;
-        ultimateGO = PoolLocalManager.Instance.PoolInstantiate(SOType.feedbackPrefab, champion.transform.position, Quaternion.LookRotation(-direction));
+        ultimateGO = PoolLocalManager.Instance.PoolInstantiate(SOType.feedbackPrefab, Champion.transform.position, Quaternion.LookRotation(-direction));
         collider = ultimateGO.GetComponent<UltimateRangeCollider>();
         collider.GetComponent<SphereCollider>().radius = SOType.colliderRadius;
-        collider.caster = caster;
+        collider.caster = Caster;
         collider.range = SOType.maxRange;
         collider.capacity = this;
         collider.Launch(direction.normalized * SOType.speed);
@@ -94,10 +94,10 @@ public class UltimateRange : ChampionActiveCapacity
         foreach (var entity in entities)
         {
             var affectedEntity = entity.GetComponent<Entity>();
-            if (affectedEntity == null || caster.team == affectedEntity.team) continue;
+            if (affectedEntity == null || Caster.team == affectedEntity.team) continue;
             var liveableEntity = entity.GetComponent<IActiveLifeable>();
             if (liveableEntity == null || !liveableEntity.AttackAffected()) continue;
-            if (PhotonNetwork.IsMasterClient) liveableEntity.RequestDecreaseCurrentHpByCapacity(caster.GetComponent<Champion>().attackDamage * SOType.damagePercentage, capacityIndex);
+            if (PhotonNetwork.IsMasterClient) liveableEntity.RequestDecreaseCurrentHpByCapacity(Caster.GetComponent<Champion>().attackDamage * SOType.damagePercentage, capacityIndex);
         }
     }
 }

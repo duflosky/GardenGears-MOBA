@@ -3,28 +3,26 @@ using UnityEngine;
 
 public class AccurateShootCollider : AffectCollider
 {
-    private bool canRangeDestroy = true;
-
-    private Dictionary<GameObject, Vector3> gameObjectDistances = new();
+    private bool _isInObject;
+    private Dictionary<GameObject, Vector3> _gameObjectsCrossed = new();
 
     protected override bool CanDisable()
     {
-        if (!canRangeDestroy) return false;
-        return base.CanDisable();
+        return !_isInObject && base.CanDisable();
     }
 
-    public void EnterWall(GameObject go)
+    public void EnterWall(GameObject target)
     {
-        gameObjectDistances.Add(go, transform.position);
-        canRangeDestroy = false;
+        _gameObjectsCrossed.Add(target, transform.position);
+        _isInObject = false;
     }
 
-    public void ExitWall(GameObject go)
+    public void ExitWall(GameObject target)
     {
-        if (!gameObjectDistances.ContainsKey(go)) return;
-        Vector3 lastCountPos = gameObjectDistances[go]; 
-        maxDistance += Vector3.Distance(lastCountPos, transform.position);
-        gameObjectDistances.Remove(go);
-        canRangeDestroy = true;
+        if (!_gameObjectsCrossed.ContainsKey(target)) return;
+        var enterPosition = _gameObjectsCrossed[target]; 
+        MaxRange += Vector3.Distance(enterPosition, transform.position);
+        _gameObjectsCrossed.Remove(target);
+        _isInObject = true;
     }
 }

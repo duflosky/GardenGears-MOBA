@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: AutoAttackMeleeSO
   m_EditorClassIdentifier: 
   referenceName: AutoAttack
-  descriptionName: tomberparterreFor
+  descriptionName: 
   icon: {fileID: 0}
-  description: cleave
+  description: 
   cooldown: 1.2
   isTargeting: 0
   maxRange: 7
@@ -26,8 +26,8 @@ MonoBehaviour:
   feedbackHitPrefab: {fileID: 0}
   shootType: 0
   indexInCollection: 0
-  gizmoPrefab: {fileID: 0}
-  capacitySlow: {fileID: 11400000, guid: be255daf9f16eae498754d546ed3b886, type: 2}
+  Gizmo: {fileID: 0}
+  CapacitySlowSO: {fileID: 11400000, guid: be255daf9f16eae498754d546ed3b886, type: 2}
   damageZone: {fileID: 2337458986253374596, guid: f2dc7cb89fec93b49a88ea5b63e37dbc,
     type: 3}
   fxPrefab: {fileID: 5572468312039609675, guid: 758adf5f7e4eeea41833ab4d2717d443,

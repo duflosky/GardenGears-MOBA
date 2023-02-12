@@ -1,24 +1,27 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using Entities.Capacities;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 [CreateAssetMenu(menuName = "Capacity/ActiveCapacitySO/Auto-Attack Range", fileName = "new AutoAttackRangeSO")]
 public class AutoAttackRangeSO : ChampionActiveCapacitySO
 {
-    public GameObject bulletPrefab;
-    public GameObject overheatBulletPrefab;
-    public GameObject hitOverheatPrefab;
+    [FormerlySerializedAs("overheatBulletPrefab")] [Space]
+    public GameObject OverheatProjectile;
 
-    public float bulletSpeed;
-    public float percentageDamage; 
-    [Space]
-    public PassiveCapacitySO overheatSO;
-    public float sprayAngle = 90;
-    [Space] public SpeedModifierPassiveSO attackSlowSO;
-    
-    
+    [FormerlySerializedAs("HitOverheat")] [FormerlySerializedAs("hitOverheatPrefab")]
+    public GameObject OverheatHit;
+
+    [FormerlySerializedAs("bulletSpeed")] public float Speed;
+
+    [FormerlySerializedAs("percentageDamage")]
+    public float PercentDamage;
+
+    [FormerlySerializedAs("overheatSO")] [Space]
+    public PassiveCapacitySO OverheatPassiveCapacitySO;
+
+    [FormerlySerializedAs("sprayAngle")] public float OverheatAngle = 60;
+
     public override Type AssociatedType()
     {
         return typeof(AutoAttackRange);

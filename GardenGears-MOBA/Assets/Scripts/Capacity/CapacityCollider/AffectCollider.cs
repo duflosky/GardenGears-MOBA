@@ -2,58 +2,52 @@ using Entities;
 using Entities.Capacities;
 using Photon.Pun;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 [RequireComponent(typeof(Rigidbody))]
-public class AffectCollider : Entity
+public class AffectCollider : MonoBehaviour
 {
-    [HideInInspector] public Entity caster;
-    [HideInInspector] public ActiveCapacity capacitySender;
-    [HideInInspector] public float maxDistance;
-    [HideInInspector] public Vector3 casterPos;
+    [HideInInspector] public Entity Caster;
+    [HideInInspector] public ActiveCapacity Capacity;
+    [HideInInspector] public float MaxRange;
+    [HideInInspector] public Vector3 CasterPosition;
     
-    [SerializeField] private bool affectEntityOnly;
-    
-    private Rigidbody rb;
+    [SerializeField] private bool _affectEntityOnly;
+    [SerializeField] private Rigidbody _rb;
 
-    private void Awake()
+    private void Update()
     {
-        rb = GetComponent<Rigidbody>();
-    }
-
-    protected override void OnUpdate()
-    {
-        base.OnUpdate();
         if (!CanDisable()) return;
-        if (Vector3.Distance(casterPos, transform.position) > maxDistance) Disable();
+        if (Vector3.Distance(CasterPosition, transform.position) > MaxRange) Disable();
     }
 
     protected virtual bool CanDisable()
     {
-        return maxDistance != 0;
+        return MaxRange != 0;
     }
 
     public void Launch(Vector3 moveVector)
     {
-        rb.isKinematic = false;
-        rb.velocity = moveVector;
+        _rb.isKinematic = false;
+        _rb.velocity = moveVector;
     }
 
     private void OnTriggerEnter(Collider other)
     {
         var entity = other.GetComponent<Entity>();
-        if (entity && entity != caster)
+        if (entity && entity != Caster)
         {
-            capacitySender.CollideEntityEffect(entity);
+            Capacity.CollideEntityEffect(entity);
         }
-        else if (!entity && !affectEntityOnly)
+        else if (!entity && !_affectEntityOnly)
         {
-            capacitySender.CollideObjectEffect(other.gameObject);
+            Capacity.CollideObjectEffect(other.gameObject);
         }
     }
 
     private void OnTriggerExit(Collider other)
     {
-       if (PhotonNetwork.IsMasterClient) capacitySender.CollideExitEffect(other.gameObject);
+       if (PhotonNetwork.IsMasterClient) Capacity.CollideExitEffect(other.gameObject);
     }
     
     public void Disable()

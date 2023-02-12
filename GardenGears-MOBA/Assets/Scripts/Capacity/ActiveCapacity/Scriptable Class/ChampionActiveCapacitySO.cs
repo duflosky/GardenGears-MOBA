@@ -1,10 +1,10 @@
-using System.Collections;
-using System.Collections.Generic;
 using Entities.Capacities;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public abstract class ChampionActiveCapacitySO : ActiveCapacitySO
 {
-    public GameObject gizmoPrefab;
-    public SpeedModifierPassiveSO capacitySlow;
+    [FormerlySerializedAs("gizmoPrefab")] [Space] public GameObject Gizmo;
+    
+    [FormerlySerializedAs("capacitySlow")] public SpeedModifierPassiveSO CapacitySlowSO;
 }

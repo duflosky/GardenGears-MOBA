@@ -94,8 +94,6 @@ GameObject:
   - component: {fileID: 5709570894031198204}
   - component: {fileID: 1890474207633622133}
   - component: {fileID: 2371922539120845978}
-  - component: {fileID: 714623444942036393}
-  - component: {fileID: 2934783595868522690}
   - component: {fileID: 3461930682553493198}
   m_Layer: 0
   m_Name: Accurate Bullet
@@ -151,45 +149,6 @@ CapsuleCollider:
   m_Height: 0
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &714623444942036393
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9083956369217742468}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ObservedComponentsFoldoutOpen: 1
-  Group: 0
-  prefixField: -1
-  Synchronization: 3
-  OwnershipTransfer: 0
-  observableSearch: 2
-  ObservedComponents:
-  - {fileID: 2934783595868522690}
-  sceneViewId: 0
-  InstantiationId: 0
-  isRuntimeInstantiated: 0
---- !u!114 &2934783595868522690
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9083956369217742468}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_SynchronizePosition: 1
-  m_SynchronizeRotation: 1
-  m_SynchronizeScale: 0
-  m_UseLocal: 1
 --- !u!114 &3461930682553493198
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -202,27 +161,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aca3c9dafedc8844b85d2ef7acee5ee2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  entityIndex: 0
-  canAddPassiveCapacity: 1
-  canRemovePassiveCapacity: 1
-  TransformUI: {fileID: 0}
-  OffsetUI: {x: 0, y: 2, z: 0}
-  canShow: 0
-  canHide: 0
-  elementsToShow: []
-  neverHideElements: []
-  canChangeTeam: 0
-  team: 0
-  baseViewRange: 0
-  viewRange: 0
-  viewAngle: 0
-  canView: 0
-  meshFilterFoV: {fileID: 0}
-  fogOfWarStartDetection: {fileID: 0}
-  caster: {fileID: 0}
-  maxDistance: 0
-  casterPos: {x: 0, y: 0, z: 0}
-  affectEntityOnly: 0
+  Caster: {fileID: 0}
+  MaxRange: 0
+  CasterPosition: {x: 0, y: 0, z: 0}
+  _affectEntityOnly: 0
+  _rb: {fileID: 1890474207633622133}
 --- !u!1001 &230738959053817231
 PrefabInstance:
   m_ObjectHideFlags: 0

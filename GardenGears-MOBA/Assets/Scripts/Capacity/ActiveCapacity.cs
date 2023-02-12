@@ -5,20 +5,20 @@ namespace Entities.Capacities
 {
     public abstract class ActiveCapacity
     {
-        public ActiveCapacitySO SO;
-        public bool onCooldown;
-        public byte indexOfSOInCollection;
-        public Entity caster;
-        public Transform casterTransform;
+        public ActiveCapacitySO ActiveCapacitySO;
+        public bool OnCooldown;
+        public byte IndexOfSOInCollection;
+        public Entity Caster;
+        public Transform CasterTransform;
 
-        protected int[] targetsEntityIndexes;
-        protected Vector3[] targetPositions;
+        protected int[] TargetsEntityIndexes;
+        protected Vector3[] TargetPositions;
 
-        private double cooldownTimer;
+        private double _cooldownTimer;
 
         protected ActiveCapacitySO AssociatedActiveCapacitySO()
         {
-            return CapacitySOCollectionManager.GetActiveCapacitySOByIndex(indexOfSOInCollection);
+            return CapacitySOCollectionManager.GetActiveCapacitySOByIndex(IndexOfSOInCollection);
         }
 
         public abstract void OnStart();
@@ -27,8 +27,8 @@ namespace Entities.Capacities
 
         protected virtual void InitiateCooldown()
         {
-            cooldownTimer = SO.cooldown;
-            onCooldown = true;
+            _cooldownTimer = ActiveCapacitySO.cooldown;
+            OnCooldown = true;
 
             GameStateMachine.Instance.OnTick += CooldownTimer;
         }
@@ -38,55 +38,57 @@ namespace Entities.Capacities
         /// </summary>
         protected virtual void CooldownTimer()
         {
-            cooldownTimer -= 1.0 / GameStateMachine.Instance.tickRate;
-            if (!(cooldownTimer <= 0)) return;
-            onCooldown = false;
+            _cooldownTimer -= 1.0 / GameStateMachine.Instance.tickRate;
+            if (!(_cooldownTimer <= 0)) return;
+            OnCooldown = false;
             GameStateMachine.Instance.OnTick -= CooldownTimer;
         }
 
-        public virtual bool TryCast(int[] targetsEntityIndexes, Vector3[] targetPositions)
+        public virtual bool TryCast(int[] targetsEntityIndexes, Vector3[] targetsPositions)
         {
-            if (onCooldown) return false;
+            if (OnCooldown) return false;
             InitiateCooldown();
-            this.targetsEntityIndexes = targetsEntityIndexes;
-            this.targetPositions = targetPositions;
+            TargetsEntityIndexes = targetsEntityIndexes;
+            TargetPositions = targetsPositions;
             CapacityPress();
             return true;
         }
 
         public abstract void CapacityPress();
-        
+
         public virtual void CapacityShotEffect(Transform transform) { }
-        
+
         public abstract void CapacityEffect(Transform transform);
-        
+
         public virtual void CapacityEndAnimation() { }
-        
+
         public virtual void CapacityRelease() { }
 
         public virtual void CollideEntityEffect(Entity entity) { }
 
         public virtual void CollideObjectEffect(GameObject obj) { }
-        
+
         public virtual void CollideFeedbackEffect(Entity affectedEntity) { }
 
         public virtual void CollideExitEffect(GameObject obj) { }
-        
+
         public static event GlobalDelegates.ByteDelegate OnAllyHit;
 
         protected static void AllyHit(byte capacityIndex)
         {
             OnAllyHit?.Invoke(capacityIndex);
         }
-        
+
         public virtual bool isInRange(int casterIndex, Vector3 position)
         {
-            float distance = Vector3.Distance(EntityCollectionManager.GetEntityByIndex(casterIndex).transform.position, position);
-            return !(distance > SO.maxRange);
+            float distance = Vector3.Distance(EntityCollectionManager.GetEntityByIndex(casterIndex).transform.position,
+                position);
+            return !(distance > ActiveCapacitySO.maxRange);
         }
 
         public abstract void PlayFeedback(int casterIndex, int[] targetsEntityIndexes, Vector3[] targetPositions);
-        public virtual void AnimationFeedback(){}
+
+        public virtual void AnimationFeedback() { }
 
         #endregion
     }
